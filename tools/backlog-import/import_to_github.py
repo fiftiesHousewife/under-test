@@ -10,6 +10,7 @@ What it does, in order:
      The key is stored in a hidden comment in the issue body, so re-running never duplicates.
   3. Links each item to its parent as a sub-issue.
   4. Adds "blocked by" links between items.
+  5. Closes, as not planned, any issue whose item is no longer in the seed.
 
 Needs `gh` logged in with access to the repo. Sub-issues and issue dependencies use GitHub's REST API.
 Issue types are organisation-level on GitHub, so this importer records the item type as a label.
@@ -123,6 +124,13 @@ def main():
             if apply:
                 by_key[item["key"]] = gh("api", f"repos/{repo}/issues", "-X", "POST", "--input", "-", input_json=payload,
                                          writes=True)
+
+    seed_keys = {item["key"] for item in items}
+    for key, issue in by_key.items():
+        if key not in seed_keys and issue.get("state") == "open":
+            print(f"  close as not planned #{issue['number']}: {issue['title']} (no longer in the seed)")
+            gh("api", f"repos/{repo}/issues/{issue['number']}", "-X", "PATCH",
+               "-f", "state=closed", "-f", "state_reason=not_planned", writes=True)
 
     for item in items:
         if not apply:

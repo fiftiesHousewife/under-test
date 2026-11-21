@@ -68,7 +68,7 @@ If the organisation profile sets `commit_messages.must_name_work_item`, every co
 
 ## Safety
 Never build or run code from another repo unless its secrets scan is clean, and only where production can't be reached
-(see [Old code runs first only where production cannot be reached](docs/decisions/0013-old-code-runs-first-only-where-production-cannot-be-reached.md)).
+(see [Old code runs first only where production cannot be reached](docs/decisions/0019-old-code-runs-first-only-where-production-cannot-be-reached.md)).
 
 ## Before you finish
 Run `./gradlew check`. It must pass.

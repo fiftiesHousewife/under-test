@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftieshousewife/under-test/schema/repo-classification.schema.json",
+  "title": "Repo classification",
+  "description": "What the repo classifier reports about one repository at one commit. This is the contract between the classifier (in this toolkit) and any survey tool that calls it across many repos (outside this toolkit). Static mode never builds or runs the repo's code.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "commit", "mode", "languages", "build", "technology_stacks", "application_types", "needs_review", "tools"],
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "confidence", "evidence"],
+      "properties": {
+        "id": {"type": "string", "description": "Technology stack or application type id, as listed in testing-guides/."},
+        "confidence": {"enum": ["high", "medium", "low"]},
+        "evidence": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "What the rule matched, e.g. a file path or a library coordinate."}
+      }
+    }
+  },
+  "properties": {
+    "schema": {"const": "repo-classification/1"},
+    "repo": {"type": "string", "description": "Name or URL, if the caller supplied one."},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+    "mode": {"enum": ["static", "deep"], "description": "static: reads files only. deep: also runs build-model tools (e.g. OpenRewrite recipes), which needs a build and must follow the toolkit's production-safety decisions."},
+    "languages": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0, "maximum": 100}, "description": "Percentage of code per language."},
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tools"],
+      "properties": {
+        "tools": {"type": "array", "items": {"enum": ["gradle", "maven", "ant", "npm", "yarn", "pnpm", "none", "other"]}},
+        "files": {"type": "array", "items": {"type": "string"}},
+        "java_version": {"type": "string"},
+        "publishes_artifact": {"type": "boolean", "description": "True if the repo publishes a library others can depend on."}
+      }
+    },
+    "technology_stacks": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "application_types": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "uses": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the repo talks to: the inputs a survey tool needs to build a map of shared systems.",
+      "properties": {
+        "libraries": {"type": "array", "items": {"type": "string"}, "description": "Library coordinates (group:name:version or npm name@version)."},
+        "http_services": {"type": "array", "items": {"type": "string"}},
+        "databases": {"type": "array", "items": {"type": "string"}},
+        "queues_and_topics": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "hard_wired_dependencies": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}, "description": "Counts of things that make code hard to test, e.g. clock_now, static_mutable_fields, singletons."},
+    "test_inventory": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}, "description": "Counts of test files by kind, e.g. unit, integration, end_to_end."},
+    "needs_review": {"type": "boolean", "description": "True if no rule matched confidently; a person should look."},
+    "tools": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Name and version of each tool the classifier ran."}
+  }
+}

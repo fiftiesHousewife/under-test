@@ -1,26 +1,28 @@
 # under-test
 
 [![Build](https://github.com/fiftiesHousewife/under-test/actions/workflows/build.yml/badge.svg)](https://github.com/fiftiesHousewife/under-test/actions/workflows/build.yml)
-![Java 21](https://img.shields.io/badge/Java-21-blue)
+![Java 25](https://img.shields.io/badge/Java-25-blue)
 ![Gradle 9](https://img.shields.io/badge/Gradle-9-02303A)
+![JUnit 6](https://img.shields.io/badge/JUnit-6-25A162)
 [![Decision guides](https://img.shields.io/badge/decisions-MADR-informational)](docs/decisions/README.md)
 
 **A toolkit for getting old code properly tested, one repo at a time.**
 
-Many organisations have hundreds or thousands of repositories with few or weak tests. This toolkit helps a team, working
-with AI coding assistance, find out what each repo needs, plan the work, and do it safely. It gives you:
+Many organisations have hundreds or thousands of repositories with few or weak tests. This toolkit helps a team,
+working with AI coding assistance, find out what each repo needs, plan the work, and do it safely. It gives you:
 
 - **Lessons on testing techniques**, each with a small runnable example showing a before and an after.
-- **Decision guides:** short records of each choice the programme has to make, with the options and their consequences.
-- **Tools and Gradle conventions** that measure test quality and enforce good practice in every build.
-- **AI assistant skills** that let an AI help with the work, while a person reviews everything it produces.
+- **Decision guides:** one short record per choice the programme has to make, with the options and what follows from each.
+- **Build conventions and tools** that measure test quality and apply good practice in every build.
+- **A repo classifier** that says what kind of codebase a repo is, for people or for a survey tool to call.
+- **AI assistant skills** that let an AI help with the work while a person reviews everything it produces.
 
-The toolkit is generic. Each organisation keeps its own facts and choices (its CI platform, issue tracker and so on) in
-a private overlay repo, so nothing organisation-specific lives here.
+The toolkit is **generic**. Nothing in it is specific to one organisation: each organisation adds its own facts and
+choices in a private overlay repo (see [Adopting it in your organisation](#adopting-it-in-your-organisation)).
 
 ## Try it
 
-You need JDK 21. The Gradle wrapper fetches everything else.
+You need JDK 25. The Gradle wrapper fetches everything else.
 
 ```bash
 git clone https://github.com/fiftiesHousewife/under-test.git
@@ -28,20 +30,17 @@ cd under-test
 ./gradlew check
 ```
 
-To install the external AI assistant skills this repo uses (see [`apm.yml`](apm.yml)), install [APM](https://microsoft.github.io/apm/) and run `apm install`.
-
-`check` runs the tests and every quality check: coverage, style, complexity, copy-paste detection, bug and security-bug
-analysis, and forbidden APIs. See [the code standards](AGENTS.md#code-standards-enforced-by-gradlew-check).
+`check` runs the tests and every quality check: coverage, style, complexity, copy-paste detection, bug and
+security-bug analysis (SpotBugs with FindSecBugs), and forbidden APIs. See [the code standards](AGENTS.md#code-standards-enforced-by-gradlew-check).
 
 ### See mutation testing catch weak tests
 
-The [mutation testing lesson](techniques/mutation-testing/README.md) has two test suites with the same 100% line coverage.
-One catches bugs; the other doesn't:
+The [mutation testing lesson](techniques/mutation-testing/README.md) has two test suites with the same 100% line
+coverage. One catches bugs; the other doesn't:
 
 ```bash
 ./gradlew :techniques:mutation-testing:pitest -Psuite=weak   # 5 of 13 deliberately introduced bugs caught
 ./gradlew :techniques:mutation-testing:pitest                # 13 of 13 caught
-open techniques/mutation-testing/example/build/reports/pitest/index.html
 ```
 
 The difference comes down to tests like these:
@@ -57,40 +56,70 @@ assertAll(
         () -> assertThat(calc.discountPercent(100, false)).isEqualTo(10));
 ```
 
+## Adopting it in your organisation
+
+You don't change this repo to use it. You keep your organisation's details in a **private overlay repo** and point the
+toolkit at it.
+
+```
+ this toolkit (public, generic)             your overlay repo (private)
+ ──────────────────────────────             ─────────────────────────────────────────────
+ decision guides             ◀── adopt, narrow or replace ──  your own decision records
+ organisation profile schema ◀── checked against ───────────  organisation-profile.yaml
+ convention plugin, skills   ◀── mirrored through ──────────  your package repository
+ underTest { } settings      ◀── set from ──────────────────  your Gradle init script
+```
+
+1. **Create your overlay.** Copy [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) into a new
+   private repo and fill in `organisation-profile.yaml`: your issue tracker, code-hosting and CI platforms, package
+   repository, approved AI assistants, whether every commit must name a work item, and who fills each engagement role.
+   It is checked against [the organisation profile schema](schema/organisation-profile.schema.json).
+2. **Keep your build environment.** Proxy, package repository and credentials stay in your existing Gradle init script
+   or Maven `settings.xml`. The toolkit never sets them.
+3. **Choose your code-quality standards.** The quality checks read one setting, which you can put in your init script
+   so it applies to every build:
+
+   ```properties
+   underTest.codeStyle=ORGANISATION                      # TOOLKIT (ours), ORGANISATION (your rule files) or NONE (your own plugin)
+   underTest.checkstyleConfig=/path/to/your/checkstyle.xml
+   underTest.minLineCoverage=0.70
+   ```
+
+   The testing evidence the programme relies on (coverage, flaky-test detection, mutation sampling, checks on
+   AI-written tests) always runs; only its thresholds follow your decisions.
+4. **Record your choices.** Where a decision guide leaves a choice, for example how CI runs container tests on your
+   platform, record it in your overlay with the
+   [record-an-organisation-decision skill](.github/skills/record-an-organisation-decision/SKILL.md).
+5. **Load the work.** Import [the starting backlog](plan/backlog-seed.yaml) into your issue tracker. Each repo's
+   approved testing plan then adds its own work items. Importers exist per tracker; see
+   [tools/backlog-import](tools/backlog-import/README.md).
+6. **Follow the phases:** set-up, classifying your repos, pilots for each common kind of repo, rolling out in batches,
+   and handing over to your own teams. Each step is backed by [decision guides](docs/decisions/README.md); the roles
+   are in [the glossary](GLOSSARY.md#engagement-roles).
+
+## Surveying many repos
+
+Surveying every repo in an organisation is outside this toolkit. The toolkit's repo classifier works on one repo and
+writes a result in [a published format](schema/repo-classification.schema.json), so any survey tool can call it.
+[A design for such a tool](docs/design/survey-tool.md) shows how to survey a GitHub organisation.
+
 ## What's in this repo
 
 | Folder | What you'll find |
 |---|---|
 | [`techniques/`](techniques/README.md) | One folder per testing technique: a lesson, a runnable example, and the rules for when to use it |
 | [`docs/decisions/`](docs/decisions/README.md) | Decision guides, one small decision each, building from foundations upward |
-| [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background reading and sources, from legacy code to mutation testing at Google |
+| [`docs/design/`](docs/design/survey-tool.md) | Designs for tools that sit outside the toolkit |
+| [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background reading and sources |
 | [`GLOSSARY.md`](GLOSSARY.md) | The words we use, and the words we avoid |
-| [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) | How an organisation records its own facts and choices, privately |
-| [`schema/`](schema/) | JSON Schemas for every YAML file the toolkit reads |
-| [`tools/`](tools/) | Tools, including [the backlog importer](tools/backlog-import/README.md) |
+| [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) | The shape of an organisation's private overlay repo |
+| [`schema/`](schema/) | JSON Schemas for every YAML and JSON format the toolkit reads or writes |
+| [`tools/`](tools/) | Tools, including [the backlog importers](tools/backlog-import/README.md) |
 | [`plan/backlog-seed.yaml`](plan/backlog-seed.yaml) | The starting list of work, to import into your issue tracker |
 | [`build-logic/`](build-logic/), [`config/quality/`](config/quality/) | Gradle conventions and quality-check rules |
-| [`AGENTS.md`](AGENTS.md) | How AI coding assistants (and people) should work here |
-
-## How the programme works
-
-1. **Set up:** agree the roles and the definition of "well tested", and make sure no old code can reach production while it runs.
-2. **Find out what repos you have:** classify each repo by technology stack and application type, using existing tools.
-3. **Pilot:** treat one real application for each common kind of repo by hand, and turn what you learn into testing guides.
-4. **Roll out in batches:** measure each repo, generate a testing plan its owner approves, and track the work in your issue tracker.
-5. **Hand over:** your own teams run the programme without outside help.
-
-Each step is backed by [decision guides](docs/decisions/README.md). The roles, from Programme Sponsor to Application Owner,
-are in [the glossary](GLOSSARY.md#engagement-roles).
-
-## Load the starting backlog into GitHub Issues
-
-```bash
-python3 tools/backlog-import/import_to_github.py OWNER/REPO            # dry run
-python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply    # create or update issues
-```
+| [`AGENTS.md`](AGENTS.md) | How AI coding assistants, and people, should work here |
 
 ## Contributing
 
-Read [AGENTS.md](AGENTS.md) and [GLOSSARY.md](GLOSSARY.md) first. In short: plain English, refer to things by name with a
-link, a schema for every YAML file, nothing organisation-specific, and `./gradlew check` must pass.
+Read [AGENTS.md](AGENTS.md) and [GLOSSARY.md](GLOSSARY.md) first. In short: plain English, refer to things by name with
+a link, a schema for every YAML file, nothing organisation-specific, and `./gradlew check` must pass.

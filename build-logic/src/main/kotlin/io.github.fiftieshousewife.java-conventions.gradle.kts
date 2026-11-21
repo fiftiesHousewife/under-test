@@ -1,6 +1,12 @@
-// Conventions for every Java project in this repository. The standards they enforce are listed in AGENTS.md.
-// `./gradlew check` runs: tests with coverage verification, Checkstyle, PMD (including complexity and the
-// assertAll rule), copy-paste detection, SpotBugs with FindSecBugs, and forbidden-API checks.
+// Conventions for every Java project. The standards they enforce are listed in AGENTS.md.
+// Three layers (see the decision guides on using the toolkit in an organisation):
+//  - environment (proxy, package repository): never set here; comes from the organisation's Gradle init script;
+//  - code-quality standards: Checkstyle, PMD (complexity, the assertAll rule), copy-paste detection, SpotBugs with
+//    FindSecBugs, forbidden APIs. The toolkit's rules are defaults: `underTest.codeStyle` = TOOLKIT, ORGANISATION
+//    (the organisation's rule files) or NONE (the organisation's own plugin does it);
+//  - testing evidence: coverage verification (and, as they are built, flaky-test detection, mutation sampling and the
+//    acceptance check for AI-written tests). Always on; only thresholds change.
+// Every underTest setting can also be a Gradle property, e.g. -PunderTest.codeStyle=NONE, or in an init script.
 // Out-of-date dependencies are reported by `./gradlew dependencyUpdates` (Ben Manes versions plugin), and checked in CI.
 // Mutation testing is opt-in: `./gradlew pitest`.
 
@@ -10,6 +16,9 @@ import com.github.spotbugs.snom.SpotBugsTask
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import groovy.json.JsonSlurper
 import de.aaschmid.gradle.plugins.cpd.Cpd
+import de.thetaphi.forbiddenapis.gradle.CheckForbiddenApis
+import io.github.fiftieshousewife.undertest.gradle.CodeStyleSource
+import io.github.fiftieshousewife.undertest.gradle.UnderTestExtension
 
 plugins {
     java
@@ -29,6 +38,36 @@ val libs = the<VersionCatalogsExtension>().named("libs")
 fun version(alias: String) = libs.findVersion(alias).get().requiredVersion
 fun library(alias: String) = libs.findLibrary(alias).get()
 val qualityConfig = rootProject.layout.projectDirectory.dir("config/quality")
+
+// ---------- Settings an organisation can change ----------
+fun fileProperty(name: String) = providers.gradleProperty(name).map { rootProject.layout.projectDirectory.file(it) }
+val underTest = extensions.create<UnderTestExtension>("underTest").apply {
+    codeStyle.convention(
+        providers.gradleProperty("underTest.codeStyle").map { CodeStyleSource.valueOf(it.trim().uppercase()) }
+            .orElse(CodeStyleSource.TOOLKIT),
+    )
+    checkstyleConfig.convention(fileProperty("underTest.checkstyleConfig"))
+    pmdRuleset.convention(fileProperty("underTest.pmdRuleset"))
+    forbiddenApiSignatures.convention(fileProperty("underTest.forbiddenApiSignatures"))
+    minLineCoverage.convention(
+        providers.gradleProperty("underTest.minLineCoverage").orElse(version("min-line-coverage")).map { it.toBigDecimal() },
+    )
+}
+val codeStyle = underTest.codeStyle
+
+// The rule file a code-quality check uses: the toolkit's, or (with ORGANISATION) the organisation's. If the
+// organisation's file is missing, the check fails when it runs, with a message saying which setting to add.
+fun Task.useRuleFile(organisationFile: RegularFileProperty, toolkitFile: RegularFile, setting: String, apply: (File) -> Unit) {
+    when {
+        codeStyle.get() == CodeStyleSource.NONE -> Unit
+        codeStyle.get() == CodeStyleSource.ORGANISATION && !organisationFile.isPresent -> {
+            val message = "underTest.codeStyle is ORGANISATION, so set underTest.$setting to the organisation's file"
+            doFirst { throw GradleException(message) }
+        }
+        codeStyle.get() == CodeStyleSource.ORGANISATION -> apply(organisationFile.get().asFile)
+        else -> apply(toolkitFile.asFile)
+    }
+}
 
 java {
     toolchain {
@@ -82,17 +121,13 @@ tasks.jacocoTestReport {
     }
 }
 
-val minLineCoverage = providers.gradleProperty("quality.minLineCoverage")
-    .orElse(version("min-line-coverage"))
-    .map { it.toBigDecimal() }
-
 tasks.jacocoTestCoverageVerification {
     dependsOn(tasks.test)
     violationRules {
         rule {
             limit {
                 counter = "LINE"
-                minimum = minLineCoverage.get()
+                minimum = underTest.minLineCoverage.get()
             }
         }
     }
@@ -102,20 +137,37 @@ tasks.check {
     dependsOn(tasks.jacocoTestCoverageVerification)
 }
 
-// ---------- Style, size and complexity ----------
+// ---------- Code-quality standards (replaceable; see underTest.codeStyle) ----------
+listOf(Checkstyle::class, Pmd::class, Cpd::class, SpotBugsTask::class, CheckForbiddenApis::class).forEach { type ->
+    tasks.withType(type.java).configureEach {
+        // A local copy, so the configuration cache doesn't have to save a reference to this build script.
+        val style = underTest.codeStyle
+        onlyIf("underTest.codeStyle is not NONE") { style.get() != CodeStyleSource.NONE }
+    }
+}
+
 checkstyle {
     toolVersion = version("checkstyle")
-    configDirectory = qualityConfig.dir("checkstyle")
     isIgnoreFailures = false
     maxWarnings = 0
 }
 
+tasks.withType<Checkstyle>().configureEach {
+    useRuleFile(underTest.checkstyleConfig, qualityConfig.file("checkstyle/checkstyle.xml"), "checkstyleConfig") {
+        configFile = it
+        configDirectory = it.parentFile
+    }
+}
+
 pmd {
     toolVersion = version("pmd")
-    ruleSetFiles = files(qualityConfig.file("pmd/ruleset.xml"))
     ruleSets = emptyList()
     isConsoleOutput = true
     isIgnoreFailures = false
+}
+
+tasks.withType<Pmd>().configureEach {
+    useRuleFile(underTest.pmdRuleset, qualityConfig.file("pmd/ruleset.xml"), "pmdRuleset") { ruleSetFiles = files(it) }
 }
 
 // ---------- Copy-paste detection ----------
@@ -136,6 +188,7 @@ tasks.withType<Cpd>().configureEach {
 tasks.check {
     dependsOn(tasks.withType<Cpd>())
 }
+// SpotBugs and forbidden APIs join `check` through their own plugins.
 
 // ---------- Bugs and security bugs ----------
 spotbugs {
@@ -159,8 +212,13 @@ forbiddenApis {
         "jdk-system-out",
         "jdk-reflection",
     )
-    signaturesFiles = files(qualityConfig.file("forbidden-apis/signatures.txt"))
     ignoreFailures = false
+}
+
+tasks.withType<CheckForbiddenApis>().configureEach {
+    useRuleFile(underTest.forbiddenApiSignatures, qualityConfig.file("forbidden-apis/signatures.txt"), "forbiddenApiSignatures") {
+        signaturesFiles = files(it)
+    }
 }
 
 // ---------- Out-of-date dependencies ----------
