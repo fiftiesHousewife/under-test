@@ -253,6 +253,33 @@
           "description": "Coordinates of the OpenFeature provider for that product."
         }
       }
+    },
+    "commit_messages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "must_name_work_item"
+      ],
+      "description": "Whether every commit must name a work item in the issue tracker. When true, AI assistant skills include the key, and the commit-message checks are switched on.",
+      "properties": {
+        "must_name_work_item": {
+          "type": "boolean"
+        },
+        "work_item_key_pattern": {
+          "type": "string",
+          "description": "Regular expression a key matches, e.g. [A-Z][A-Z0-9]+-[0-9]+ for Jira keys."
+        },
+        "enforced_by": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "commit-message-hook",
+              "ci-check",
+              "server-side-rule"
+            ]
+          }
+        }
+      }
     }
   }
 }

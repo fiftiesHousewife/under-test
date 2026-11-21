@@ -34,5 +34,5 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ## More Information
 
 * Builds on: [How this repository is organised](0003-how-this-repository-is-organised.md)
-* Later decisions that build on this: [Feature flags use the openfeature standard with the organisation's own flag product](0009-feature-flags-use-the-openfeature-standard-with-the-organisations-own-flag-product.md)
+* Later decisions that build on this: [Feature flags use the OpenFeature standard with the organisation's own flag product](0009-feature-flags-use-the-openfeature-standard-with-the-organisations-own-flag-product.md), [When the organisation requires it every commit names its work item](0033-when-the-organisation-requires-it-every-commit-names-its-work-item.md)
 * Background: none

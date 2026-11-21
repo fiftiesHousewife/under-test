@@ -32,5 +32,5 @@ Proposed: rules only. Repos that match no rule go to a review list; a recurring 
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0008-we-reuse-existing-tools-before-building-new-ones.md), [People do the work with AI coding assistance, and review everything it produces](0010-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)
-* Later decisions that build on this: [Which existing tools the repo classifier combines](0033-which-existing-tools-the-repo-classifier-combines.md), [The lists of technology stacks and application types](0034-the-lists-of-technology-stacks-and-application-types.md)
+* Later decisions that build on this: [Which existing tools the repo classifier combines](0035-which-existing-tools-the-repo-classifier-combines.md), [The lists of technology stacks and application types](0036-the-lists-of-technology-stacks-and-application-types.md)
 * Background: [repo-classification](../REFERENCES.md#repo-classification)

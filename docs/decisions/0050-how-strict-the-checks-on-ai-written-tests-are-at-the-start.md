@@ -29,6 +29,6 @@ Not yet chosen. The options are below. Open.
 
 ## More Information
 
-* Builds on: [The checks an AI-written test must pass before it is kept](0046-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md)
+* Builds on: [The checks an AI-written test must pass before it is kept](0048-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md)
 * Later decisions that build on this: none yet
 * Background: none

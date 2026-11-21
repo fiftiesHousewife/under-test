@@ -36,6 +36,7 @@ Name a product only as an option or an example.
 | [work-on-an-item](.github/skills/work-on-an-item/SKILL.md) | Pick up a work item from the issue tracker and finish it |
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |
 | [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) | Record an organisation's own choice in its private overlay repo |
+| [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turn a repo's approved testing plan into work items (placeholder until the loader exists) |
 | [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md) | Write a technique lesson and example |
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
 | architecture-decision-records (installed by APM) | The mechanics of writing a MADR record; use it with write-a-decision-record, which adds this repo's rules |
@@ -55,16 +56,19 @@ External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with
 | Methods short and simple: cyclomatic complexity 10 or less, cognitive complexity 15 or less, 50 lines or fewer | Checkstyle and PMD |
 | No copy-pasted code (75 tokens or more) | Copy-paste detection |
 | No bug patterns or security bugs | SpotBugs with FindSecBugs |
-| No dependency with a known vulnerability scored 7 or higher | OWASP dependency-check (in CI; `./gradlew dependencyCheckAnalyze` locally) |
+| Dependencies kept current (pre-releases ignored) | Ben Manes versions plugin: `./gradlew dependencyUpdates`; checked in CI, failing if `quality.failOnStaleDependencies=true` |
 | Local variables `final` where not reassigned; braces always; no star imports | Checkstyle |
 | Versions only in [`gradle/libs.versions.toml`](gradle/libs.versions.toml) | Review |
 | Ids use the `io.github.fiftieshousewife` namespace | Review |
 
 Tests that need a container go in the `integrationTest` source set, and skip themselves where there's no container runtime.
 
+## Commits
+If the organisation profile sets `commit_messages.must_name_work_item`, every commit names its work item key. This repo itself has no such rule.
+
 ## Safety
 Never build or run code from another repo unless its secrets scan is clean, and only where production can't be reached
-(see [Old code runs first only where production cannot be reached](docs/decisions/0012-old-code-runs-first-only-where-production-cannot-be-reached.md)).
+(see [Old code runs first only where production cannot be reached](docs/decisions/0013-old-code-runs-first-only-where-production-cannot-be-reached.md)).
 
 ## Before you finish
 Run `./gradlew check`. It must pass.

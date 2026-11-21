@@ -29,6 +29,6 @@ Proposed: the first option. Pilots chosen so the first batch covers the pairs wi
 
 ## More Information
 
-* Builds on: [The lists of technology stacks and application types](0034-the-lists-of-technology-stacks-and-application-types.md)
-* Later decisions that build on this: [How each batch of repos is chosen](0054-how-each-batch-of-repos-is-chosen.md)
+* Builds on: [The lists of technology stacks and application types](0036-the-lists-of-technology-stacks-and-application-types.md)
+* Later decisions that build on this: [How each batch of repos is chosen](0056-how-each-batch-of-repos-is-chosen.md)
 * Background: [engagement-model](../REFERENCES.md#engagement-model)

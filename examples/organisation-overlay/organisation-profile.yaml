@@ -24,6 +24,12 @@ package_repository:
 ai_assistants:
   allowed: [an approved AI coding assistant]
   independent_agents_allowed: false
+commit_messages:
+  must_name_work_item: false
+  # An organisation with a "no commit without a work item" rule would set, for example:
+  # must_name_work_item: true
+  # work_item_key_pattern: "[A-Z][A-Z0-9]+-[0-9]+"
+  # enforced_by: [commit-message-hook, ci-check, server-side-rule]
 deployment_records: The organisation's deployment tool
 secrets_scanning: none yet
 production_hosts: DNS zones marked as production

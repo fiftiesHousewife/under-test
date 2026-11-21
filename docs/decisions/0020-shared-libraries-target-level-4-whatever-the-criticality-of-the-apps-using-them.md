@@ -25,7 +25,7 @@ Proposed: the first option. Libraries go into early batches, ordered by how many
 
 ### Consequences
 
-* Batch selection (decision 0054) puts widely used libraries early.
+* Batch selection (decision 0056) puts widely used libraries early.
 
 ## More Information
 

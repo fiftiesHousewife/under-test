@@ -33,5 +33,5 @@ Proposed: every repo is scanned before any build, test run or app start. The cod
 ## More Information
 
 * Builds on: nothing (a foundation decision)
-* Later decisions that build on this: [Independent AI agents working unattended are a future direction only](0011-independent-ai-agents-working-unattended-are-a-future-direction-only.md), [A production secret found in a repo is handled as a security incident](0016-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md), [Which existing tools the repo classifier combines](0033-which-existing-tools-the-repo-classifier-combines.md)
+* Later decisions that build on this: [Independent AI agents working unattended are a future direction only](0011-independent-ai-agents-working-unattended-are-a-future-direction-only.md), [A production secret found in a repo is handled as a security incident](0016-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md), [Which existing tools the repo classifier combines](0035-which-existing-tools-the-repo-classifier-combines.md)
 * Background: [production-safety](../REFERENCES.md#production-safety)

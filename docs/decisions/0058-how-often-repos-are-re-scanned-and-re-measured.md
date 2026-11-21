@@ -29,6 +29,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [Where-measured results are stored and how each repo sees its own](0029-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md)
+* Builds on: [Where measured results are stored and how each repo sees its own](0029-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md)
 * Later decisions that build on this: none yet
 * Background: none

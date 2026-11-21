@@ -18,14 +18,12 @@ pitest = "1.19.5"
 pitest-junit5 = "1.2.1"
 # Smallest line coverage a project may have; a project can raise it with quality.minLineCoverage.
 min-line-coverage = "0.80"
-# Fail on any dependency vulnerability scored at or above this (CVSS).
-dependency-check-fail-cvss = "7.0"
 
 # Gradle plugins applied by build-logic
 gradle-pitest-plugin = "1.19.0-rc.1"
 gradle-spotbugs-plugin = "6.5.13"
 gradle-forbiddenapis-plugin = "3.11"
-gradle-dependency-check-plugin = "13.0.0"
+gradle-versions-plugin = "0.67.0"
 gradle-cpd-plugin = "3.5"
 
 [libraries]
@@ -43,5 +41,5 @@ findsecbugs = { module = "com.h3xstream.findsecbugs:findsecbugs-plugin", version
 gradle-pitest-plugin = { module = "info.solidsoft.gradle.pitest:gradle-pitest-plugin", version.ref = "gradle-pitest-plugin" }
 gradle-spotbugs-plugin = { module = "com.github.spotbugs.snom:spotbugs-gradle-plugin", version.ref = "gradle-spotbugs-plugin" }
 gradle-forbiddenapis-plugin = { module = "de.thetaphi:forbiddenapis", version.ref = "gradle-forbiddenapis-plugin" }
-gradle-dependency-check-plugin = { module = "org.owasp:dependency-check-gradle", version.ref = "gradle-dependency-check-plugin" }
+gradle-versions-plugin = { module = "io.github.ben-manes:gradle-versions-plugin", version.ref = "gradle-versions-plugin" }
 gradle-cpd-plugin = { module = "de.aaschmid:gradle-cpd-plugin", version.ref = "gradle-cpd-plugin" }

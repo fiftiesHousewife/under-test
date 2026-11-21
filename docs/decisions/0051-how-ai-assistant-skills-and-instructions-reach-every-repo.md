@@ -14,6 +14,8 @@ Skills and instructions live in this repo but are needed in every repo. Some cod
 
 ## Considered Options
 
+* **Declared as dependencies with APM (Agent Package Manager): each repo's `apm.yml` names the toolkit's skills, pinned to a version, and `apm install` puts them where each AI assistant looks; a lock file records exact versions**  
+  Works today across several AI assistants; one source, no copies to drift; APM is young and changes quickly, so pin its version
 * **Copied into each repo by an automated pull request when they change**  
   Works today; many copies
 * **Vendored once into a template**  
@@ -23,7 +25,7 @@ Skills and instructions live in this repo but are needed in every repo. Some cod
 
 ## Decision Outcome
 
-Not yet chosen. The options are below. Open.
+Not yet chosen. The options are below. Not yet chosen. This toolkit itself already uses APM for the external skills it depends on.
 
 ### Consequences
 

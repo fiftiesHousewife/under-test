@@ -4,7 +4,7 @@ decision-makers: Technical Architect
 group: How we work
 ---
 
-# Feature flags use the openfeature standard with the organisation's own flag product
+# Feature flags use the OpenFeature standard with the organisation's own flag product
 
 **Decided by:** Technical Architect · **Status:** proposed
 
@@ -33,5 +33,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0008-we-reuse-existing-tools-before-building-new-ones.md), [Organisation-specific facts and decisions live in a private overlay repo](0004-organisation-specific-facts-and-decisions-live-in-a-private-overlay-repo.md)
-* Later decisions that build on this: [Feature flags are used to change legacy code safely and to release gradually](0051-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md)
+* Later decisions that build on this: [Feature flags are used to change legacy code safely and to release gradually](0053-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md)
 * Background: [feature-flags](../REFERENCES.md#feature-flags)

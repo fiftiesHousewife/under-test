@@ -6,7 +6,7 @@ is the only list (see [The programme backlog lives in the organisation's issue t
 | Tracker | Importer | Built on |
 |---|---|---|
 | GitHub Issues | [`import_to_github.py`](import_to_github.py) | GitHub CLI and REST API (sub-issues, blocked-by links) |
-| Jira Cloud | to do | Jira REST API (parent links, "is blocked by" issue links) |
+| Jira Cloud | to do | Jira Cloud REST API or Atlassian's command-line tool: outcomes as epics, deliverables as children, "blocks" links. Credentials from `JIRA_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` in the environment |
 
 ```bash
 python3 tools/backlog-import/import_to_github.py OWNER/REPO           # dry run

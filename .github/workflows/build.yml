@@ -21,5 +21,3 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
       - name: Run all checks
         run: ./gradlew check
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}

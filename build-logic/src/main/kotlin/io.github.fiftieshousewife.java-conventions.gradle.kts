@@ -1,12 +1,14 @@
 // Conventions for every Java project in this repository. The standards they enforce are listed in AGENTS.md.
 // `./gradlew check` runs: tests with coverage verification, Checkstyle, PMD (including complexity and the
 // assertAll rule), copy-paste detection, SpotBugs with FindSecBugs, and forbidden-API checks.
-// Dependency vulnerability checks run with `./gradlew dependencyCheckAnalyze`, and as part of `check` in CI.
+// Out-of-date dependencies are reported by `./gradlew dependencyUpdates` (Ben Manes versions plugin), and checked in CI.
 // Mutation testing is opt-in: `./gradlew pitest`.
 
 import com.github.spotbugs.snom.Confidence
 import com.github.spotbugs.snom.Effort
 import com.github.spotbugs.snom.SpotBugsTask
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import groovy.json.JsonSlurper
 import de.aaschmid.gradle.plugins.cpd.Cpd
 
 plugins {
@@ -16,7 +18,7 @@ plugins {
     pmd
     id("com.github.spotbugs")
     id("de.thetaphi.forbiddenapis")
-    id("org.owasp.dependencycheck")
+    id("io.github.ben-manes.versions")
     id("de.aaschmid.cpd")
     id("info.solidsoft.pitest")
 }
@@ -161,18 +163,40 @@ forbiddenApis {
     ignoreFailures = false
 }
 
-// ---------- Dependency vulnerabilities ----------
-dependencyCheck {
-    failBuildOnCVSS = version("dependency-check-fail-cvss").toFloat()
-    formats = listOf("HTML", "JSON")
-    nvd {
-        apiKey = providers.environmentVariable("NVD_API_KEY").orNull
+// ---------- Out-of-date dependencies ----------
+fun isPreRelease(version: String) =
+    Regex("(?i).*[.-](alpha|beta|rc|cr|m|milestone|preview|snapshot|ea)[.\\d-]*").matches(version)
+
+tasks.withType<DependencyUpdatesTask>().configureEach {
+    rejectVersionIf { isPreRelease(candidate.version) && !isPreRelease(currentVersion) }
+    outputFormatter = "json,plain"
+    outputDir = layout.buildDirectory.dir("reports/dependencyUpdates").get().asFile.path
+    reportfileName = "report"
+}
+
+// Reads the versions report. Warns about out-of-date dependencies, or fails when quality.failOnStaleDependencies=true.
+val failOnStaleDependencies = providers.gradleProperty("quality.failOnStaleDependencies").map { it.toBoolean() }.orElse(false)
+val dependencyReport = layout.buildDirectory.file("reports/dependencyUpdates/report.json")
+val checkDependencyVersions = tasks.register("checkDependencyVersions") {
+    group = "verification"
+    description = "Reports out-of-date dependencies; fails if quality.failOnStaleDependencies is true."
+    dependsOn(tasks.withType<DependencyUpdatesTask>())
+    val report = dependencyReport
+    val fail = failOnStaleDependencies
+    doLast {
+        @Suppress("UNCHECKED_CAST")
+        val outdated = (JsonSlurper().parse(report.get().asFile) as Map<String, Any>)["outdated"] as Map<String, Any>
+        val count = (outdated["count"] as Number).toInt()
+        if (count > 0) {
+            val message = "$count out-of-date dependencies; see ${report.get().asFile.parentFile}/report.txt"
+            if (fail.get()) throw GradleException(message) else logger.warn(message)
+        }
     }
 }
 
 if (providers.environmentVariable("CI").isPresent) {
     tasks.check {
-        dependsOn(tasks.named("dependencyCheckAnalyze"))
+        dependsOn(checkDependencyVersions)
     }
 }
 

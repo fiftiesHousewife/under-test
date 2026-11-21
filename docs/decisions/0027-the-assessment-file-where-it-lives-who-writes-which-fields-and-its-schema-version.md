@@ -30,5 +30,5 @@ Proposed: the first option, with plain field names (`measured:` not `probe:`).
 ## More Information
 
 * Builds on: [What each test maturity level means](0017-what-each-test-maturity-level-means.md)
-* Later decisions that build on this: [Testing plans are generated from the assessment file, and the issue tracker follows the work](0028-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md), [Where-measured results are stored and how each repo sees its own](0029-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md), [The named list of obstacles to testing and how each is scored](0035-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md)
+* Later decisions that build on this: [Testing plans are generated from the assessment file, and the issue tracker follows the work](0028-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md), [Where measured results are stored and how each repo sees its own](0029-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md), [The named list of obstacles to testing and how each is scored](0037-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md)
 * Background: none

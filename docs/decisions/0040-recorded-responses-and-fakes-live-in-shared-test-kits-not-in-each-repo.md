@@ -29,6 +29,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [Order of preference for test stand-in approaches](0036-order-of-preference-for-test-stand-in-approaches.md)
-* Later decisions that build on this: [Who owns and maintains each shared test kit](0039-who-owns-and-maintains-each-shared-test-kit.md)
+* Builds on: [Order of preference for test stand-in approaches](0038-order-of-preference-for-test-stand-in-approaches.md)
+* Later decisions that build on this: [Who owns and maintains each shared test kit](0041-who-owns-and-maintains-each-shared-test-kit.md)
 * Background: [test-doubles](../REFERENCES.md#test-doubles)

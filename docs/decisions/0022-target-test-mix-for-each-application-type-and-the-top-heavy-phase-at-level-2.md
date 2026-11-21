@@ -30,6 +30,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [What each test maturity level means](0017-what-each-test-maturity-level-means.md), [The lists of technology stacks and application types](0034-the-lists-of-technology-stacks-and-application-types.md)
+* Builds on: [What each test maturity level means](0017-what-each-test-maturity-level-means.md), [The lists of technology stacks and application types](0036-the-lists-of-technology-stacks-and-application-types.md)
 * Later decisions that build on this: none yet
 * Background: [test-mix](../REFERENCES.md#test-mix)

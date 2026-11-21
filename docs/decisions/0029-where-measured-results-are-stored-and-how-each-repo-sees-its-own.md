@@ -4,7 +4,7 @@ decision-makers: Engagement Lead
 group: Recording results and owning plans
 ---
 
-# Where-measured results are stored and how each repo sees its own
+# Where measured results are stored and how each repo sees its own
 
 **Decided by:** Engagement Lead · **Status:** proposed
 
@@ -30,5 +30,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [The assessment file: where it lives, who writes which fields, and its schema version](0027-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md)
-* Later decisions that build on this: [How often repos are re-scanned and re-measured](0056-how-often-repos-are-re-scanned-and-re-measured.md)
+* Later decisions that build on this: [How often repos are re-scanned and re-measured](0058-how-often-repos-are-re-scanned-and-re-measured.md)
 * Background: none

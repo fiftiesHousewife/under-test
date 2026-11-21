@@ -29,6 +29,6 @@ Proposed: the first option. Mutation testing shows where only one state of a fla
 
 ## More Information
 
-* Builds on: [Feature flags are used to change legacy code safely and to release gradually](0051-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md)
+* Builds on: [Feature flags are used to change legacy code safely and to release gradually](0053-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md)
 * Later decisions that build on this: none yet
 * Background: [feature-flags](../REFERENCES.md#feature-flags)

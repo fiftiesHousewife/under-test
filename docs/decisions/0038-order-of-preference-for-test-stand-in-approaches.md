@@ -30,5 +30,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [Tests are split by what they need: local tests and container tests](0023-tests-are-split-by-what-they-need-local-tests-and-container-tests.md)
-* Later decisions that build on this: [Recorded responses and fakes live in shared test kits, not in each repo](0038-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md)
+* Later decisions that build on this: [Recorded responses and fakes live in shared test kits, not in each repo](0040-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md)
 * Background: [test-doubles](../REFERENCES.md#test-doubles)

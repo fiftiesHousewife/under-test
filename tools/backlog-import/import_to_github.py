@@ -18,6 +18,7 @@ import json
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 SEED = Path(__file__).resolve().parents[2] / "plan" / "backlog-seed.yaml"
@@ -50,12 +51,26 @@ def parse_seed(path):
     return items
 
 
-def gh(*args, input_json=None):
-    result = subprocess.run(["gh", *args], input=json.dumps(input_json) if input_json else None,
-                            capture_output=True, text=True)
-    if result.returncode != 0:
+PAUSE_SECONDS = 1.5      # GitHub asks for at least a second between requests that create content
+RATE_LIMIT_WAIT = 90     # wait this long, then retry, if GitHub's secondary rate limit is hit
+
+
+def gh(*args, input_json=None, writes=False, allow_fail=False):
+    for attempt in range(6):
+        result = subprocess.run(["gh", *args], input=json.dumps(input_json) if input_json else None,
+                                capture_output=True, text=True)
+        if result.returncode == 0:
+            if writes:
+                time.sleep(PAUSE_SECONDS)
+            return json.loads(result.stdout) if result.stdout.strip() else None
+        if "rate limit" in result.stderr.lower():
+            print(f"    rate limited; waiting {RATE_LIMIT_WAIT}s before retrying")
+            time.sleep(RATE_LIMIT_WAIT)
+            continue
+        if allow_fail:
+            return None
         sys.exit(f"gh {' '.join(args)} failed:\n{result.stderr}")
-    return json.loads(result.stdout) if result.stdout.strip() else None
+    sys.exit("still rate limited after several retries; run the importer again later")
 
 
 def labels_for(item):
@@ -87,7 +102,7 @@ def main():
             print(f"  label: {label}")
             if apply:
                 colour = LABEL_COLOURS[label.split(":")[0]]
-                gh("api", f"repos/{repo}/labels", "-X", "POST", "-f", f"name={label}", "-f", f"color={colour}")
+                gh("api", f"repos/{repo}/labels", "-X", "POST", "-f", f"name={label}", "-f", f"color={colour}", writes=True)
 
     by_key = {}
     if apply:
@@ -102,11 +117,12 @@ def main():
             print(f"  update #{by_key[item['key']]['number']}: {item['title']}")
             if apply:
                 by_key[item["key"]] = gh("api", f"repos/{repo}/issues/{by_key[item['key']]['number']}", "-X", "PATCH",
-                                         "--input", "-", input_json=payload)
+                                         "--input", "-", input_json=payload, writes=True)
         else:
             print(f"  create: {item['title']}")
             if apply:
-                by_key[item["key"]] = gh("api", f"repos/{repo}/issues", "-X", "POST", "--input", "-", input_json=payload)
+                by_key[item["key"]] = gh("api", f"repos/{repo}/issues", "-X", "POST", "--input", "-", input_json=payload,
+                                         writes=True)
 
     for item in items:
         if not apply:
@@ -114,11 +130,11 @@ def main():
         issue = by_key[item["key"]]
         if "parent" in item:
             parent = by_key[item["parent"]]
-            subprocess.run(["gh", "api", f"repos/{repo}/issues/{parent['number']}/sub_issues", "-X", "POST",
-                            "-F", f"sub_issue_id={issue['id']}"], capture_output=True, text=True)
+            gh("api", f"repos/{repo}/issues/{parent['number']}/sub_issues", "-X", "POST",
+               "-F", f"sub_issue_id={issue['id']}", writes=True, allow_fail=True)
         for blocker in item.get("blocked_by", []):
-            subprocess.run(["gh", "api", f"repos/{repo}/issues/{issue['number']}/dependencies/blocked_by", "-X", "POST",
-                            "-F", f"issue_id={by_key[blocker]['id']}"], capture_output=True, text=True)
+            gh("api", f"repos/{repo}/issues/{issue['number']}/dependencies/blocked_by", "-X", "POST",
+               "-F", f"issue_id={by_key[blocker]['id']}", writes=True, allow_fail=True)
     print("done" if apply else "dry run complete; add --apply to make these changes")
 
 

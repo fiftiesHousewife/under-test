@@ -32,5 +32,5 @@ Proposed: the first option. A repo's own departures from its testing guides are 
 ## More Information
 
 * Builds on: [The assessment file: where it lives, who writes which fields, and its schema version](0027-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md), [The programme backlog lives in the organisation's issue tracker, not in a file](0005-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Each repos work is loaded into the issue tracker by one tool with an adapter per tracker](0032-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md)
 * Background: none

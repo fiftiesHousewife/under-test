@@ -183,7 +183,7 @@ items:
     decision_record: "docs/decisions/0008-we-reuse-existing-tools-before-building-new-ones.md"
   - key: "decide-feature-flags-use-the-openfeature-standard-with-the-organisations-own-flag-product"
     type: "decision"
-    title: "Feature flags use the openfeature standard with the organisation's own flag product"
+    title: "Feature flags use the OpenFeature standard with the organisation's own flag product"
     parent: "the-toolkit-is-ready-to-use-in-any-repo"
     phase: "set-up"
     horizon: "next"
@@ -440,7 +440,7 @@ items:
     decision_record: "docs/decisions/0028-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md"
   - key: "decide-where-measured-results-are-stored-and-how-each-repo-sees-its-own"
     type: "decision"
-    title: "Where-measured results are stored and how each repo sees its own"
+    title: "Where measured results are stored and how each repo sees its own"
     parent: "the-toolkit-is-ready-to-use-in-any-repo"
     phase: "set-up"
     horizon: "next"
@@ -475,6 +475,34 @@ items:
     blocked_by:
       - "decide-who-approves-repo-and-application-testing-plans"
     decision_record: "docs/decisions/0031-repo-work-is-tracked-in-the-organisations-issue-tracker-with-standard-labels.md"
+  - key: "decide-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker"
+    type: "decision"
+    title: "Each repos work is loaded into the issue tracker by one tool with an adapter per tracker"
+    parent: "the-toolkit-is-ready-to-use-in-any-repo"
+    phase: "set-up"
+    horizon: "next"
+    owner_role: "Engagement Lead"
+    done_by: "person"
+    done_when:
+      - "The decision record's pull request is approved by Engagement Lead"
+    blocked_by:
+      - "decide-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work"
+      - "decide-we-reuse-existing-tools-before-building-new-ones"
+    decision_record: "docs/decisions/0032-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md"
+  - key: "decide-when-the-organisation-requires-it-every-commit-names-its-work-item"
+    type: "decision"
+    title: "When the organisation requires it every commit names its work item"
+    parent: "the-toolkit-is-ready-to-use-in-any-repo"
+    phase: "set-up"
+    horizon: "next"
+    owner_role: "Steering Group"
+    done_by: "person"
+    done_when:
+      - "The decision record's pull request is approved by Steering Group"
+    blocked_by:
+      - "decide-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file"
+      - "decide-organisation-specific-facts-and-decisions-live-in-a-private-overlay-repo"
+    decision_record: "docs/decisions/0033-when-the-organisation-requires-it-every-commit-names-its-work-item.md"
   - key: "decide-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated"
     type: "decision"
     title: "Repos are classified by rules only, so results can be explained and repeated"
@@ -488,7 +516,7 @@ items:
     blocked_by:
       - "decide-we-reuse-existing-tools-before-building-new-ones"
       - "decide-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces"
-    decision_record: "docs/decisions/0032-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated.md"
+    decision_record: "docs/decisions/0034-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated.md"
   - key: "decide-which-existing-tools-the-repo-classifier-combines"
     type: "decision"
     title: "Which existing tools the repo classifier combines"
@@ -504,7 +532,7 @@ items:
       - "decide-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean"
       - "decide-old-code-runs-first-only-where-production-cannot-be-reached"
       - "decide-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated"
-    decision_record: "docs/decisions/0033-which-existing-tools-the-repo-classifier-combines.md"
+    decision_record: "docs/decisions/0035-which-existing-tools-the-repo-classifier-combines.md"
   - key: "decide-the-lists-of-technology-stacks-and-application-types"
     type: "decision"
     title: "The lists of technology stacks and application types"
@@ -517,7 +545,7 @@ items:
       - "The decision record's pull request is approved by Test Quality Lead, approved by the Steering Group"
     blocked_by:
       - "decide-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated"
-    decision_record: "docs/decisions/0034-the-lists-of-technology-stacks-and-application-types.md"
+    decision_record: "docs/decisions/0036-the-lists-of-technology-stacks-and-application-types.md"
   - key: "decide-the-named-list-of-obstacles-to-testing-and-how-each-is-scored"
     type: "decision"
     title: "The named list of obstacles to testing and how each is scored"
@@ -530,7 +558,7 @@ items:
       - "The decision record's pull request is approved by Test Quality Lead, approved by the Steering Group"
     blocked_by:
       - "decide-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version"
-    decision_record: "docs/decisions/0035-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md"
+    decision_record: "docs/decisions/0037-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md"
   - key: "decide-order-of-preference-for-test-stand-in-approaches"
     type: "decision"
     title: "Order of preference for test stand-in approaches"
@@ -543,7 +571,7 @@ items:
       - "The decision record's pull request is approved by Technical Architect"
     blocked_by:
       - "decide-tests-are-split-by-what-they-need-local-tests-and-container-tests"
-    decision_record: "docs/decisions/0036-order-of-preference-for-test-stand-in-approaches.md"
+    decision_record: "docs/decisions/0038-order-of-preference-for-test-stand-in-approaches.md"
   - key: "decide-an-in-memory-database-of-a-different-product-never-counts-as-evidence"
     type: "decision"
     title: "An in-memory database of a different product never counts as evidence"
@@ -556,7 +584,7 @@ items:
       - "The decision record's pull request is approved by Test Quality Lead, approved by the Steering Group"
     blocked_by:
       - "decide-what-counts-as-evidence-for-each-test-maturity-level"
-    decision_record: "docs/decisions/0037-an-in-memory-database-of-a-different-product-never-counts-as-evidence.md"
+    decision_record: "docs/decisions/0039-an-in-memory-database-of-a-different-product-never-counts-as-evidence.md"
   - key: "decide-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo"
     type: "decision"
     title: "Recorded responses and fakes live in shared test kits, not in each repo"
@@ -569,7 +597,7 @@ items:
       - "The decision record's pull request is approved by Technical Architect"
     blocked_by:
       - "decide-order-of-preference-for-test-stand-in-approaches"
-    decision_record: "docs/decisions/0038-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md"
+    decision_record: "docs/decisions/0040-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md"
   - key: "decide-who-owns-and-maintains-each-shared-test-kit"
     type: "decision"
     title: "Who owns and maintains each shared test kit"
@@ -582,7 +610,7 @@ items:
       - "The decision record's pull request is approved by Steering Group"
     blocked_by:
       - "decide-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo"
-    decision_record: "docs/decisions/0039-who-owns-and-maintains-each-shared-test-kit.md"
+    decision_record: "docs/decisions/0041-who-owns-and-maintains-each-shared-test-kit.md"
   - key: "decide-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs"
     type: "decision"
     title: "Tests that reach real shared systems are tagged and left out of normal runs"
@@ -595,7 +623,7 @@ items:
       - "The decision record's pull request is approved by Security and Platform Owner (can veto)"
     blocked_by:
       - "decide-old-code-runs-first-only-where-production-cannot-be-reached"
-    decision_record: "docs/decisions/0040-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md"
+    decision_record: "docs/decisions/0042-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md"
   - key: "decide-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time"
     type: "decision"
     title: "Whether a shared test environment can count as evidence for a limited time"
@@ -609,7 +637,7 @@ items:
     blocked_by:
       - "decide-what-counts-as-evidence-for-each-test-maturity-level"
       - "decide-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs"
-    decision_record: "docs/decisions/0041-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time.md"
+    decision_record: "docs/decisions/0043-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time.md"
   - key: "decide-how-flaky-tests-are-found"
     type: "decision"
     title: "How flaky tests are found"
@@ -620,7 +648,7 @@ items:
     done_by: "person"
     done_when:
       - "The decision record's pull request is approved by Technical Architect"
-    decision_record: "docs/decisions/0042-how-flaky-tests-are-found.md"
+    decision_record: "docs/decisions/0044-how-flaky-tests-are-found.md"
   - key: "decide-flaky-tests-can-be-quarantined-only-with-an-expiry-date"
     type: "decision"
     title: "Flaky tests can be quarantined only with an expiry date"
@@ -633,7 +661,7 @@ items:
       - "The decision record's pull request is approved by Technical Architect"
     blocked_by:
       - "decide-how-flaky-tests-are-found"
-    decision_record: "docs/decisions/0043-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md"
+    decision_record: "docs/decisions/0045-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md"
   - key: "decide-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed"
     type: "decision"
     title: "Every feature flag state in use is tested and old flags are removed"
@@ -646,7 +674,7 @@ items:
       - "The decision record's pull request is approved by Test Quality Lead, approved by the Steering Group"
     blocked_by:
       - "decide-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually"
-    decision_record: "docs/decisions/0044-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed.md"
+    decision_record: "docs/decisions/0046-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed.md"
   - key: "decide-personal-data-is-removed-from-any-recorded-traffic-or-data"
     type: "decision"
     title: "Personal data is removed from any recorded traffic or data"
@@ -657,7 +685,7 @@ items:
     done_by: "person"
     done_when:
       - "The decision record's pull request is approved by Security and Platform Owner (can veto)"
-    decision_record: "docs/decisions/0045-personal-data-is-removed-from-any-recorded-traffic-or-data.md"
+    decision_record: "docs/decisions/0047-personal-data-is-removed-from-any-recorded-traffic-or-data.md"
   - key: "decide-the-checks-an-ai-written-test-must-pass-before-it-is-kept"
     type: "decision"
     title: "The checks an AI-written test must pass before it is kept"
@@ -671,7 +699,7 @@ items:
     blocked_by:
       - "decide-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces"
       - "decide-what-counts-as-evidence-for-each-test-maturity-level"
-    decision_record: "docs/decisions/0046-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md"
+    decision_record: "docs/decisions/0048-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md"
   - key: "decide-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin"
     type: "decision"
     title: "AI-written tests that expect different behaviour go to triage, not the bin"
@@ -684,7 +712,7 @@ items:
       - "The decision record's pull request is approved by Test Quality Lead"
     blocked_by:
       - "decide-the-checks-an-ai-written-test-must-pass-before-it-is-kept"
-    decision_record: "docs/decisions/0047-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin.md"
+    decision_record: "docs/decisions/0049-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin.md"
   - key: "decide-how-strict-the-checks-on-ai-written-tests-are-at-the-start"
     type: "decision"
     title: "How strict the checks on AI-written tests are at the start"
@@ -697,7 +725,7 @@ items:
       - "The decision record's pull request is approved by Test Quality Lead"
     blocked_by:
       - "decide-the-checks-an-ai-written-test-must-pass-before-it-is-kept"
-    decision_record: "docs/decisions/0048-how-strict-the-checks-on-ai-written-tests-are-at-the-start.md"
+    decision_record: "docs/decisions/0050-how-strict-the-checks-on-ai-written-tests-are-at-the-start.md"
   - key: "decide-how-ai-assistant-skills-and-instructions-reach-every-repo"
     type: "decision"
     title: "How AI assistant skills and instructions reach every repo"
@@ -710,7 +738,7 @@ items:
       - "The decision record's pull request is approved by Technical Architect"
     blocked_by:
       - "decide-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces"
-    decision_record: "docs/decisions/0049-how-ai-assistant-skills-and-instructions-reach-every-repo.md"
+    decision_record: "docs/decisions/0051-how-ai-assistant-skills-and-instructions-reach-every-repo.md"
   - key: "decide-the-order-of-workstreams-for-a-repo"
     type: "decision"
     title: "The order of workstreams for a repo"
@@ -723,7 +751,7 @@ items:
       - "The decision record's pull request is approved by Engagement Lead"
     blocked_by:
       - "decide-what-each-test-maturity-level-means"
-    decision_record: "docs/decisions/0050-the-order-of-workstreams-for-a-repo.md"
+    decision_record: "docs/decisions/0052-the-order-of-workstreams-for-a-repo.md"
   - key: "decide-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually"
     type: "decision"
     title: "Feature flags are used to change legacy code safely and to release gradually"
@@ -737,7 +765,7 @@ items:
     blocked_by:
       - "decide-feature-flags-use-the-openfeature-standard-with-the-organisations-own-flag-product"
       - "decide-what-each-test-maturity-level-means"
-    decision_record: "docs/decisions/0051-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md"
+    decision_record: "docs/decisions/0053-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md"
   - key: "decide-repos-no-longer-deployed-or-changed-get-a-retirement-review-not-a-testing-plan"
     type: "decision"
     title: "Repos no longer deployed or changed get a retirement review, not a testing plan"
@@ -748,7 +776,7 @@ items:
     done_by: "person"
     done_when:
       - "The decision record's pull request is approved by Engagement Lead, with the Programme Sponsor"
-    decision_record: "docs/decisions/0052-repos-no-longer-deployed-or-changed-get-a-retirement-review-not-a-testing-plan.md"
+    decision_record: "docs/decisions/0054-repos-no-longer-deployed-or-changed-get-a-retirement-review-not-a-testing-plan.md"
   - key: "decide-one-pilot-application-per-common-technology-stack-and-application-type-pair"
     type: "decision"
     title: "One pilot application per common technology stack and application type pair"
@@ -761,7 +789,7 @@ items:
       - "The decision record's pull request is approved by Engagement Lead, with the Programme Sponsor"
     blocked_by:
       - "decide-the-lists-of-technology-stacks-and-application-types"
-    decision_record: "docs/decisions/0053-one-pilot-application-per-common-technology-stack-and-application-type-pair.md"
+    decision_record: "docs/decisions/0055-one-pilot-application-per-common-technology-stack-and-application-type-pair.md"
   - key: "decide-how-each-batch-of-repos-is-chosen"
     type: "decision"
     title: "How each batch of repos is chosen"
@@ -776,7 +804,7 @@ items:
       - "decide-target-test-maturity-level-for-each-business-criticality"
       - "decide-how-an-applications-test-maturity-level-is-worked-out-from-its-repos"
       - "decide-one-pilot-application-per-common-technology-stack-and-application-type-pair"
-    decision_record: "docs/decisions/0054-how-each-batch-of-repos-is-chosen.md"
+    decision_record: "docs/decisions/0056-how-each-batch-of-repos-is-chosen.md"
   - key: "decide-mutation-testing-in-pull-requests-reports-only-at-first"
     type: "decision"
     title: "Mutation testing in pull requests reports only at first"
@@ -789,7 +817,7 @@ items:
       - "The decision record's pull request is approved by Technical Architect"
     blocked_by:
       - "decide-what-counts-as-evidence-for-each-test-maturity-level"
-    decision_record: "docs/decisions/0055-mutation-testing-in-pull-requests-reports-only-at-first.md"
+    decision_record: "docs/decisions/0057-mutation-testing-in-pull-requests-reports-only-at-first.md"
   - key: "decide-how-often-repos-are-re-scanned-and-re-measured"
     type: "decision"
     title: "How often repos are re-scanned and re-measured"
@@ -802,7 +830,7 @@ items:
       - "The decision record's pull request is approved by Engagement Lead"
     blocked_by:
       - "decide-where-measured-results-are-stored-and-how-each-repo-sees-its-own"
-    decision_record: "docs/decisions/0056-how-often-repos-are-re-scanned-and-re-measured.md"
+    decision_record: "docs/decisions/0058-how-often-repos-are-re-scanned-and-re-measured.md"
   - key: "secrets-scan-before-any-repo-is-built-or-run"
     type: "deliverable"
     title: "Scan every repo for committed secrets before it is built or run, using an existing tool"
@@ -895,6 +923,34 @@ items:
       - "Re-running updates items by key instead of duplicating"
     blocked_by:
       - "decide-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file"
+  - key: "jira-cloud-adapter-for-the-work-loader"
+    type: "deliverable"
+    title: "Jira Cloud adapter for loading the backlog and each repo's work"
+    parent: "the-toolkit-is-ready-to-use-in-any-repo"
+    phase: "set-up"
+    horizon: "now"
+    owner_role: "Engagement Lead"
+    done_by: "tool"
+    done_when:
+      - "Built on the Jira Cloud REST API or Atlassian's own command-line tool"
+      - "Outcomes become epics, deliverables become children, blocked-by becomes Jira's \"blocks\" link"
+      - "Re-running updates items by key"
+    blocked_by:
+      - "decide-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker"
+  - key: "commit-message-check"
+    type: "deliverable"
+    title: "Commit-message check that requires a work item key when the organisation profile says so"
+    parent: "the-toolkit-is-ready-to-use-in-any-repo"
+    phase: "set-up"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "tool"
+    done_when:
+      - "Off unless the profile turns it on"
+      - "A commit-message hook, a CI check on pull requests, and instructions for the platform's server-side rule"
+    blocked_by:
+      - "decide-when-the-organisation-requires-it-every-commit-names-its-work-item"
+      - "organisation-profile-schema-and-validator"
   - key: "issue-labels-and-templates"
     type: "deliverable"
     title: "Item labels and templates for each supported issue tracker"
