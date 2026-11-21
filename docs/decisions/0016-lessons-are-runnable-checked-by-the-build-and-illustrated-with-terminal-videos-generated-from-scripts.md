@@ -36,5 +36,5 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [How this repository is organised](0001-how-this-repository-is-organised.md)
-* Later decisions that build on this: [Lessons live apart from technique rules and move to their own repo once the convention plugin is published](0017-lessons-live-apart-from-technique-rules-and-move-to-their-own-repo-once-the-convention-plugin-is-published.md), [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md)
+* Later decisions that build on this: [Lessons live in their own repo, with a copy of the build conventions](0017-lessons-live-in-their-own-repo-with-a-copy-of-the-build-conventions.md), [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md)
 * Background: none

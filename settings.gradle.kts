@@ -23,7 +23,6 @@ dependencyResolutionManagement {
 rootProject.name = "under-test"
 
 // Each directory that holds a build.gradle.kts becomes a project, named by its path:
-//   lessons/<id>/example  -> :lessons:<id>     (reference example for people learning the technique)
 //   tools/<id>               -> :tools:<id>          (automated tools: assessment-file validator, convention plugin, scanners)
 //   shared-test-kits/<id>    -> :shared-test-kits:<id> (stand-ins for one widely shared system)
 fun includeAll(root: String, subdir: String? = null) {
@@ -37,9 +36,5 @@ fun includeAll(root: String, subdir: String? = null) {
     }
 }
 
-includeAll("lessons", subdir = "example")
-// Checks for lesson videos; kept under lessons/ so they move with the lessons into their own repo.
-include(":lessons:video-tools")
-project(":lessons:video-tools").projectDir = rootDir.resolve("lessons/_shared/video-tools")
 includeAll("tools")
 includeAll("shared-test-kits")

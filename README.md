@@ -27,7 +27,7 @@ corporate networks.
 |---|---|
 | Evaluating it for a company with a locked-down network (no internet installs, no public code hosting, your own package repository, proxy, tracker and wiki) | [docs/CORPORATE-USE.md](docs/CORPORATE-USE.md): the assumptions it is built for, and how each part reaches people |
 | Ready to adopt it in your organisation | [ADOPTION.md](ADOPTION.md): step by step, from naming roles to rolling out in batches |
-| Learning a testing technique | [lessons/](lessons/README.md): lessons, runnable examples and videos |
+| Learning a testing technique | [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons): lessons, runnable examples and narrated videos |
 | Making or reviewing a programme decision | [decision-guides/](decision-guides/README.md): decision guides, smallest first |
 | An AI coding assistant, or directing one | [AGENTS.md](AGENTS.md): how to work in this repo, and the code standards |
 | Unsure of a word | [GLOSSARY.md](GLOSSARY.md) |
@@ -40,7 +40,7 @@ You never change or fork this repo to use it. Your organisation keeps its own fa
 
 ```mermaid
 flowchart TB
-    T["<b>Toolkit</b> (this repo, public)<br/>decision guides, defaults, lessons, schemas"]
+    T["<b>Toolkit</b> (this repo, public)<br/>decision guides, defaults, technique rules, schemas"]
     O["<b>Your organisation repo</b> (private)<br/>organisation profile + your decisions"]
     U["<b>Organisation units</b> (folders in your organisation repo)<br/>their own decisions; may enrich, never contradict"]
     R["<b>Each repo</b><br/>assessment file, testing plan, any time-limited exceptions"]
@@ -74,10 +74,12 @@ security-bug analysis (SpotBugs with FindSecBugs), and forbidden APIs. See
 
 ### See mutation testing catch weak tests
 
-The [mutation testing lesson](lessons/mutation-testing/README.md) has two test suites with the same 100% line
+The [mutation testing lesson](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/mutation-testing/README.md), in the lessons repo, has two test suites with the same 100% line
 coverage. One catches bugs; the other doesn't:
 
 ```bash
+git clone https://github.com/fiftiesHousewife/under-test-lessons.git
+cd under-test-lessons
 ./gradlew :lessons:mutation-testing:pitest -Psuite=weak   # 5 of 13 deliberately introduced bugs caught
 ./gradlew :lessons:mutation-testing:pitest                # 13 of 13 caught
 ```
@@ -113,7 +115,6 @@ result in [a published format](schema/repo-classification.schema.json), so any s
 | Folder | What you'll find |
 |---|---|
 | [`ADOPTION.md`](ADOPTION.md), [`docs/CORPORATE-USE.md`](docs/CORPORATE-USE.md) | How to adopt the toolkit, and the corporate environment it is built for |
-| [`lessons/`](lessons/README.md) | One folder per lesson: explanation, runnable example, exercise, and video scripts |
 | [`techniques/`](techniques/README.md) | The rules for when to use each testing technique, read by the toolkit's tools |
 | [`decision-guides/`](decision-guides/README.md) | Decision guides for adopting organisations, one small decision each, building from foundations upward |
 | [`docs/decisions/`](docs/decisions/README.md) | The toolkit's own decisions: how it is built, published and adopted |
@@ -131,7 +132,7 @@ result in [a published format](schema/repo-classification.schema.json), so any s
 
 ## Licence
 
-Apache License 2.0, for everything in this repository: code, tools, guides, lessons and videos. See [LICENSE](LICENSE)
+Apache License 2.0, for everything in this repository: code, tools and guides. The lessons and videos, in their own repo, use the same licence. See [LICENSE](LICENSE)
 and [NOTICE](NOTICE).
 
 ## Contributing

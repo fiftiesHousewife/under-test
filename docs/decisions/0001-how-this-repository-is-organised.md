@@ -12,7 +12,7 @@ group: How we work
 
 ## Context and Problem Statement
 
-This repo holds the rules, tools, AI assistant skills and lessons for the programme. People and tools both need to find things in predictable places.
+This repo holds the rules, tools and AI assistant skills for the programme; lessons live in their own repo. People and tools both need to find things in predictable places.
 
 ## Considered Options
 
@@ -23,7 +23,7 @@ This repo holds the rules, tools, AI assistant skills and lessons for the progra
 
 ## Decision Outcome
 
-Proposed: one folder per kind of content: `docs/decisions/` (the toolkit's own decisions), `decision-guides/` (guides for adopting organisations), `techniques/<id>/technique.yaml` (rules the tools read), `lessons/<id>/` (lesson, runnable example, exercise, video scripts), `testing-guides/technology-stacks/<id>/`, `testing-guides/application-types/<id>/`, `shared-test-kits/<system-id>/`, `applications/<app-id>/`, `schema/`, `tools/<id>/`, `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
+Proposed: one folder per kind of content: `docs/decisions/` (the toolkit's own decisions), `decision-guides/` (guides for adopting organisations), `techniques/<id>/technique.yaml` (rules the tools read), lessons in their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons) (lesson, runnable example, exercise, video scripts), `testing-guides/technology-stacks/<id>/`, `testing-guides/application-types/<id>/`, `shared-test-kits/<system-id>/`, `applications/<app-id>/`, `schema/`, `tools/<id>/`, `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
 
 ### Consequences
 
@@ -32,5 +32,5 @@ Proposed: one folder per kind of content: `docs/decisions/` (the toolkit's own d
 ## More Information
 
 * Builds on: nothing (a foundation decision)
-* Later decisions that build on this: [Organisation-specific facts and decisions live in a private organisation repo](0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md), [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md), [Lessons live apart from technique rules and move to their own repo once the convention plugin is published](0017-lessons-live-apart-from-technique-rules-and-move-to-their-own-repo-once-the-convention-plugin-is-published.md)
+* Later decisions that build on this: [Organisation-specific facts and decisions live in a private organisation repo](0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md), [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md), [Lessons live in their own repo, with a copy of the build conventions](0017-lessons-live-in-their-own-repo-with-a-copy-of-the-build-conventions.md)
 * Background: none

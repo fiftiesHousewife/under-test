@@ -3,7 +3,8 @@
 Guidance for any AI coding assistant working in this repo, and for the people directing it.
 
 **What this repo is:** a generic toolkit for raising test quality across many legacy repositories: decision guides, tools,
-AI assistant skills, and lessons on testing techniques. It is used by people with AI coding assistance. AI agents working
+and AI assistant skills. Lessons on testing techniques live in their own repo,
+[under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons). It is used by people with AI coding assistance. AI agents working
 unattended are a future direction only.
 
 **Keep it generic.** Never write an organisation's own facts or decisions here. They belong in that organisation's
@@ -23,12 +24,10 @@ Name a product only as an option or an example.
 | [`decision-guides/`](decision-guides/README.md) | Decision guides for adopting organisations; each organisation accepts, narrows or replaces them in its organisation repo. |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background and sources. |
 | [`techniques/`](techniques/README.md) | One `technique.yaml` per technique: the rules the toolkit's tools read. |
-| [`lessons/`](lessons/README.md) | One folder per lesson: README, runnable `example/`, exercise, and video and narration scripts. Kept apart so lessons can later move to their own repo. |
 | `testing-guides/` | Default approach per technology stack and per application type. |
 | `shared-test-kits/` | Stand-ins for widely shared systems. |
 | `tools/` | Automated tools. Reuse existing tools before building anything. [`tools/repo-checks`](tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`). |
 | [`tools/sync/`](tools/sync/README.md), `tools/git-hooks/` | The maintainers' push script, and the hook that refuses a plain `git push`. |
-| `lessons/_shared/` | Shared video tools: hidden set-up, the in-terminal helpers (`note`, `show`, `callout`), the pronunciation list, and `video-tools` (`:lessons:video-tools`: checks, recording, captions, voice, assembly; `renderLessonVideo` does it all). |
 | [`schema/`](schema/) | Schemas for every YAML format. |
 | [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |
 | [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo. |
@@ -43,8 +42,6 @@ Name a product only as an option or an example.
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |
 | [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) | Record an organisation's own choice in its private organisation repo |
 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turn a repo's approved testing plan into work items (placeholder until the loader exists) |
-| [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md) | Write a technique lesson and example |
-| [make-a-lesson-video](.github/skills/make-a-lesson-video/SKILL.md) | Write, check and render a lesson's short terminal video (ten minutes at most) |
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
 | architecture-decision-records (installed by APM) | The mechanics of writing a MADR record; use it with write-a-decision-record, which adds this repo's rules |
 

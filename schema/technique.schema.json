@@ -106,7 +106,7 @@
           ]
         }
       },
-      "description": "Status of the lesson for this technique, in lessons/<id>/."
+      "description": "Status of the lesson for this technique, in the lessons repo (under-test-lessons), at lessons/<id>/."
     },
     "note": {
       "type": "string"

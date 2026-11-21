@@ -35,7 +35,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Testing evidence is defined by standard report files, not by one build plugin](0014-testing-evidence-is-defined-by-standard-report-files-not-by-one-build-plugin.md) | proposed | Toolkit maintainers |
 | [The toolkit provides reference build set-ups for Gradle, Maven and npm](0015-the-toolkit-provides-reference-build-set-ups-for-gradle-maven-and-npm.md) | proposed | Toolkit maintainers |
 | [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [Lessons live apart from technique rules and move to their own repo once the convention plugin is published](0017-lessons-live-apart-from-technique-rules-and-move-to-their-own-repo-once-the-convention-plugin-is-published.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [Lessons live in their own repo, with a copy of the build conventions](0017-lessons-live-in-their-own-repo-with-a-copy-of-the-build-conventions.md) | accepted | Toolkit maintainers |
 | [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md) | proposed | Toolkit maintainers |
 | [How AI assistant skills and instructions reach every repo](0019-how-ai-assistant-skills-and-instructions-reach-every-repo.md) | proposed (agreed in discussion) | Toolkit maintainers |
 

@@ -4,12 +4,12 @@ One folder per testing technique, holding `technique.yaml`: when to adopt, defer
 run first, and what to use instead. The toolkit's planning tools read these files; they are checked against
 [the technique schema](../schema/technique.schema.json).
 
-The lessons that teach each technique (explanation, runnable example, exercise, video) are in
-[`lessons/`](../lessons/README.md).
+The lessons that teach each technique (explanation, runnable example, exercise, video) are in their own repo,
+[under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons).
 
 | Technique | Workstream | Evidence for maturity levels | Java lesson | TypeScript lesson |
 |---|---|---|---|---|
-| [mutation-testing](mutation-testing/technique.yaml) ([lesson](../lessons/mutation-testing/README.md)) | strengthen tests | 4 | ready | to do |
+| [mutation-testing](mutation-testing/technique.yaml) ([lesson](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/mutation-testing/README.md)) | strengthen tests | 4 | ready | to do |
 | [snapshot-testing](snapshot-testing/) | record current behaviour | 2 | to do | – |
 | [ai-written-tests](ai-written-tests/) | record current behaviour | 2 | to do | – |
 | [automatic-test-generation](automatic-test-generation/) | record current behaviour | 2 | to do | – |
