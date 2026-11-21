@@ -45,6 +45,12 @@ Name a product only as an option or an example.
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
 | architecture-decision-records (installed by APM) | The mechanics of writing a MADR record; use it with write-a-decision-record, which adds this repo's rules |
 
+Prompts, for short, repeatable jobs where a skill would add more than it saves:
+
+| Prompt | Use it to |
+|---|---|
+| [strengthen-tests-until-pit-catches-the-planted-bugs](.github/prompts/strengthen-tests-until-pit-catches-the-planted-bugs.prompt.md) | Improve tests until PIT catches the planted bugs in key code, after discovery has shown they can't be trusted |
+
 External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with `apm install` (APM, the Agent Package Manager). Run it once after cloning.
 
 ## Code standards (enforced by `./gradlew check`)
