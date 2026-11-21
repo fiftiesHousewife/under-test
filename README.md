@@ -18,7 +18,7 @@ working with AI coding assistance, find out what each repo needs, plan the work,
 - **AI assistant skills** that let an AI help with the work while a person reviews everything it produces.
 
 The toolkit is **generic**. Nothing in it is specific to one organisation: each organisation adds its own facts and
-choices in a private overlay repo (see [Adopting it in your organisation](#adopting-it-in-your-organisation)).
+choices in a private overlay repo. [ADOPTION.md](ADOPTION.md) walks through adopting it step by step.
 
 ## Try it
 

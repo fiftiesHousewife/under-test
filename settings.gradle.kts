@@ -6,6 +6,13 @@ pluginManagement {
     }
 }
 
+plugins {
+    // Where Gradle downloads a JDK 25 if none is installed. An organisation without internet access switches downloads
+    // off in its init script or gradle.properties (org.gradle.java.installations.auto-download=false) and points
+    // Gradle at its installed JDKs (org.gradle.java.installations.paths); see ADOPTION.md.
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 dependencyResolutionManagement {
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
     repositories {

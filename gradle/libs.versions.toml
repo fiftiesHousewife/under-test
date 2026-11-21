@@ -24,7 +24,6 @@ gradle-pitest-plugin = "1.19.0"
 gradle-spotbugs-plugin = "6.5.13"
 gradle-forbiddenapis-plugin = "3.11"
 gradle-versions-plugin = "0.67.0"
-gradle-cpd-plugin = "3.5"
 
 [libraries]
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
@@ -42,4 +41,3 @@ gradle-pitest-plugin = { module = "info.solidsoft.gradle.pitest:gradle-pitest-pl
 gradle-spotbugs-plugin = { module = "com.github.spotbugs.snom:spotbugs-gradle-plugin", version.ref = "gradle-spotbugs-plugin" }
 gradle-forbiddenapis-plugin = { module = "de.thetaphi:forbiddenapis", version.ref = "gradle-forbiddenapis-plugin" }
 gradle-versions-plugin = { module = "io.github.ben-manes:gradle-versions-plugin", version.ref = "gradle-versions-plugin" }
-gradle-cpd-plugin = { module = "de.aaschmid:gradle-cpd-plugin", version.ref = "gradle-cpd-plugin" }

@@ -15,7 +15,6 @@ import com.github.spotbugs.snom.Effort
 import com.github.spotbugs.snom.SpotBugsTask
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import groovy.json.JsonSlurper
-import de.aaschmid.gradle.plugins.cpd.Cpd
 import de.thetaphi.forbiddenapis.gradle.CheckForbiddenApis
 import io.github.fiftieshousewife.undertest.gradle.CodeStyleSource
 import io.github.fiftieshousewife.undertest.gradle.UnderTestExtension
@@ -28,7 +27,6 @@ plugins {
     id("com.github.spotbugs")
     id("de.thetaphi.forbiddenapis")
     id("io.github.ben-manes.versions")
-    id("de.aaschmid.cpd")
     id("info.solidsoft.pitest")
 }
 
@@ -138,7 +136,7 @@ tasks.check {
 }
 
 // ---------- Code-quality standards (replaceable; see underTest.codeStyle) ----------
-listOf(Checkstyle::class, Pmd::class, Cpd::class, SpotBugsTask::class, CheckForbiddenApis::class).forEach { type ->
+listOf(Checkstyle::class, Pmd::class, SpotBugsTask::class, CheckForbiddenApis::class).forEach { type ->
     tasks.withType(type.java).configureEach {
         // A local copy, so the configuration cache doesn't have to save a reference to this build script.
         val style = underTest.codeStyle
@@ -168,27 +166,37 @@ pmd {
 
 tasks.withType<Pmd>().configureEach {
     useRuleFile(underTest.pmdRuleset, qualityConfig.file("pmd/ruleset.xml"), "pmdRuleset") { ruleSetFiles = files(it) }
+    // The JDK's own classes, from the toolchain, so PMD resolves types against Java 25 instead of guessing.
+    val jdkClasses = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(version("java")) }
+        .map { it.metadata.installationPath.file("lib/jrt-fs.jar") }
+    classpath = (classpath ?: files()).plus(files(jdkClasses))
 }
 
-// ---------- Copy-paste detection ----------
-cpd {
-    toolVersion = version("pmd")
-    minimumTokenCount = 75
-    isIgnoreFailures = false
+// ---------- Copy-paste detection: PMD's own CPD, run directly (no extra plugin to mirror) ----------
+val cpdTool = configurations.create("cpdTool") {
+    isCanBeConsumed = false
+    isCanBeResolved = true
 }
-
-tasks.withType<Cpd>().configureEach {
-    reports {
-        text.required = true
-        xml.required = false
-    }
-    source = fileTree("src") { include("**/*.java") }
+dependencies {
+    cpdTool("net.sourceforge.pmd:pmd-cli:${version("pmd")}")
+    cpdTool("net.sourceforge.pmd:pmd-java:${version("pmd")}")
 }
-
+val cpdCheck = tasks.register<JavaExec>("cpdCheck") {
+    group = "verification"
+    description = "Fails if 75 or more tokens of Java code are copy-pasted (PMD's CPD)."
+    val style = underTest.codeStyle
+    onlyIf("underTest.codeStyle is not NONE") { style.get() != CodeStyleSource.NONE }
+    val sources = files("src/main/java", "src/test/java", "src/integrationTest/java").filter { it.isDirectory }
+    inputs.files(sources).withPathSensitivity(PathSensitivity.RELATIVE)
+    classpath = cpdTool
+    mainClass = "net.sourceforge.pmd.cli.PmdCli"
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(version("java")) }
+    args("cpd", "--minimum-tokens", "75", "--language", "java", "--format", "text")
+    argumentProviders.add(CommandLineArgumentProvider { sources.files.sorted().flatMap { listOf("--dir", it.path) } })
+}
 tasks.check {
-    dependsOn(tasks.withType<Cpd>())
+    dependsOn(cpdCheck)
 }
-// SpotBugs and forbidden APIs join `check` through their own plugins.
 
 // ---------- Bugs and security bugs ----------
 spotbugs {

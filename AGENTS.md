@@ -26,6 +26,7 @@ Name a product only as an option or an example.
 | `shared-test-kits/` | Stand-ins for widely shared systems. |
 | `tools/` | Automated tools. Reuse existing tools before building anything. |
 | [`schema/`](schema/) | Schemas for every YAML format. |
+| [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |
 | [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) | The shape of an organisation's private overlay repo. |
 | [`plan/backlog-seed.yaml`](plan/backlog-seed.yaml) | Starting work list, imported once into the organisation's issue tracker. After that, work comes from the tracker. |
 | `build-logic/`, `config/quality/` | Gradle conventions and the quality-check rules. |
@@ -54,7 +55,7 @@ External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with
 | Time comes from an injected `java.time.Clock`, never `now()` or `currentTimeMillis()` | forbidden-APIs check |
 | No unsafe, deprecated, internal or non-portable JDK APIs, and no reflection tricks | forbidden-APIs bundled signatures |
 | Methods short and simple: cyclomatic complexity 10 or less, cognitive complexity 15 or less, 50 lines or fewer | Checkstyle and PMD |
-| No copy-pasted code (75 tokens or more) | Copy-paste detection |
+| No copy-pasted code (75 tokens or more) | PMD's copy-paste detector (`cpdCheck`) |
 | No bug patterns or security bugs | SpotBugs with FindSecBugs |
 | Dependencies kept current (pre-releases ignored) | Ben Manes versions plugin: `./gradlew dependencyUpdates`; checked in CI, failing if `quality.failOnStaleDependencies=true` |
 | Local variables `final` where not reassigned; braces always; no star imports | Checkstyle |
