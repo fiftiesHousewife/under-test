@@ -29,6 +29,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [The checks an AI-written test must pass before it is kept](0061-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md)
+* Builds on: [The checks an AI-written test must pass before it is kept](0064-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md)
 * Later decisions that build on this: none yet
 * Background: none

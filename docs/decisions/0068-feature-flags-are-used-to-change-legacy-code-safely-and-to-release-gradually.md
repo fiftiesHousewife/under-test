@@ -31,5 +31,5 @@ Proposed: the first option. Comparing old and new code behind a flag is a form o
 ## More Information
 
 * Builds on: [Feature flags use the OpenFeature standard with the organisation's own flag product](0021-feature-flags-use-the-openfeature-standard-with-the-organisations-own-flag-product.md), [What each test maturity level means](0029-what-each-test-maturity-level-means.md)
-* Later decisions that build on this: [Every feature flag state in use is tested and old flags are removed](0059-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed.md)
+* Later decisions that build on this: [Every feature flag state in use is tested and old flags are removed](0062-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed.md)
 * Background: [feature-flags](../REFERENCES.md#feature-flags)

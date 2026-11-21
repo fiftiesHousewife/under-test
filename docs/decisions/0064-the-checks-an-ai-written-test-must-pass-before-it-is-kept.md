@@ -30,5 +30,5 @@ Proposed: the five checks, as an `acceptanceCheck` Gradle task (and an npm equiv
 ## More Information
 
 * Builds on: [People do the work with AI coding assistance, and review everything it produces](0022-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md), [What counts as evidence for each test maturity level](0030-what-counts-as-evidence-for-each-test-maturity-level.md)
-* Later decisions that build on this: [AI-written tests that expect different behaviour go to triage, not the bin](0062-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin.md), [How strict the checks on AI-written tests are at the start](0063-how-strict-the-checks-on-ai-written-tests-are-at-the-start.md)
+* Later decisions that build on this: [AI-written tests that expect different behaviour go to triage, not the bin](0065-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin.md), [How strict the checks on AI-written tests are at the start](0066-how-strict-the-checks-on-ai-written-tests-are-at-the-start.md)
 * Background: [ai-written-tests](../REFERENCES.md#ai-written-tests), [mutation-testing](../REFERENCES.md#mutation-testing)

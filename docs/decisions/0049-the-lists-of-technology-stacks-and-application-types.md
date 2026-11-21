@@ -30,5 +30,5 @@ Proposed: the first list, extended when a pattern recurs in the review list.
 ## More Information
 
 * Builds on: [Repos are classified by rules only, so results can be explained and repeated](0047-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated.md)
-* Later decisions that build on this: [Target test mix for each application type and the top-heavy phase at level 2](0034-target-test-mix-for-each-application-type-and-the-top-heavy-phase-at-level-2.md), [One pilot application per common technology stack and application type pair](0067-one-pilot-application-per-common-technology-stack-and-application-type-pair.md)
+* Later decisions that build on this: [Target test mix for each application type and the top-heavy phase at level 2](0034-target-test-mix-for-each-application-type-and-the-top-heavy-phase-at-level-2.md), [One pilot application per common technology stack and application type pair](0070-one-pilot-application-per-common-technology-stack-and-application-type-pair.md)
 * Background: none

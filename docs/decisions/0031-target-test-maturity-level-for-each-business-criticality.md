@@ -30,5 +30,5 @@ Proposed: these targets as a starting point.
 ## More Information
 
 * Builds on: [What each test maturity level means](0029-what-each-test-maturity-level-means.md)
-* Later decisions that build on this: [Shared libraries target level 4, whatever the criticality of the apps using them](0032-shared-libraries-target-level-4-whatever-the-criticality-of-the-apps-using-them.md), [How each batch of repos is chosen](0068-how-each-batch-of-repos-is-chosen.md)
+* Later decisions that build on this: [Shared libraries target level 4, whatever the criticality of the apps using them](0032-shared-libraries-target-level-4-whatever-the-criticality-of-the-apps-using-them.md), [How each batch of repos is chosen](0071-how-each-batch-of-repos-is-chosen.md)
 * Background: none

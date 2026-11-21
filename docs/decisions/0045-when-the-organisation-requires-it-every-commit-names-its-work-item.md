@@ -4,7 +4,7 @@ decision-makers: Steering Group
 group: Recording results and owning plans
 ---
 
-# When the organisation requires it every commit names its work item
+# When the organisation requires it, every commit names its work item
 
 **Decided by:** Steering Group · **Status:** proposed
 

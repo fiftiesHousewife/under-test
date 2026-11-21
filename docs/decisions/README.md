@@ -77,55 +77,63 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Where measured results are stored and how each repo sees its own](0041-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md) | proposed | Engagement Lead |
 | [Who approves repo and application testing plans](0042-who-approves-repo-and-application-testing-plans.md) | proposed | Steering Group |
 | [Repo work is tracked in the organisation's issue tracker with standard labels](0043-repo-work-is-tracked-in-the-organisations-issue-tracker-with-standard-labels.md) | proposed | Engagement Lead |
-| [Each repos work is loaded into the issue tracker by one tool with an adapter per tracker](0044-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md) | proposed | Engagement Lead |
-| [When the organisation requires it every commit names its work item](0045-when-the-organisation-requires-it-every-commit-names-its-work-item.md) | proposed | Steering Group |
+| [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](0044-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md) | proposed | Engagement Lead |
+| [When the organisation requires it, every commit names its work item](0045-when-the-organisation-requires-it-every-commit-names-its-work-item.md) | proposed | Steering Group |
 
 ## Understanding our repos
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [The estate survey sits outside the toolkit which provides a repo classifier a survey tool can call](0046-the-estate-survey-sits-outside-the-toolkit-which-provides-a-repo-classifier-a-survey-tool-can-call.md) | proposed (agreed in discussion) | Technical Architect |
+| [The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call](0046-the-estate-survey-sits-outside-the-toolkit-which-provides-a-repo-classifier-a-survey-tool-can-call.md) | proposed (agreed in discussion) | Technical Architect |
 | [Repos are classified by rules only, so results can be explained and repeated](0047-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated.md) | proposed | Technical Architect |
 | [Which existing tools the repo classifier combines](0048-which-existing-tools-the-repo-classifier-combines.md) | proposed | Technical Architect |
 | [The lists of technology stacks and application types](0049-the-lists-of-technology-stacks-and-application-types.md) | proposed | Test Quality Lead, approved by the Steering Group |
 | [The named list of obstacles to testing and how each is scored](0050-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md) | proposed (open) | Test Quality Lead, approved by the Steering Group |
 
+## Knowing what each system connects to
+
+| Decision | Status | Who decides |
+|---|---|---|
+| [Each application's connections are recorded as a CALM connection list](0051-each-applications-connections-are-recorded-as-a-calm-connection-list.md) | proposed (agreed in discussion) | Technical Architect |
+| [The connection list says what tests use for each connection, and which addresses tests must never reach](0052-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md) | proposed (agreed in discussion) | Security and Platform Owner (can veto) |
+
 ## Standing in for real systems
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [Order of preference for test stand-in approaches](0051-order-of-preference-for-test-stand-in-approaches.md) | proposed | Technical Architect |
-| [An in-memory database of a different product never counts as evidence](0052-an-in-memory-database-of-a-different-product-never-counts-as-evidence.md) | proposed | Test Quality Lead, approved by the Steering Group |
-| [Recorded responses and fakes live in shared test kits, not in each repo](0053-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md) | proposed | Technical Architect |
-| [Who owns and maintains each shared test kit](0054-who-owns-and-maintains-each-shared-test-kit.md) | proposed | Steering Group |
-| [Tests that reach real shared systems are tagged and left out of normal runs](0055-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md) | proposed | Security and Platform Owner (can veto) |
-| [Whether a shared test environment can count as evidence for a limited time](0056-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time.md) | proposed (open) | Test Quality Lead, approved by the Steering Group |
+| [Order of preference for test stand-in approaches](0053-order-of-preference-for-test-stand-in-approaches.md) | proposed | Technical Architect |
+| [Contract tests share pacts through a self-hosted open-source Pact Broker](0054-contract-tests-share-pacts-through-a-self-hosted-open-source-pact-broker.md) | proposed | Technical Architect, approved by the Security and Platform Owner |
+| [An in-memory database of a different product never counts as evidence](0055-an-in-memory-database-of-a-different-product-never-counts-as-evidence.md) | proposed | Test Quality Lead, approved by the Steering Group |
+| [Recorded responses and fakes live in shared test kits, not in each repo](0056-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md) | proposed | Technical Architect |
+| [Who owns and maintains each shared test kit](0057-who-owns-and-maintains-each-shared-test-kit.md) | proposed | Steering Group |
+| [Tests that reach real shared systems are tagged and left out of normal runs](0058-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md) | proposed | Security and Platform Owner (can veto) |
+| [Whether a shared test environment can count as evidence for a limited time](0059-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time.md) | proposed (open) | Test Quality Lead, approved by the Steering Group |
 
 ## Test hygiene
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [How flaky tests are found](0057-how-flaky-tests-are-found.md) | proposed | Technical Architect |
-| [Flaky tests can be quarantined only with an expiry date](0058-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md) | proposed | Technical Architect |
-| [Every feature flag state in use is tested and old flags are removed](0059-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed.md) | proposed | Test Quality Lead, approved by the Steering Group |
-| [Personal data is removed from any recorded traffic or data](0060-personal-data-is-removed-from-any-recorded-traffic-or-data.md) | proposed | Security and Platform Owner (can veto) |
+| [How flaky tests are found](0060-how-flaky-tests-are-found.md) | proposed | Technical Architect |
+| [Flaky tests can be quarantined only with an expiry date](0061-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md) | proposed | Technical Architect |
+| [Every feature flag state in use is tested and old flags are removed](0062-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed.md) | proposed | Test Quality Lead, approved by the Steering Group |
+| [Personal data is removed from any recorded traffic or data](0063-personal-data-is-removed-from-any-recorded-traffic-or-data.md) | proposed | Security and Platform Owner (can veto) |
 
 ## AI-written tests
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [The checks an AI-written test must pass before it is kept](0061-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md) | proposed | Test Quality Lead |
-| [AI-written tests that expect different behaviour go to triage, not the bin](0062-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin.md) | proposed | Test Quality Lead |
-| [How strict the checks on AI-written tests are at the start](0063-how-strict-the-checks-on-ai-written-tests-are-at-the-start.md) | proposed (open) | Test Quality Lead |
+| [The checks an AI-written test must pass before it is kept](0064-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md) | proposed | Test Quality Lead |
+| [AI-written tests that expect different behaviour go to triage, not the bin](0065-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin.md) | proposed | Test Quality Lead |
+| [How strict the checks on AI-written tests are at the start](0066-how-strict-the-checks-on-ai-written-tests-are-at-the-start.md) | proposed (open) | Test Quality Lead |
 
 ## Rolling out
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [The order of workstreams for a repo](0064-the-order-of-workstreams-for-a-repo.md) | proposed | Engagement Lead |
-| [Feature flags are used to change legacy code safely and to release gradually](0065-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md) | proposed | Technical Architect |
-| [Repos no longer deployed or changed get a retirement review, not a testing plan](0066-repos-no-longer-deployed-or-changed-get-a-retirement-review-not-a-testing-plan.md) | proposed | Engagement Lead, with the Programme Sponsor |
-| [One pilot application per common technology stack and application type pair](0067-one-pilot-application-per-common-technology-stack-and-application-type-pair.md) | proposed | Engagement Lead, with the Programme Sponsor |
-| [How each batch of repos is chosen](0068-how-each-batch-of-repos-is-chosen.md) | proposed | Engagement Lead, with the Programme Sponsor |
-| [Mutation testing in pull requests reports only at first](0069-mutation-testing-in-pull-requests-reports-only-at-first.md) | proposed | Technical Architect |
-| [How often repos are re-scanned and re-measured](0070-how-often-repos-are-re-scanned-and-re-measured.md) | proposed | Engagement Lead |
+| [The order of workstreams for a repo](0067-the-order-of-workstreams-for-a-repo.md) | proposed | Engagement Lead |
+| [Feature flags are used to change legacy code safely and to release gradually](0068-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md) | proposed | Technical Architect |
+| [Repos no longer deployed or changed get a retirement review, not a testing plan](0069-repos-no-longer-deployed-or-changed-get-a-retirement-review-not-a-testing-plan.md) | proposed | Engagement Lead, with the Programme Sponsor |
+| [One pilot application per common technology stack and application type pair](0070-one-pilot-application-per-common-technology-stack-and-application-type-pair.md) | proposed | Engagement Lead, with the Programme Sponsor |
+| [How each batch of repos is chosen](0071-how-each-batch-of-repos-is-chosen.md) | proposed | Engagement Lead, with the Programme Sponsor |
+| [Mutation testing in pull requests reports only at first](0072-mutation-testing-in-pull-requests-reports-only-at-first.md) | proposed | Technical Architect |
+| [How often repos are re-scanned and re-measured](0073-how-often-repos-are-re-scanned-and-re-measured.md) | proposed | Engagement Lead |

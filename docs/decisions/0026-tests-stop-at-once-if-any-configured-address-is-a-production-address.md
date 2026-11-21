@@ -30,5 +30,5 @@ Proposed: the convention plugin refuses to run tests if any configured address i
 ## More Information
 
 * Builds on: [Old code runs first only where production cannot be reached](0025-old-code-runs-first-only-where-production-cannot-be-reached.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [The connection list says what tests use for each connection, and which addresses tests must never reach](0052-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md)
 * Background: none

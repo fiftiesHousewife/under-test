@@ -4,7 +4,7 @@ name: Contract tests (Pact)
 workstream: make-it-run-on-its-own
 test_stand_in_approach: contract
 evidence_for_maturity_levels: [3]
-tools: [pact-jvm, pact-js]
+tools: [pact-jvm, pact-js, pact-broker, pact-broker-cli]
 adopt_when:
   - Consumer and provider are both owned by teams willing to run provider verification
 reject_or_defer_when:
@@ -14,4 +14,8 @@ precondition_checks:
   - {done_by: person, check: Provider team agreement}
 fallback: Recorded stubs plus scheduled checks against a live sandbox
 references: [test-doubles]
+constraints:
+  - Contracts are shared through a self-hosted open-source Pact Broker; pipelines use the Rust broker client, not the Ruby one
+  - Current Pact JVM needs JDK 17 or newer; services on older JDKs need the 4.5 line
+  - JUnit 6 support in Pact JVM is not yet documented; check before relying on it
 example: {java: todo, typescript: todo}

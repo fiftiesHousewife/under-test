@@ -30,5 +30,5 @@ Proposed: the first option. Fix groups of tests that fail together before single
 ## More Information
 
 * Builds on: nothing (a foundation decision)
-* Later decisions that build on this: [Flaky tests can be quarantined only with an expiry date](0058-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md)
+* Later decisions that build on this: [Flaky tests can be quarantined only with an expiry date](0061-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md)
 * Background: [flaky-tests](../REFERENCES.md#flaky-tests)

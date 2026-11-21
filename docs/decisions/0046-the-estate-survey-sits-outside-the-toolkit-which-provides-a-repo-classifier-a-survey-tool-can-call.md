@@ -4,7 +4,7 @@ decision-makers: Technical Architect
 group: Understanding our repos
 ---
 
-# The estate survey sits outside the toolkit which provides a repo classifier a survey tool can call
+# The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call
 
 **Decided by:** Technical Architect · **Status:** proposed (agreed in discussion)
 

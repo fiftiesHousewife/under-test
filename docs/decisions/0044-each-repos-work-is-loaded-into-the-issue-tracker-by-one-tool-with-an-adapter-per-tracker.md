@@ -4,7 +4,7 @@ decision-makers: Engagement Lead
 group: Recording results and owning plans
 ---
 
-# Each repos work is loaded into the issue tracker by one tool with an adapter per tracker
+# Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker
 
 **Decided by:** Engagement Lead · **Status:** proposed
 

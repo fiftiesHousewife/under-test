@@ -29,6 +29,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [How flaky tests are found](0057-how-flaky-tests-are-found.md)
+* Builds on: [How flaky tests are found](0060-how-flaky-tests-are-found.md)
 * Later decisions that build on this: none yet
 * Background: [flaky-tests](../REFERENCES.md#flaky-tests)

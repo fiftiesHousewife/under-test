@@ -30,5 +30,5 @@ Not yet chosen. The options are below. Open.
 ## More Information
 
 * Builds on: [What each test maturity level means](0029-what-each-test-maturity-level-means.md)
-* Later decisions that build on this: [How each batch of repos is chosen](0068-how-each-batch-of-repos-is-chosen.md)
+* Later decisions that build on this: [How each batch of repos is chosen](0071-how-each-batch-of-repos-is-chosen.md)
 * Background: none

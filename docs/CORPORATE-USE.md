@@ -179,8 +179,18 @@ Your branding and edited videos live in your organisation repo or your own media
 - **To watch or edit:** nothing new; the files play in browsers, wikis and video tools.
 - **To revoice or rebrand automatically:** ffmpeg, which many organisations already approve, and optionally your
   approved text-to-speech service.
-- **To re-render the screen recording from source:** VHS, mirrored through your package or container registry. Most
-  organisations won't need this.
+- **To make your own lesson videos, or re-render the toolkit's:** VHS. Most organisations won't need it. If you do:
+  1. Mirror VHS's official container image (`ghcr.io/charmbracelet/vhs`, MIT licence), which already includes its
+     helpers (`ttyd` and `ffmpeg`), through your container registry, like any other approved image.
+  2. Run it as the image of a CI job. On Kubernetes-based CI the job runs inside the image, so no Docker daemon is
+     needed. The job runs `vhs lesson.tape` and keeps the MP4 and GIF as outputs.
+  3. For voice and captions too, mirror narratty's image (`ghcr.io/ditschi/narratty`, MIT licence), which bundles VHS,
+     the Kokoro voice (Apache-2.0) and ffmpeg.
+  4. People write and edit the `.tape` and narration files on their own machines, with no container runtime needed;
+     CI renders the video, just as it runs container tests.
+
+  Other routes, such as `go install` through a mirrored Go module proxy, or Charm's own Linux package repository, are
+  usually harder to get approved.
 
 ### Licence
 

@@ -51,3 +51,14 @@ apm_modules/
 ### Research working notes (reports are promoted into docs/ when useful) ###
 research_notes/
 reports/
+
+### Generated lesson videos (published with releases, not kept in git) ###
+techniques/*/media/*.gif
+techniques/*/media/*.mp4
+techniques/*/media/*.webm
+techniques/*/media/*.cast
+techniques/*/media/*.mp3
+techniques/*/media/*.wav
+techniques/*/media/*.vtt
+techniques/*/media/*.srt
+.narratty/

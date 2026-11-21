@@ -33,5 +33,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0020-we-reuse-existing-tools-before-building-new-ones.md), [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
-* Later decisions that build on this: [Feature flags are used to change legacy code safely and to release gradually](0065-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md)
+* Later decisions that build on this: [Feature flags are used to change legacy code safely and to release gradually](0068-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md)
 * Background: [feature-flags](../REFERENCES.md#feature-flags)

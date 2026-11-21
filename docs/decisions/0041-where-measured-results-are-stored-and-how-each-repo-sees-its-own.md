@@ -30,5 +30,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [The assessment file: where it lives, who writes which fields, and its schema version](0039-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md)
-* Later decisions that build on this: [How often repos are re-scanned and re-measured](0070-how-often-repos-are-re-scanned-and-re-measured.md)
+* Later decisions that build on this: [How often repos are re-scanned and re-measured](0073-how-often-repos-are-re-scanned-and-re-measured.md)
 * Background: none

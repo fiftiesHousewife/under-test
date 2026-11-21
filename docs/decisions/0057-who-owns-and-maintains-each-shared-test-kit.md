@@ -29,6 +29,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [Recorded responses and fakes live in shared test kits, not in each repo](0053-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md)
+* Builds on: [Recorded responses and fakes live in shared test kits, not in each repo](0056-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md)
 * Later decisions that build on this: none yet
 * Background: none
