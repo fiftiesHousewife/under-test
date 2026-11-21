@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: recorded-http-responses
+name: Recorded HTTP stubs (WireMock)
+workstream: make-it-run-on-its-own
+test_stand_in_approach: recorded-responses
+evidence_for_maturity_levels: [1, 2]
+tools: [wiremock, hoverfly]
+adopt_when:
+  - Dependency you do not own, over HTTP
+  - A non-prod instance is reachable to record from
+reject_or_defer_when:
+  - No reachable instance to record from
+precondition_checks:
+  - {done_by: tool, check: Outbound-call check lists the HTTP hosts tests contact}
+fallback: Hand-written stubs taken from the API spec
+constraints: [Commit recordings to the shared test kit for that system, not to each repo]
+references: [test-doubles]
+example: {java: todo, typescript: todo}

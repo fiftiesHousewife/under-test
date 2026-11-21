@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: feature-flags
+name: Feature flags (branch by abstraction and gradual release, through OpenFeature)
+workstream: make-code-testable
+evidence_for_maturity_levels: [5]
+tools: [openfeature]
+adopt_when:
+  - A risky change to code on a key user journey
+  - Old and new code should run side by side to be compared
+  - A high-criticality application needs gradual release with a quick switch-off
+reject_or_defer_when:
+  - The setting is long-lived configuration, not a temporary switch
+  - No one will own and remove the flag
+precondition_checks:
+  - {done_by: person, check: Each flag has an owner and a removal date}
+  - {done_by: tool, check: Tests cover both states of the flag}
+fallback: differential-testing
+constraints: [Every flag state in use is tested; flags past their removal date fail the build]
+references: [feature-flags]
+example: {java: todo, typescript: none}

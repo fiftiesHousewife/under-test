@@ -1,0 +1,47 @@
+# One catalogue for the whole repository. build-logic reads it with from(files("../gradle/libs.versions.toml")).
+
+[versions]
+java = "21"
+junit = "6.1.3"
+assertj = "3.27.7"
+lombok = "1.18.48"
+slf4j = "2.0.20"
+log4j = "2.26.1"
+
+# Quality tools
+jacoco = "0.8.16"
+checkstyle = "14.4.0"
+pmd = "7.29.0"
+spotbugs = "4.10.5"
+findsecbugs = "1.14.0"
+pitest = "1.19.5"
+pitest-junit5 = "1.2.1"
+# Smallest line coverage a project may have; a project can raise it with quality.minLineCoverage.
+min-line-coverage = "0.80"
+# Fail on any dependency vulnerability scored at or above this (CVSS).
+dependency-check-fail-cvss = "7.0"
+
+# Gradle plugins applied by build-logic
+gradle-pitest-plugin = "1.19.0-rc.1"
+gradle-spotbugs-plugin = "6.5.13"
+gradle-forbiddenapis-plugin = "3.11"
+gradle-dependency-check-plugin = "13.0.0"
+gradle-cpd-plugin = "3.5"
+
+[libraries]
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
+log4j-slf4j2-impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }
+findsecbugs = { module = "com.h3xstream.findsecbugs:findsecbugs-plugin", version.ref = "findsecbugs" }
+
+# Gradle plugins, as ordinary dependencies of build-logic
+gradle-pitest-plugin = { module = "info.solidsoft.gradle.pitest:gradle-pitest-plugin", version.ref = "gradle-pitest-plugin" }
+gradle-spotbugs-plugin = { module = "com.github.spotbugs.snom:spotbugs-gradle-plugin", version.ref = "gradle-spotbugs-plugin" }
+gradle-forbiddenapis-plugin = { module = "de.thetaphi:forbiddenapis", version.ref = "gradle-forbiddenapis-plugin" }
+gradle-dependency-check-plugin = { module = "org.owasp:dependency-check-gradle", version.ref = "gradle-dependency-check-plugin" }
+gradle-cpd-plugin = { module = "de.aaschmid:gradle-cpd-plugin", version.ref = "gradle-cpd-plugin" }

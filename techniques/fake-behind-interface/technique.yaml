@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: fake-behind-interface
+name: Fake behind an interface (the real connection code sits behind an interface; tests use an in-memory fake)
+workstream: make-it-run-on-its-own
+test_stand_in_approach: fake-behind-interface
+evidence_for_maturity_levels: [1, 2]
+tools: [archunit]
+adopt_when:
+  - Dependency has no image and no reachable non-prod (mainframe, licensed middleware, vendor SDK)
+  - Local tests need a stand-in for a system with no in-process substitute
+reject_or_defer_when: []
+precondition_checks:
+  - {done_by: tool, check: Count of hard-wired dependencies, found by static scan}
+fallback: Accept risk (ADR entry with owner and review date)
+constraints: [The real system stays untested; container tests check the connection code]
+references: [test-doubles]
+example: {java: todo, typescript: none}

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: traffic-record-and-replay
+name: Record/replay of traffic (Keploy)
+workstream: make-it-run-on-its-own
+evidence_for_maturity_levels: [1, 2]
+tools: [keploy]
+adopt_when:
+  - HTTP or gRPC service
+  - Capture is allowed in a non-prod environment
+  - Linux host
+reject_or_defer_when:
+  - eBPF capture not permitted (needs elevated kernel privileges)
+  - Production data cannot be scrubbed
+  - Windows-only runtime
+precondition_checks:
+  - {done_by: person, check: Platform and security sign-off}
+  - {done_by: tool, check: Trial capture}
+fallback: recorded-http-responses
+constraints: [Linux hosts with kernel-level capture permission only; removing personal data is mandatory]
+references: [test-doubles]
+example: {java: none, typescript: none}
+note: No runnable example; needs eBPF on a Linux host. README explains the WireMock fallback.

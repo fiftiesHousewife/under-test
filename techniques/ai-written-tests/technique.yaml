@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: ai-written-tests
+name: AI-written tests that record current behaviour, kept only if they pass the acceptance check
+workstream: record-current-behaviour
+evidence_for_maturity_levels: [2]
+tools: [ai-assistant, acceptance-check]
+adopt_when:
+  - The target class's dependencies can already be replaced in tests
+  - Runs in a JVM test without the network
+reject_or_defer_when:
+  - Code whose dependencies cannot be replaced (produces fragile tests full of mocks)
+  - Target scheduled for deletion
+precondition_checks:
+  - {done_by: tool, check: Count of hard-wired dependencies per class}
+  - {done_by: tool, check: Outbound network calls blocked}
+fallback: Tests at the edges (API, messages, files) first
+constraints: [Every draft test must pass the acceptance check (ADR-004)]
+references: [ai-written-tests]
+example: {java: todo, typescript: none}

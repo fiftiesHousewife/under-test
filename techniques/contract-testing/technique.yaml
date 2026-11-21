@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: contract-testing
+name: Contract tests (Pact)
+workstream: make-it-run-on-its-own
+test_stand_in_approach: contract
+evidence_for_maturity_levels: [3]
+tools: [pact-jvm, pact-js]
+adopt_when:
+  - Consumer and provider are both owned by teams willing to run provider verification
+reject_or_defer_when:
+  - The provider team will not verify
+  - External vendor API
+precondition_checks:
+  - {done_by: person, check: Provider team agreement}
+fallback: Recorded stubs plus scheduled checks against a live sandbox
+references: [test-doubles]
+example: {java: todo, typescript: todo}

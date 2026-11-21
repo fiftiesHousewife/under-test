@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftieshousewife/under-test/schema/organisation-profile.schema.json",
+  "title": "Organisation profile",
+  "description": "Facts about one organisation that the toolkit needs but cannot choose: platforms, tools already in place, and who fills each engagement role. Kept in the organisation's private overlay repo as organisation-profile.yaml, never in this repo. Facts with no choice go here; choices go in the overlay repo's own decision records.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "organisation",
+    "issue_tracker",
+    "code_hosting",
+    "ci",
+    "developer_machines",
+    "package_repository",
+    "ai_assistants"
+  ],
+  "properties": {
+    "organisation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "overlay_repo"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "overlay_repo": {
+          "type": "string",
+          "description": "Where this profile and the organisation's own decision records live."
+        },
+        "repo_count_estimate": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Rough number of repositories in scope; sizes the measurement budget."
+        }
+      }
+    },
+    "issue_tracker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "description": "Where the programme backlog and each repo's work items are kept.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "github-issues",
+            "gitlab-issues",
+            "jira-cloud",
+            "jira-data-center",
+            "azure-boards"
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "project_key": {
+          "type": "string",
+          "description": "Project or board identifier, where the tracker has one."
+        }
+      }
+    },
+    "code_hosting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "github-cloud",
+            "github-enterprise-cloud",
+            "github-enterprise-server",
+            "gitlab",
+            "bitbucket",
+            "azure-repos"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "ci": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "enum": [
+            "github-actions",
+            "gitlab-ci",
+            "jenkins",
+            "tekton",
+            "azure-pipelines",
+            "other"
+          ]
+        },
+        "runs_on": {
+          "enum": [
+            "virtual-machines",
+            "kubernetes",
+            "openshift",
+            "other"
+          ],
+          "description": "What build jobs run on. Kubernetes-based platforms usually have no Docker daemon."
+        },
+        "image_build_tool": {
+          "type": "string",
+          "description": "e.g. docker, buildah, kaniko. Builds images; does not run the containers tests need."
+        },
+        "container_runtime_for_tests": {
+          "enum": [
+            "docker",
+            "rootless-podman",
+            "kubedock",
+            "remote-container-host",
+            "hosted-service",
+            "none",
+            "undecided"
+          ]
+        }
+      }
+    },
+    "developer_machines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "container_runtime_available"
+      ],
+      "properties": {
+        "operating_systems": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "windows",
+              "macos",
+              "linux"
+            ]
+          }
+        },
+        "container_runtime_available": {
+          "type": "boolean"
+        },
+        "note": {
+          "type": "string",
+          "description": "e.g. why there is no runtime and whether that may change."
+        }
+      }
+    },
+    "package_repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "artifactory",
+            "nexus",
+            "github-packages",
+            "gitlab-packages",
+            "azure-artifacts",
+            "public-only"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "ai_assistants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed",
+        "independent_agents_allowed"
+      ],
+      "properties": {
+        "allowed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "AI assistants people may use with this toolkit."
+        },
+        "independent_agents_allowed": {
+          "type": "boolean",
+          "description": "Whether AI agents may work unattended. False until approved, vetted and tested."
+        }
+      }
+    },
+    "deployment_records": {
+      "type": "string",
+      "description": "Where to find which repos are deployed (a deployment tool or release records)."
+    },
+    "secrets_scanning": {
+      "type": "string",
+      "description": "Secret-scanning tool already in use, if any."
+    },
+    "production_hosts": {
+      "type": "string",
+      "description": "Source of the list of production host names (DNS zones, configuration database, naming rule)."
+    },
+    "roles": {
+      "type": "object",
+      "description": "Who fills each engagement role: a person, or a team on the code-hosting platform used for review rules.",
+      "additionalProperties": false,
+      "properties": {
+        "programme_sponsor": {
+          "type": "string"
+        },
+        "engagement_lead": {
+          "type": "string"
+        },
+        "technical_architect": {
+          "type": "string"
+        },
+        "test_quality_lead": {
+          "type": "string"
+        },
+        "security_and_platform_owner": {
+          "type": "string"
+        },
+        "toolkit_owner": {
+          "type": "string"
+        },
+        "steering_group": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "feature_flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product": {
+          "type": "string",
+          "description": "The organisation's feature flag product, if any."
+        },
+        "openfeature_provider": {
+          "type": "string",
+          "description": "Coordinates of the OpenFeature provider for that product."
+        }
+      }
+    }
+  }
+}

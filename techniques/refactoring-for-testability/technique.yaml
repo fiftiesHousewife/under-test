@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: refactoring-for-testability
+name: Refactoring for testability (OpenRewrite recipes plus hand changes, so dependencies can be replaced in tests)
+workstream: make-code-testable
+evidence_for_maturity_levels: [2, 3]
+tools: [openrewrite]
+adopt_when:
+  - Many hard-wired dependencies (clock, singletons, infrastructure created with new) on code that will survive
+reject_or_defer_when:
+  - Code to be retired
+precondition_checks:
+  - {done_by: tool, check: Count of hard-wired dependencies, found by static scan}
+fallback: Record current behaviour at the edges only
+references: [legacy-code]
+example: {java: todo, typescript: none}

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: business-rule-tests
+name: Specification tests for journeys (L3)
+workstream: test-against-requirements
+evidence_for_maturity_levels: [3]
+tools: [junit5, assertj]
+adopt_when:
+  - Key user journeys in high- and medium-criticality applications
+  - SME available
+reject_or_defer_when:
+  - "No SME and no spec: record as an open risk, not a reject"
+precondition_checks:
+  - {done_by: person, check: SME available}
+fallback: differential-testing
+references: [legacy-code]
+example: {java: todo, typescript: todo}

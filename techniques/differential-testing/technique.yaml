@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: differential-testing
+name: Differential / shadow testing (Diffy)
+workstream: check-in-production
+evidence_for_maturity_levels: [3, 5]
+tools: [diffy]
+adopt_when:
+  - Migrations, refactors or platform moves where the old version is the source of expected results
+  - Read-heavy endpoints
+reject_or_defer_when:
+  - Endpoints with side effects (writes) and no isolated sink
+  - No traffic mirroring
+precondition_checks:
+  - {done_by: person, check: Modernisation in scope}
+  - {done_by: tool, check: Share of endpoints that are read-only}
+fallback: Replay recorded requests against old and new builds offline
+references: [legacy-code]
+example: {java: todo, typescript: none}

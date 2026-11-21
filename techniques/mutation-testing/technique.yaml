@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: mutation-testing
+name: Mutation testing (PIT, StrykerJS)
+workstream: strengthen-tests
+evidence_for_maturity_levels: [4]
+tools: [pitest, strykerjs]
+adopt_when:
+  - Code has tests worth hardening
+  - Suite has no flaky tests
+  - Business criticality warrants it
+reject_or_defer_when:
+  - Coverage of the target close to zero
+  - Flaky suite
+precondition_checks:
+  - {done_by: tool, check: Coverage and flaky-test count from the measurement run}
+fallback: Wait until the record-current-behaviour workstream has added tests
+constraints: [Never a full run across all our repos; high-risk files or code changed in a pull request only]
+references: [mutation-testing]
+example: {java: ready, typescript: todo}

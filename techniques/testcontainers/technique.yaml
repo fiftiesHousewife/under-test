@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: testcontainers
+name: Testcontainers
+workstream: make-it-run-on-its-own
+test_stand_in_approach: run-in-container
+evidence_for_maturity_levels: [1, 2, 3]
+tools: [testcontainers]
+adopt_when:
+  - Infrastructure you own (database, broker, cache) that has an image
+  - A container runtime is available to tests (CI today; developer machines if WSL2 is enabled)
+reject_or_defer_when:
+  - No container runtime anywhere tests run
+  - Licensed product with no image (for example certain mainframe middleware)
+precondition_checks:
+  - {done_by: tool, check: Runtime check in CI}
+  - {done_by: tool, check: Image exists in the organisation's package repository}
+fallback: fake-behind-interface
+constraints: [Container tests only (integrationTest source set); run in CI today, locally once WSL2 is available; waits on ADR-005 container runtime]
+references: [test-doubles]
+example: {java: todo, typescript: none}

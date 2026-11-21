@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: post-release-checks
+name: Production verification (synthetic checks, canary)
+workstream: check-in-production
+evidence_for_maturity_levels: [5]
+tools: [harness]
+adopt_when:
+  - High business criticality
+  - Deployed with a pipeline that can gate
+reject_or_defer_when:
+  - No staged rollout is possible
+precondition_checks:
+  - {done_by: person, check: Platform capability}
+fallback: Post-deploy smoke tests
+references: [production-safety]
+example: {java: none, typescript: none}
+note: Pipeline-level; README only.

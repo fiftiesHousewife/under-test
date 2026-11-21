@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: snapshot-testing
+name: Approval / golden-master tests at the boundary
+workstream: record-current-behaviour
+evidence_for_maturity_levels: [2]
+tools: [approvaltests-java]
+adopt_when:
+  - Output is deterministic or can be normalised
+  - Structured output such as JSON, files or reports
+reject_or_defer_when:
+  - Output is dominated by timestamps or IDs that cannot be normalised
+  - The boundary is about to be replaced
+precondition_checks:
+  - {done_by: tool, check: Run twice and diff the outputs}
+fallback: property-based-testing
+application_types: [web-service, batch-job, message-consumer]
+references: [legacy-code]
+example: {java: todo, typescript: none}

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: property-based-testing
+name: Property-based tests (jqwik, fast-check)
+workstream: test-against-requirements
+evidence_for_maturity_levels: [3]
+tools: [jqwik, fast-check]
+adopt_when:
+  - Pure calculations, parsers, serialisation round-trips
+  - Invariants a domain expert can state
+reject_or_defer_when:
+  - No invariant anyone can state
+precondition_checks:
+  - {done_by: person, check: SME names an invariant}
+fallback: business-rule-tests
+references: [property-based-testing]
+example: {java: todo, typescript: todo}

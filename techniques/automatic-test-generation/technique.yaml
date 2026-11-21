@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: automatic-test-generation
+name: Random or search-based generation (Randoop, EvoSuite)
+workstream: record-current-behaviour
+evidence_for_maturity_levels: [2]
+tools: [randoop, evosuite]
+adopt_when:
+  - Libraries and pure logic
+  - JDK version supported by the tool
+reject_or_defer_when:
+  - Framework-heavy code (Spring contexts)
+  - Unsupported JDK
+precondition_checks:
+  - {done_by: tool, check: JDK version}
+  - {done_by: tool, check: Framework annotation density}
+fallback: ai-written-tests
+references: [test-generation]
+example: {java: todo, typescript: none}
