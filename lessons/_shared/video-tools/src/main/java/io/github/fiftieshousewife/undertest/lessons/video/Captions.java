@@ -28,13 +28,12 @@ public final class Captions {
     }
 
     static void write(final Path root, final String lesson) {
-        final Path media = root.resolve("lessons").resolve(lesson).resolve("media");
-        final List<Scene> scenes = TapeTimeline.scenes(root, media.resolve(lesson + ".tape"));
-        final List<Cue> cues = CaptionFile.cues(scenes, Narration.paragraphs(media.resolve(lesson + ".narration.md")));
-        writeFile(media.resolve(lesson + ".vtt"), CaptionFile.webVtt(cues));
-        writeFile(media.resolve(lesson + ".srt"), CaptionFile.srt(cues));
-        log.info("{}: {} scenes, {} captions, {} seconds", lesson.replace('\r', ' ').replace('\n', ' '), scenes.size(),
-                cues.size(),
+        final Media media = new Media(root, lesson);
+        final List<Scene> scenes = media.scenes();
+        final List<Cue> cues = CaptionFile.cues(scenes, Narration.paragraphs(media.file(".narration.md")));
+        writeFile(media.file(".vtt"), CaptionFile.webVtt(cues));
+        writeFile(media.file(".srt"), CaptionFile.srt(cues));
+        log.info("{}: {} scenes, {} captions, {} seconds", media.safeLesson(), scenes.size(), cues.size(),
                 Math.round(scenes.getLast().end()));
     }
 

@@ -51,7 +51,7 @@ edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.ta
 
 ## Rules that stop a recording from hanging
 
-Each of these cost a failed render once. The video checks in `./gradlew check` catch the first four.
+Each of these cost a failed render once. The video checks in `./gradlew check` catch most of them.
 
 | Rule | Why |
 |---|---|
@@ -62,6 +62,7 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 | Slow commands go through `run_with_notes` | It runs them with no terminal input; a background job that reads the terminal is stopped by the shell |
 | Don't run other Gradle builds in the repo while rendering | The recording can join a Gradle background process started elsewhere; `render.sh` stops them before it starts |
 | Each scene fits on one screen; clear off-camera between scenes (`Hide`, `Type "clear"`, `Enter`, `Show`) | `Wait+Screen` can't see text printed after the screen has scrolled |
+| After each `Enter`, a `Sleep 300ms` (or a `Wait`) before typing the next command, even off-camera | VHS types the next command straight away; its echo mixes into the output of the one still running |
 | Paths in `Output` and `Screenshot` are relative | VHS rejects paths that start with `/` |
 
 ## Captions
@@ -69,6 +70,21 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 `./gradlew :lessons:video-tools:buildLessonCaptions -Plesson=<id>` writes `<id>.vtt` and `<id>.srt` next to the script.
 It times each scene from the script's pauses and splits its narration into short cues. It fails if a `Wait` is on
 camera or if the narration has a different number of items from the script's scenes.
+
+## Voice and the finished video
+
+1. Once, per machine: create the offline voice environment under `build/voice` (Python 3.13 with `kokoro-onnx` and
+   `soundfile`, plus the model files `kokoro-v1.0.onnx` and `voices-v1.0.bin` from the kokoro-onnx releases).
+2. Record the silent video (it writes `<id>.silent.mp4` and the GIF), then run
+   `./gradlew :lessons:video-tools:assembleLessonVideo -Plesson=<id>`. It builds the captions, reads each scene's
+   narration aloud, checks every clip fits its scene, and writes the finished `<id>.mp4` (voice and a captions track)
+   and `<id>.narration.m4a`.
+3. If a scene's narration doesn't fit, the build says which scene and how many seconds to add to its pauses. Narration
+   decides each scene's length: aim for the narration plus a second, and keep the whole video short.
+   VHS recordings come out a few percent shorter than their pauses add up to. The tools stretch the timings to the
+   real length, but leave about 10% spare in each scene so the narration still fits.
+4. Any other voice can replace Kokoro: pass `-PlessonVoiceCommand="<program and arguments>"`, a command that turns a
+   text file into a WAV file. Organisations use their own approved speech service this way.
 
 ## Check, render, look
 

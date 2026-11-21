@@ -7,6 +7,7 @@
 Hide
 Type "export PS1='$ ' GREP_COLORS='mt=01;33' && source lessons/_shared/callout.sh"
 Enter
+Sleep 300ms
 Type "./gradlew -q --console=plain help >/dev/null 2>&1; ./gradlew -q --console=plain :lessons:${LESSON}:testClasses >/dev/null 2>&1; echo SETUP-$((1+1))-DONE"
 Enter
 Wait+Screen@600s /SETUP-2-DONE/

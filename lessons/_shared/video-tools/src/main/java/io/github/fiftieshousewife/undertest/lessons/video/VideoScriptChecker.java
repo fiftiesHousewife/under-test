@@ -44,12 +44,26 @@ public final class VideoScriptChecker {
         final List<String> lines = readLines(tape);
         final StringBuilder typed = new StringBuilder();
         final List<Problem> problems = new ArrayList<>();
+        boolean commandRunning = false;
         for (int i = 0; i < lines.size(); i++) {
             final Line line = new Line(tape, i + 1, lines.get(i).strip());
             problems.addAll(checkLine(root, line, typed));
+            if (commandRunning && line.text().startsWith("Type")) {
+                problems.add(line.problem("the previous command may still be running, so this typing would mix into"
+                        + " its output; add Sleep 300ms (or a Wait) after its Enter"));
+            }
+            commandRunning = nextCommandRunning(commandRunning, line.text());
             typedText(line.text()).ifPresent(text -> typed.append(text).append('\n'));
         }
         return problems;
+    }
+
+    /** After Type then Enter, a command runs until a Sleep or Wait gives it time to finish. */
+    private static boolean nextCommandRunning(final boolean running, final String line) {
+        if (line.startsWith("Sleep") || line.startsWith("Wait")) {
+            return false;
+        }
+        return running || "Enter".equals(line);
     }
 
     private static List<Problem> checkLine(final Path root, final Line line, final CharSequence typed) {

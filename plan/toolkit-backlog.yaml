@@ -931,6 +931,7 @@ items:
       - "Notes on sync quality, outputs (GIF, separate audio, captions) and fit; adopt-or-build decision recorded"
     blocked_by:
       - "decide-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts"
+    notes: "Not needed so far: kokoro-onnx is called directly from lessons/_shared/video-tools/speak-kokoro.py, which keeps the voice replaceable by any text-to-WAV command."
   - key: "lesson-voiceover-and-captions"
     type: "deliverable"
     title: "Spoken voiceover and captions for lesson videos, from narration text, with an offline voice"
@@ -946,6 +947,7 @@ items:
       - "Existing tools used; anything we write ourselves agreed first"
     blocked_by:
       - "lesson-videos-generated-with-vhs"
+    notes: "In progress: lessons/_shared/video-tools builds WebVTT and SRT captions (buildLessonCaptions) and a narration track read by the offline Kokoro voice through kokoro-onnx (MIT; model Apache-2.0) (buildLessonVoice), checks each clip fits its scene, and assembles the finished MP4 (assembleLessonVideo). The voice is any command that turns a text file into a WAV file."
   - key: "lesson-video-layers-and-rebranding"
     type: "deliverable"
     title: "Lesson videos as editable layers, plus automatic rebranding from an organisation branding file"
@@ -961,6 +963,7 @@ items:
     blocked_by:
       - "decide-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them"
       - "lesson-voiceover-and-captions"
+    notes: "Partly done: each video now has the silent MP4, GIF, narration WAV and M4A, one WAV clip per scene, captions (WebVTT, SRT) and the finished MP4. Still to do: the branding file and adding an intro and outro."
   - key: "publish-lessons-bundle-to-maven-central"
     type: "deliverable"
     title: "Publish the lessons bundle (video layers, captions and scripts) to Maven Central with each release"

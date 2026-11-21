@@ -61,6 +61,21 @@ class VideoScriptCheckerTest {
     }
 
     @Test
+    void reportsTypingBeforeThePreviousCommandHasFinished() throws IOException {
+        final String script = """
+                Type "first"
+                Enter
+                Type "second"
+                Enter
+                Sleep 300ms
+                Type "third"
+                """;
+
+        assertThat(problemsIn(script)).containsExactly("line 3: the previous command may still be running, so this"
+                + " typing would mix into its output; add Sleep 300ms (or a Wait) after its Enter");
+    }
+
+    @Test
     void findsNoScriptsWhenThereIsNoLessonsFolder() {
         assertThat(new VideoScriptChecker().check(root)).isEmpty();
     }
