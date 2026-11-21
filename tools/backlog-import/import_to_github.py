@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Import plan/backlog-seed.yaml into GitHub Issues, using the GitHub REST API directly.
+"""Import a backlog file into GitHub Issues, using the GitHub REST API directly.
 
 Needs only Python 3 (standard library) and a token. No GitHub CLI or other tools.
 
-    python3 tools/backlog-import/import_to_github.py OWNER/REPO            # dry run: shows what would happen
-    python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply    # creates and updates issues
+    python3 tools/backlog-import/import_to_github.py OWNER/REPO                 # dry run of plan/toolkit-backlog.yaml
+    python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply         # creates and updates issues
+    python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply --file templates/programme-backlog.yaml
+                                                    # an organisation's starting backlog, from the template
 
 Settings, from the environment:
     UNDERTEST_GITHUB_TOKEN (or GH_TOKEN, or GITHUB_TOKEN)   a token with permission to write issues in the repo
@@ -15,9 +17,11 @@ What it does, in order:
   1. Creates labels for item type, phase, owner role, who does it, and horizon (if missing).
   2. Creates one issue per item, or updates it if an issue with the same key already exists.
      The key is stored in a hidden comment in the issue body, so re-running never duplicates.
-  3. Closes, as not planned, any issue whose item is no longer in the seed.
+  3. Closes items marked status: done as completed, and closes, as not planned, any issue whose item is no longer in
+     the file.
   4. Links each item to its parent as a sub-issue.
   5. Adds "blocked by" links between items.
+  6. With --page <path>, writes a readable Markdown page of the open items, ordered and linked to their issues.
 """
 import http.client
 import json
@@ -30,7 +34,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-SEED = Path(__file__).resolve().parents[2] / "plan" / "backlog-seed.yaml"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_SEED = REPO_ROOT / "plan" / "toolkit-backlog.yaml"
 KEY_MARKER = "<!-- backlog-key: {} -->"
 LABEL_COLOURS = {"type": "5319e7", "phase": "0e8a16", "owner": "1d76db", "done-by": "fbca04", "horizon": "d93f0b"}
 PAUSE_SECONDS = 1.5      # GitHub asks for at least a second between requests that create content
@@ -132,12 +137,44 @@ def body_for(item, web_base):
     return "\n".join(lines)
 
 
+HORIZON_ORDER = {"now": 0, "next": 1, "later": 2}
+
+
+def write_page(items, by_key, path):
+    """An ordered, readable table of open items, grouped by outcome, linked to their issues."""
+    titles = {item["key"]: item["title"] for item in items}
+    open_keys = {key for key, issue in by_key.items() if issue.get("state") == "open"}
+    def link(key):
+        return f"[{titles[key]}]({by_key[key]['html_url']})" if key in by_key else titles[key]
+    def waiting(item):
+        return [b for b in item.get("blocked_by", []) if b in open_keys]
+    lines = ["# Backlog", "",
+             "Open work for this repository, generated from the issue tracker by "
+             "[tools/backlog-import](../tools/backlog-import/README.md) after each import. Do not edit by hand.", "",
+             "Ordered by horizon (now, next, later), then items that are ready before items waiting on others.", ""]
+    outcomes = [item for item in items if item["type"] == "outcome" and item["key"] in open_keys]
+    for outcome in outcomes:
+        children = [item for item in items if item.get("parent") == outcome["key"] and item["key"] in open_keys]
+        if not children:
+            continue
+        children.sort(key=lambda item: (HORIZON_ORDER.get(item.get("horizon"), 3), bool(waiting(item)), item["type"] != "decision"))
+        lines += [f"## {link(outcome['key'])}", "", "| | Item | Type | Owner | Done by | Waiting on |", "|---|---|---|---|---|---|"]
+        for item in children:
+            number = f"#{by_key[item['key']]['number']}" if item["key"] in by_key else ""
+            blockers = ", ".join(link(b) for b in waiting(item)) or "–"
+            lines.append(f"| {number} | {link(item['key'])} | {item['type']} | {item['owner_role']} | {item['done_by']} | {blockers} |")
+        lines.append("")
+    Path(path).write_text("\n".join(lines), encoding="utf-8")
+    print(f"wrote {path}")
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     repo, apply = sys.argv[1], "--apply" in sys.argv
-    items = parse_seed(SEED)
-    print(f"{len(items)} items in {SEED.name}; {'APPLYING to' if apply else 'dry run for'} {repo}")
+    seed = REPO_ROOT / sys.argv[sys.argv.index("--file") + 1] if "--file" in sys.argv else DEFAULT_SEED
+    items = parse_seed(seed)
+    print(f"{len(items)} items in {seed.name}; {'APPLYING to' if apply else 'dry run for'} {repo}")
     if not apply:
         for item in items:
             print(f"  would create or update: {item['title']}")
@@ -172,6 +209,13 @@ def main():
             print(f"  create: {item['title']}")
             by_key[item["key"]], _ = github.request("POST", "issues", payload, writes=True)
 
+    for item in items:
+        issue = by_key[item["key"]]
+        if item.get("status") == "done" and issue.get("state") == "open":
+            print(f"  close as completed #{issue['number']}: {item['title']}")
+            by_key[item["key"]], _ = github.request("PATCH", f"issues/{issue['number']}",
+                                                    {"state": "closed", "state_reason": "completed"}, writes=True)
+
     seed_keys = {item["key"] for item in items}
     for key, issue in by_key.items():
         if key not in seed_keys and issue.get("state") == "open":
@@ -188,6 +232,8 @@ def main():
         for blocker in item.get("blocked_by", []):
             github.request("POST", f"issues/{issue['number']}/dependencies/blocked_by",
                            {"issue_id": by_key[blocker]["id"]}, writes=True, allow_fail=True)
+    if "--page" in sys.argv:
+        write_page(items, by_key, REPO_ROOT / sys.argv[sys.argv.index("--page") + 1])
     print("done")
 
 

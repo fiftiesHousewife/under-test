@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: database-unit-tests
+name: "Database unit tests (test stored procedures and functions inside the database, on the real engine)"
+workstream: test-against-requirements
+evidence_for_maturity_levels: [2, 3]
+tools: [utplsql, tsqlt, pgtap, testcontainers]
+adopt_when:
+  - "Business rules live in stored procedures, functions or triggers"
+  - "The database engine can run in a container, or a disposable test schema is available"
+reject_or_defer_when:
+  - "The procedures are being moved out of the database soon; characterise them from the application side instead"
+precondition_checks:
+  - {done_by: tool, check: "The schema can be created from scripts or migrations in source control"}
+  - {done_by: person, check: "The database licence allows running the engine in a test container"}
+fallback: characterisation-tests
+constraints:
+  - "Use the engine's own test framework: utPLSQL for Oracle, tSQLt for SQL Server, pgTAP for PostgreSQL"
+  - "tSQLt states no licence in its repository; check its terms before adopting it"
+  - "Never test against a different database product (an in-memory database is not evidence)"
+  - "Prove migrations too: run Flyway validate or Liquibase update-testing-rollback against the real engine"
+references: [test-doubles]
+example: {java: todo, typescript: none}

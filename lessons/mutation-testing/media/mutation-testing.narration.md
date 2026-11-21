@@ -1,37 +1,20 @@
-# Mutation testing: two suites, same coverage, very different strength
+# Narration: mutation testing
 
-Here are two test suites for the same discount calculator. Both of them run every line of the code, so line coverage
-says they are equally good.
+One line per scene. Captions and the voiceover are generated from this file; the video script is
+[mutation-testing.tape](mutation-testing.tape).
 
-Mutation testing checks that claim. A tool called PIT plants thirteen small bugs in the code, one at a time, and runs
-the tests against each one. A good test suite should notice every planted bug.
-
-First, look at a test from the weak suite. It only checks that the discount is more than zero, so a wrong percentage
-would still pass.
-
-```console
-$ grep -n -A1 'Weak:' lessons/mutation-testing/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mutation/DiscountCalculatorWeakTest.java | head -2
-```
-
-Now run PIT against the weak suite.
-
-```console
-$ ./gradlew -q :lessons:mutation-testing:pitest -Psuite=weak 2>/dev/null | grep 'Generated 13'
-```
-
-Only five of the thirteen planted bugs were caught. The other eight would slip through, even with full line coverage.
-
-The strong suite checks exact values on both sides of every boundary, and wraps several checks together so that every
-failure is reported.
-
-```console
-$ grep -n -A3 'assertAll(' lessons/mutation-testing/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mutation/DiscountCalculatorStrongTest.java | head -4
-```
-
-Run PIT against the strong suite.
-
-```console
-$ ./gradlew -q :lessons:mutation-testing:pitest 2>/dev/null | grep 'Generated 13'
-```
-
-All thirteen caught. Coverage told us the two suites were the same. Mutation testing shows they are not.
+1. **Why.** Mutation testing asks whether your tests check the code they run, or only run it. Line coverage counts the
+   lines a test ran; it cannot tell whether any test checked the result. PIT plants one small bug at a time, reruns the
+   tests, and counts the bugs they catch.
+2. **The build.** PIT is one Gradle plugin, applied to every repo by the toolkit's build conventions, with its versions
+   in the version catalogue. This lesson adds one switch to choose which of its two test suites PIT uses.
+3. **The code under test.** A discount of 5% from 50 and 10% from 100, plus 2% more for loyal customers.
+4. **The weak tests.** Every line of the calculator runs, so line coverage is 100%. The comments say what each test
+   fails to check.
+5. **PIT on the weak tests.** `./gradlew -q :lessons:mutation-testing:pitest -Psuite=weak`. The build prints a summary:
+   100% line coverage, but only 5 of 13 planted bugs caught. For every bug it shows the line it changed and which tests
+   ran: the ones that failed, or the ones that still passed. On line 24, `>= 50` became `> 50`, so an order of exactly
+   50 loses its discount, and no test tries 50.
+6. **The strong tests.** They check both sides of every boundary, with exact values.
+7. **PIT on the strong tests.** `./gradlew -q :lessons:mutation-testing:pitest`. The same 100% line coverage, and all 13
+   planted bugs caught. Only mutation testing shows which tests catch bugs.

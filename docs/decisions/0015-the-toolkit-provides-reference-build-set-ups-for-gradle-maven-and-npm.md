@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Technical Architect
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # The toolkit provides reference build set-ups for Gradle, Maven and npm
 
-**Decided by:** Technical Architect · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** proposed
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 

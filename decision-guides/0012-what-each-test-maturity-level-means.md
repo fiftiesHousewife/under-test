@@ -1,0 +1,36 @@
+---
+status: proposed
+decision-makers: Test Quality Lead, approved by the Steering Group
+group: What "well tested" means
+---
+
+# What each test maturity level means
+
+**Decided by:** Test Quality Lead, approved by the Steering Group · **Status:** proposed
+
+*This is a decision guide for adopting organisations. Each organisation accepts, narrows or replaces it in its own organisation repo.*
+
+## Context and Problem Statement
+
+Every target, check and summary needs one shared answer to "how well tested is this repo?".
+
+## Considered Options
+
+* **Six levels: 0 builds reliably; 1 runs on its own (in CI, with outbound calls blocked); 2 current behaviour recorded; 3 checked against requirements; 4 tests proven to catch bugs; 5 checked in production**  
+  Ordered by the evidence tests provide
+* **Fewer levels**  
+  Simpler, but hides real differences between repos
+
+## Decision Outcome
+
+Proposed: the six levels as listed. Level 1 is proved in CI, because developer machines may not be able to run containers.
+
+### Consequences
+
+* Level fields in the assessment file schema.
+
+## More Information
+
+* Builds on: nothing (a foundation decision)
+* Later decisions that build on this: [What counts as evidence for each test maturity level](0013-what-counts-as-evidence-for-each-test-maturity-level.md), [Target test maturity level for each business criticality](0015-target-test-maturity-level-for-each-business-criticality.md), [Shared libraries target level 4, whatever the criticality of the apps using them](0016-shared-libraries-target-level-4-whatever-the-criticality-of-the-apps-using-them.md), [How an application's test maturity level is worked out from its repos](0017-how-an-applications-test-maturity-level-is-worked-out-from-its-repos.md), [Target test mix for each application type and the top-heavy phase at level 2](0018-target-test-mix-for-each-application-type-and-the-top-heavy-phase-at-level-2.md), [The assessment file: where it lives, who writes which fields, and its schema version](0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md), [The order of workstreams for a repo](0050-the-order-of-workstreams-for-a-repo.md), [Feature flags are used to change legacy code safely and to release gradually](0051-feature-flags-are-used-to-change-legacy-code-safely-and-to-release-gradually.md)
+* Background: [maturity-models](../docs/REFERENCES.md#maturity-models), [legacy-code](../docs/REFERENCES.md#legacy-code)

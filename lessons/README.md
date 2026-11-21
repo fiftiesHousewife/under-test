@@ -9,6 +9,10 @@ One folder per lesson, for anyone learning a testing technique. Each lesson has:
 | `exercise/` | An exercise starting from the "before" state, with the "after" state as the answer (to come) |
 | `media/` | The video script (`.tape`) and narration text; videos, captions and audio are generated from them and published with releases |
 
+Shared video tools are in `_shared/`: the hidden set-up, callout and narration helpers, the render script, and
+[video checks](_shared/video-tools/build.gradle.kts) that run in `./gradlew check`. They stay inside `lessons/` so
+they move with the lessons when the lessons get their own repo.
+
 The rules a planning tool applies for each technique are kept separately, in [`techniques/`](../techniques/README.md).
 
 To add a lesson, follow [the write-a-technique-lesson skill](../.github/skills/write-a-technique-lesson/SKILL.md).

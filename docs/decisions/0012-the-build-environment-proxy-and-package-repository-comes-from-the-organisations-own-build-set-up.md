@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Technical Architect, approved by the Security and Platform Owner
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # The build environment (proxy and package repository) comes from the organisation's own build set-up
 
-**Decided by:** Technical Architect, approved by the Security and Platform Owner · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** proposed
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 

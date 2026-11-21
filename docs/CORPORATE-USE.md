@@ -203,6 +203,9 @@ rebrand and redistribute it freely; when you redistribute, keep the licence and 
 
 ## A day in the life
 
+See also the [repo journey diagrams](design/repo-journey.md).
+
+
 | Who | What they do | Tools they touch |
 |---|---|---|
 | **Toolkit Owner** | Approves a new toolkit release, raises the version in the organisation repo by pull request, passes the external artifact list to security | Package repository, organisation repo |

@@ -21,6 +21,19 @@ A suite can have 100% line coverage and still let most mutants survive. This exa
 open lessons/mutation-testing/example/build/reports/pitest/index.html
 ```
 
+After each run the build prints a short summary: line coverage, how many planted bugs (mutants) were caught, and for
+each one the line it changed and which tests failed or still passed. For example, with the weak suite:
+
+```text
+Line coverage: 13 of 13 lines run by the tests (100%)
+Planted bugs:  13, caught 5, missed 8
+...
+Missed - every test that ran still passed:
+  line 24  } else if (total >= 50) {                boundary moved by one  passed: mediumOrder, smallOrder and 1 more
+...
+Result: the tests caught 5 of 13 planted bugs (38%).
+```
+
 Both suites give 100% line coverage of [`DiscountCalculator`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mutation/DiscountCalculator.java).
 In the HTML report, red lines have a surviving mutant. Hover over the number next to a line to see each mutant.
 
@@ -51,7 +64,7 @@ The rules a planning tool applies are in [the technique rules](../../techniques/
 
 - **Measurement run:** a time-limited PIT run on the ten highest-risk files writes `measured.mutation_sample` into the repo's
   assessment file (`testing/assessment.yaml`). It's skipped, and the skip recorded, if coverage is under 20%.
-- **Acceptance check (ADR-004):** a AI-written test is kept only if it raises coverage *or kills at least one surviving mutant*.
+- **Acceptance check** ([the checks an AI-written test must pass before it is kept](../../decision-guides/0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md)): an AI-written test is kept only if it raises coverage *or kills at least one surviving mutant*.
 - **"Strengthen tests" workstream:** PIT runs on the code changed in each pull request and comments with the surviving mutants.
   The AI assistant is asked to strengthen assertions to kill named mutants, and the acceptance check confirms each kill.
 
@@ -59,7 +72,7 @@ The rules a planning tool applies are in [the technique rules](../../techniques/
 
 - **Mutants that can't be killed:** some changes behave exactly like the original code, so no test can tell them apart. Don't chase 100% across a codebase.
 - **Flaky tests spoil the score:** a flaky test "kills" mutants at random. Fix flaky tests first.
-- **Gaming a fixed score:** a fixed mutation score target gets gamed. ADR-003 proposes "no surviving mutants in key-journey code changed by each pull request" instead.
+- **Gaming a fixed score:** a fixed mutation score target gets gamed. [What counts as evidence for each test maturity level](../../decision-guides/0013-what-counts-as-evidence-for-each-test-maturity-level.md) proposes "no surviving mutants in key-journey code changed by each pull request" instead.
 
 ## Further reading
 

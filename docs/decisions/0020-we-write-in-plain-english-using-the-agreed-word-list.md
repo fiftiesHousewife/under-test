@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Engagement Lead
+decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # We write in plain English using the agreed word list
 
-**Decided by:** Engagement Lead · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 

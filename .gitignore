@@ -62,3 +62,7 @@ lessons/*/media/*.wav
 lessons/*/media/*.vtt
 lessons/*/media/*.srt
 .narratty/
+
+### Python ###
+__pycache__/
+*.pyc

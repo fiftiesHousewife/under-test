@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Steering Group
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich
 
-**Decided by:** Steering Group · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -33,6 +35,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
+* Builds on: [Organisation-specific facts and decisions live in a private organisation repo](0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
 * Later decisions that build on this: [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md)
 * Background: none

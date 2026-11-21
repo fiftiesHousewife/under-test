@@ -15,6 +15,7 @@ import com.github.spotbugs.snom.Effort
 import com.github.spotbugs.snom.SpotBugsTask
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import groovy.json.JsonSlurper
+import java.io.OutputStream
 import de.thetaphi.forbiddenapis.gradle.CheckForbiddenApis
 import io.github.fiftieshousewife.undertest.gradle.CodeStyleSource
 import io.github.fiftieshousewife.undertest.gradle.UnderTestExtension
@@ -270,7 +271,26 @@ if (providers.environmentVariable("CI").isPresent) {
 pitest {
     pitestVersion = version("pitest")
     junit5PluginVersion = version("pitest-junit5")
-    targetClasses = listOf("io.github.fiftieshousewife.*")
+    targetClasses = listOf("${project.group}.*")
     outputFormats = listOf("HTML", "XML")
     timestampedReports = false
+    fullMutationMatrix = true // records every test that ran against each planted bug, for the summary
+    verbosity = "QUIET" // the mutationSummary task below prints a short, plain-English result instead
+}
+
+// After every PIT run, print a plain-English summary instead of making people read PIT's console output.
+val mutationSummary = tasks.register<io.github.fiftieshousewife.undertest.gradle.MutationSummaryTask>("mutationSummary") {
+    group = "verification"
+    description = "Summarises the last PIT run: coverage, planted bugs caught and missed, and where."
+    reportDir = layout.buildDirectory.dir("reports/pitest")
+    sourceDirs.from(sourceSets.named("main").map { it.java.srcDirs })
+}
+tasks.named<JavaExec>("pitest") {
+    doFirst {
+        // PIT's long statistics and info lines are replaced by the summary; warnings and errors still show.
+        val pit = this as JavaExec
+        pit.standardOutput = OutputStream.nullOutputStream()
+        pit.errorOutput = io.github.fiftieshousewife.undertest.gradle.InfoLineFilter(System.err)
+    }
+    finalizedBy(mutationSummary)
 }

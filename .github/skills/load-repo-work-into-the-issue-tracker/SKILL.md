@@ -6,7 +6,7 @@ description: Load a repo's approved testing plan into the organisation's issue t
 # Loading a repo's work into the issue tracker
 
 > Placeholder: the tracker-neutral loader and its Jira Cloud adapter are still to be built
-> (see [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](../../../docs/decisions/0046-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md)).
+> (see [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](../../../docs/decisions/0023-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md)).
 > Until then, use the GitHub importer in [tools/backlog-import](../../../tools/backlog-import/README.md) for the programme backlog only.
 
 1. Read the organisation profile from the private organisation repo: `issue_tracker` (which tracker, its address and project) and

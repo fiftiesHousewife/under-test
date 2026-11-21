@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Steering Group
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # A repo that cannot meet a decision gets a time-limited exception approved by the deciding role
 
-**Decided by:** Steering Group · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** proposed
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 

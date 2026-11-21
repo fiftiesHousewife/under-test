@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: embedded-jakarta-ee-tests
+name: "Embedded Jakarta EE tests (run EJBs, CDI beans, JMS and JNDI lookups in tests without a full application server)"
+workstream: make-it-run-on-its-own
+test_stand_in_approach: run-in-container
+evidence_for_maturity_levels: [1, 2, 3]
+tools: [arquillian, openejb-core, weld-junit5, artemis-junit-5, simple-jndi]
+adopt_when:
+  - "J2EE, Java EE or Jakarta EE code depends on container services: EJBs, CDI, JMS, JNDI data sources"
+  - "Tests today need a deployed server, so nobody runs them"
+reject_or_defer_when:
+  - "The app is about to move off the container; test the logic behind interfaces instead"
+precondition_checks:
+  - {done_by: tool, check: "Which container services the code uses, found by scanning annotations and deployment descriptors"}
+fallback: fake-behind-interface
+constraints:
+  - "Prefer the smallest stand-in that works: weld-junit5 for CDI, Simple-JNDI for JNDI lookups, an embedded Artemis broker for JMS, embedded OpenEJB for EJBs, and Arquillian only when a real container is needed"
+  - "Spring's old JNDI stand-in (SimpleNamingContextBuilder) was removed in Spring 6; use Simple-JNDI"
+  - "Old Struts, JSF or JSP pages are tested with HtmlUnit or Playwright (see server-rendered-ui-tests)"
+references: [test-doubles]
+example: {java: todo, typescript: none}

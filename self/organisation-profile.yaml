@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=../schema/organisation-profile.schema.json
+# The toolkit's own organisation profile: this repo adopts the toolkit as its own first adopter (self-application).
+# Public by design: it describes only the toolkit project itself.
+toolkit:
+  version: 0.1.0
+  source_mirror: https://github.com/fiftiesHousewife/under-test
+organisation:
+  name: under-test toolkit project
+  organisation_repo: https://github.com/fiftiesHousewife/under-test
+issue_tracker:
+  kind: github-issues
+  url: https://github.com/fiftiesHousewife/under-test/issues
+code_hosting:
+  kind: github-cloud
+  url: https://github.com/fiftiesHousewife
+ci:
+  platform: github-actions
+  runs_on: virtual-machines
+  image_build_tool: docker
+  container_runtime_for_tests: docker
+developer_machines:
+  operating_systems: [macos, linux, windows]
+  container_runtime_available: true
+package_repository:
+  kind: public-only
+ai_assistants:
+  allowed: [any AI coding assistant, directed and reviewed by a person]
+  independent_agents_allowed: false
+commit_messages:
+  must_name_work_item: false
+roles:
+  toolkit_owner: toolkit maintainers

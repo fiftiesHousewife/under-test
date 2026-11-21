@@ -10,8 +10,8 @@ adopt_when:
   - Local tests need a stand-in for a system with no in-process substitute
 reject_or_defer_when: []
 precondition_checks:
-  - {done_by: tool, check: Count of hard-wired dependencies, found by static scan}
-fallback: Accept risk (ADR entry with owner and review date)
+  - {done_by: tool, check: "Count of hard-wired dependencies, found by static scan"}
+fallback: "Accept the risk, recorded as a time-limited exception with an owner and a review date"
 constraints: [The real system stays untested; container tests check the connection code]
 references: [test-doubles]
 example: {java: todo, typescript: none}

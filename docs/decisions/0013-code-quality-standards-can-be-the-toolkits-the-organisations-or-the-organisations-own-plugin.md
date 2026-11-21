@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Technical Architect
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin
 
-**Decided by:** Technical Architect · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** proposed
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 

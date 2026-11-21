@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Technical Architect
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Build settings come in three layers: environment, code-quality standards and testing evidence
 
-**Decided by:** Technical Architect · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -32,6 +34,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
+* Builds on: [Organisation-specific facts and decisions live in a private organisation repo](0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
 * Later decisions that build on this: [The build environment (proxy and package repository) comes from the organisation's own build set-up](0012-the-build-environment-proxy-and-package-repository-comes-from-the-organisations-own-build-set-up.md), [Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin](0013-code-quality-standards-can-be-the-toolkits-the-organisations-or-the-organisations-own-plugin.md), [Testing evidence is defined by standard report files, not by one build plugin](0014-testing-evidence-is-defined-by-standard-report-files-not-by-one-build-plugin.md)
 * Background: none

@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Test Quality Lead, approved by the Steering Group
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Testing evidence is defined by standard report files, not by one build plugin
 
-**Decided by:** Test Quality Lead, approved by the Steering Group · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** proposed
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -29,6 +31,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md), [What counts as evidence for each test maturity level](0032-what-counts-as-evidence-for-each-test-maturity-level.md)
+* Builds on: [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md), [What counts as evidence for each test maturity level](../../decision-guides/0013-what-counts-as-evidence-for-each-test-maturity-level.md)
 * Later decisions that build on this: [The toolkit provides reference build set-ups for Gradle, Maven and npm](0015-the-toolkit-provides-reference-build-set-ups-for-gradle-maven-and-npm.md)
 * Background: none

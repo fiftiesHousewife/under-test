@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Toolkit Owner
+decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # Every tool the toolkit names is checked for maintenance and licence before adoption and at each release
 
-**Decided by:** Toolkit Owner · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -31,5 +33,5 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [The format for intended behaviour is chosen by piloting Gherkin and Allium side by side](0028-the-format-for-intended-behaviour-is-chosen-by-piloting-gherkin-and-allium-side-by-side.md)
 * Background: none

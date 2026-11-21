@@ -16,5 +16,6 @@ precondition_checks:
 fallback: Replay recorded requests against old and new builds offline
 constraints:
   - Not Diffy - the original is archived and its only fork has a non-commercial licence
+  - "For a parallel run inside the code (old and new side by side, compare, keep serving the old result), write a small wrapper: the Java and JavaScript ports of GitHub's Scientist library are no longer maintained"
 references: [legacy-code]
 example: {java: todo, typescript: none}

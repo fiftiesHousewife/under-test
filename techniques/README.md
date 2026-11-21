@@ -17,6 +17,7 @@ The lessons that teach each technique (explanation, runnable example, exercise, 
 | [testcontainers](testcontainers/) | make it run on its own | 1–3 | to do (container part) | – |
 | [contract-testing](contract-testing/) | make it run on its own | 3 | to do | to do |
 | [fake-behind-interface](fake-behind-interface/) | make it run on its own | 1–2 | to do | – |
+| [stand-in-commands](stand-in-commands/) | make it run on its own | 1–2 | to do | – |
 | [traffic-record-and-replay](traffic-record-and-replay/) | make it run on its own | 1–2 | lesson only | – |
 | [refactoring-for-testability](refactoring-for-testability/) | make code testable | 2–3 | to do | – |
 | [feature-flags](feature-flags/) | make code testable | 5 | to do | – |
@@ -25,3 +26,9 @@ The lessons that teach each technique (explanation, runnable example, exercise, 
 | [business-rule-tests](business-rule-tests/) | test against requirements | 3 | to do | to do |
 | [differential-testing](differential-testing/) | check in production | 3, 5 | to do | – |
 | [post-release-checks](post-release-checks/) | check in production | 5 | lesson only | – |
+| [characterisation-tests](characterisation-tests/) | record current behaviour | 1–2 | to do | – |
+| [database-unit-tests](database-unit-tests/) | test against requirements | 2–3 | to do | – |
+| [batch-file-in-file-out-tests](batch-file-in-file-out-tests/) | record current behaviour | 1–3 | to do | – |
+| [embedded-jakarta-ee-tests](embedded-jakarta-ee-tests/) | make it run on its own | 1–3 | to do | – |
+| [machine-state-checks](machine-state-checks/) | strengthen tests | 2 | – | – |
+| [server-rendered-ui-tests](server-rendered-ui-tests/) | record current behaviour | 2–3 | to do | to do |

@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Toolkit Owner
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Lessons live apart from technique rules and move to their own repo once the convention plugin is published
 
-**Decided by:** Toolkit Owner · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -33,6 +35,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md), [How this repository is organised](0003-how-this-repository-is-organised.md)
+* Builds on: [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md), [How this repository is organised](0001-how-this-repository-is-organised.md)
 * Later decisions that build on this: none yet
 * Background: none

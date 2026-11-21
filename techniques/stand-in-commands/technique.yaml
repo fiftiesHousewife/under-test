@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: stand-in-commands
+name: "Stand-in commands (a script under test calls a small stand-in program, put first on PATH, instead of the real tool)"
+workstream: make-it-run-on-its-own
+test_stand_in_approach: fake-behind-interface
+evidence_for_maturity_levels: [1, 2]
+tools: [bats-core, shellcheck, kcov]
+adopt_when:
+  - "Shell scripts or batch jobs call other programs (curl, sqlplus, scp, a vendor command-line tool) that tests must not reach"
+  - "The real program is slow, needs credentials, or can reach production"
+  - "You need to test how a script reports progress, retries or fails, which the real program can't be made to do on demand"
+reject_or_defer_when:
+  - "The script's logic is mostly in the program it calls; test that program instead"
+precondition_checks:
+  - {done_by: tool, check: "Scripts call programs by name (found on PATH), not by fixed absolute path"}
+  - {done_by: person, check: "With AI help, list the programs each script calls, and what output and exit codes it relies on"}
+fallback: "Run the script only in a shared test environment, and accept the risk for the paths that can't be triggered there"
+constraints:
+  - "Run ShellCheck on every script first, and measure coverage of shell scripts with kcov (its container image)"
+  - "Get bats-core and its helper libraries as a pinned copy of the source or the official bats/bats container image, not from npm, where copies lag behind or come from forks"
+  - "The stand-in shows what the script does with the output it expects; a separate check with the real program confirms that output is still realistic"
+references: [test-doubles]
+example: {java: none, typescript: none}

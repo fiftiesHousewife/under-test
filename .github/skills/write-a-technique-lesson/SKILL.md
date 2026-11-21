@@ -33,6 +33,8 @@ lessons/<id>/
 - **Size:** one production class or a small package.
 
 ## The video script (`media/<id>.tape`)
+Follow [the make-a-lesson-video skill](../make-a-lesson-video/SKILL.md): short (ten minutes at most, two to five is
+better), one idea, and the rules that stop a recording from hanging. In brief:
 Copy `lessons/mutation-testing/media/mutation-testing.tape` and keep its shape:
 - **Dependencies first:** `Require` each program the video needs (java, git, ...), then `Env LESSON "<id>"` and
   `Source lessons/_shared/setup.tape`. The shared set-up runs off-camera: it fetches Gradle, resolves every plugin and
@@ -43,6 +45,10 @@ Copy `lessons/mutation-testing/media/mutation-testing.tape` and keep its shape:
 - **Highlight:** pipe output through `grep --color=always` so the key part is coloured.
 - **Call out:** draw a box off-camera: `Hide`, `Type@1ms "callout '...'"`, `Enter`, `Show`.
 - **Zoom:** not possible inside VHS; add a zoom marker to the narration file instead (post-production step).
+- **Render** with `lessons/_shared/render.sh <id>`, which shows brief timed progress and the VHS log only on failure.
+- **Check before rendering:** `./gradlew :lessons:video-tools:check` catches script mistakes that would make a
+  recording hang (a `Wait` on the last line only, a pattern that matches the typed command, Gradle output piped into
+  `grep` without `--rerun`), and tests the shared helpers. It also runs in `./gradlew check`.
 
 ## The README, in this order
 1. Title line: workstream, test maturity level it provides evidence for, tools.

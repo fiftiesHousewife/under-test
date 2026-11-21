@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Engagement Lead
+decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The programme backlog lives in the organisation's issue tracker, not in a file
 
-**Decided by:** Engagement Lead · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** proposed
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -27,11 +29,11 @@ Proposed: the first option. The starting list of work is kept in this repo as a 
 
 ### Consequences
 
-* `plan/backlog-seed.yaml` and its schema.
-* An importer per supported tracker, built on existing tools.
+* `plan/toolkit-backlog.yaml`, `templates/programme-backlog.yaml` and their schema.
+* An importer per supported tracker, using its REST API.
 
 ## More Information
 
-* Builds on: [The programme runs as a forward deployed engagement with named roles](0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md), [The programme moves through five phases, each ending with a sign-off](0002-the-programme-moves-through-five-phases-each-ending-with-a-sign-off.md)
-* Later decisions that build on this: [Decision records follow MADR and are approved by pull request review](0010-decision-records-follow-madr-and-are-approved-by-pull-request-review.md), [Testing plans are generated from the assessment file, and the issue tracker follows the work](0042-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md), [When the organisation requires it, every commit names its work item](0047-when-the-organisation-requires-it-every-commit-names-its-work-item.md)
+* Builds on: [The programme runs as a forward deployed engagement with named roles](../../decision-guides/0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md), [The programme moves through five phases, each ending with a sign-off](../../decision-guides/0003-the-programme-moves-through-five-phases-each-ending-with-a-sign-off.md)
+* Later decisions that build on this: [Decision records follow MADR and are approved by pull request review](0010-decision-records-follow-madr-and-are-approved-by-pull-request-review.md), [Testing plans are generated from the assessment file, and the issue tracker follows the work](../../decision-guides/0024-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md), [When the organisation requires it, every commit names its work item](../../decision-guides/0028-when-the-organisation-requires-it-every-commit-names-its-work-item.md)
 * Background: none

@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: server-rendered-ui-tests
+name: "Server-rendered UI tests (drive old JSP, JSF or Struts pages in a browser, with screenshots as saved results)"
+workstream: record-current-behaviour
+evidence_for_maturity_levels: [2, 3]
+tools: [playwright, htmlunit]
+adopt_when:
+  - "Pages are built on the server (JSP, JSF, Struts, templates) and the logic behind them is hard to reach"
+  - "A few user journeys matter most and can be named by the Application Owner"
+reject_or_defer_when:
+  - "The logic can be tested below the page; prefer that, and keep browser tests to a few journeys"
+precondition_checks:
+  - {done_by: tool, check: "The app starts locally or in a container with test data"}
+  - {done_by: person, check: "The journeys to cover are named and agreed"}
+fallback: characterisation-tests
+constraints:
+  - "Use HtmlUnit for quick checks of page content and forms, and Playwright for full browser journeys and screenshot comparison"
+  - "Keep existing Selenium suites working rather than rewriting them"
+references: [test-mix]
+example: {java: todo, typescript: todo}

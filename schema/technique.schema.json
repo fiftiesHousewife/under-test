@@ -19,7 +19,7 @@
   "additionalProperties": false,
   "$defs": {
     "maturityLevel": {
-      "description": "A test maturity level (ADR-003): 0 builds reliably; 1 runs on its own; 2 current behaviour recorded; 3 checked against requirements; 4 tests proven to catch bugs; 5 checked in production.",
+      "description": "A test maturity level (see the decision guide: what each test maturity level means): 0 builds reliably; 1 runs on its own; 2 current behaviour recorded; 3 checked against requirements; 4 tests proven to catch bugs; 5 checked in production.",
       "type": "integer",
       "minimum": 0,
       "maximum": 5

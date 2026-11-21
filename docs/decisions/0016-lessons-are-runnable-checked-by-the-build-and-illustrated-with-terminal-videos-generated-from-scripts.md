@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Toolkit Owner
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts
 
-**Decided by:** Toolkit Owner · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -33,6 +35,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [How this repository is organised](0003-how-this-repository-is-organised.md)
+* Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [How this repository is organised](0001-how-this-repository-is-organised.md)
 * Later decisions that build on this: [Lessons live apart from technique rules and move to their own repo once the convention plugin is published](0017-lessons-live-apart-from-technique-rules-and-move-to-their-own-repo-once-the-convention-plugin-is-published.md), [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md)
 * Background: none

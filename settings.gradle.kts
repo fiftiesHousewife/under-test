@@ -38,5 +38,8 @@ fun includeAll(root: String, subdir: String? = null) {
 }
 
 includeAll("lessons", subdir = "example")
+// Checks for lesson videos; kept under lessons/ so they move with the lessons into their own repo.
+include(":lessons:video-tools")
+project(":lessons:video-tools").projectDir = rootDir.resolve("lessons/_shared/video-tools")
 includeAll("tools")
 includeAll("shared-test-kits")

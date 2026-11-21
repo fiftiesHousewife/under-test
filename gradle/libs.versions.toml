@@ -7,6 +7,8 @@ assertj = "3.27.7"
 lombok = "1.18.48"
 slf4j = "2.0.20"
 log4j = "2.26.1"
+jackson3 = "3.3.0"
+json-schema-validator = "3.0.9"
 
 # Quality tools
 jacoco = "0.8.16"
@@ -35,6 +37,8 @@ slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
 log4j-slf4j2-impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }
 findsecbugs = { module = "com.h3xstream.findsecbugs:findsecbugs-plugin", version.ref = "findsecbugs" }
+json-schema-validator = { module = "com.networknt:json-schema-validator", version.ref = "json-schema-validator" }
+jackson3-yaml = { module = "tools.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson3" }
 
 # Gradle plugins, as ordinary dependencies of build-logic
 gradle-pitest-plugin = { module = "info.solidsoft.gradle.pitest:gradle-pitest-plugin", version.ref = "gradle-pitest-plugin" }

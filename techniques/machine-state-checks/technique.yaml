@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: machine-state-checks
+name: "Machine state checks (check the files, services, ports and packages an install or deploy script leaves behind)"
+workstream: strengthen-tests
+evidence_for_maturity_levels: [2]
+tools: [goss]
+adopt_when:
+  - "Install, deploy or configuration scripts set up servers or containers"
+  - "Failures show up only after deployment, as a missing file, wrong permission or closed port"
+reject_or_defer_when:
+  - "The platform's own tooling already checks this (for example, container image scanning and health checks)"
+precondition_checks:
+  - {done_by: tool, check: "The script can run in a throwaway container or virtual machine"}
+fallback: post-release-checks
+constraints:
+  - "Run the script and the checks in a throwaway container, never on a shared server"
+references: [legacy-code]
+example: {java: none, typescript: none}

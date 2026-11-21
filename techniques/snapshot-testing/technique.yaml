@@ -3,7 +3,7 @@ id: snapshot-testing
 name: Approval / golden-master tests at the boundary
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [2]
-tools: [approvaltests-java]
+tools: [approvaltests-java, xmlunit, jsonunit, datacompy]
 adopt_when:
   - Output is deterministic or can be normalised
   - Structured output such as JSON, files or reports
@@ -12,6 +12,8 @@ reject_or_defer_when:
   - The boundary is about to be replaced
 precondition_checks:
   - {done_by: tool, check: Run twice and diff the outputs}
+constraints:
+  - "Compare structured output with a tool that ignores what doesn't matter: XMLUnit for XML, JSONUnit for JSON, datacompy for tables and CSV"
 fallback: property-based-testing
 application_types: [web-service, batch-job, message-consumer]
 references: [legacy-code]

@@ -1,12 +1,14 @@
 ---
 status: proposed
-decision-makers: Technical Architect
+decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # How AI assistant skills and instructions reach every repo
 
-**Decided by:** Technical Architect · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+
+*This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
 
@@ -35,6 +37,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [People do the work with AI coding assistance, and review everything it produces](0024-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)
+* Builds on: [People do the work with AI coding assistance, and review everything it produces](../../decision-guides/0005-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)
 * Later decisions that build on this: none yet
 * Background: none

@@ -5,7 +5,7 @@
 ![Java 25](https://img.shields.io/badge/Java-25-blue)
 ![Gradle 9](https://img.shields.io/badge/Gradle-9-02303A)
 ![JUnit 6](https://img.shields.io/badge/JUnit-6-25A162)
-[![Decision guides](https://img.shields.io/badge/decisions-MADR-informational)](docs/decisions/README.md)
+[![Decision guides](https://img.shields.io/badge/decision%20guides-MADR-informational)](decision-guides/README.md)
 
 **A toolkit for getting old code properly tested, one repo at a time.**
 
@@ -28,9 +28,10 @@ corporate networks.
 | Evaluating it for a company with a locked-down network (no internet installs, no public code hosting, your own package repository, proxy, tracker and wiki) | [docs/CORPORATE-USE.md](docs/CORPORATE-USE.md): the assumptions it is built for, and how each part reaches people |
 | Ready to adopt it in your organisation | [ADOPTION.md](ADOPTION.md): step by step, from naming roles to rolling out in batches |
 | Learning a testing technique | [lessons/](lessons/README.md): lessons, runnable examples and videos |
-| Making or reviewing a programme decision | [docs/decisions/](docs/decisions/README.md): decision guides, smallest first |
+| Making or reviewing a programme decision | [decision-guides/](decision-guides/README.md): decision guides, smallest first |
 | An AI coding assistant, or directing one | [AGENTS.md](AGENTS.md): how to work in this repo, and the code standards |
 | Unsure of a word | [GLOSSARY.md](GLOSSARY.md) |
+| Following the toolkit's own progress | [docs/BACKLOG.md](docs/BACKLOG.md): open work, ordered and linked to its issues |
 
 ## Adopting it, in brief
 
@@ -114,14 +115,17 @@ result in [a published format](schema/repo-classification.schema.json), so any s
 | [`ADOPTION.md`](ADOPTION.md), [`docs/CORPORATE-USE.md`](docs/CORPORATE-USE.md) | How to adopt the toolkit, and the corporate environment it is built for |
 | [`lessons/`](lessons/README.md) | One folder per lesson: explanation, runnable example, exercise, and video scripts |
 | [`techniques/`](techniques/README.md) | The rules for when to use each testing technique, read by the toolkit's tools |
-| [`docs/decisions/`](docs/decisions/README.md) | Decision guides, one small decision each, building from foundations upward |
-| [`docs/design/`](docs/design/survey-tool.md) | Designs for tools that sit outside the toolkit |
-| [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background reading and sources |
+| [`decision-guides/`](decision-guides/README.md) | Decision guides for adopting organisations, one small decision each, building from foundations upward |
+| [`docs/decisions/`](docs/decisions/README.md) | The toolkit's own decisions: how it is built, published and adopted |
+| [`docs/design/`](docs/design/repo-journey.md) | Diagrams of a repo's journey, and designs for tools outside the toolkit |
+| [`self/`](self/README.md) | The toolkit adopting itself: its own organisation profile |
+| [`docs/REFERENCES.md`](docs/REFERENCES.md), [`docs/research/`](docs/research/calm-and-allium-for-test-design.md) | Background reading, sources, and research reports |
 | [`GLOSSARY.md`](GLOSSARY.md) | The words we use, the words we avoid, the engagement roles and phases |
 | [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation repo, with placeholder values |
 | [`schema/`](schema/) | JSON Schemas for every YAML and JSON format the toolkit reads or writes |
-| [`tools/`](tools/) | Tools, including [the backlog importers](tools/backlog-import/README.md) |
-| [`plan/backlog-seed.yaml`](plan/backlog-seed.yaml) | The starting list of work, to import into your issue tracker |
+| [`tools/`](tools/) | Tools: [repo checks](tools/repo-checks/build.gradle.kts), [backlog importers](tools/backlog-import/README.md), [maintainer sync](tools/sync/README.md) |
+| [`templates/programme-backlog.yaml`](templates/programme-backlog.yaml) | An organisation's starting backlog, to import into its own issue tracker |
+| [`plan/toolkit-backlog.yaml`](plan/toolkit-backlog.yaml) | Work to build the toolkit itself (this repo's issues) |
 | [`build-logic/`](build-logic/), [`config/quality/`](config/quality/) | Gradle conventions and quality-check rules |
 | [`AGENTS.md`](AGENTS.md) | How AI coding assistants, and people, should work here |
 

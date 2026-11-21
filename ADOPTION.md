@@ -76,7 +76,7 @@ Name the people for each engagement role in [the glossary](GLOSSARY.md#engagemen
 Engagement Lead, Technical Architect, Test Quality Lead, Security and Platform Owner, Toolkit Owner, and the
 Steering Group. Application Owners join as their applications come into scope.
 
-*Background:* [The programme runs as a forward deployed engagement with named roles](docs/decisions/0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md).
+*Background:* [The programme runs as a forward deployed engagement with named roles](decision-guides/0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md).
 
 ## Step 2: Bring the toolkit inside your network
 
@@ -118,7 +118,7 @@ Copy [`examples/organisation-repo/`](examples/organisation-repo/README.md) into 
 The file is checked against [the organisation profile schema](schema/organisation-profile.schema.json). Facts with no
 choice go here; choices go in your own decision records (step 6).
 
-*Background:* [Organisation-specific facts and decisions live in a private organisation repo](docs/decisions/0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md).
+*Background:* [Organisation-specific facts and decisions live in a private organisation repo](docs/decisions/0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md).
 
 ## Step 4: Keep your build environment
 
@@ -172,7 +172,7 @@ and [Code-quality standards can be the toolkit's, the organisation's, or the org
 
 ## Step 6: Work through the decision guides
 
-The [decision guides](docs/decisions/README.md) cover every choice the programme needs, smallest first. For each one,
+The [decision guides](decision-guides/README.md) cover every choice the programme needs, smallest first. For each one,
 the deciding role reads it and either:
 
 - **adopts it as written**: record that in your organisation repo with a one-line decision record; or
@@ -211,7 +211,7 @@ one, by hand, with an AI assistant, or in CI:
    the key in every commit, and the commit-message checks switch on.
 
 *Background:* [The programme backlog lives in the organisation's issue tracker, not in a file](docs/decisions/0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
-and [When the organisation requires it, every commit names its work item](docs/decisions/0047-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
+and [When the organisation requires it, every commit names its work item](decision-guides/0028-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
 
 ## Step 9: Give your AI assistant the skills
 
@@ -223,6 +223,9 @@ the AI and review everything it produces; unattended AI agents stay off unless y
 *Background:* [How AI assistant skills and instructions reach every repo](docs/decisions/0019-how-ai-assistant-skills-and-instructions-reach-every-repo.md).
 
 ## Step 10: Run the programme
+
+The [repo journey diagrams](docs/design/repo-journey.md) show each step below, the two tracks, connection lists and who does what.
+
 
 1. **Classify your repos.** Run the repo classifier on each repo, or build a survey tool that calls it across your
    code-hosting platform ([design](docs/design/survey-tool.md)).

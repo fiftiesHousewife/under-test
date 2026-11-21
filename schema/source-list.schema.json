@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftiesHousewife/under-test/schema/source-list.schema.json",
+  "title": "Source list",
+  "description": "The knowledge sources the Knowledge Curator has chosen for one application. AI-drafted specification rules may only use these sources, and every rule must cite one. Kept in the application's main repo as testing/sources.yaml, or in the organisation repo.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["application", "curator", "sources"],
+  "properties": {
+    "application": {"type": "string"},
+    "curator": {"type": "string", "description": "The Knowledge Curator: a person or team."},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "location", "currency"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Descriptive key, used in rule citations."},
+          "kind": {"enum": ["regression-pack", "manual-test-scripts", "wiki-pages", "tracker-query", "other-repo", "specification-document", "expert-notes", "other"]},
+          "location": {"type": "string", "description": "Where it is: an exported file path, a page space, a tracker query, a repo. The AI assistant reads only what people export or make reachable."},
+          "owner": {"type": "string"},
+          "currency": {"enum": ["current", "mostly-current", "out-of-date", "unknown"], "description": "How far the source can be trusted to reflect today's system."},
+          "as_of_version": {"type": "string", "description": "The version, revision or commit the export represents, so citations can point at it."},
+          "notes": {"type": "string"}
+        }
+      }
+    }
+  }
+}

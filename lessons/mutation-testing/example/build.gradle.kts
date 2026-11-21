@@ -12,3 +12,8 @@ val suite = providers.gradleProperty("suite").getOrElse("strong")
 pitest {
     excludedTestClasses = listOf(if (suite == "weak") "*StrongTest" else "*WeakTest")
 }
+
+// A lesson always reruns PIT, so switching suites never shows a stale result.
+tasks.named("pitest") {
+    outputs.upToDateWhen { false }
+}

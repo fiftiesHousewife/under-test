@@ -1,7 +1,8 @@
 # Backlog importers
 
-Load [the backlog seed](../../plan/backlog-seed.yaml) into the organisation's issue tracker, once. After that the tracker
-is the only list (see [The programme backlog lives in the organisation's issue tracker, not in a file](../../docs/decisions/0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)).
+Load a backlog file into an issue tracker: [the toolkit's own backlog](../../plan/toolkit-backlog.yaml) into this repo's
+tracker, or [the programme backlog template](../../templates/programme-backlog.yaml) into an organisation's tracker as its
+starting backlog. After import, the tracker is the only list (see [The programme backlog lives in the organisation's issue tracker, not in a file](../../docs/decisions/0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)).
 
 | Tracker | Importer | Built on |
 |---|---|---|

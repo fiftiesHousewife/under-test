@@ -62,7 +62,7 @@
 
 ## Engagement roles
 
-The programme runs as a forward deployed engagement (see [The programme runs as a forward deployed engagement with named roles](docs/decisions/0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md) and [references](docs/REFERENCES.md#engagement-model)). These roles replace the names of any client's internal bodies.
+The programme runs as a forward deployed engagement (see [The programme runs as a forward deployed engagement with named roles](decision-guides/0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md) and [references](docs/REFERENCES.md#engagement-model)). These roles replace the names of any client's internal bodies.
 
 | Role | Side | What they do | What they decide |
 |---|---|---|---|
@@ -74,6 +74,8 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | **Security and Platform Owner** | Client | Guards production and the platforms tests run on | Production safety (can veto); approves container runtimes |
 | **Application Owner** | Client | Owns an application and its repos | Commits to a batch; approves the repo and application testing plans; accepts the results |
 | **Toolkit Owner** | Delivery, moving to client at handover | Keeps the testing guides, shared test kits and lessons current | Releases of the toolkit; who maintains each shared test kit (with the Steering Group) |
+| **Knowledge Curator** | Client | Decides which knowledge sources count for an application (regression packs, wiki pages, tracker queries, other repos) and how current each is | The application's source list |
+| **Architecture Owner** | Client | Confirms an application's connection list and owns its boundary contracts | What the application connects to, and its contracts |
 | **Subject-matter expert** | Client | Knows the business rules | The expected results for tests against requirements |
 | **Steering Group** | Both | Programme Sponsor, Engagement Lead, Technical Architect and Security and Platform Owner | Disputes, approving moves between phases, cross-cutting decisions |
 
@@ -96,9 +98,19 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | property-based testing | Instead of single examples, state a rule ("debits always equal credits") and let a tool try many inputs. |
 | snapshot testing | Save a known-good output once; future runs compare against it and a person approves any change. |
 | test double / fake / stub | A stand-in for a real dependency during a test. |
+| characterisation test | A test that records what code does today, bugs included, so it can be changed safely (Feathers' term). The first step for code nobody can fully explain. |
+| golden master | A saved output from a known-good run, compared against every later run; another name for a snapshot or approval test of a whole program. |
+| stand-in command | A small program placed first on `PATH` so a script under test calls it instead of the real tool. |
+| parallel run | Sending the same work to the old and the new version, comparing results, and still trusting the old one until they agree. |
+| strangler fig | Replacing a system piece by piece, routing each piece to the new version as it is ready, instead of all at once. |
 | flaky test | A test that sometimes passes and sometimes fails without any code change. |
-| Testcontainers, WireMock, Pact, PIT, ArchUnit, jetCheck | Tool names. Say what the tool does the first time. |
+| Testcontainers, WireMock, Pact, PIT, ArchUnit, jetCheck, bats-core, VHS | Tool names. Say what the tool does the first time. |
 | **connection list** | A file listing everything an application connects to (interfaces, databases, queues, outside services), with what tests use instead of each one and which addresses tests must never reach. Written in FINOS CALM, an open standard format. | dependency map, architecture document |
+| **discovery** | The first step on every repo: a draft connection list, approval tests pinning current behaviour, and a source list. Coverage targets apply only afterwards. | |
+| **current behaviour** / **intended behaviour** | What a system does today (pinned by approval tests) and what it should do (recorded in a specification). Every difference becomes an open question. | as-is / to-be |
+| **open question** | A difference or unknown that a named person must settle; for behaviour, the Application Owner decides: keep it, fix it, or correct the specification. | red card, hotspot |
+| **source list** | The knowledge sources the Knowledge Curator has chosen for an application, checked against a schema. Every drafted rule must cite one. | source manifest |
+| **required tests** | The tests a repo must have: one of the right kind for each connection, and passing tests for each specification rule. Measured alongside coverage and mutation results. | test obligations |
 | **issue tracker** | Where the programme backlog and each repo's work items are kept. Whichever the organisation already uses (for example GitHub Issues or Jira); named in its organisation profile. | (a product name, except as an example) |
 | **organisation profile** | A file in the organisation's private organisation repo recording facts the toolkit can't choose: issue tracker, CI platform, package repository, approved AI assistants, who fills each role. |  |
 | **organisation repo** | A separate, private repo that holds **only** an organisation's own additions: its organisation profile, its own decision records, and folders for its organisation units. It names which toolkit version it uses, and that version's artifacts arrive through the organisation's own package repository; the toolkit itself is used unchanged, and the toolkit's tools read both. **Not a fork:** a fork is a copy of the toolkit that you change, which then drifts and has to be merged by hand at every update. Think of the toolkit as a printed map and the organisation repo as a clear sheet laid over it for your own notes. | overlay, fork, config repo |

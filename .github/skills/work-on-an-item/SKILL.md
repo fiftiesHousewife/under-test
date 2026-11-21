@@ -1,6 +1,6 @@
 ---
 name: work-on-an-item
-description: Pick up a work item from the organisation's issue tracker (or, before import, from plan/backlog-seed.yaml) and finish it in this repo. Use when asked to "do the next item", "work the backlog", or to work on a named item.
+description: Pick up a work item from the organisation's issue tracker (in this repo, the toolkit backlog in plan/toolkit-backlog.yaml) and finish it in this repo. Use when asked to "do the next item", "work the backlog", or to work on a named item.
 ---
 
 # Working on an item
@@ -10,7 +10,7 @@ description: Pick up a work item from the organisation's issue tracker (or, befo
   the tracker's REST API or web view. Don't assume extra command-line tools are installed. For GitHub, for example:
   `curl -s -H "Authorization: Bearer $UNDERTEST_GITHUB_TOKEN" "$GITHUB_API_URL/repos/OWNER/REPO/issues?labels=horizon:%20now&state=open"`
   (then skip items with open "blocked by" links). For Jira, a JQL search through its REST API.
-  Before the backlog has been imported, read [the backlog seed](../../../plan/backlog-seed.yaml).
+  Before the backlog has been imported, read [the toolkit backlog](../../../plan/toolkit-backlog.yaml).
 - Read the item's "done when" list and any linked decision record. If it depends on an open decision, stop and say so.
 
 ## 2. Act according to who does it
