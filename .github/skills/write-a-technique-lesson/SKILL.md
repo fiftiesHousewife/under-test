@@ -45,7 +45,7 @@ Copy `lessons/mutation-testing/media/mutation-testing.tape` and keep its shape:
 - **Highlight:** pipe output through `grep --color=always` so the key part is coloured.
 - **Call out:** draw a box off-camera: `Hide`, `Type@1ms "callout '...'"`, `Enter`, `Show`.
 - **Zoom:** not possible inside VHS; add a zoom marker to the narration file instead (post-production step).
-- **Render** with `lessons/_shared/render.sh <id>`, which shows brief timed progress and the VHS log only on failure.
+- **Render** with `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>`, which shows brief timed progress and the VHS log only on failure.
 - **Check before rendering:** `./gradlew :lessons:video-tools:check` catches script mistakes that would make a
   recording hang (a `Wait` on the last line only, a pattern that matches the typed command, Gradle output piped into
   `grep` without `--rerun`), and tests the shared helpers. It also runs in `./gradlew check`.

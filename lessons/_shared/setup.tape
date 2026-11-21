@@ -5,7 +5,11 @@
 # It waits for a marker printed when the set-up finishes. The marker is computed ($((1+1)) prints 2), so the typed
 # command, which also appears on screen, can't match it early.
 Hide
-Type "export PS1='$ ' GREP_COLORS='mt=01;33' && source lessons/_shared/callout.sh"
+Type "export PS1='$ ' GREP_COLORS='mt=01;33' VIDEO_TIMINGS=lessons/${LESSON}/media/${LESSON}.timings && source lessons/_shared/callout.sh && : > $VIDEO_TIMINGS"
+Enter
+Sleep 300ms
+# Quiet Gradle on camera without changing the commands people see: no deprecation summary, no configuration-cache notes.
+Type `export GRADLE_OPTS="$GRADLE_OPTS -Dorg.gradle.warning.mode=none -Dorg.gradle.configuration-cache=false"`
 Enter
 Sleep 300ms
 Type "./gradlew -q --console=plain help >/dev/null 2>&1; ./gradlew -q --console=plain :lessons:${LESSON}:testClasses >/dev/null 2>&1; echo SETUP-$((1+1))-DONE"

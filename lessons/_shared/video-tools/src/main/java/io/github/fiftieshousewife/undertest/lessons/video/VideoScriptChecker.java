@@ -36,6 +36,25 @@ public final class VideoScriptChecker {
         final List<Problem> problems = new ArrayList<>();
         for (final Path tape : tapes(root.resolve("lessons"))) {
             problems.addAll(checkTape(root, tape));
+            final Path narration = tape.resolveSibling(String.valueOf(tape.getFileName()).replace(".tape",
+                    ".narration.md"));
+            if (Files.isRegularFile(narration)) {
+                problems.addAll(checkNarration(narration));
+            }
+        }
+        return problems;
+    }
+
+    /** Narration is spoken, so it must never contain a command: say what happens instead. */
+    static List<Problem> checkNarration(final Path narration) {
+        final List<String> paragraphs = Narration.rawParagraphs(narration);
+        final List<Problem> problems = new ArrayList<>();
+        for (int i = 0; i < paragraphs.size(); i++) {
+            final String text = paragraphs.get(i);
+            if (text.contains("`") || text.contains("./") || text.contains("gradlew")) {
+                problems.add(new Problem(narration, "item " + (i + 1) + " contains a command, which the voice would"
+                        + " read aloud; say what happens instead (for example, \"Now we run the strong tests\")"));
+            }
         }
         return problems;
     }
@@ -103,6 +122,10 @@ public final class VideoScriptChecker {
     }
 
     private static Optional<Problem> checkTyped(final Line line, final String text) {
+        if (line.text().matches("^Type(?:@\\S+)?\\s+\".*") && text.contains("\\\"")) {
+            return Optional.of(line.problem("VHS strings have no escape characters, so \\\" ends the string early;"
+                    + " put the text in backticks instead"));
+        }
         if (text.contains("./gradlew") && text.contains("| grep") && !text.contains("--rerun")) {
             return Optional.of(line.problem("Gradle output piped into grep needs --rerun: a task skipped as up to"
                     + " date prints nothing, so the recording waits for output that never comes"));

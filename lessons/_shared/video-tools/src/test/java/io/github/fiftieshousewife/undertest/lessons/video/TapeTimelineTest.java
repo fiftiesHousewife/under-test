@@ -50,10 +50,19 @@ class TapeTimelineTest {
     }
 
     @Test
-    void rejectsAWaitOnCamera() {
+    void rejectsAWaitOnCameraWithoutAMeasuredRunTime() {
         assertThatThrownBy(() -> scenesOf("# ---- Scene 1: x ----\nWait+Screen /done/\n"))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("lesson.tape line 2");
+                .hasMessageContaining("lesson.tape line 2")
+                .hasMessageContaining("measured run time");
+    }
+
+    @Test
+    void timesEachWaitOnCameraByItsMeasuredRun() throws IOException {
+        final Path tape = root.resolve("live.tape");
+        Files.writeString(tape, "# ---- Scene 1: live ----\nWait+Screen /a/\nSleep 1s\nWait+Screen /b/\n");
+
+        assertThat(TapeTimeline.scenes(root, tape, List.of(2.5, 4.0)).getFirst().end()).isEqualTo(7.5);
     }
 
     @Test

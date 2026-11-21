@@ -28,7 +28,7 @@ Name a product only as an option or an example.
 | `shared-test-kits/` | Stand-ins for widely shared systems. |
 | `tools/` | Automated tools. Reuse existing tools before building anything. [`tools/repo-checks`](tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`). |
 | [`tools/sync/`](tools/sync/README.md), `tools/git-hooks/` | The maintainers' push script, and the hook that refuses a plain `git push`. |
-| `lessons/_shared/` | Shared video tools: hidden set-up, callout and narration helpers, `render.sh`, and video checks (`:lessons:video-tools`). |
+| `lessons/_shared/` | Shared video tools: hidden set-up, the in-terminal helpers (`note`, `show`, `callout`), the pronunciation list, and `video-tools` (`:lessons:video-tools`: checks, recording, captions, voice, assembly; `renderLessonVideo` does it all). |
 | [`schema/`](schema/) | Schemas for every YAML format. |
 | [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |
 | [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo. |

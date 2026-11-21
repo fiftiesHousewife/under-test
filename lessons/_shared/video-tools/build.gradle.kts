@@ -1,3 +1,5 @@
+import java.net.URI
+
 plugins {
     id("io.github.fiftieshousewife.java-conventions")
 }
@@ -27,7 +29,7 @@ val checkVideoScripts = tasks.register<JavaExec>("checkVideoScripts") {
 
 val testVideoHelpers = tasks.register<Exec>("testVideoHelpers") {
     group = "verification"
-    description = "Tests lessons/_shared/callout.sh and render.sh with a stand-in for VHS."
+    description = "Tests the in-terminal video helpers in lessons/_shared/callout.sh."
     workingDir = rootDir
     commandLine("bash", "lessons/_shared/video-tools/test-video-helpers.sh")
 }
@@ -40,7 +42,58 @@ tasks.register<JavaExec>("buildLessonCaptions") {
     args(listOfNotNull(repoRoot, providers.gradleProperty("lesson").orNull))
 }
 
+val recordLessonVideo = tasks.register<JavaExec>("recordLessonVideo") {
+    group = "documentation"
+    description = "Records a lesson's silent video and GIF with VHS, showing brief progress (-Plesson=<id>)."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    val root = repoRoot
+    val lessonId = lesson
+    argumentProviders.add(CommandLineArgumentProvider { listOf("record", root, lessonId.getOrElse("")) })
+}
+
+// The offline voice, set up once per machine under build/voice. An organisation can use its own Python
+// (-PlessonVoicePython) and a mirror of the model files (-PlessonVoiceModelsUrl); pip uses the machine's own pip settings.
+val voiceDir = rootDir.resolve("build/voice")
+val voicePython = providers.gradleProperty("lessonVoicePython").orElse("python3.13")
+val voiceModelsUrl = providers.gradleProperty("lessonVoiceModelsUrl")
+    .orElse("https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0")
+val voiceModels = listOf("kokoro-v1.0.onnx", "voices-v1.0.bin")
+
+val createVoiceEnvironment = tasks.register<Exec>("createVoiceEnvironment") {
+    val dir = voiceDir
+    onlyIf { !dir.resolve("venv/bin/python").isFile }
+    commandLine(voicePython.get(), "-m", "venv", dir.resolve("venv").absolutePath)
+}
+
+val installVoicePackages = tasks.register<Exec>("installVoicePackages") {
+    val dir = voiceDir
+    dependsOn(createVoiceEnvironment)
+    onlyIf { !dir.resolve("venv/.packages-installed").isFile }
+    commandLine(dir.resolve("venv/bin/pip").absolutePath, "install", "-q", "kokoro-onnx", "soundfile")
+    doLast { dir.resolve("venv/.packages-installed").writeText("kokoro-onnx soundfile\n") }
+}
+
+val setUpLessonVoice = tasks.register("setUpLessonVoice") {
+    group = "documentation"
+    description = "Sets up the offline Kokoro voice under build/voice: Python environment, packages and model files."
+    val dir = voiceDir
+    val base = voiceModelsUrl
+    val models = voiceModels
+    dependsOn(installVoicePackages)
+    onlyIf { models.any { !dir.resolve(it).isFile } }
+    doLast {
+        models.filterNot { dir.resolve(it).isFile }.forEach { name ->
+            URI.create("${base.get()}/$name").toURL().openStream().use { input ->
+                dir.resolve("$name.part").outputStream().use { input.copyTo(it) }
+            }
+            dir.resolve("$name.part").renameTo(dir.resolve(name))
+        }
+    }
+}
+
 val buildLessonVoice = tasks.register<JavaExec>("buildLessonVoice") {
+    dependsOn(setUpLessonVoice)
     group = "documentation"
     description = "Reads each scene's narration aloud and builds the narration track (-Plesson=<id>)."
     classpath = sourceSets.main.get().runtimeClasspath
@@ -62,6 +115,16 @@ tasks.register<JavaExec>("assembleLessonVideo") {
     val lessonId = lesson
     argumentProviders.add(CommandLineArgumentProvider { listOf("assemble", root, lessonId.getOrElse("")) })
     dependsOn("buildLessonCaptions", buildLessonVoice)
+}
+
+// Later steps use the recorded video's real length, so they run after recording when both are asked for.
+tasks.named("buildLessonCaptions") { mustRunAfter(recordLessonVideo) }
+buildLessonVoice.configure { mustRunAfter(recordLessonVideo) }
+
+tasks.register("renderLessonVideo") {
+    group = "documentation"
+    description = "Makes a lesson's whole video: records it, builds captions and voice, and assembles the MP4 (-Plesson=<id>)."
+    dependsOn(recordLessonVideo, "assembleLessonVideo")
 }
 
 tasks.check {

@@ -76,6 +76,25 @@ class VideoScriptCheckerTest {
     }
 
     @Test
+    void reportsNarrationThatWouldReadACommandAloud() throws IOException {
+        final Path media = Files.createDirectories(root.resolve("lessons/example-lesson/media"));
+        Files.writeString(media.resolve("example-lesson.tape"), "Sleep 1s\n");
+        Files.writeString(media.resolve("example-lesson.narration.md"),
+                "1. Now we run the weak tests.\n2. Run `./gradlew pitest` now.\n");
+
+        assertThat(new VideoScriptChecker().check(root)).extracting(Problem::message)
+                .containsExactly("item 2 contains a command, which the voice would read aloud; say what happens instead"
+                        + " (for example, \"Now we run the strong tests\")");
+    }
+
+    @Test
+    void reportsEscapedQuotesWhichVhsCannotRead() throws IOException {
+        assertThat(problemsIn("Type \"export X=\\\"a b\\\"\"\nType `export X=\"a b\"`\n"))
+                .containsExactly("line 1: VHS strings have no escape characters, so \\\" ends the string early;"
+                        + " put the text in backticks instead");
+    }
+
+    @Test
     void findsNoScriptsWhenThereIsNoLessonsFolder() {
         assertThat(new VideoScriptChecker().check(root)).isEmpty();
     }

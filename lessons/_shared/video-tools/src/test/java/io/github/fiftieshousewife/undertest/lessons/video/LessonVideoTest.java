@@ -55,7 +55,7 @@ class LessonVideoTest {
 
         assertAll(
                 () -> assertThat(WavFile.read(media.resolve("demo.narration.wav")).seconds()).isEqualTo(12),
-                () -> assertThat(Files.readString(media.resolve("demo.voice/02.txt"))).isEqualTo("Second scene."));
+                () -> assertThat(Files.readString(media.resolve("demo.voice/02-1.txt"))).isEqualTo("Second scene."));
     }
 
     @Test
@@ -66,6 +66,15 @@ class LessonVideoTest {
         assertThatIllegalStateException()
                 .isThrownBy(() -> LessonVideo.voice(new Media(root, "demo"), List.of(voice.toString())))
                 .withMessageContaining("scene 1 (one): narration needs 11.0 s");
+    }
+
+    @Test
+    void readsMeasuredRunTimesFromTheLastRecording() throws IOException {
+        Files.writeString(media.resolve("demo.timings"), "2.5\n\n4.0\n");
+
+        assertAll(
+                () -> assertThat(new Media(root, "demo").measuredRuns()).containsExactly(2.5, 4.0),
+                () -> assertThat(new Media(root, "other").measuredRuns()).isEmpty());
     }
 
     @Test

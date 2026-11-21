@@ -12,8 +12,9 @@ import java.util.regex.Pattern;
 /**
  * Works out when each scene of a lesson video is on screen, from its VHS script alone. Only time on camera counts:
  * pauses ({@code Sleep}) and visible typing. Anything done while hidden ({@code Hide} ... {@code Show}) takes no video
- * time. Scenes start at comment lines like {@code # ---- Scene 2: the build ----}. A {@code Wait} on camera makes the
- * timing unknowable, so it is an error: run waits while hidden.
+ * time. Scenes start at comment lines like {@code # ---- Scene 2: the build ----}. A {@code Wait} on camera lasts as
+ * long as the command it waits for, so its time comes from the measured run times the recording writes (one per live
+ * run, in order); without them, a {@code Wait} on camera is an error.
  */
 public final class TapeTimeline {
 
@@ -24,6 +25,7 @@ public final class TapeTimeline {
     private static final double VHS_DEFAULT_TYPING_SECONDS = 0.05;
 
     private final Path root;
+    private final java.util.Deque<Double> measured;
     private final List<Scene> collected = new ArrayList<>();
     private double time;
     private boolean hidden;
@@ -31,13 +33,19 @@ public final class TapeTimeline {
     private String title;
     private double sceneStart;
 
-    private TapeTimeline(final Path root) {
+    private TapeTimeline(final Path root, final List<Double> measured) {
         this.root = root;
+        this.measured = new java.util.ArrayDeque<>(measured);
     }
 
     /** The scenes of a script, in order. Paths in {@code Source} lines are relative to {@code root}. */
     public static List<Scene> scenes(final Path root, final Path tape) {
-        final TapeTimeline timeline = new TapeTimeline(root);
+        return scenes(root, tape, List.of());
+    }
+
+    /** As {@link #scenes(Path, Path)}, using measured run times, in seconds, for each {@code Wait} on camera. */
+    public static List<Scene> scenes(final Path root, final Path tape, final List<Double> measured) {
+        final TapeTimeline timeline = new TapeTimeline(root, measured);
         timeline.read(tape);
         timeline.endScene();
         return List.copyOf(timeline.collected);
@@ -59,8 +67,11 @@ public final class TapeTimeline {
         } else if ("Hide".equals(line) || "Show".equals(line)) {
             hidden = "Hide".equals(line);
         } else if (!hidden && line.startsWith("Wait")) {
-            throw new IllegalStateException(where + ": a Wait on camera makes the video's timing unknown;"
-                    + " run it while hidden (Hide ... Wait ... Show)");
+            if (measured.isEmpty()) {
+                throw new IllegalStateException(where + ": a Wait on camera needs a measured run time; record the"
+                        + " video first (its live runs use run_live, which measures them)");
+            }
+            time += measured.removeFirst();
         } else {
             timeAndSettings(line);
         }

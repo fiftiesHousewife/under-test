@@ -31,7 +31,7 @@ public final class CaptionFile {
     }
 
     static List<Cue> cuesFor(final Scene scene, final String text) {
-        final List<String> chunks = chunks(text);
+        final List<String> chunks = chunks(Pauses.withoutMarkers(text));
         final double total = chunks.stream().mapToInt(String::length).sum();
         final List<Cue> cues = new ArrayList<>();
         double start = scene.start();

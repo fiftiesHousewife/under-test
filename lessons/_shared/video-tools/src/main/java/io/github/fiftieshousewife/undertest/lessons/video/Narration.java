@@ -21,6 +21,11 @@ public final class Narration {
 
     /** One plain-text paragraph per scene, in order. */
     public static List<String> paragraphs(final Path file) {
+        return rawParagraphs(file).stream().map(Narration::plain).toList();
+    }
+
+    /** One paragraph per scene, exactly as written (Markdown marks kept). */
+    static List<String> rawParagraphs(final Path file) {
         final List<StringBuilder> items = new ArrayList<>();
         for (final String line : readLines(file)) {
             final var item = ITEM.matcher(line);
@@ -30,7 +35,7 @@ public final class Narration {
                 items.getLast().append(' ').append(line.strip());
             }
         }
-        return items.stream().map(text -> plain(text.toString())).toList();
+        return items.stream().map(StringBuilder::toString).toList();
     }
 
     static String plain(final String markdown) {

@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Entry point for a lesson video's layers, after VHS has recorded {@code <id>.silent.mp4}:
+ * Entry point for making a lesson video:
  * <ul>
+ *   <li>{@code record <root> <id>}: records the silent video ({@code <id>.silent.mp4} and the GIF) with VHS;</li>
  *   <li>{@code voice <root> <id> <command...>}: reads each scene's narration aloud with the given command (which turns
  *   a text file into a WAV file), checks each clip fits its scene, and writes {@code <id>.narration.wav};</li>
  *   <li>{@code assemble <root> <id>}: combines the silent video, the narration and the captions into {@code <id>.mp4},
@@ -26,15 +28,15 @@ public final class LessonVideo {
     }
 
     public static void main(final String... args) {
-        if (args.length < 3 || !"voice".equals(args[0]) && !"assemble".equals(args[0])) {
-            throw new IllegalArgumentException("usage: LessonVideo voice <root> <lesson> <command...>"
-                    + " | assemble <root> <lesson>");
+        if (args.length < 3 || !List.of("record", "voice", "assemble").contains(args[0])) {
+            throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
+                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson>");
         }
         final Media media = new Media(Path.of(args[1]), args[2]);
-        if ("voice".equals(args[0])) {
-            voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
-        } else {
-            assemble(media);
+        switch (args[0]) {
+            case "record" -> new Recorder(Clock.systemUTC()).record(media);
+            case "voice" -> voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
+            default -> assemble(media);
         }
     }
 
@@ -43,7 +45,10 @@ public final class LessonVideo {
             throw new IllegalArgumentException("give the voice command: a program that turns a text file into a WAV");
         }
         final List<Scene> scenes = media.scenes();
-        final List<String> narration = Narration.paragraphs(media.file(".narration.md"));
+        final Pronunciation pronunciation =
+                Pronunciation.read(media.root().resolve("lessons/_shared/pronunciations.txt"));
+        final List<String> narration = Narration.paragraphs(media.file(".narration.md")).stream()
+                .map(pronunciation::forSpeech).toList();
         final Path clipsFolder = media.file(".voice");
         createFolder(clipsFolder);
         final List<WavFile> clips = new ArrayList<>();
@@ -70,7 +75,27 @@ public final class LessonVideo {
         log.info("{}: finished video written, with voice and captions", media.safeLesson());
     }
 
-    private static WavFile speak(final List<String> command, final String text, final Path clip) {
+    /** Speaks a scene's narration: each part between pause markers separately, joined with the pauses' silence. */
+    private static WavFile speak(final List<String> command, final String narration, final Path clip) {
+        final List<Pauses.Part> parts = Pauses.parts(narration);
+        if (parts.isEmpty()) {
+            throw new IllegalArgumentException("a scene has no narration: " + clip);
+        }
+        final java.io.ByteArrayOutputStream joined = new java.io.ByteArrayOutputStream();
+        final List<WavFile> spoken = new ArrayList<>();
+        for (int i = 0; i < parts.size(); i++) {
+            final Path partClip = clip.resolveSibling(clip.getFileName() + "-" + (i + 1));
+            spoken.add(speakPart(command, parts.get(i).text(), partClip));
+            joined.writeBytes(spoken.getLast().samples());
+            joined.writeBytes(spoken.getLast().silence(parts.get(i).pauseAfter()).samples());
+        }
+        final WavFile format = spoken.getFirst();
+        final WavFile whole = new WavFile(format.sampleRate(), format.channels(), joined.toByteArray());
+        whole.write(clip.resolveSibling(clip.getFileName() + ".wav"));
+        return whole;
+    }
+
+    private static WavFile speakPart(final List<String> command, final String text, final Path clip) {
         final Path textFile = clip.resolveSibling(clip.getFileName() + ".txt");
         final Path wav = clip.resolveSibling(clip.getFileName() + ".wav");
         try {

@@ -24,16 +24,21 @@ edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.ta
   the same output helps people outside the video too.
 - **Show files without the command that printed them:** draw code panels and narration off-camera with `show` and
   `note`, which erase their own command line.
-- **Slow steps get notes, not silence:** run anything that takes more than a few seconds with `run_with_notes`, which
-  shows short notes on what is happening while it works.
+- **Show real runs live:** run the commands viewers care about (the build, PIT) on camera with `run_live`. It shows the
+  command, lets its own progress output play, and records how long it took, so captions and voice stay in time.
+  `run_with_notes` is for slow steps where the output itself isn't worth watching.
+- **Quiet build output without changing the commands:** the shared set-up sets `GRADLE_OPTS` off-camera to drop
+  Gradle's deprecation summary and configuration-cache notes. Viewers see the plain command, the live progress bar, the
+  build's summary and "BUILD SUCCESSFUL". Never filter output with `grep` on camera.
 
 ## Look
 
 - **Full HD:** `Set Width 1920`, `Set Height 1080`, `Set FontSize 20`. Smaller sizes look blurry when played full screen.
 - **Colours carry meaning:** narration (`note`) in cyan, file headers (`show`) in magenta, callouts in a yellow box,
   code and build output in the terminal's normal colour.
-- **Space separates kinds of text:** `show` and `callout` start with a blank line, so captions, code and results never
-  run together.
+- **Space separates kinds of text:** one blank line between blocks of different kinds (captions, code panels, commands,
+  callouts) and none between consecutive caption lines. The helpers do this themselves; start each scene with `scene`
+  (not `clear`) so the first block has no blank line above it, and use `gap` if you need one by hand.
 - **Each scene fits on one screen** (about 36 rows by 150 columns at this size). Keep build output to lines that fit.
 
 ## Write the script
@@ -46,8 +51,9 @@ edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.ta
 4. Draw callouts off-camera: `Hide`, ``Type@1ms `callout "..."` ``, `Enter`, `Show`.
 5. Mark each scene with a comment line `# ---- Scene N: title ----`, and write the narration file
    (`media/<id>.narration.md`) as a numbered list with **one item per scene**. Captions and voiceover come from it.
-6. Run slow commands and every `Wait` off-camera (`Hide`, command, `Wait+Screen`, `Show`), so the command and its result
-   appear together. Then the video's timing depends only on its pauses, and captions and voice can be timed exactly.
+6. A `Wait` on camera is fine only after `run_live`, which measures the run; the timings go to `<id>.timings` and the
+   caption and voice steps use them. Any other wait runs off-camera (`Hide`, command, `Wait+Screen`, `Show`).
+7. VHS strings have no escape characters: for text containing double quotes, use backticks (``Type `echo "hi"` ``).
 
 ## Rules that stop a recording from hanging
 
@@ -60,7 +66,7 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 | A task whose output you wait for always runs (`outputs.upToDateWhen { false }`, or `--rerun`) | A task skipped as up to date prints nothing, so the recording waits for output that never comes |
 | With `-q`, wait only for output the build prints at quiet level (as `mutationSummary` does) | Gradle's quiet mode hides normal task output |
 | Slow commands go through `run_with_notes` | It runs them with no terminal input; a background job that reads the terminal is stopped by the shell |
-| Don't run other Gradle builds in the repo while rendering | The recording can join a Gradle background process started elsewhere; `render.sh` stops them before it starts |
+| Don't run other Gradle builds in the repo while rendering | The recording can join a Gradle background process started elsewhere, for example inside a sandbox |
 | Each scene fits on one screen; clear off-camera between scenes (`Hide`, `Type "clear"`, `Enter`, `Show`) | `Wait+Screen` can't see text printed after the screen has scrolled |
 | After each `Enter`, a `Sleep 300ms` (or a `Wait`) before typing the next command, even off-camera | VHS types the next command straight away; its echo mixes into the output of the one still running |
 | Paths in `Output` and `Screenshot` are relative | VHS rejects paths that start with `/` |
@@ -71,14 +77,28 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 It times each scene from the script's pauses and splits its narration into short cues. It fails if a `Wait` is on
 camera or if the narration has a different number of items from the script's scenes.
 
+## Writing narration to be spoken
+
+- Short sentences. No semicolons: the voice runs straight through them.
+- Never read a command aloud. Say what is happening: "Now we run the strong tests", not the Gradle command. The video
+  checks fail on narration containing backticks, `./` or `gradlew`.
+- Write numbers and symbols as words: "100 percent", "greater than or equal to 50".
+- If the voice stresses a phrase oddly (for example "test suites"), rephrase it rather than fight it: "the weak tests
+  or the strong tests".
+- Pause where a listener needs a moment, with a marker: `Why do we need mutation testing? [pause 1s] Line coverage...`.
+  The voice goes silent for that long; captions leave the marker out.
+- Words the voice gets wrong go in [the pronunciation list](../../../lessons/_shared/pronunciations.txt)
+  (`word = how to say it`), for example `PIT = pit` and `reruns = re-runs`. It changes only what is spoken; captions
+  keep the written form.
+
 ## Voice and the finished video
 
-1. Once, per machine: create the offline voice environment under `build/voice` (Python 3.13 with `kokoro-onnx` and
-   `soundfile`, plus the model files `kokoro-v1.0.onnx` and `voices-v1.0.bin` from the kokoro-onnx releases).
-2. Record the silent video (it writes `<id>.silent.mp4` and the GIF), then run
-   `./gradlew :lessons:video-tools:assembleLessonVideo -Plesson=<id>`. It builds the captions, reads each scene's
-   narration aloud, checks every clip fits its scene, and writes the finished `<id>.mp4` (voice and a captions track)
-   and `<id>.narration.m4a`.
+1. **One command makes the whole video:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>`. It records
+   the silent video and GIF with VHS (timed progress, and a heartbeat during slow steps), builds the captions, reads
+   each scene's narration aloud, checks every clip fits its scene, and writes the finished `<id>.mp4` (voice and a
+   captions track) and `<id>.narration.m4a`. The first run sets up the offline voice under `build/voice` by itself
+   (`setUpLessonVoice`). Changing only the narration? Run `assembleLessonVideo` instead: no new recording needed.
+2. In a sandboxed AI session, run it with `--no-daemon`, so it never joins a Gradle process started inside the sandbox.
 3. If a scene's narration doesn't fit, the build says which scene and how many seconds to add to its pauses. Narration
    decides each scene's length: aim for the narration plus a second, and keep the whole video short.
    VHS recordings come out a few percent shorter than their pauses add up to. The tools stretch the timings to the
@@ -89,8 +109,8 @@ camera or if the narration has a different number of items from the script's sce
 ## Check, render, look
 
 1. `./gradlew :lessons:video-tools:check` checks the script and the shared helpers.
-2. `lessons/_shared/render.sh <id>` renders it, with timed progress and a heartbeat during slow steps. On failure it
-   shows the end of the VHS log.
+2. `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>` makes it (see above). On failure it shows the end of
+   the VHS log.
 3. If a render stalls, don't guess: copy the script, replace the stuck `Wait` with `Sleep 60s`, render that, and look at
    the last frame (`ffmpeg -sseof -0.1 -i <gif> -frames:v 1 frame.png`).
 4. Watch the whole video once before calling it done. Check its length against the ten-minute ceiling.

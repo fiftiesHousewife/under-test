@@ -25,16 +25,36 @@ _erase_typed() {
   printf '\r'
 }
 
+# Spacing: one blank line between blocks of different kinds (captions, code panels, commands, callouts), none between
+# consecutive caption lines. _VIDEO_LAST remembers what was drawn last; "scene" starts a fresh screen.
+_VIDEO_LAST=""
+_gap_before() { [ -n "$_VIDEO_LAST" ] && { [ "$1" != note ] || [ "$_VIDEO_LAST" != note ]; } && printf '\n'; _VIDEO_LAST="$1"; }
+
+#   scene  -> clears the screen for a new scene
+scene() {
+  clear
+  _VIDEO_LAST=""
+}
+
+#   gap    -> a blank line, for example between captions and a command typed on camera
+gap() {
+  _erase_typed gap "$@"
+  printf '\n'
+  _VIDEO_LAST=""
+}
+
 callout() {
   _erase_typed callout "$@"
+  _gap_before callout
   local text=" $* "
   local line
   line=$(printf '%*s' "${#text}" '' | tr ' ' '─')
-  printf '\n\033[1;33m┌%s┐\n│%s│\n└%s┘\033[0m\n' "$line" "$text" "$line"
+  printf '\033[1;33m┌%s┐\n│%s│\n└%s┘\033[0m\n' "$line" "$text" "$line"
 }
 
 note() {
   _erase_typed note "$@"
+  _gap_before note
   printf '\033[1;36m%s\033[0m\n' "$*"
 }
 
@@ -83,6 +103,23 @@ show() {
       | grep -v '/build/' | head -1)
   fi
   [ -n "$file" ] || { echo "show: nothing found for $target" >&2; return 1; }
-  printf '\n\033[1;35m── %s ──\033[0m\n' "${label:-${file##*/}}"
+  _gap_before show
+  printf '\033[1;35m── %s ──\033[0m\n' "${label:-${file##*/}}"
   awk -v f="$from" -v t="$to" 'NR >= f && (t == 0 || NR <= t) { printf "\033[2;37m%3d\033[0m  %s\n", NR, $0 }' "$file"
+}
+
+#   run_live "<command>"
+# Shows the command as typed and runs it live, on camera, with its own progress output. It records how long the run
+# took (one line per run, in seconds) in the file named by VIDEO_TIMINGS, so captions and voice can be timed to the
+# real recording. Call it off-camera and Show straight after its Enter.
+run_live() {
+  _erase_typed run_live "$@"
+  _gap_before live
+  printf '$ %s\n' "$1"
+  local start end
+  start=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
+  bash -c "$1" </dev/null
+  end=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
+  [ -n "${VIDEO_TIMINGS:-}" ] && perl -e "printf \"%.3f\\n\", $end - $start" >>"$VIDEO_TIMINGS"
+  _VIDEO_LAST=live
 }

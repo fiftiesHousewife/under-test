@@ -160,6 +160,23 @@ Lesson videos are generated from scripts in the toolkit's own CI and published w
 | Source | `<lesson>.tape` | Re-render the screen recording |
 | Quick-look animation | `<lesson>.gif` (silent) | Embed in wiki pages |
 
+### Recording new videos is out of scope inside a corporate network
+
+Organisations receive finished video layers and customise them with Java and ffmpeg only. Recording or re-recording a
+lesson video needs VHS (a Go program, not on Maven Central) plus ttyd, ffmpeg and a headless browser, and is done in the
+toolkit's own build. If an organisation later wants to record its own lessons, the options, best first, are:
+
+| Route | What to mirror |
+|---|---|
+| Container image | `ghcr.io/charmbracelet/vhs` through a container-image remote; includes VHS, ttyd, ffmpeg and a browser |
+| Generic remote for release files | VHS and ttyd release binaries from GitHub; ffmpeg from the organisation's own OS packages |
+| Linux package repository | Charm's apt or yum repository (`repo.charm.sh`), proxied |
+| Go module proxy | `go install github.com/charmbracelet/vhs@<version>` through a Go remote; ttyd and ffmpeg installed separately |
+
+Check before relying on any route without the container image: VHS's browser library may try to download Chromium on
+first run if none is installed. The offline voice follows the same pattern: Python packages through a PyPI mirror, and
+model files through a generic remote (`-PlessonVoiceModelsUrl`).
+
 ### Three ways to customise
 
 1. **In a video editor you already use** (for example Camtasia, Premiere Pro or Clipchamp). Import the silent recording,

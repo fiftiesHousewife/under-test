@@ -1,20 +1,24 @@
 # Narration: mutation testing
 
-One line per scene. Captions and the voiceover are generated from this file; the video script is
-[mutation-testing.tape](mutation-testing.tape).
+One item per scene of [mutation-testing.tape](mutation-testing.tape). Written to be spoken: short sentences, no
+commands read aloud. Captions use this text as written; the voice also applies
+[the pronunciation list](../../_shared/pronunciations.txt), so "PIT" is said "pit".
 
-1. **Why.** Mutation testing asks whether your tests check the code they run, or only run it. Line coverage counts the
-   lines a test ran; it cannot tell whether any test checked the result. PIT plants one small bug at a time, reruns the
-   tests, and counts the bugs they catch.
-2. **The build.** PIT is one Gradle plugin, applied to every repo by the toolkit's build conventions, with its versions
-   in the version catalogue. This lesson adds one switch to choose which of its two test suites PIT uses.
-3. **The code under test.** A discount of 5% from 50 and 10% from 100, plus 2% more for loyal customers.
-4. **The weak tests.** Every line of the calculator runs, so line coverage is 100%. The comments say what each test
-   fails to check.
-5. **PIT on the weak tests.** `./gradlew -q :lessons:mutation-testing:pitest -Psuite=weak`. The build prints a summary:
-   100% line coverage, but only 5 of 13 planted bugs caught. For every bug it shows the line it changed and which tests
-   ran: the ones that failed, or the ones that still passed. On line 24, `>= 50` became `> 50`, so an order of exactly
-   50 loses its discount, and no test tries 50.
-6. **The strong tests.** They check both sides of every boundary, with exact values.
-7. **PIT on the strong tests.** `./gradlew -q :lessons:mutation-testing:pitest`. The same 100% line coverage, and all 13
-   planted bugs caught. Only mutation testing shows which tests catch bugs.
+1. Why do we need mutation testing? [pause 1s] Line coverage counts the lines your tests ran. It does not check that
+   any test looked at the result. For example, a test can call the discount calculator, ignore the answer, and still
+   give that line full coverage. If the calculator gave 50 percent off instead of 5, that test would still pass. PIT
+   looks for exactly this. It plants one small bug at a time, reruns your tests, and counts how many bugs the tests
+   catch.
+2. First, the build. PIT is one Gradle plugin, applied to every repo by the toolkit's build conventions. Its versions
+   live in the version catalogue. This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests.
+3. Here is the code under test. Orders of 50 or more get 5 percent off. Orders of 100 or more get 10 percent. Loyal
+   customers get 2 percent more.
+4. Now the weak tests. Every line of the calculator runs, so line coverage is 100 percent. The comment on each test says
+   what it fails to check.
+5. Now we run PIT against the weak tests. Line coverage is still 100 percent, but the tests catch only 5 of the 13
+   planted bugs. For every bug, the summary shows the line it changed, and which tests ran. Look at line 24. When
+   greater than or equal to 50 becomes greater than 50, an order of exactly 50 loses its discount. No test tries 50, so
+   every test still passes.
+6. Now the strong tests. They check both sides of every boundary, with exact values.
+7. Now we run the strong tests. Line coverage is the same, 100 percent, and the tests catch all 13 planted bugs. [pause 1s] Only
+   mutation testing shows which tests really catch bugs.

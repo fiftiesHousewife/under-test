@@ -63,6 +63,7 @@ lessons/*/media/*.vtt
 lessons/*/media/*.srt
 lessons/*/media/*.m4a
 lessons/*/media/*.voice/
+lessons/*/media/*.timings
 .narratty/
 
 ### Python ###
