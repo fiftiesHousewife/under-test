@@ -37,7 +37,10 @@ Name a product only as an option or an example.
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |
 | [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) | Record an organisation's own choice in its private overlay repo |
 | [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md) | Write a technique lesson and example |
-| [grilling](.github/skills/grilling/SKILL.md) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
+| grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
+| architecture-decision-records (installed by APM) | The mechanics of writing a MADR record; use it with write-a-decision-record, which adds this repo's rules |
+
+External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with `apm install` (APM, the Agent Package Manager). Run it once after cloning.
 
 ## Code standards (enforced by `./gradlew check`)
 | Standard | Enforced by |

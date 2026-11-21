@@ -28,6 +28,8 @@ cd under-test
 ./gradlew check
 ```
 
+To install the external AI assistant skills this repo uses (see [`apm.yml`](apm.yml)), install [APM](https://microsoft.github.io/apm/) and run `apm install`.
+
 `check` runs the tests and every quality check: coverage, style, complexity, copy-paste detection, bug and security-bug
 analysis, and forbidden APIs. See [the code standards](AGENTS.md#code-standards-enforced-by-gradlew-check).
 

@@ -44,3 +44,6 @@ bin/
 ### Claude Code (local only) ###
 .claude/settings.local.json
 .claude/.cc-writes
+
+### APM (installed skills are rebuilt from apm.lock.yaml) ###
+apm_modules/
