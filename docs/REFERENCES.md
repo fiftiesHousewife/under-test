@@ -36,11 +36,11 @@ Cost has been the long-standing objection. Google's practice answers it by mutat
 
 ## 6. Generating tests automatically {#test-generation}
 
-Before large language models, automatic test generation used random and search-based methods. Randoop generates call sequences guided by feedback from execution [Pacheco et al. 2007]. EvoSuite evolves whole test suites towards coverage goals [Fraser & Arcuri 2011]. Both work best on plain library code and struggle with framework-heavy code, which is why our technique rules limit them to libraries and pure logic.
+Before large language models, automatic test generation used random and search-based methods. Randoop generates call sequences guided by feedback from execution [Pacheco et al. 2007]. EvoSuite evolves whole test suites towards coverage goals [Fraser & Arcuri 2011], though it is no longer maintained. Both work best on plain library code and struggle with framework-heavy code, which is why our technique rules limit them to libraries and pure logic.
 
 ## 6a. Property-based testing {#property-based-testing}
 
-Property-based testing replaces single examples with stated rules (properties) that a tool checks against many generated inputs, shrinking any failure to the smallest case [Claessen & Hughes 2000]. It suits pure calculations, parsers and serialisation, where a domain expert can state an invariant such as "debits always equal credits". jqwik brings the approach to JUnit 5 on the JVM [jqwik], and fast-check to TypeScript [fast-check].
+Property-based testing replaces single examples with stated rules (properties) that a tool checks against many generated inputs, shrinking any failure to the smallest case [Claessen & Hughes 2000]. It suits pure calculations, parsers and serialisation, where a domain expert can state an invariant such as "debits always equal credits". On the JVM, jetCheck (from JetBrains) brings the approach to any test framework [jetCheck]; the toolkit avoids jqwik because its licence adds an anti-AI usage clause from version 1.10 and it is in maintenance-only mode, and fast-check to TypeScript [fast-check].
 
 ## 6b. Feature flags {#feature-flags}
 
@@ -97,7 +97,7 @@ Running unfamiliar code that may hold production credentials calls for separatio
 - **[Hodgson 2017]** P. Hodgson. *Feature Toggles (aka Feature Flags).* https://martinfowler.com/articles/feature-toggles.html
 - **[ICONIQ 2025]** ICONIQ Growth. *The FDE Advantage.* https://www.iconiq.com/growth/reports/the-fde-advantage-turning-deployment-into-compounding-value
 - **[Jia & Harman 2011]** Y. Jia, M. Harman. *An analysis and survey of the development of mutation testing.* IEEE Transactions on Software Engineering 37(5), 2011.
-- **[jqwik]** https://jqwik.net/
+- **[jetCheck]** JetBrains jetCheck. https://github.com/JetBrains/jetCheck
 - **[Just et al. 2014]** R. Just, D. Jalali, L. Inozemtseva, M. D. Ernst, R. Holmes, G. Fraser. *Are mutants a valid substitute for real faults in software testing?* FSE 2014.
 - **[Konveyor]** Konveyor rulesets. https://github.com/konveyor/rulesets
 - **[Luo et al. 2014]** Q. Luo, F. Hariri, L. Eloussi, D. Marinov. *An empirical analysis of flaky tests.* FSE 2014.

@@ -32,6 +32,6 @@ Proposed: the first option. Upgrading the toolkit is a one-line change to the ve
 
 ## More Information
 
-* Builds on: [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md), [We reuse existing tools before building new ones](0020-we-reuse-existing-tools-before-building-new-ones.md)
+* Builds on: [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md), [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md)
 * Later decisions that build on this: none yet
 * Background: none

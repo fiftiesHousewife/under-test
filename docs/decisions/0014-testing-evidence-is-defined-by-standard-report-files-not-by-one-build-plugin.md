@@ -29,6 +29,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md), [What counts as evidence for each test maturity level](0030-what-counts-as-evidence-for-each-test-maturity-level.md)
+* Builds on: [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md), [What counts as evidence for each test maturity level](0032-what-counts-as-evidence-for-each-test-maturity-level.md)
 * Later decisions that build on this: [The toolkit provides reference build set-ups for Gradle, Maven and npm](0015-the-toolkit-provides-reference-build-set-ups-for-gradle-maven-and-npm.md)
 * Background: none

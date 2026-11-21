@@ -1,6 +1,6 @@
 ---
 name: write-a-technique-lesson
-description: Create or improve a lesson for a testing technique under techniques/<id>/ (a README plus a runnable before-and-after Gradle example). Use for lesson items in the backlog, or when asked for an example of a technique.
+description: Create or improve a lesson for a testing technique under lessons/<id>/ (a README, a runnable before-and-after Gradle example, an exercise, and video and narration scripts). Use for lesson items in the backlog, or when asked for an example of a technique.
 ---
 
 # Writing a technique lesson
@@ -10,14 +10,18 @@ Use `techniques/mutation-testing/` as the model. Words follow `GLOSSARY.md`; exp
 
 ## Layout
 ```
-techniques/<id>/
-  technique.yaml        # already exists: rules for tools. Set example.java to "ready" when done.
-  README.md             # the lesson
+techniques/<id>/technique.yaml   # rules for tools; already exists. Set example.java to "ready" when the lesson is done.
+lessons/<id>/
+  README.md                      # the lesson
   example/
-    build.gradle.kts    # plugins { id("io.github.fiftieshousewife.java-conventions") }
+    build.gradle.kts             # plugins { id("io.github.fiftieshousewife.java-conventions") }
     src/main/java/io/github/fiftieshousewife/undertest/techniques/<package>/...
-    src/test/java/...              # local tests: no container runtime, no network
-    src/integrationTest/java/...   # only if the technique needs containers; skips itself where there is no runtime
+    src/test/java/...            # local tests: no container runtime, no network
+    src/integrationTest/java/... # only if the technique needs containers; skips itself where there is no runtime
+  exercise/                      # starts from the "before" state; the "after" state is the answer
+  media/
+    <id>.tape                    # VHS script for the terminal video
+    <id>.narration.md            # narration text: voice and captions are generated from it
 ```
 
 ## The example
@@ -27,6 +31,18 @@ techniques/<id>/
 - **Repeatable:** no real clock, random values, network or sleeps. Must pass 5 runs in a row.
 - **Safe:** no real host names, no secrets, nothing that looks like production configuration.
 - **Size:** one production class or a small package.
+
+## The video script (`media/<id>.tape`)
+Copy `lessons/mutation-testing/media/mutation-testing.tape` and keep its shape:
+- **Dependencies first:** `Require` each program the video needs (java, git, ...), then `Env LESSON "<id>"` and
+  `Source lessons/_shared/setup.tape`. The shared set-up runs off-camera: it fetches Gradle, resolves every plugin and
+  library, compiles the lesson, and loads the callout helper, so the video opens on a warmed-up project.
+- **House style:** keep the `Set` block identical to the other lessons (size, font, theme, typing speed, window bar).
+- **Narration on screen:** type it as shell comments (`Type "# ..."`). Slow down for a key command with `Type@70ms`.
+- **Pause:** `Sleep` long enough to read what just appeared; `Wait /regex/` for slow commands rather than guessing.
+- **Highlight:** pipe output through `grep --color=always` so the key part is coloured.
+- **Call out:** draw a box off-camera: `Hide`, `Type@1ms "callout '...'"`, `Enter`, `Show`.
+- **Zoom:** not possible inside VHS; add a zoom marker to the narration file instead (post-production step).
 
 ## The README, in this order
 1. Title line: workstream, test maturity level it provides evidence for, tools.
@@ -41,8 +57,8 @@ Follow the code standards in [AGENTS.md](../../../AGENTS.md): at most three para
 8. **Further reading:** primary sources only.
 
 ## Checklist (the automated check for this item)
-- [ ] `./gradlew :techniques:<id>:build` passes, and passes again with `--rerun-tasks`.
+- [ ] `./gradlew :lessons:<id>:build` passes, and passes again with `--rerun-tasks`.
 - [ ] Every command in the README was run, and its stated result matches.
-- [ ] `technique.yaml` `example:` updated; `techniques/README.md` table updated.
+- [ ] `techniques/<id>/technique.yaml` `example:` updated; `lessons/README.md` and `techniques/README.md` tables updated.
 - [ ] Nothing needs a container outside `integrationTest`.
 - [ ] Checked against `GLOSSARY.md`.

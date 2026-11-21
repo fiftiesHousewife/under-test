@@ -21,7 +21,8 @@ Name a product only as an option or an example.
 |---|---|
 | [`docs/decisions/`](docs/decisions/README.md) | Decision guides, one small decision each, in MADR form. Agents draft; the deciding role approves by pull request. |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background and sources. |
-| [`techniques/`](techniques/README.md) | One folder per technique: `technique.yaml` rules, a `README.md` lesson, and a runnable `example/`. |
+| [`techniques/`](techniques/README.md) | One `technique.yaml` per technique: the rules the toolkit's tools read. |
+| [`lessons/`](lessons/README.md) | One folder per lesson: README, runnable `example/`, exercise, and video and narration scripts. Kept apart so lessons can later move to their own repo. |
 | `testing-guides/` | Default approach per technology stack and per application type. |
 | `shared-test-kits/` | Stand-ins for widely shared systems. |
 | `tools/` | Automated tools. Reuse existing tools before building anything. |
@@ -69,7 +70,7 @@ If the organisation profile sets `commit_messages.must_name_work_item`, every co
 
 ## Safety
 Never build or run code from another repo unless its secrets scan is clean, and only where production can't be reached
-(see [Old code runs first only where production cannot be reached](docs/decisions/0025-old-code-runs-first-only-where-production-cannot-be-reached.md)).
+(see [Old code runs first only where production cannot be reached](docs/decisions/0027-old-code-runs-first-only-where-production-cannot-be-reached.md)).
 
 ## Before you finish
 Run `./gradlew check`. It must pass.

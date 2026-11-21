@@ -211,7 +211,7 @@ one, by hand, with an AI assistant, or in CI:
    the key in every commit, and the commit-message checks switch on.
 
 *Background:* [The programme backlog lives in the organisation's issue tracker, not in a file](docs/decisions/0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
-and [When the organisation requires it, every commit names its work item](docs/decisions/0045-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
+and [When the organisation requires it, every commit names its work item](docs/decisions/0047-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
 
 ## Step 9: Give your AI assistant the skills
 
@@ -220,7 +220,7 @@ repository, and unpacked by `./gradlew installSkills` into the folders your appr
 installer is needed. APM (Agent Package Manager) is an optional extra, for organisations that allow it. People direct
 the AI and review everything it produces; unattended AI agents stay off unless your profile allows them.
 
-*Background:* [How AI assistant skills and instructions reach every repo](docs/decisions/0018-how-ai-assistant-skills-and-instructions-reach-every-repo.md).
+*Background:* [How AI assistant skills and instructions reach every repo](docs/decisions/0019-how-ai-assistant-skills-and-instructions-reach-every-repo.md).
 
 ## Step 10: Run the programme
 

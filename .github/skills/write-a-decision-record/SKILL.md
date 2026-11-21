@@ -33,6 +33,6 @@ Not yet chosen. The options are below. This toolkit itself already uses APM for 
 
 ## More Information
 
-* Builds on: [People do the work with AI coding assistance, and review everything it produces](../../../docs/decisions/0022-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)
+* Builds on: [People do the work with AI coding assistance, and review everything it produces](../../../docs/decisions/0024-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)
 * Later decisions that build on this: none yet
 * Background: none

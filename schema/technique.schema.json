@@ -105,7 +105,8 @@
             "none"
           ]
         }
-      }
+      },
+      "description": "Status of the lesson for this technique, in lessons/<id>/."
     },
     "note": {
       "type": "string"

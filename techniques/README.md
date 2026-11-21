@@ -1,19 +1,15 @@
-# Technique catalogue
+# Technique rules
 
-One folder per testing technique. Each folder serves two readers:
+One folder per testing technique, holding `technique.yaml`: when to adopt, defer or reject the technique, the checks to
+run first, and what to use instead. The toolkit's planning tools read these files; they are checked against
+[the technique schema](../schema/technique.schema.json).
 
-| File | Reader | Purpose |
-|---|---|---|
-| `technique.yaml` | Tools and agents | When to adopt, defer or reject the technique; checks to run first; what to use instead. The planning tool reads these. Schema: [`schema/technique.schema.json`](../schema/technique.schema.json). |
-| `README.md` | People | A lesson: what it catches, a walk-through of the example, how it fits the programme, common mistakes. |
-| `example/` | People | A small runnable Gradle project (`:techniques:<id>`) with a before and an after. Runs on a developer machine with no container runtime. |
-| `example-ts/` | People | A TypeScript version, where the technique applies to web UI or Node code. |
+The lessons that teach each technique (explanation, runnable example, exercise, video) are in
+[`lessons/`](../lessons/README.md).
 
-To add a lesson or example, follow [`.github/skills/write-a-technique-lesson`](../.github/skills/write-a-technique-lesson/SKILL.md). Words follow [GLOSSARY.md](../GLOSSARY.md).
-
-| Technique | Workstream | Evidence for maturity levels | Java example | TypeScript example |
+| Technique | Workstream | Evidence for maturity levels | Java lesson | TypeScript lesson |
 |---|---|---|---|---|
-| [mutation-testing](mutation-testing/) | strengthen tests | 4 | ready | to do |
+| [mutation-testing](mutation-testing/technique.yaml) ([lesson](../lessons/mutation-testing/README.md)) | strengthen tests | 4 | ready | to do |
 | [snapshot-testing](snapshot-testing/) | record current behaviour | 2 | to do | – |
 | [ai-written-tests](ai-written-tests/) | record current behaviour | 2 | to do | – |
 | [automatic-test-generation](automatic-test-generation/) | record current behaviour | 2 | to do | – |

@@ -97,7 +97,7 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | snapshot testing | Save a known-good output once; future runs compare against it and a person approves any change. |
 | test double / fake / stub | A stand-in for a real dependency during a test. |
 | flaky test | A test that sometimes passes and sometimes fails without any code change. |
-| Testcontainers, WireMock, Pact, PIT, ArchUnit, jqwik | Tool names. Say what the tool does the first time. |
+| Testcontainers, WireMock, Pact, PIT, ArchUnit, jetCheck | Tool names. Say what the tool does the first time. |
 | **connection list** | A file listing everything an application connects to (interfaces, databases, queues, outside services), with what tests use instead of each one and which addresses tests must never reach. Written in FINOS CALM, an open standard format. | dependency map, architecture document |
 | **issue tracker** | Where the programme backlog and each repo's work items are kept. Whichever the organisation already uses (for example GitHub Issues or Jira); named in its organisation profile. | (a product name, except as an example) |
 | **organisation profile** | A file in the organisation's private organisation repo recording facts the toolkit can't choose: issue tracker, CI platform, package repository, approved AI assistants, who fills each role. |  |

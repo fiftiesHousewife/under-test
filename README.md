@@ -27,7 +27,7 @@ corporate networks.
 |---|---|
 | Evaluating it for a company with a locked-down network (no internet installs, no public code hosting, your own package repository, proxy, tracker and wiki) | [docs/CORPORATE-USE.md](docs/CORPORATE-USE.md): the assumptions it is built for, and how each part reaches people |
 | Ready to adopt it in your organisation | [ADOPTION.md](ADOPTION.md): step by step, from naming roles to rolling out in batches |
-| Learning a testing technique | [techniques/](techniques/README.md): lessons, runnable examples and videos |
+| Learning a testing technique | [lessons/](lessons/README.md): lessons, runnable examples and videos |
 | Making or reviewing a programme decision | [docs/decisions/](docs/decisions/README.md): decision guides, smallest first |
 | An AI coding assistant, or directing one | [AGENTS.md](AGENTS.md): how to work in this repo, and the code standards |
 | Unsure of a word | [GLOSSARY.md](GLOSSARY.md) |
@@ -73,12 +73,12 @@ security-bug analysis (SpotBugs with FindSecBugs), and forbidden APIs. See
 
 ### See mutation testing catch weak tests
 
-The [mutation testing lesson](techniques/mutation-testing/README.md) has two test suites with the same 100% line
+The [mutation testing lesson](lessons/mutation-testing/README.md) has two test suites with the same 100% line
 coverage. One catches bugs; the other doesn't:
 
 ```bash
-./gradlew :techniques:mutation-testing:pitest -Psuite=weak   # 5 of 13 deliberately introduced bugs caught
-./gradlew :techniques:mutation-testing:pitest                # 13 of 13 caught
+./gradlew :lessons:mutation-testing:pitest -Psuite=weak   # 5 of 13 deliberately introduced bugs caught
+./gradlew :lessons:mutation-testing:pitest                # 13 of 13 caught
 ```
 
 The difference comes down to tests like these:
@@ -112,7 +112,8 @@ result in [a published format](schema/repo-classification.schema.json), so any s
 | Folder | What you'll find |
 |---|---|
 | [`ADOPTION.md`](ADOPTION.md), [`docs/CORPORATE-USE.md`](docs/CORPORATE-USE.md) | How to adopt the toolkit, and the corporate environment it is built for |
-| [`techniques/`](techniques/README.md) | One folder per testing technique: lesson, runnable example, video, and the rules for when to use it |
+| [`lessons/`](lessons/README.md) | One folder per lesson: explanation, runnable example, exercise, and video scripts |
+| [`techniques/`](techniques/README.md) | The rules for when to use each testing technique, read by the toolkit's tools |
 | [`docs/decisions/`](docs/decisions/README.md) | Decision guides, one small decision each, building from foundations upward |
 | [`docs/design/`](docs/design/survey-tool.md) | Designs for tools that sit outside the toolkit |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background reading and sources |

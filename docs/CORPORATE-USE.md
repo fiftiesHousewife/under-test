@@ -197,7 +197,7 @@ Your branding and edited videos live in your organisation repo or your own media
 Everything in the toolkit, videos and their layers included, is under the Apache License 2.0. You may use, change,
 rebrand and redistribute it freely; when you redistribute, keep the licence and notices and mark the files you changed.
 
-*Background:* [Lesson videos ship as editable layers so organisations can rebrand, trim and revoice them](decisions/0017-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md).
+*Background:* [Lesson videos ship as editable layers so organisations can rebrand, trim and revoice them](decisions/0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md).
 
 ---
 

@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=../../schema/technique.schema.json
 id: automatic-test-generation
-name: Random or search-based generation (Randoop, EvoSuite)
+name: Automatic test generation (Randoop)
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [2]
-tools: [randoop, evosuite]
+tools: [randoop]
 adopt_when:
   - Libraries and pure logic
   - JDK version supported by the tool
@@ -14,5 +14,8 @@ precondition_checks:
   - {done_by: tool, check: JDK version}
   - {done_by: tool, check: Framework annotation density}
 fallback: ai-written-tests
+constraints:
+  - Randoop ships as a release zip, not on Maven Central; organisations mirror it into their package repository
+  - EvoSuite is no longer maintained (no release since 2021) and is not used
 references: [test-generation]
 example: {java: todo, typescript: none}

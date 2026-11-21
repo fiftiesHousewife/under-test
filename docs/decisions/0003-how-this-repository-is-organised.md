@@ -21,7 +21,7 @@ This repo holds the rules, tools, AI assistant skills and lessons for the progra
 
 ## Decision Outcome
 
-Proposed: one folder per kind of content: `adr/`, `techniques/<id>/` (lesson, runnable example, `technique.yaml` rules), `testing-guides/technology-stacks/<id>/`, `testing-guides/application-types/<id>/`, `shared-test-kits/<system-id>/`, `applications/<app-id>/`, `schema/`, `tools/<id>/`, `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
+Proposed: one folder per kind of content: `docs/decisions/` (decision guides), `techniques/<id>/technique.yaml` (rules the tools read), `lessons/<id>/` (lesson, runnable example, exercise, video scripts), `testing-guides/technology-stacks/<id>/`, `testing-guides/application-types/<id>/`, `shared-test-kits/<system-id>/`, `applications/<app-id>/`, `schema/`, `tools/<id>/`, `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
 
 ### Consequences
 
@@ -30,5 +30,5 @@ Proposed: one folder per kind of content: `adr/`, `techniques/<id>/` (lesson, ru
 ## More Information
 
 * Builds on: nothing (a foundation decision)
-* Later decisions that build on this: [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md), [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md)
+* Later decisions that build on this: [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md), [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md), [Lessons live apart from technique rules and move to their own repo once the convention plugin is published](0017-lessons-live-apart-from-technique-rules-and-move-to-their-own-repo-once-the-convention-plugin-is-published.md)
 * Background: none
