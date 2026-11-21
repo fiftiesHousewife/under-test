@@ -4,7 +4,7 @@ decision-makers: Toolkit Owner
 group: Using the toolkit in an organisation
 ---
 
-# Lessons are runnable checked by the build and illustrated with terminal videos generated from scripts
+# Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts
 
 **Decided by:** Toolkit Owner · **Status:** proposed (agreed in discussion)
 
@@ -34,5 +34,5 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0020-we-reuse-existing-tools-before-building-new-ones.md), [How this repository is organised](0003-how-this-repository-is-organised.md)
-* Later decisions that build on this: [Lesson videos ship as editable layers so organisation's can rebrand trim and revoice them](0017-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md)
+* Later decisions that build on this: [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0017-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md)
 * Background: none

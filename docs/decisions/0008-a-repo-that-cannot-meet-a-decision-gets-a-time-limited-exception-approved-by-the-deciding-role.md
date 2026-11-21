@@ -4,7 +4,7 @@ decision-makers: Steering Group
 group: Using the toolkit in an organisation
 ---
 
-# A repo that cannot meet a decision gets a time limited exception approved by the deciding role
+# A repo that cannot meet a decision gets a time-limited exception approved by the deciding role
 
 **Decided by:** Steering Group · **Status:** proposed
 
@@ -32,6 +32,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [Decisions cascade from toolkit to organisation to organisation units to repos and lower levels only enrich](0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md)
+* Builds on: [Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich](0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md)
 * Later decisions that build on this: none yet
 * Background: none

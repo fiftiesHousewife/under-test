@@ -12,7 +12,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [The programme runs as a forward deployed engagement with named roles](0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md) | proposed | Programme Sponsor |
 | [The programme moves through five phases, each ending with a sign-off](0002-the-programme-moves-through-five-phases-each-ending-with-a-sign-off.md) | proposed | Programme Sponsor |
 | [How this repository is organised](0003-how-this-repository-is-organised.md) | proposed | Technical Architect |
-| [The toolkits licence for code and for lessons and videos](0004-the-toolkits-licence-for-code-and-for-lessons-and-videos.md) | proposed (agreed in discussion) | Programme Sponsor |
+| [The toolkit's licence for code and for lessons and videos](0004-the-toolkits-licence-for-code-and-for-lessons-and-videos.md) | proposed (agreed in discussion) | Programme Sponsor |
 | [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md) | proposed (agreed in discussion) | Technical Architect |
 | [The programme backlog lives in the organisation's issue tracker, not in a file](0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md) | proposed | Engagement Lead |
 | [Decision records follow MADR and are approved by pull request review](0010-decision-records-follow-madr-and-are-approved-by-pull-request-review.md) | proposed | Engagement Lead |
@@ -27,15 +27,15 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | Decision | Status | Who decides |
 |---|---|---|
 | [The organisation repo refers to the toolkit by version through the organisation's package repository](0006-the-organisation-repo-refers-to-the-toolkit-by-version-through-the-organisations-package-repository.md) | proposed | Technical Architect |
-| [Decisions cascade from toolkit to organisation to organisation units to repos and lower levels only enrich](0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md) | proposed (agreed in discussion) | Steering Group |
-| [A repo that cannot meet a decision gets a time limited exception approved by the deciding role](0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md) | proposed | Steering Group |
+| [Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich](0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md) | proposed (agreed in discussion) | Steering Group |
+| [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md) | proposed | Steering Group |
 | [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md) | proposed (agreed in discussion) | Technical Architect |
 | [The build environment (proxy and package repository) comes from the organisation's own build set-up](0012-the-build-environment-proxy-and-package-repository-comes-from-the-organisations-own-build-set-up.md) | proposed | Technical Architect, approved by the Security and Platform Owner |
 | [Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin](0013-code-quality-standards-can-be-the-toolkits-the-organisations-or-the-organisations-own-plugin.md) | proposed | Technical Architect |
 | [Testing evidence is defined by standard report files, not by one build plugin](0014-testing-evidence-is-defined-by-standard-report-files-not-by-one-build-plugin.md) | proposed | Test Quality Lead, approved by the Steering Group |
 | [The toolkit provides reference build set-ups for Gradle, Maven and npm](0015-the-toolkit-provides-reference-build-set-ups-for-gradle-maven-and-npm.md) | proposed | Technical Architect |
-| [Lessons are runnable checked by the build and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md) | proposed (agreed in discussion) | Toolkit Owner |
-| [Lesson videos ship as editable layers so organisation's can rebrand trim and revoice them](0017-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md) | proposed | Toolkit Owner |
+| [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md) | proposed (agreed in discussion) | Toolkit Owner |
+| [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0017-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md) | proposed | Toolkit Owner |
 | [How AI assistant skills and instructions reach every repo](0018-how-ai-assistant-skills-and-instructions-reach-every-repo.md) | proposed (agreed in discussion) | Technical Architect |
 
 ## Keeping production safe

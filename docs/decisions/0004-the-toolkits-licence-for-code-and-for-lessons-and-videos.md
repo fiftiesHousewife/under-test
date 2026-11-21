@@ -4,7 +4,7 @@ decision-makers: Programme Sponsor
 group: How we work
 ---
 
-# The toolkits licence for code and for lessons and videos
+# The toolkit's licence for code and for lessons and videos
 
 **Decided by:** Programme Sponsor · **Status:** proposed (agreed in discussion)
 

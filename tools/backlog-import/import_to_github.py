@@ -19,6 +19,7 @@ What it does, in order:
   4. Links each item to its parent as a sub-issue.
   5. Adds "blocked by" links between items.
 """
+import http.client
 import json
 import os
 import re
@@ -34,6 +35,7 @@ KEY_MARKER = "<!-- backlog-key: {} -->"
 LABEL_COLOURS = {"type": "5319e7", "phase": "0e8a16", "owner": "1d76db", "done-by": "fbca04", "horizon": "d93f0b"}
 PAUSE_SECONDS = 1.5      # GitHub asks for at least a second between requests that create content
 RATE_LIMIT_WAIT = 90     # wait this long, then retry, if a rate limit is hit and GitHub gives no time
+NETWORK_RETRY_WAIT = 15  # wait this long, then retry, after a dropped connection, timeout or server error
 
 
 def parse_seed(path):
@@ -80,7 +82,7 @@ class GitHub:
                 **({"Content-Type": "application/json"} if data else {}),
             })
             try:
-                with urllib.request.urlopen(req) as response:
+                with urllib.request.urlopen(req, timeout=60) as response:
                     payload = response.read()
                     if writes:
                         time.sleep(PAUSE_SECONDS)
@@ -92,10 +94,17 @@ class GitHub:
                     print(f"    rate limited; waiting {wait}s before retrying")
                     time.sleep(wait)
                     continue
+                if error.code >= 500:
+                    print(f"    server error {error.code}; retrying in {NETWORK_RETRY_WAIT}s")
+                    time.sleep(NETWORK_RETRY_WAIT)
+                    continue
                 if allow_fail:
                     return None, None
                 sys.exit(f"{method} {url} failed with {error.code}:\n{text}")
-        sys.exit("still rate limited after several retries; run the importer again later")
+            except (urllib.error.URLError, http.client.HTTPException, ConnectionError, TimeoutError) as error:
+                print(f"    connection problem ({error}); retrying in {NETWORK_RETRY_WAIT}s")
+                time.sleep(NETWORK_RETRY_WAIT)
+        sys.exit("still failing after several retries; run the importer again later (it carries on where it stopped)")
 
     def all_pages(self, path):
         url, results = f"{self.base}/repos/{self.repo}/{path}", []

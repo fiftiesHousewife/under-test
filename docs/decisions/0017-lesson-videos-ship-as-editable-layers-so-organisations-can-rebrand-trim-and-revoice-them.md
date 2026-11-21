@@ -4,7 +4,7 @@ decision-makers: Toolkit Owner
 group: Using the toolkit in an organisation
 ---
 
-# Lesson videos ship as editable layers so organisation's can rebrand trim and revoice them
+# Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them
 
 **Decided by:** Toolkit Owner · **Status:** proposed
 
@@ -31,6 +31,6 @@ Proposed: the first option. Organisation branding lives in the organisation repo
 
 ## More Information
 
-* Builds on: [Lessons are runnable checked by the build and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md), [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
+* Builds on: [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md), [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
 * Later decisions that build on this: none yet
 * Background: none
