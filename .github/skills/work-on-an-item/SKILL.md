@@ -6,8 +6,10 @@ description: Pick up a work item from the organisation's issue tracker (or, befo
 # Working on an item
 
 ## 1. Pick an item
-- If the person named an item, use it. Otherwise list open items in the issue tracker that aren't blocked
-  (for GitHub: `gh issue list --label "horizon: now" --search "-is:blocked"`; for Jira, the tracker's own filter).
+- If the person named an item, use it. Otherwise list open items in the issue tracker that aren't blocked, using
+  the tracker's REST API or web view. Don't assume extra command-line tools are installed. For GitHub, for example:
+  `curl -s -H "Authorization: Bearer $UNDERTEST_GITHUB_TOKEN" "$GITHUB_API_URL/repos/OWNER/REPO/issues?labels=horizon:%20now&state=open"`
+  (then skip items with open "blocked by" links). For Jira, a JQL search through its REST API.
   Before the backlog has been imported, read [the backlog seed](../../../plan/backlog-seed.yaml).
 - Read the item's "done when" list and any linked decision record. If it depends on an open decision, stop and say so.
 
@@ -20,7 +22,7 @@ description: Pick up a work item from the organisation's issue tracker (or, befo
 
 ## 3. Rules
 - Follow [AGENTS.md](../../../AGENTS.md): plain English, references by name and link, no dates, a schema for every YAML file, the code standards.
-- Keep this repo generic. Organisation facts and choices go in the organisation's private overlay repo.
+- Keep this repo generic. Organisation facts and choices go in the organisation's private organisation repo.
 - Never build or run another repo's code unless its secrets scan is clean, and only where production can't be reached.
 
 ## 4. Finish

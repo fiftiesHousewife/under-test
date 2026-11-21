@@ -30,5 +30,5 @@ Proposed: the five phases. The Steering Group approves each move to the next pha
 ## More Information
 
 * Builds on: [The programme runs as a forward deployed engagement with named roles](0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md)
-* Later decisions that build on this: [The programme backlog lives in the organisation's issue tracker, not in a file](0005-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
+* Later decisions that build on this: [The programme backlog lives in the organisation's issue tracker, not in a file](0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
 * Background: [engagement-model](../REFERENCES.md#engagement-model)

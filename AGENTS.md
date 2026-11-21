@@ -7,7 +7,7 @@ AI assistant skills, and lessons on testing techniques. It is used by people wit
 unattended are a future direction only.
 
 **Keep it generic.** Never write an organisation's own facts or decisions here. They belong in that organisation's
-private overlay repo (see [Organisation-specific facts and decisions live in a private overlay repo](docs/decisions/0004-organisation-specific-facts-and-decisions-live-in-a-private-overlay-repo.md)).
+private organisation repo (see [Organisation-specific facts and decisions live in a private organisation repo](docs/decisions/0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)).
 Name a product only as an option or an example.
 
 ## Words and references
@@ -27,7 +27,7 @@ Name a product only as an option or an example.
 | `tools/` | Automated tools. Reuse existing tools before building anything. |
 | [`schema/`](schema/) | Schemas for every YAML format. |
 | [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |
-| [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) | The shape of an organisation's private overlay repo. |
+| [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo. |
 | [`plan/backlog-seed.yaml`](plan/backlog-seed.yaml) | Starting work list, imported once into the organisation's issue tracker. After that, work comes from the tracker. |
 | `build-logic/`, `config/quality/` | Gradle conventions and the quality-check rules. |
 
@@ -36,7 +36,7 @@ Name a product only as an option or an example.
 |---|---|
 | [work-on-an-item](.github/skills/work-on-an-item/SKILL.md) | Pick up a work item from the issue tracker and finish it |
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |
-| [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) | Record an organisation's own choice in its private overlay repo |
+| [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) | Record an organisation's own choice in its private organisation repo |
 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turn a repo's approved testing plan into work items (placeholder until the loader exists) |
 | [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md) | Write a technique lesson and example |
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
@@ -69,7 +69,7 @@ If the organisation profile sets `commit_messages.must_name_work_item`, every co
 
 ## Safety
 Never build or run code from another repo unless its secrets scan is clean, and only where production can't be reached
-(see [Old code runs first only where production cannot be reached](docs/decisions/0019-old-code-runs-first-only-where-production-cannot-be-reached.md)).
+(see [Old code runs first only where production cannot be reached](docs/decisions/0025-old-code-runs-first-only-where-production-cannot-be-reached.md)).
 
 ## Before you finish
 Run `./gradlew check`. It must pass.

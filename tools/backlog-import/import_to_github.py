@@ -1,30 +1,39 @@
 #!/usr/bin/env python3
-"""Import plan/backlog-seed.yaml into GitHub Issues, using the GitHub CLI (`gh`).
+"""Import plan/backlog-seed.yaml into GitHub Issues, using the GitHub REST API directly.
+
+Needs only Python 3 (standard library) and a token. No GitHub CLI or other tools.
 
     python3 tools/backlog-import/import_to_github.py OWNER/REPO            # dry run: shows what would happen
     python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply    # creates and updates issues
+
+Settings, from the environment:
+    UNDERTEST_GITHUB_TOKEN (or GH_TOKEN, or GITHUB_TOKEN)   a token with permission to write issues in the repo
+    GITHUB_API_URL   API address. Default https://api.github.com; for an internal GitHub server use
+                     https://<your-host>/api/v3. A proxy is taken from HTTPS_PROXY as usual.
 
 What it does, in order:
   1. Creates labels for item type, phase, owner role, who does it, and horizon (if missing).
   2. Creates one issue per item, or updates it if an issue with the same key already exists.
      The key is stored in a hidden comment in the issue body, so re-running never duplicates.
-  3. Links each item to its parent as a sub-issue.
-  4. Adds "blocked by" links between items.
-  5. Closes, as not planned, any issue whose item is no longer in the seed.
-
-Needs `gh` logged in with access to the repo. Sub-issues and issue dependencies use GitHub's REST API.
-Issue types are organisation-level on GitHub, so this importer records the item type as a label.
+  3. Closes, as not planned, any issue whose item is no longer in the seed.
+  4. Links each item to its parent as a sub-issue.
+  5. Adds "blocked by" links between items.
 """
 import json
+import os
 import re
-import subprocess
 import sys
 import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 SEED = Path(__file__).resolve().parents[2] / "plan" / "backlog-seed.yaml"
 KEY_MARKER = "<!-- backlog-key: {} -->"
 LABEL_COLOURS = {"type": "5319e7", "phase": "0e8a16", "owner": "1d76db", "done-by": "fbca04", "horizon": "d93f0b"}
+PAUSE_SECONDS = 1.5      # GitHub asks for at least a second between requests that create content
+RATE_LIMIT_WAIT = 90     # wait this long, then retry, if a rate limit is hit and GitHub gives no time
 
 
 def parse_seed(path):
@@ -52,26 +61,51 @@ def parse_seed(path):
     return items
 
 
-PAUSE_SECONDS = 1.5      # GitHub asks for at least a second between requests that create content
-RATE_LIMIT_WAIT = 90     # wait this long, then retry, if GitHub's secondary rate limit is hit
+class GitHub:
+    def __init__(self, repo):
+        self.base = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
+        self.repo = repo
+        self.token = (os.environ.get("UNDERTEST_GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+                      or os.environ.get("GITHUB_TOKEN"))
 
+    def request(self, method, path, body=None, writes=False, allow_fail=False):
+        url = path if path.startswith("http") else f"{self.base}/repos/{self.repo}/{path}"
+        data = json.dumps(body).encode() if body is not None else None
+        for _ in range(6):
+            req = urllib.request.Request(url, data=data, method=method, headers={
+                "Accept": "application/vnd.github+json",
+                "X-GitHub-Api-Version": "2022-11-28",
+                "Authorization": f"Bearer {self.token}",
+                "User-Agent": "under-test-backlog-import",
+                **({"Content-Type": "application/json"} if data else {}),
+            })
+            try:
+                with urllib.request.urlopen(req) as response:
+                    payload = response.read()
+                    if writes:
+                        time.sleep(PAUSE_SECONDS)
+                    return (json.loads(payload) if payload else None), response.headers
+            except urllib.error.HTTPError as error:
+                text = error.read().decode(errors="replace")
+                if error.code in (403, 429) and "rate limit" in text.lower():
+                    wait = int(error.headers.get("Retry-After") or RATE_LIMIT_WAIT)
+                    print(f"    rate limited; waiting {wait}s before retrying")
+                    time.sleep(wait)
+                    continue
+                if allow_fail:
+                    return None, None
+                sys.exit(f"{method} {url} failed with {error.code}:\n{text}")
+        sys.exit("still rate limited after several retries; run the importer again later")
 
-def gh(*args, input_json=None, writes=False, allow_fail=False):
-    for attempt in range(6):
-        result = subprocess.run(["gh", *args], input=json.dumps(input_json) if input_json else None,
-                                capture_output=True, text=True)
-        if result.returncode == 0:
-            if writes:
-                time.sleep(PAUSE_SECONDS)
-            return json.loads(result.stdout) if result.stdout.strip() else None
-        if "rate limit" in result.stderr.lower():
-            print(f"    rate limited; waiting {RATE_LIMIT_WAIT}s before retrying")
-            time.sleep(RATE_LIMIT_WAIT)
-            continue
-        if allow_fail:
-            return None
-        sys.exit(f"gh {' '.join(args)} failed:\n{result.stderr}")
-    sys.exit("still rate limited after several retries; run the importer again later")
+    def all_pages(self, path):
+        url, results = f"{self.base}/repos/{self.repo}/{path}", []
+        while url:
+            page, headers = self.request("GET", url)
+            results += page
+            links = headers.get("Link", "") if headers else ""
+            m = re.search(r'<([^>]+)>;\s*rel="next"', links)
+            url = m.group(1) if m else None
+        return results
 
 
 def labels_for(item):
@@ -79,11 +113,11 @@ def labels_for(item):
             f"done-by: {item['done_by']}"] + ([f"horizon: {item['horizon']}"] if "horizon" in item else [])
 
 
-def body_for(item, repo):
+def body_for(item, web_base):
     lines = [KEY_MARKER.format(item["key"]), "", "**Done when:**", ""]
     lines += [f"- [ ] {d}" for d in item["done_when"]]
     if "decision_record" in item:
-        lines += ["", f"**Decision record:** [{item['title']}](https://github.com/{repo}/blob/main/{item['decision_record']})"]
+        lines += ["", f"**Decision record:** [{item['title']}]({web_base}/blob/main/{item['decision_record']})"]
     if "notes" in item:
         lines += ["", item["notes"]]
     return "\n".join(lines)
@@ -95,55 +129,57 @@ def main():
     repo, apply = sys.argv[1], "--apply" in sys.argv
     items = parse_seed(SEED)
     print(f"{len(items)} items in {SEED.name}; {'APPLYING to' if apply else 'dry run for'} {repo}")
+    if not apply:
+        for item in items:
+            print(f"  would create or update: {item['title']}")
+        print("dry run complete; add --apply to make these changes")
+        return
 
-    wanted = sorted({label for item in items for label in labels_for(item)})
-    existing_labels = {l["name"] for l in gh("api", f"repos/{repo}/labels", "--paginate")} if apply else set()
-    for label in wanted:
-        if label not in existing_labels:
-            print(f"  label: {label}")
-            if apply:
-                colour = LABEL_COLOURS[label.split(":")[0]]
-                gh("api", f"repos/{repo}/labels", "-X", "POST", "-f", f"name={label}", "-f", f"color={colour}", writes=True)
+    github = GitHub(repo)
+    if not github.token:
+        sys.exit("Set UNDERTEST_GITHUB_TOKEN (or GH_TOKEN / GITHUB_TOKEN) to a token that can write issues.")
+    web_base = github.base.replace("://api.github.com", "://github.com").replace("/api/v3", "") + f"/{repo}"
+
+    existing = {label["name"] for label in github.all_pages("labels?per_page=100")}
+    for label in sorted({label for item in items for label in labels_for(item)} - existing):
+        print(f"  label: {label}")
+        github.request("POST", "labels", {"name": label, "color": LABEL_COLOURS[label.split(":")[0]]}, writes=True)
 
     by_key = {}
-    if apply:
-        for issue in gh("api", f"repos/{repo}/issues?state=all&per_page=100", "--paginate"):
-            m = re.search(r"<!-- backlog-key: ([a-z0-9-]+) -->", issue.get("body") or "")
-            if m:
-                by_key[m.group(1)] = issue
+    for issue in github.all_pages("issues?state=all&per_page=100"):
+        if "pull_request" in issue:
+            continue
+        m = re.search(r"<!-- backlog-key: ([a-z0-9-]+) -->", issue.get("body") or "")
+        if m:
+            by_key[m.group(1)] = issue
 
     for item in items:
-        payload = {"title": item["title"], "body": body_for(item, repo), "labels": labels_for(item)}
+        payload = {"title": item["title"], "body": body_for(item, web_base), "labels": labels_for(item)}
         if item["key"] in by_key:
-            print(f"  update #{by_key[item['key']]['number']}: {item['title']}")
-            if apply:
-                by_key[item["key"]] = gh("api", f"repos/{repo}/issues/{by_key[item['key']]['number']}", "-X", "PATCH",
-                                         "--input", "-", input_json=payload, writes=True)
+            number = by_key[item["key"]]["number"]
+            print(f"  update #{number}: {item['title']}")
+            by_key[item["key"]], _ = github.request("PATCH", f"issues/{number}", payload, writes=True)
         else:
             print(f"  create: {item['title']}")
-            if apply:
-                by_key[item["key"]] = gh("api", f"repos/{repo}/issues", "-X", "POST", "--input", "-", input_json=payload,
-                                         writes=True)
+            by_key[item["key"]], _ = github.request("POST", "issues", payload, writes=True)
 
     seed_keys = {item["key"] for item in items}
     for key, issue in by_key.items():
         if key not in seed_keys and issue.get("state") == "open":
             print(f"  close as not planned #{issue['number']}: {issue['title']} (no longer in the seed)")
-            gh("api", f"repos/{repo}/issues/{issue['number']}", "-X", "PATCH",
-               "-f", "state=closed", "-f", "state_reason=not_planned", writes=True)
+            github.request("PATCH", f"issues/{issue['number']}", {"state": "closed", "state_reason": "not_planned"},
+                           writes=True)
 
     for item in items:
-        if not apply:
-            continue
         issue = by_key[item["key"]]
         if "parent" in item:
             parent = by_key[item["parent"]]
-            gh("api", f"repos/{repo}/issues/{parent['number']}/sub_issues", "-X", "POST",
-               "-F", f"sub_issue_id={issue['id']}", writes=True, allow_fail=True)
+            github.request("POST", f"issues/{parent['number']}/sub_issues", {"sub_issue_id": issue["id"]},
+                           writes=True, allow_fail=True)
         for blocker in item.get("blocked_by", []):
-            gh("api", f"repos/{repo}/issues/{issue['number']}/dependencies/blocked_by", "-X", "POST",
-               "-F", f"issue_id={by_key[blocker]['id']}", writes=True, allow_fail=True)
-    print("done" if apply else "dry run complete; add --apply to make these changes")
+            github.request("POST", f"issues/{issue['number']}/dependencies/blocked_by",
+                           {"issue_id": by_key[blocker]["id"]}, writes=True, allow_fail=True)
+    print("done")
 
 
 if __name__ == "__main__":

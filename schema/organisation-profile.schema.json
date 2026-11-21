@@ -2,10 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/fiftieshousewife/under-test/schema/organisation-profile.schema.json",
   "title": "Organisation profile",
-  "description": "Facts about one organisation that the toolkit needs but cannot choose: platforms, tools already in place, and who fills each engagement role. Kept in the organisation's private overlay repo as organisation-profile.yaml, never in this repo. Facts with no choice go here; choices go in the overlay repo's own decision records.",
+  "description": "Facts about one organisation that the toolkit needs but cannot choose: platforms, tools already in place, and who fills each engagement role. Kept in the organisation's private organisation repo as organisation-profile.yaml, never in this repo. Facts with no choice go here; choices go in the organisation repo's own decision records.",
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "toolkit",
     "organisation",
     "issue_tracker",
     "code_hosting",
@@ -15,18 +16,41 @@
     "ai_assistants"
   ],
   "properties": {
+    "toolkit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version"
+      ],
+      "description": "Which toolkit release this organisation builds on. Its artifacts arrive through the organisation's package repository; nothing is fetched from public code-hosting sites.",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Toolkit release, e.g. 1.4.0. Change it by pull request to upgrade."
+        },
+        "group_id": {
+          "type": "string",
+          "default": "io.github.fiftieshousewife.undertest",
+          "description": "Maven group of the toolkit's artifacts."
+        },
+        "source_mirror": {
+          "type": "string",
+          "description": "Optional: address of the organisation's internal copy of the toolkit source, for people to browse."
+        }
+      }
+    },
     "organisation": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "name",
-        "overlay_repo"
+        "organisation_repo"
       ],
       "properties": {
         "name": {
           "type": "string"
         },
-        "overlay_repo": {
+        "organisation_repo": {
           "type": "string",
           "description": "Where this profile and the organisation's own decision records live."
         },

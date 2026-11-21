@@ -1,6 +1,7 @@
 # under-test
 
 [![Build](https://github.com/fiftiesHousewife/under-test/actions/workflows/build.yml/badge.svg)](https://github.com/fiftiesHousewife/under-test/actions/workflows/build.yml)
+[![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](LICENSE)
 ![Java 25](https://img.shields.io/badge/Java-25-blue)
 ![Gradle 9](https://img.shields.io/badge/Gradle-9-02303A)
 ![JUnit 6](https://img.shields.io/badge/JUnit-6-25A162)
@@ -18,7 +19,9 @@ working with AI coding assistance, find out what each repo needs, plan the work,
 - **AI assistant skills** that let an AI help with the work while a person reviews everything it produces.
 
 The toolkit is **generic**. Nothing in it is specific to one organisation: each organisation adds its own facts and
-choices in a private overlay repo. [ADOPTION.md](ADOPTION.md) walks through adopting it step by step.
+choices in a private organisation repo. [ADOPTION.md](ADOPTION.md) walks through adopting it step by step, and
+[docs/CORPORATE-USE.md](docs/CORPORATE-USE.md) explains how it works inside a locked-down corporate network: no
+internet installs, no public code hosting, your own package repository, proxy, tracker and knowledge tools.
 
 ## Try it
 
@@ -58,11 +61,11 @@ assertAll(
 
 ## Adopting it in your organisation
 
-You don't change this repo to use it. You keep your organisation's details in a **private overlay repo** and point the
+You don't change this repo to use it. You keep your organisation's details in a **private organisation repo** and point the
 toolkit at it.
 
 ```
- this toolkit (public, generic)             your overlay repo (private)
+ this toolkit (public, generic)             your organisation repo (private)
  ──────────────────────────────             ─────────────────────────────────────────────
  decision guides             ◀── adopt, narrow or replace ──  your own decision records
  organisation profile schema ◀── checked against ───────────  organisation-profile.yaml
@@ -70,7 +73,7 @@ toolkit at it.
  underTest { } settings      ◀── set from ──────────────────  your Gradle init script
 ```
 
-1. **Create your overlay.** Copy [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) into a new
+1. **Create your organisation repo.** Copy [`examples/organisation-repo/`](examples/organisation-repo/README.md) into a new
    private repo and fill in `organisation-profile.yaml`: your issue tracker, code-hosting and CI platforms, package
    repository, approved AI assistants, whether every commit must name a work item, and who fills each engagement role.
    It is checked against [the organisation profile schema](schema/organisation-profile.schema.json).
@@ -88,7 +91,7 @@ toolkit at it.
    The testing evidence the programme relies on (coverage, flaky-test detection, mutation sampling, checks on
    AI-written tests) always runs; only its thresholds follow your decisions.
 4. **Record your choices.** Where a decision guide leaves a choice, for example how CI runs container tests on your
-   platform, record it in your overlay with the
+   platform, record it in your organisation repo with the
    [record-an-organisation-decision skill](.github/skills/record-an-organisation-decision/SKILL.md).
 5. **Load the work.** Import [the starting backlog](plan/backlog-seed.yaml) into your issue tracker. Each repo's
    approved testing plan then adds its own work items. Importers exist per tracker; see
@@ -109,15 +112,21 @@ writes a result in [a published format](schema/repo-classification.schema.json),
 |---|---|
 | [`techniques/`](techniques/README.md) | One folder per testing technique: a lesson, a runnable example, and the rules for when to use it |
 | [`docs/decisions/`](docs/decisions/README.md) | Decision guides, one small decision each, building from foundations upward |
+| [`docs/CORPORATE-USE.md`](docs/CORPORATE-USE.md) | How the toolkit is used inside a locked-down corporate network |
 | [`docs/design/`](docs/design/survey-tool.md) | Designs for tools that sit outside the toolkit |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background reading and sources |
 | [`GLOSSARY.md`](GLOSSARY.md) | The words we use, and the words we avoid |
-| [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) | The shape of an organisation's private overlay repo |
+| [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo |
 | [`schema/`](schema/) | JSON Schemas for every YAML and JSON format the toolkit reads or writes |
 | [`tools/`](tools/) | Tools, including [the backlog importers](tools/backlog-import/README.md) |
 | [`plan/backlog-seed.yaml`](plan/backlog-seed.yaml) | The starting list of work, to import into your issue tracker |
 | [`build-logic/`](build-logic/), [`config/quality/`](config/quality/) | Gradle conventions and quality-check rules |
 | [`AGENTS.md`](AGENTS.md) | How AI coding assistants, and people, should work here |
+
+## Licence
+
+Apache License 2.0, for everything in this repository: code, tools, guides, lessons and videos. See [LICENSE](LICENSE)
+and [NOTICE](NOTICE).
 
 ## Contributing
 

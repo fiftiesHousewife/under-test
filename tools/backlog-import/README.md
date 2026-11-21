@@ -1,14 +1,16 @@
 # Backlog importers
 
 Load [the backlog seed](../../plan/backlog-seed.yaml) into the organisation's issue tracker, once. After that the tracker
-is the only list (see [The programme backlog lives in the organisation's issue tracker, not in a file](../../docs/decisions/0005-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)).
+is the only list (see [The programme backlog lives in the organisation's issue tracker, not in a file](../../docs/decisions/0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)).
 
 | Tracker | Importer | Built on |
 |---|---|---|
-| GitHub Issues | [`import_to_github.py`](import_to_github.py) | GitHub CLI and REST API (sub-issues, blocked-by links) |
+| GitHub Issues (public or an internal server) | [`import_to_github.py`](import_to_github.py) | GitHub REST API only; Python standard library; no GitHub CLI |
 | Jira Cloud | to do | Jira Cloud REST API or Atlassian's command-line tool: outcomes as epics, deliverables as children, "blocks" links. Credentials from `JIRA_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` in the environment |
 
 ```bash
+export UNDERTEST_GITHUB_TOKEN=...                        # a token that can write issues
+export GITHUB_API_URL=https://github.example.com/api/v3  # only for an internal GitHub server
 python3 tools/backlog-import/import_to_github.py OWNER/REPO           # dry run
 python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply   # create or update issues
 ```

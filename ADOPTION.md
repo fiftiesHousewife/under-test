@@ -8,9 +8,10 @@ true in a large company:
 - **Your platforms are fixed.** Your build tools, CI, deployment, issue tracker, code-hosting platform and AI
   assistant are already chosen. The toolkit fits around them; it never asks you to replace one.
 - **Your details stay private.** Nothing about your organisation goes into the toolkit. It lives in your own private
-  overlay repo.
+  organisation repo.
 
-Words follow [GLOSSARY.md](GLOSSARY.md). The decisions behind each step are linked as you go.
+Words follow [GLOSSARY.md](GLOSSARY.md). The decisions behind each step are linked as you go. For the corporate
+environment these steps assume, in detail, see [docs/CORPORATE-USE.md](docs/CORPORATE-USE.md).
 
 ---
 
@@ -18,15 +19,54 @@ Words follow [GLOSSARY.md](GLOSSARY.md). The decisions behind each step are link
 
 | Part | Ready to use | Still to come |
 |---|---|---|
-| Decision guides, glossary, technique lessons | Yes | More lessons |
+| Decision guides, glossary, technique lessons | Yes | More lessons; learning paths by role |
+| Lesson videos with voice, captions and editable layers | First video script | Voice, captions, layers, rebranding step |
+| Licence | Apache-2.0 for everything | – |
 | Gradle conventions and quality checks, with the `underTest` settings | Yes, from this repo's source | Published as a versioned plugin you can mirror |
-| Organisation profile schema and example overlay | Yes | A validator |
-| Backlog import | GitHub importer (Python and the GitHub CLI) | Jira adapter; a version that needs nothing but Java |
+| Organisation profile schema and example organisation repo | Yes | A validator |
+| Organisation-unit settings and the tool that combines the levels | Designed | Built |
+| Backlog import | GitHub importer (Python standard library, GitHub REST API; works with internal GitHub servers) | Jira adapter; a version that needs nothing but Java |
 | Skills bundle (`installSkills`) | Designed | Built and published |
 | Repo classifier | Designed, output format published | Built |
 | Maven and npm set-ups | Designed | Built |
 
 Until a part is published as an artifact, you would build it from your internal copy of this repo.
+
+## Levels of adoption
+
+Adoption happens at four levels. Each level builds on the one above, and may **enrich** it but never **contradict** it.
+
+```mermaid
+flowchart TB
+    T["<b>Toolkit</b> (public)<br/>decision guides, defaults, schemas"]
+    O["<b>Organisation</b> (private organisation repo)<br/>organisation profile + organisation decisions"]
+    U1["<b>Organisation unit</b><br/>e.g. a division: units/division/"]
+    U2["<b>Organisation unit</b><br/>e.g. a department: units/division/department/"]
+    R["<b>Repo</b><br/>assessment file, testing plan, exceptions"]
+    T -->|adopt, narrow, add, or replace| O
+    O -->|adopt, narrow or add only| U1
+    U1 -->|adopt, narrow or add only| U2
+    U2 -->|consumes the combined result| R
+```
+
+| Level | Where it lives | It may | It may not |
+|---|---|---|---|
+| **Toolkit** | This repo | Offer options and defaults | Contain anything organisation-specific |
+| **Organisation** | Private organisation repo: `organisation-profile.yaml`, `docs/decisions/` | Adopt, narrow or replace a toolkit guide (giving reasons), add decisions, set facts | Be published |
+| **Organisation unit** (any depth) | Same organisation repo, under `units/<path>/`, owned by that unit through code-owner rules | Adopt or narrow a decision from above (choose an option left open, tighten a threshold), add decisions on things not covered above | Replace or loosen anything decided above |
+| **Repo** | The repo itself: `testing/assessment.yaml`, `testing/TESTING-PLAN.md` | Record what is specific to it; ask for a time-limited exception | Make decisions that loosen anything |
+
+**How a repo's settings are worked out.** Starting from the toolkit's defaults, each level's settings are applied in
+order: organisation, then each unit from the top down. Thresholds take the strictest value (if the organisation says
+70% coverage and a department says 80%, the repo needs 80%). A choice must be one the level above allowed. A tool
+checks that no level contradicts the one above, and lists which level set each value.
+
+**When a repo can't comply.** The repo records an exception in its assessment file: which decision, why, and an
+expiry date. It is approved by the role that owns that decision at the level that made it. Expired exceptions fail
+the build.
+
+*Background:* [Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich](docs/decisions/0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md)
+and [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](docs/decisions/0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md).
 
 ---
 
@@ -42,8 +82,13 @@ Steering Group. Application Owners join as their applications come into scope.
 
 Nothing is fetched from the internet at build time. Before anyone uses the toolkit:
 
-1. **Copy the source.** Mirror this repository into your code-hosting platform, and pin a released version (a tag).
-   Your Toolkit Owner decides when to take a newer release.
+1. **Refer to the toolkit by version, through your package repository.** Each toolkit release is published to Maven
+   Central as versioned artifacts: the convention plugin, the skills bundle, and a content bundle holding the decision
+   guides, schemas and technique rules. Your package repository already mirrors Maven Central, so they arrive the same
+   way as any library, and nobody needs to reach a public code-hosting site. Your organisation repo names the version
+   (`toolkit.version` in the profile); your Toolkit Owner decides when to take a newer one.
+   *Optionally*, keep an internal mirror of this repository's source so people can browse it, and record its address
+   as `toolkit.source_mirror`.
 2. **Mirror the dependencies.** Your package repository needs proxies (remote repositories) for Maven Central and the
    Gradle Plugin Portal, which most organisations already have. The full list of what the toolkit uses is in
    [`gradle/libs.versions.toml`](gradle/libs.versions.toml). Your security review approves those, as with any
@@ -54,9 +99,9 @@ Nothing is fetched from the internet at build time. Before anyone uses the toolk
    and developer machines through your usual software channel. Then switch off Gradle's automatic JDK download, as in
    step 4.
 
-## Step 3: Create your private overlay repo
+## Step 3: Create your private organisation repo
 
-Copy [`examples/organisation-overlay/`](examples/organisation-overlay/README.md) into a new **private** repo. Fill in
+Copy [`examples/organisation-repo/`](examples/organisation-repo/README.md) into a new **private** repo. Fill in
 `organisation-profile.yaml` with your facts:
 
 | Field | What you record | Example |
@@ -73,13 +118,13 @@ Copy [`examples/organisation-overlay/`](examples/organisation-overlay/README.md)
 The file is checked against [the organisation profile schema](schema/organisation-profile.schema.json). Facts with no
 choice go here; choices go in your own decision records (step 6).
 
-*Background:* [Organisation-specific facts and decisions live in a private overlay repo](docs/decisions/0004-organisation-specific-facts-and-decisions-live-in-a-private-overlay-repo.md).
+*Background:* [Organisation-specific facts and decisions live in a private organisation repo](docs/decisions/0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md).
 
 ## Step 4: Keep your build environment
 
 Your proxy, package repository, credentials and JDK locations stay where they already are: a Gradle init script (or
 `gradle.properties` in the Gradle user home) and Maven's `settings.xml`. These apply before any repo's own settings,
-so the toolkit never needs to know them. Keep a copy, or a pointer to it, in your overlay. A typical Gradle init
+so the toolkit never needs to know them. Keep a copy, or a pointer to it, in your organisation repo. A typical Gradle init
 script does four things:
 
 ```kotlin
@@ -99,7 +144,7 @@ org.gradle.java.installations.paths=/opt/jdk-25
 underTest.codeStyle=TOOLKIT
 ```
 
-*Background:* [The build environment (proxy and package repository) comes from the organisation's own build set-up](docs/decisions/0008-the-build-environment-proxy-and-package-repository-comes-from-the-organisations-own-build-set-up.md).
+*Background:* [The build environment (proxy and package repository) comes from the organisation's own build set-up](docs/decisions/0012-the-build-environment-proxy-and-package-repository-comes-from-the-organisations-own-build-set-up.md).
 
 ## Step 5: Fit your code-quality standards
 
@@ -122,21 +167,28 @@ underTest.minLineCoverage=0.70
 Testing evidence is defined by standard report files (JaCoCo, PIT, JUnit XML), not by one build plugin, so Maven and
 npm repos can take part once their set-ups exist.
 
-*Background:* [Build settings come in three layers](docs/decisions/0007-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md)
-and [Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin](docs/decisions/0009-code-quality-standards-can-be-the-toolkits-the-organisations-or-the-organisations-own-plugin.md).
+*Background:* [Build settings come in three layers](docs/decisions/0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md)
+and [Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin](docs/decisions/0013-code-quality-standards-can-be-the-toolkits-the-organisations-or-the-organisations-own-plugin.md).
 
 ## Step 6: Work through the decision guides
 
 The [decision guides](docs/decisions/README.md) cover every choice the programme needs, smallest first. For each one,
 the deciding role reads it and either:
 
-- **adopts it as written**: record that in your overlay with a one-line decision record; or
+- **adopts it as written**: record that in your organisation repo with a one-line decision record; or
 - **chooses between its options, or narrows it**: record the choice and the reason; or
 - **replaces it**: record your own decision and why.
 
 Use the [record-an-organisation-decision skill](.github/skills/record-an-organisation-decision/SKILL.md) with your AI
-assistant to draft these. It writes into your overlay only. Settle the production-safety decisions and the container
+assistant to draft these. It writes into your organisation repo only. Settle the production-safety decisions and the container
 decision first, because most others depend on them.
+
+## Step 6a: Let organisation units add their own decisions
+
+Each organisation unit that wants its own decisions or stricter settings gets a folder in the organisation repo, under
+`units/<path>/`, owned by that unit's leads through code-owner rules. A unit's decision records name the decision
+above that they narrow, or say that they add something new. A unit can't replace or loosen anything decided above it;
+the combining tool rejects that.
 
 ## Step 7: Make production safe before running anything
 
@@ -154,12 +206,12 @@ one, by hand, with an AI assistant, or in CI:
 
 1. **Import the starting backlog** into your tracker with the importer for it (see
    [tools/backlog-import](tools/backlog-import/README.md)). The Jira adapter is still to be built. In an environment
-   without Python or the GitHub CLI, wait for the Java version, or load the seed with your tracker's own bulk import.
+   without Python, wait for the Java version, or load the seed with your tracker's own bulk import.
 2. **If every commit must name a work item**, set `commit_messages` in your profile. AI assistant skills then include
    the key in every commit, and the commit-message checks switch on.
 
-*Background:* [The programme backlog lives in the organisation's issue tracker, not in a file](docs/decisions/0005-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
-and [When the organisation requires it, every commit names its work item](docs/decisions/0039-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
+*Background:* [The programme backlog lives in the organisation's issue tracker, not in a file](docs/decisions/0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
+and [When the organisation requires it, every commit names its work item](docs/decisions/0045-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
 
 ## Step 9: Give your AI assistant the skills
 
@@ -168,7 +220,7 @@ repository, and unpacked by `./gradlew installSkills` into the folders your appr
 installer is needed. APM (Agent Package Manager) is an optional extra, for organisations that allow it. People direct
 the AI and review everything it produces; unattended AI agents stay off unless your profile allows them.
 
-*Background:* [How AI assistant skills and instructions reach every repo](docs/decisions/0012-how-ai-assistant-skills-and-instructions-reach-every-repo.md).
+*Background:* [How AI assistant skills and instructions reach every repo](docs/decisions/0018-how-ai-assistant-skills-and-instructions-reach-every-repo.md).
 
 ## Step 10: Run the programme
 
@@ -182,7 +234,7 @@ the AI and review everything it produces; unattended AI agents stay off unless y
 
 ## Keeping up to date
 
-- Take new toolkit releases deliberately. Update the pinned version in your overlay through a pull request, and read
+- Take new toolkit releases deliberately. Update the pinned version in your organisation repo through a pull request, and read
   the decision guides that changed. Accepted decision records are never edited; a change arrives as a new record.
 - Re-run your profile validation and builds after each upgrade.
 - Send improvements that would help any organisation back to the toolkit. Never send organisation details.

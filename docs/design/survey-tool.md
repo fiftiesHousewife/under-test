@@ -4,7 +4,7 @@
 tool can survey every repo in a GitHub organisation by calling this toolkit's repo classifier. It uses a public
 organisation as the worked example, so it can be tried without access to any private code.
 
-See [The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call](../decisions/0040-the-estate-survey-sits-outside-the-toolkit-which-provides-a-repo-classifier-a-survey-tool-can-call.md)
+See [The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call](../decisions/0046-the-estate-survey-sits-outside-the-toolkit-which-provides-a-repo-classifier-a-survey-tool-can-call.md)
 for the decision, and [the repo classification schema](../../schema/repo-classification.schema.json) for the contract
 between the two.
 
@@ -90,7 +90,7 @@ repo-classifier --repo-dir path/to/clone --commit <sha> --mode static --output c
 - Exit code 0 means classified (even with `needs_review: true`); a non-zero code means the classifier itself failed.
 - Output follows [the repo classification schema](../../schema/repo-classification.schema.json).
 - The classifier combines existing tools, as decided in
-  [Which existing tools the repo classifier combines](../decisions/0042-which-existing-tools-the-repo-classifier-combines.md).
+  [Which existing tools the repo classifier combines](../decisions/0048-which-existing-tools-the-repo-classifier-combines.md).
 
 ## Open questions for whoever builds the survey tool
 

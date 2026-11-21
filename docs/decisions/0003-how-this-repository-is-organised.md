@@ -30,5 +30,5 @@ Proposed: one folder per kind of content: `adr/`, `techniques/<id>/` (lesson, ru
 ## More Information
 
 * Builds on: nothing (a foundation decision)
-* Later decisions that build on this: [Organisation-specific facts and decisions live in a private overlay repo](0004-organisation-specific-facts-and-decisions-live-in-a-private-overlay-repo.md)
+* Later decisions that build on this: [Organisation-specific facts and decisions live in a private organisation repo](0005-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md), [Lessons are runnable checked by the build and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md)
 * Background: none

@@ -47,3 +47,7 @@ bin/
 
 ### APM (installed skills are rebuilt from apm.lock.yaml) ###
 apm_modules/
+
+### Research working notes (reports are promoted into docs/ when useful) ###
+research_notes/
+reports/

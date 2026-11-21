@@ -11,7 +11,7 @@
 5. **One word per idea.** If two things share a word (for example "tier" meant both application importance and test type), rename one of them.
 6. **Names say what something is or does.** A file, decision or task name should make sense to a newcomer.
 7. **Refer to things by name, with a link.** Never by a code or number, in documents or in chat.
-8. **No organisation-specific details in this repo.** Name a product only as an option or an example; an organisation's own facts and choices live in its private overlay repo.
+8. **No organisation-specific details in this repo.** Name a product only as an option or an example; an organisation's own facts and choices live in its private organisation repo.
 
 ## Words we use
 
@@ -99,8 +99,8 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | flaky test | A test that sometimes passes and sometimes fails without any code change. |
 | Testcontainers, WireMock, Pact, PIT, ArchUnit, jqwik | Tool names. Say what the tool does the first time. |
 | **issue tracker** | Where the programme backlog and each repo's work items are kept. Whichever the organisation already uses (for example GitHub Issues or Jira); named in its organisation profile. | (a product name, except as an example) |
-| **organisation profile** | A file in the organisation's private overlay repo recording facts the toolkit can't choose: issue tracker, CI platform, package repository, approved AI assistants, who fills each role. |  |
-| **private overlay repo** | The organisation's own repo, kept private, holding its organisation profile and its own decision records. |  |
+| **organisation profile** | A file in the organisation's private organisation repo recording facts the toolkit can't choose: issue tracker, CI platform, package repository, approved AI assistants, who fills each role. |  |
+| **organisation repo** | A separate, private repo that holds **only** an organisation's own additions: its organisation profile, its own decision records, and folders for its organisation units. It names which toolkit version it uses, and that version's artifacts arrive through the organisation's own package repository; the toolkit itself is used unchanged, and the toolkit's tools read both. **Not a fork:** a fork is a copy of the toolkit that you change, which then drifts and has to be merged by hand at every update. Think of the toolkit as a printed map and the organisation repo as a clear sheet laid over it for your own notes. | overlay, fork, config repo |
 | **decision guide** | A decision record in this toolkit, written so any organisation can follow it: options, and which fits which situation. |  |
 | testing pyramid | The recommended *mix* of tests in a suite: many unit tests, fewer integration tests, few end-to-end tests. Not the maturity levels. Each repo-type guide states a target mix; the measurement run records the actual mix ("test mix"). Legacy repos start top-heavy (broad tests at the edges, level 2) and move toward the pyramid from level 3. |
 | forward deployed engineering | Engineers working inside a client's teams to solve their problem end to end, then turning what they learn into reusable tools. |

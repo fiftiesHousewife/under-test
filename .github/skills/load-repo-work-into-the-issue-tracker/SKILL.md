@@ -6,10 +6,10 @@ description: Load a repo's approved testing plan into the organisation's issue t
 # Loading a repo's work into the issue tracker
 
 > Placeholder: the tracker-neutral loader and its Jira Cloud adapter are still to be built
-> (see [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](../../../docs/decisions/0032-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md)).
+> (see [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](../../../docs/decisions/0044-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md)).
 > Until then, use the GitHub importer in [tools/backlog-import](../../../tools/backlog-import/README.md) for the programme backlog only.
 
-1. Read the organisation profile from the private overlay repo: `issue_tracker` (which tracker, its address and project) and
+1. Read the organisation profile from the private organisation repo: `issue_tracker` (which tracker, its address and project) and
    `commit_messages`. Credentials come from the person's environment (for example a Jira API token), never from files.
 2. Check the repo's `testing/TESTING-PLAN.md` is approved (merged). Don't load an unapproved plan.
 3. Run the loader as a **dry run** and show the person what it would create or update.

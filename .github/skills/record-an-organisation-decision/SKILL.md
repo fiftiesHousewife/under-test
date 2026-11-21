@@ -1,19 +1,19 @@
 ---
 name: record-an-organisation-decision
-description: Record an organisation's own fact or choice (its CI platform, issue tracker, container runtime, approved AI assistant, who fills a role, a choice between a guide's options) in that organisation's PRIVATE overlay repo. Use whenever an organisation-specific detail comes up. Never writes into this toolkit repo.
+description: Record an organisation's own fact or choice (its CI platform, issue tracker, container runtime, approved AI assistant, who fills a role, a choice between a guide's options) in that organisation's PRIVATE organisation repo. Use whenever an organisation-specific detail comes up. Never writes into this toolkit repo.
 ---
 
 # Recording an organisation's decision
 
-**Never write organisation details into this toolkit repo.** Ask for the path of the organisation's private overlay
-repo if you don't have it. If it doesn't exist yet, offer to create one from [the example overlay](../../../examples/organisation-overlay/README.md).
+**Never write organisation details into this toolkit repo.** Ask for the path of the organisation's private organisation
+repo if you don't have it. If it doesn't exist yet, offer to create one from [the example organisation repo](../../../examples/organisation-repo/README.md).
 
 ## Is it a fact or a choice?
 - **A fact with no choice** (for example "CI runs on Kubernetes", "the issue tracker is Jira Cloud", "developer machines have
-  no container runtime"): set the matching field in the overlay's `organisation-profile.yaml`. Check it against
+  no container runtime"): set the matching field in the organisation repo's `organisation-profile.yaml`. Check it against
   [the organisation profile schema](../../../schema/organisation-profile.schema.json). No decision record is needed.
 - **A choice** (for example which of a guide's options to use for running container tests in CI): write a decision record
-  in the overlay's `docs/decisions/`, from its template.
+  in the organisation repo's `docs/decisions/`, from its template.
 
 ## Writing the organisation's decision record
 1. Title: the question in full, in plain English.

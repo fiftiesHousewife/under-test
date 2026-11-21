@@ -31,5 +31,5 @@ Proposed: the first option. What each role does and decides is in `GLOSSARY.md`.
 ## More Information
 
 * Builds on: nothing (a foundation decision)
-* Later decisions that build on this: [The programme moves through five phases, each ending with a sign-off](0002-the-programme-moves-through-five-phases-each-ending-with-a-sign-off.md), [The programme backlog lives in the organisation's issue tracker, not in a file](0005-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md), [Decision records follow MADR and are approved by pull request review](0006-decision-records-follow-madr-and-are-approved-by-pull-request-review.md)
+* Later decisions that build on this: [The programme moves through five phases, each ending with a sign-off](0002-the-programme-moves-through-five-phases-each-ending-with-a-sign-off.md), [The programme backlog lives in the organisation's issue tracker, not in a file](0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md), [Decision records follow MADR and are approved by pull request review](0010-decision-records-follow-madr-and-are-approved-by-pull-request-review.md)
 * Background: [engagement-model](../REFERENCES.md#engagement-model)
