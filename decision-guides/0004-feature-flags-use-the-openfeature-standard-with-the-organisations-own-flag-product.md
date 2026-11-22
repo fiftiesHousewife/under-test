@@ -30,7 +30,7 @@ Proposed: the first option.
 ### Consequences
 
 * `feature_flags` in the organisation profile schema.
-* The feature flags lesson uses OpenFeature with an in-memory provider.
+* The [feature flags lesson](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/feature-flags/README.md) uses OpenFeature with an in-memory provider.
 
 ## More Information
 

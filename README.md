@@ -12,11 +12,15 @@
 Many organisations have hundreds or thousands of repositories with few or weak tests. This toolkit helps a team,
 working with AI coding assistance, find out what each repo needs, plan the work, and do it safely. It gives you:
 
-- **Lessons on testing techniques**, each with a runnable before-and-after example and a short terminal video.
 - **Decision guides:** one short record per choice the programme has to make, with the options and what follows.
 - **Build conventions and tools** that measure test quality and apply good practice in every build.
-- **A repo classifier** that says what kind of codebase a repo is, for people or for a survey tool to call.
+- **Technique rules:** for each testing technique, when to adopt, defer or reject it for a repo, and what to use
+  instead.
 - **AI assistant skills** that let an AI help with the work while a person reviews everything it produces.
+- Planned: **a repo classifier** that says what kind of codebase a repo is, for people or for a survey tool to call.
+
+**Lessons** that teach each technique, with a runnable before-and-after example, slides and a narrated video, are in
+their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons).
 
 The toolkit is **generic**: nothing in it is specific to one organisation, and it's designed to work inside locked-down
 corporate networks.
@@ -99,10 +103,13 @@ assertAll(
 
 ## Lessons and videos
 
-Each lesson has a short terminal video generated from a script, with captions and a spoken voiceover produced from
-the same narration text, so videos never drift from the code. Organisations receive them as editable layers (silent
-video, narration audio and script, captions) to rebrand, trim or revoice; see
-[docs/CORPORATE-USE.md](docs/CORPORATE-USE.md#lessons-and-videos-rebranding-trimming-and-revoicing).
+Lessons, their slides and narrated videos, and the tools that make them are in
+[under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons): its
+[catalogue](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/CATALOGUE.md) lists every
+technique here and the lessons that teach it, and its guide to
+[using the lessons inside a company](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/docs/using-inside-a-company.md)
+explains how to rebrand, trim or revoice the videos. Each lesson names the techniques it teaches, and that repo's build
+checks they match the techniques here.
 
 ## Surveying many repos
 

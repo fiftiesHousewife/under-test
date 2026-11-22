@@ -15,4 +15,3 @@ fallback: business-rule-tests
 constraints:
   - Not jqwik - its licence adds an anti-AI usage clause from 1.10, and it is in maintenance-only mode
 references: [property-based-testing]
-example: {java: todo, typescript: todo}

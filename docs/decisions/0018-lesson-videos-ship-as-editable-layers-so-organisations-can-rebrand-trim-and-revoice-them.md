@@ -1,12 +1,16 @@
 ---
-status: proposed
+status: superseded
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [Lesson work and lesson decisions are planned and recorded in the lessons repo](0032-lesson-work-and-lesson-decisions-are-planned-and-recorded-in-the-lessons-repo.md).
+> The lessons repo's guide to using the lessons inside a company now explains the layers and how to customise them,
+> and its plan carries the automatic rebranding step from a branding file.
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 

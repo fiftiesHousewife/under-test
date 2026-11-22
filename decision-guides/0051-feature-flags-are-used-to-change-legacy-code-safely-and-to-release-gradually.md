@@ -28,7 +28,7 @@ Proposed: the first option. Comparing old and new code behind a flag is a form o
 ### Consequences
 
 * The make-code-testable and check-in-production workstreams use flags where this applies.
-* The feature flags lesson.
+* The [feature flags lesson](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/feature-flags/README.md).
 
 ## More Information
 

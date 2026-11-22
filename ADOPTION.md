@@ -19,8 +19,8 @@ environment these steps assume, in detail, see [docs/CORPORATE-USE.md](docs/CORP
 
 | Part | Ready to use | Still to come |
 |---|---|---|
-| Decision guides, glossary, technique lessons | Yes | More lessons; learning paths by role |
-| Lesson videos with voice, captions and editable layers | First video script | Voice, captions, layers, rebranding step |
+| Decision guides, glossary, technique rules | Yes | – |
+| Lessons and their videos | In their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons): see its [catalogue](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/CATALOGUE.md) | Planned there |
 | Licence | Apache-2.0 for everything | – |
 | Gradle conventions and quality checks, with the `underTest` settings | Yes, from this repo's source | Published as a versioned plugin you can mirror |
 | Organisation profile schema and example organisation repo | Yes | A validator |

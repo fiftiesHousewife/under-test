@@ -30,7 +30,7 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ### Consequences
 
 * Session budgets in the application testing plan.
-* A session template in the lessons.
+* A session template, with the budget fields, in the application testing plan.
 
 ## More Information
 

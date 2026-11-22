@@ -17,4 +17,3 @@ constraints:
   - "Commit recordings to the shared test kit for that system, not to each repo"
   - "Hurl suits plain-text HTTP checks that live alongside shell scripts"
 references: [test-doubles]
-example: {java: todo, typescript: todo}

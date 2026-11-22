@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../schema/technique.schema.json
-id: batch-file-in-file-out-tests
+id: batch-file-in-file-out
 name: "Batch file-in, file-out tests (run a job on known input files and compare its output files with saved ones)"
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [1, 2, 3]
@@ -12,11 +12,10 @@ reject_or_defer_when:
 precondition_checks:
   - {done_by: tool, check: "The job can be started on its own, with input and output locations passed in"}
   - {done_by: person, check: "Synthetic or masked input data is approved for use in tests"}
-fallback: snapshot-testing
+fallback: structured-output-comparison
 constraints:
   - "Spring Batch jobs: run the whole job or one step with spring-batch-test"
   - "Compare tables and CSV files with a tool that reports differences row by row (datacompy), not a plain text diff"
   - "Generate inputs with Datafaker or similar; never copy production data unmasked"
   - "Scheduled jobs: call the job directly with an injected clock rather than waiting for the scheduler"
 references: [legacy-code]
-example: {java: todo, typescript: none}

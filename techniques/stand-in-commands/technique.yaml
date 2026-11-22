@@ -2,7 +2,7 @@
 id: stand-in-commands
 name: "Stand-in commands (a script under test calls a small stand-in program, put first on PATH, instead of the real tool)"
 workstream: make-it-run-on-its-own
-test_stand_in_approach: fake-behind-interface
+test_stand_in_approach: fake-behind-an-interface
 evidence_for_maturity_levels: [1, 2]
 tools: [bats-core, shellcheck, kcov]
 adopt_when:
@@ -20,4 +20,3 @@ constraints:
   - "Get bats-core and its helper libraries as a pinned copy of the source or the official bats/bats container image, not from npm, where copies lag behind or come from forks"
   - "The stand-in shows what the script does with the output it expects; a separate check with the real program confirms that output is still realistic"
 references: [test-doubles]
-example: {java: none, typescript: none}

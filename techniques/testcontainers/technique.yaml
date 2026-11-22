@@ -14,7 +14,6 @@ reject_or_defer_when:
 precondition_checks:
   - {done_by: tool, check: Runtime check in CI}
   - {done_by: tool, check: Image exists in the organisation's package repository}
-fallback: fake-behind-interface
+fallback: fake-behind-an-interface
 constraints: [Container tests only (integrationTest source set); run in CI today, locally once WSL2 is available; see the decision guide on container tests on developer machines that have no container runtime]
 references: [test-doubles]
-example: {java: todo, typescript: none}

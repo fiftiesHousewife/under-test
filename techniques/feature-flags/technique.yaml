@@ -17,4 +17,3 @@ precondition_checks:
 fallback: differential-testing
 constraints: [Every flag state in use is tested; flags past their removal date fail the build]
 references: [feature-flags]
-example: {java: todo, typescript: none}

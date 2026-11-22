@@ -19,4 +19,3 @@ constraints:
   - "Never test against a different database product (an in-memory database is not evidence)"
   - "Prove migrations too: run Flyway validate or Liquibase update-testing-rollback against the real engine"
 references: [test-doubles]
-example: {java: todo, typescript: none}

@@ -12,4 +12,3 @@ precondition_checks:
   - {done_by: tool, check: "Count of hard-wired dependencies, found by static scan"}
 fallback: Record current behaviour at the edges only
 references: [legacy-code]
-example: {java: todo, typescript: none}

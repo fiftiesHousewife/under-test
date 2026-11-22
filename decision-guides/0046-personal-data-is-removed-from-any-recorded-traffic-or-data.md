@@ -27,7 +27,7 @@ Proposed: the first option. Seed data for shared test kits is synthetic.
 
 ### Consequences
 
-* Shared test kit and recorded-response lessons include the step.
+* Shared test kits include the step, and so does the lesson on [recorded HTTP responses](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/recorded-http-responses/README.md).
 
 ## More Information
 

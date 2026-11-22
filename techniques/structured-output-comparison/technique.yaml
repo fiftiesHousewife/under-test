@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../schema/technique.schema.json
-id: snapshot-testing
-name: Approval / golden-master tests at the boundary
+id: structured-output-comparison
+name: Comparing structured output (snapshot, approval or golden-master tests at the boundary)
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [2]
 tools: [approvaltests-java, xmlunit, jsonunit, datacompy]
@@ -17,4 +17,3 @@ constraints:
 fallback: property-based-testing
 application_types: [web-service, batch-job, message-consumer]
 references: [legacy-code]
-example: {java: todo, typescript: none}

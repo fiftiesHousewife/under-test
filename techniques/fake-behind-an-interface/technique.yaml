@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=../../schema/technique.schema.json
-id: fake-behind-interface
+id: fake-behind-an-interface
 name: Fake behind an interface (the real connection code sits behind an interface; tests use an in-memory fake)
 workstream: make-it-run-on-its-own
-test_stand_in_approach: fake-behind-interface
+test_stand_in_approach: fake-behind-an-interface
 evidence_for_maturity_levels: [1, 2]
 tools: [archunit]
 adopt_when:
@@ -14,4 +14,3 @@ precondition_checks:
 fallback: "Accept the risk, recorded as a time-limited exception with an owner and a review date"
 constraints: [The real system stays untested; container tests check the connection code]
 references: [test-doubles]
-example: {java: todo, typescript: none}

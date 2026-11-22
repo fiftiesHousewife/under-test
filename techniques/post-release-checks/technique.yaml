@@ -13,5 +13,4 @@ precondition_checks:
   - {done_by: person, check: Platform capability}
 fallback: Post-deploy smoke tests
 references: [production-safety]
-example: {java: none, typescript: none}
 note: Pipeline-level; README only.

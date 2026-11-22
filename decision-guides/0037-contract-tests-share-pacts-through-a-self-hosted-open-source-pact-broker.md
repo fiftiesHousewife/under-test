@@ -32,7 +32,7 @@ Proposed: the first option, starting brokerless for the first pilot pair if the 
 ### Consequences
 
 * A broker deployment guide and CI templates using the Rust client.
-* The contract testing lesson and technique rules name the broker and its limits.
+* The technique rules, and the contract tests lesson planned in [the lessons catalogue](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/CATALOGUE.md), name the broker and its limits.
 
 ## More Information
 

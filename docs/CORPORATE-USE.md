@@ -90,7 +90,7 @@ flowchart LR
 | Convention plugin (quality checks, testing evidence, `underTest` settings) | Versioned Gradle plugin artifact | Package repository |
 | Skills for the AI assistant | Versioned skills bundle, unpacked by `./gradlew installSkills` | Package repository |
 | Decision guides, schemas, technique rules | Versioned content bundle | Package repository |
-| Lessons with runnable examples | The content bundle, or the internal source mirror | Package repository or code hosting |
+| Lessons with runnable examples | The lessons repo ([under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons)), through the internal source mirror | Code hosting |
 | Organisation profile and decisions | Files in the organisation repo | Internal code hosting |
 | Third-party tools the checks use (Checkstyle, PMD, SpotBugs, FindSecBugs, JaCoCo, PIT, forbidden APIs) | Ordinary Maven artifacts | Package repository |
 
@@ -145,76 +145,16 @@ practice:
 
 ---
 
-## Lessons and videos: rebranding, trimming and revoicing
+## Lessons and videos
 
-Lesson videos are generated from scripts in the toolkit's own CI and published with each release. Each one ships as
-**separate layers**, so you can make it your own without re-recording anything:
+Lessons and their narrated videos are in their own repo,
+[under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons), built to run inside a locked-down
+network too. Its guide to
+[using the lessons inside a company](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/docs/using-inside-a-company.md)
+lists everything they fetch and how to route it, and explains how to rebrand, trim or revoice the videos and how to
+record videos yourself if you need to.
 
-| Layer | File | Use it to |
-|---|---|---|
-| Finished video | `<lesson>.mp4` | Use as-is |
-| Silent screen recording | `<lesson>.silent.mp4` | Put your own voice or music under it |
-| Narration audio | `<lesson>.narration.m4a`, and one clip per step | Re-time or replace parts of the voice |
-| Narration script | `<lesson>.narration.md`, one line per step | Change wording to your terms, translate it, or record a person reading it |
-| Captions | `<lesson>.vtt`, `<lesson>.srt` | Subtitles in any player or editor; regenerated from the script |
-| Source | `<lesson>.tape` | Re-render the screen recording |
-| Quick-look animation | `<lesson>.gif` (silent) | Embed in wiki pages |
-
-### Recording new videos is out of scope inside a corporate network
-
-Organisations receive finished video layers and customise them with Java and ffmpeg only. Recording or re-recording a
-lesson video needs VHS (a Go program, not on Maven Central) plus ttyd, ffmpeg and a headless browser, and is done in the
-toolkit's own build. If an organisation later wants to record its own lessons, the options, best first, are:
-
-| Route | What to mirror |
-|---|---|
-| Container image | `ghcr.io/charmbracelet/vhs` through a container-image remote; includes VHS, ttyd, ffmpeg and a browser |
-| Generic remote for release files | VHS and ttyd release binaries from GitHub; ffmpeg from the organisation's own OS packages |
-| Linux package repository | Charm's apt or yum repository (`repo.charm.sh`), proxied |
-| Go module proxy | `go install github.com/charmbracelet/vhs@<version>` through a Go remote; ttyd and ffmpeg installed separately |
-
-Check before relying on any route without the container image: VHS's browser library may try to download Chromium on
-first run if none is installed. The offline voice follows the same pattern: Python packages through a PyPI mirror, and
-model files through a generic remote (`-PlessonVoiceModelsUrl`).
-
-### Three ways to customise
-
-1. **In a video editor you already use** (for example Camtasia, Premiere Pro or Clipchamp). Import the silent recording,
-   narration audio and captions as separate tracks, then add your intro and outro, trim, or replace the voice. No new
-   tools needed.
-2. **Revoice.** Have a person record the narration script, or run it through your approved text-to-speech service.
-   Captions don't need redoing: they come from the same script. If you change the script's wording, regenerate the
-   captions from it.
-3. **Rebrand automatically at every release.** Keep a branding file in your organisation repo naming your intro clip,
-   outro clip, voice and caption style. A small step built on ffmpeg adds your intro and outro and combines the layers,
-   so each new toolkit release gives you branded videos without manual editing. (Planned; see the backlog.)
-
-Your branding and edited videos live in your organisation repo or your own media library, never in the toolkit.
-
-### What you need, and what you don't
-
-- **To watch or edit:** nothing new; the files play in browsers, wikis and video tools.
-- **To revoice or rebrand automatically:** ffmpeg, which many organisations already approve, and optionally your
-  approved text-to-speech service.
-- **To make your own lesson videos, or re-render the toolkit's:** VHS. Most organisations won't need it. If you do:
-  1. Mirror VHS's official container image (`ghcr.io/charmbracelet/vhs`, MIT licence), which already includes its
-     helpers (`ttyd` and `ffmpeg`), through your container registry, like any other approved image.
-  2. Run it as the image of a CI job. On Kubernetes-based CI the job runs inside the image, so no Docker daemon is
-     needed. The job runs `vhs lesson.tape` and keeps the MP4 and GIF as outputs.
-  3. For voice and captions too, mirror narratty's image (`ghcr.io/ditschi/narratty`, MIT licence), which bundles VHS,
-     the Kokoro voice (Apache-2.0) and ffmpeg.
-  4. People write and edit the `.tape` and narration files on their own machines, with no container runtime needed;
-     CI renders the video, just as it runs container tests.
-
-  Other routes, such as `go install` through a mirrored Go module proxy, or Charm's own Linux package repository, are
-  usually harder to get approved.
-
-### Licence
-
-Everything in the toolkit, videos and their layers included, is under the Apache License 2.0. You may use, change,
-rebrand and redistribute it freely; when you redistribute, keep the licence and notices and mark the files you changed.
-
-*Background:* [Lesson videos ship as editable layers so organisations can rebrand, trim and revoice them](decisions/0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md).
+*Background:* [Lesson work and lesson decisions are planned and recorded in the lessons repo](decisions/0032-lesson-work-and-lesson-decisions-are-planned-and-recorded-in-the-lessons-repo.md).
 
 ---
 

@@ -15,4 +15,3 @@ fallback: post-release-checks
 constraints:
   - "Run the script and the checks in a throwaway container, never on a shared server"
 references: [legacy-code]
-example: {java: none, typescript: none}

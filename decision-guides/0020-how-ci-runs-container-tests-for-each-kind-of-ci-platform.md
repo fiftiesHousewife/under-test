@@ -36,7 +36,7 @@ Proposed: as a guide, choose by CI platform: Docker where it exists; otherwise k
 ### Consequences
 
 * The convention plugin reads the runtime from the environment, so repos don't change when the choice does.
-* The Testcontainers lesson shows both a Docker and a Kubernetes-based set-up.
+* The lesson on [real databases in tests](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/real-databases-in-tests/README.md) shows both a Docker and a Kubernetes-based set-up.
 
 ## More Information
 

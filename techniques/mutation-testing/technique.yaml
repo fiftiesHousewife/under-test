@@ -16,4 +16,3 @@ precondition_checks:
 fallback: Wait until the record-current-behaviour workstream has added tests
 constraints: [Never a full run across all our repos; high-risk files or code changed in a pull request only]
 references: [mutation-testing]
-example: {java: ready, typescript: todo}

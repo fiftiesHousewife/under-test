@@ -17,4 +17,3 @@ constraints:
   - "Use HtmlUnit for quick checks of page content and forms, and Playwright for full browser journeys and screenshot comparison"
   - "Keep existing Selenium suites working rather than rewriting them"
 references: [test-mix]
-example: {java: todo, typescript: todo}

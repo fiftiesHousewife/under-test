@@ -18,5 +18,4 @@ precondition_checks:
 fallback: recorded-http-responses
 constraints: [Linux hosts with kernel-level capture permission only; removing personal data is mandatory]
 references: [test-doubles]
-example: {java: none, typescript: none}
 note: No runnable example; needs eBPF on a Linux host. README explains the WireMock fallback.

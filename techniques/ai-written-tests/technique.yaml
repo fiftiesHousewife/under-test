@@ -16,4 +16,3 @@ precondition_checks:
 fallback: Tests at the edges (API, messages, files) first
 constraints: ["Every draft test must pass the checks in the decision guide: the checks an AI-written test must pass before it is kept"]
 references: [ai-written-tests]
-example: {java: todo, typescript: none}

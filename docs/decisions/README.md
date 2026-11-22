@@ -34,10 +34,13 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin](0013-code-quality-standards-can-be-the-toolkits-the-organisations-or-the-organisations-own-plugin.md) | proposed | Toolkit maintainers |
 | [Testing evidence is defined by standard report files, not by one build plugin](0014-testing-evidence-is-defined-by-standard-report-files-not-by-one-build-plugin.md) | proposed | Toolkit maintainers |
 | [The toolkit provides reference build set-ups for Gradle, Maven and npm](0015-the-toolkit-provides-reference-build-set-ups-for-gradle-maven-and-npm.md) | proposed | Toolkit maintainers |
-| [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md) | superseded | Toolkit maintainers |
 | [Lessons live in their own repo, with a copy of the build conventions](0017-lessons-live-in-their-own-repo-with-a-copy-of-the-build-conventions.md) | accepted | Toolkit maintainers |
-| [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md) | proposed | Toolkit maintainers |
+| [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md) | superseded | Toolkit maintainers |
 | [How AI assistant skills and instructions reach every repo](0019-how-ai-assistant-skills-and-instructions-reach-every-repo.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [Each lesson names the toolkit techniques it teaches, and only the lessons repo records which lessons exist](0030-each-lesson-names-the-toolkit-techniques-it-teaches-and-only-the-lessons-repo-records-which-lessons-exist.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Technique ids match the names of the lessons that teach them, where one lesson teaches one technique](0031-technique-ids-match-the-names-of-the-lessons-that-teach-them-where-one-lesson-teaches-one-technique.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Lesson work and lesson decisions are planned and recorded in the lessons repo](0032-lesson-work-and-lesson-decisions-are-planned-and-recorded-in-the-lessons-repo.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

@@ -13,4 +13,3 @@ precondition_checks:
   - {done_by: tool, check: Module count}
 fallback: None needed
 references: [legacy-code]
-example: {java: todo, typescript: none}

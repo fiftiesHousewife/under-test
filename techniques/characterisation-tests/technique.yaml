@@ -12,10 +12,9 @@ reject_or_defer_when:
 precondition_checks:
   - {done_by: tool, check: "The code builds and runs on its own (make-it-run-on-its-own done first)"}
   - {done_by: person, check: "A test point is chosen: a place where inputs can be fed in and outputs read without editing the logic"}
-fallback: snapshot-testing
+fallback: structured-output-comparison
 constraints:
   - "The tests record what the code does, including its bugs; a known bug becomes an open question for the Application Owner, not a silent fix"
   - "Use Mockito (which can replace static and final methods) for hard-wired calls; never PowerMock or JMockit, which no longer work on current Java"
   - "Use System Stubs for environment variables, System.exit and standard input in old command-line programs"
 references: [legacy-code]
-example: {java: todo, typescript: none}

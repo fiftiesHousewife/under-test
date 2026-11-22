@@ -1,12 +1,18 @@
 ---
-status: proposed
+status: superseded
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [Lesson work and lesson decisions are planned and recorded in the lessons repo](0032-lesson-work-and-lesson-decisions-are-planned-and-recorded-in-the-lessons-repo.md).
+> The lessons repo decides how lessons and videos are made (its decision
+> [Videos and decks are generated from text files, never edited by hand](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/docs/decisions/0002-videos-and-decks-are-generated-from-text-files-never-edited-by-hand.md)),
+> and its plan carries this record's remaining consequences: learning paths by role, exercises, and a check that runs
+> every command a lesson shows.
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 

@@ -1,34 +1,41 @@
 # Technique rules
 
 One folder per testing technique, holding `technique.yaml`: when to adopt, defer or reject the technique, the checks to
-run first, and what to use instead. The toolkit's planning tools read these files; they are checked against
+run first, and what to use instead. These are rules, not teaching material: the toolkit's planning tools will read them
+to mark each technique adopt, defer or reject for a repo, and `./gradlew check` checks every file against
 [the technique schema](../schema/technique.schema.json).
 
-The lessons that teach each technique (explanation, runnable example, exercise, video) are in their own repo,
-[under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons).
+**Lessons** that teach each technique (an explanation, a runnable before-and-after example, slides and a narrated
+video) are in their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons). The toolkit
+doesn't record which lessons exist: each lesson names the technique ids it teaches in its own `lesson.yaml`, and the
+lessons repo's build fails if its
+[catalogue of every technique and its lessons](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/CATALOGUE.md#every-toolkit-technique-and-its-lesson)
+leaves out a technique here or names one that isn't. **Renaming or removing a technique id needs the same change in
+the lessons repo.** See
+[Each lesson names the toolkit techniques it teaches, and only the lessons repo records which lessons exist](../docs/decisions/0030-each-lesson-names-the-toolkit-techniques-it-teaches-and-only-the-lessons-repo-records-which-lessons-exist.md).
 
-| Technique | Workstream | Evidence for maturity levels | Java lesson | TypeScript lesson |
-|---|---|---|---|---|
-| [mutation-testing](mutation-testing/technique.yaml) ([lesson](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/mutation-testing/README.md)) | strengthen tests | 4 | ready | to do |
-| [snapshot-testing](snapshot-testing/) | record current behaviour | 2 | to do | – |
-| [ai-written-tests](ai-written-tests/) | record current behaviour | 2 | to do | – |
-| [automatic-test-generation](automatic-test-generation/) | record current behaviour | 2 | to do | – |
-| [recorded-http-responses](recorded-http-responses/) | make it run on its own | 1–2 | to do | to do |
-| [testcontainers](testcontainers/) | make it run on its own | 1–3 | to do (container part) | – |
-| [contract-testing](contract-testing/) | make it run on its own | 3 | to do | to do |
-| [fake-behind-interface](fake-behind-interface/) | make it run on its own | 1–2 | to do | – |
-| [stand-in-commands](stand-in-commands/) | make it run on its own | 1–2 | to do | – |
-| [traffic-record-and-replay](traffic-record-and-replay/) | make it run on its own | 1–2 | lesson only | – |
-| [refactoring-for-testability](refactoring-for-testability/) | make code testable | 2–3 | to do | – |
-| [feature-flags](feature-flags/) | make code testable | 5 | to do | – |
-| [architecture-rules](architecture-rules/) | make code testable | 2–3 | to do | – |
-| [property-based-testing](property-based-testing/) | test against requirements | 3 | to do | to do |
-| [business-rule-tests](business-rule-tests/) | test against requirements | 3 | to do | to do |
-| [differential-testing](differential-testing/) | check in production | 3, 5 | to do | – |
-| [post-release-checks](post-release-checks/) | check in production | 5 | lesson only | – |
-| [characterisation-tests](characterisation-tests/) | record current behaviour | 1–2 | to do | – |
-| [database-unit-tests](database-unit-tests/) | test against requirements | 2–3 | to do | – |
-| [batch-file-in-file-out-tests](batch-file-in-file-out-tests/) | record current behaviour | 1–3 | to do | – |
-| [embedded-jakarta-ee-tests](embedded-jakarta-ee-tests/) | make it run on its own | 1–3 | to do | – |
-| [machine-state-checks](machine-state-checks/) | strengthen tests | 2 | – | – |
-| [server-rendered-ui-tests](server-rendered-ui-tests/) | record current behaviour | 2–3 | to do | to do |
+| Technique | Workstream | Evidence for maturity levels |
+|---|---|---|
+| [ai-written-tests](ai-written-tests/technique.yaml) | record current behaviour | 2 |
+| [architecture-rules](architecture-rules/technique.yaml) | make code testable | 2–3 |
+| [automatic-test-generation](automatic-test-generation/technique.yaml) | record current behaviour | 2 |
+| [batch-file-in-file-out](batch-file-in-file-out/technique.yaml) | record current behaviour | 1–3 |
+| [business-rule-tests](business-rule-tests/technique.yaml) | test against requirements | 3 |
+| [characterisation-tests](characterisation-tests/technique.yaml) | record current behaviour | 1–2 |
+| [contract-testing](contract-testing/technique.yaml) | make it run on its own | 3 |
+| [database-unit-tests](database-unit-tests/technique.yaml) | test against requirements | 2–3 |
+| [differential-testing](differential-testing/technique.yaml) | check in production | 3, 5 |
+| [embedded-jakarta-ee-tests](embedded-jakarta-ee-tests/technique.yaml) | make it run on its own | 1–3 |
+| [fake-behind-an-interface](fake-behind-an-interface/technique.yaml) | make it run on its own | 1–2 |
+| [feature-flags](feature-flags/technique.yaml) | make code testable | 5 |
+| [machine-state-checks](machine-state-checks/technique.yaml) | strengthen tests | 2 |
+| [mutation-testing](mutation-testing/technique.yaml) | strengthen tests | 4 |
+| [post-release-checks](post-release-checks/technique.yaml) | check in production | 5 |
+| [property-based-testing](property-based-testing/technique.yaml) | test against requirements | 3 |
+| [recorded-http-responses](recorded-http-responses/technique.yaml) | make it run on its own | 1–2 |
+| [refactoring-for-testability](refactoring-for-testability/technique.yaml) | make code testable | 2–3 |
+| [server-rendered-ui-tests](server-rendered-ui-tests/technique.yaml) | record current behaviour | 2–3 |
+| [stand-in-commands](stand-in-commands/technique.yaml) | make it run on its own | 1–2 |
+| [structured-output-comparison](structured-output-comparison/technique.yaml) | record current behaviour | 2 |
+| [testcontainers](testcontainers/technique.yaml) | make it run on its own | 1–3 |
+| [traffic-record-and-replay](traffic-record-and-replay/technique.yaml) | make it run on its own | 1–2 |

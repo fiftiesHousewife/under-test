@@ -18,4 +18,3 @@ constraints:
   - Contracts are shared through a self-hosted open-source Pact Broker; pipelines use the Rust broker client, not the Ruby one
   - Current Pact JVM needs JDK 17 or newer; services on older JDKs need the 4.5 line
   - JUnit 6 support in Pact JVM is not yet documented; check before relying on it
-example: {java: todo, typescript: todo}

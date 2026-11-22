@@ -28,7 +28,7 @@ Proposed: the first option.
 ### Consequences
 
 * The "make it run on its own" workstream adds the test profile first.
-* Lesson: running old code safely (the lesson on running old code safely).
+* A lesson on running old code safely on your own machine, planned in [the lessons catalogue](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/CATALOGUE.md).
 
 ## More Information
 

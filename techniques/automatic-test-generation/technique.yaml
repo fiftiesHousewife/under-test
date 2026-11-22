@@ -18,4 +18,3 @@ constraints:
   - Randoop ships as a release zip, not on Maven Central; organisations mirror it into their package repository
   - EvoSuite is no longer maintained (no release since 2021) and is not used
 references: [test-generation]
-example: {java: todo, typescript: none}
