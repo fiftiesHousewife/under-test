@@ -1,21 +1,28 @@
 # yaml-language-server: $schema=../../schema/technique.schema.json
 id: traffic-record-and-replay
-name: Record/replay of traffic (Keploy)
-workstream: make-it-run-on-its-own
+name: Record and replay of traffic (Keploy records an application's incoming calls and its outgoing calls, then replays them as tests with its own stand-ins)
+workstream: record-current-behaviour
 evidence_for_maturity_levels: [1, 2]
 tools: [keploy]
 adopt_when:
-  - HTTP or gRPC service
-  - Capture is allowed in a non-prod environment
-  - Linux host
+  - HTTP service whose outgoing calls are HTTP or HTTPS, MySQL or MongoDB (what Keploy understands on every platform)
+  - The application can run in a test environment where its real dependencies answer, and capture there is approved
+  - On Windows (x86-64) or macOS on Apple silicon, where Keploy runs as an ordinary user; or on Linux in CI where it may run as root for eBPF
+  - The Keploy trial on a pilot application has passed
 reject_or_defer_when:
-  - eBPF capture not permitted (needs elevated kernel privileges)
-  - Production data cannot be scrubbed
-  - Windows-only runtime
+  - Outgoing calls to PostgreSQL, Redis or Kafka on Windows (captured only as raw bytes, which usually don't replay)
+  - Linux machines where eBPF capture as root isn't permitted
+  - Keploy is found to need contact with its own servers on a closed network
+  - The recordings can't have personal data removed before they leave the capture environment
+  - Its closed-source protocol components aren't approved by the security review
 precondition_checks:
-  - {done_by: person, check: Platform and security sign-off}
-  - {done_by: tool, check: Trial capture}
+  - {done_by: person, check: Security and Platform Owner approves the Keploy binary and its closed components}
+  - {done_by: person, check: Capture in the chosen environment is approved}
+  - {done_by: tool, check: Trial capture on a machine with no route out shows no contact with Keploy's servers}
+  - {done_by: tool, check: Recordings pass the personal-data detector gate}
 fallback: recorded-http-responses
-constraints: [Linux hosts with kernel-level capture permission only; removing personal data is mandatory]
+constraints:
+  - Remove personal data before any recording leaves the environment it was captured in
+  - Keep Keploy's version pinned, and re-check what each platform understands at every upgrade
 references: [test-doubles]
-note: No runnable example; needs eBPF on a Linux host. README explains the WireMock fallback.
+note: Trialled on a pilot application before it's recommended; until then, WireMock recording is the default way to record a service's outgoing calls.

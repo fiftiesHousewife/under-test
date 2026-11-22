@@ -16,7 +16,7 @@ The toolkit and everything it brings into a build (libraries, quality tools, Gra
 
 ## Considered Options
 
-* **Check every resolved dependency against OSV (osv.dev), Google's open vulnerability database, as a task in tools/repo-checks: collect resolved artifacts from every configuration, query OSV in batches, and fail on known vulnerabilities at or above a chosen severity. Organisations without internet access point it at a mirror of OSV's published data files**  
+* **Check every resolved dependency against OSV (osv.dev), Google's open vulnerability database, as a task in maintainer-tools/repo-checks: collect resolved artifacts from every configuration, query OSV in batches, and fail on known vulnerabilities at or above a chosen severity. Organisations without internet access point it at a mirror of OSV's published data files**  
   No account or key; covers Maven and npm; works offline from a mirror
 * **OSV-Scanner (Google's command-line tool)**  
   Complete and maintained; a Go binary that many organisations must approve separately
@@ -29,7 +29,7 @@ Agreed in discussion: the first option. Run it in CI on every build, after confi
 
 ### Consequences
 
-* A vulnerability check task in tools/repo-checks, part of ./gradlew check in CI.
+* A vulnerability check task in maintainer-tools/repo-checks, part of ./gradlew check in CI.
 * A severity threshold setting, and a setting for an internal OSV mirror.
 
 ## More Information

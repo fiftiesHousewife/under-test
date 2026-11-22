@@ -16,21 +16,36 @@ Many repos hold production secrets in their configuration. Building or running t
 
 ## Considered Options
 
-* **The code-hosting platform's secret scanning and push protection**  
-  Built into some code-hosting platforms; covers history and new commits
-* **gitleaks (MIT) in the pipeline**  
-  Open source; we run and tune it. TruffleHog is an alternative but is AGPL-licensed, a strong copyleft licence
+* **gitleaks (MIT) on every repo, history included, whatever the platform; the platform's own scanning as well, where
+  it has it**  
+  One tool everywhere gives the same results in one report format, which the toolkit writes into each assessment file.
+  We run and tune it. TruffleHog is an alternative but is AGPL-licensed, a strong copyleft licence
+* **The code-hosting platform's secret scanning and push protection where available, gitleaks otherwise**  
+  Less to run; covers history and new commits; but results come in a different shape on each platform, and on some
+  platforms scanning private repos costs extra
+* **Both, required**  
+  Strongest; organisations without paid platform scanning can't comply
 * **No scan; rely on people**  
   Not acceptable at scale
 
 ## Decision Outcome
 
-Proposed: every repo is scanned before any build, test run or app start. The code-hosting platform's own secret scanning if available, otherwise gitleaks; the organisation profile records which. Findings are recorded in the assessment file and the repo is blocked from running.
+Proposed: every repo is scanned with gitleaks, its whole history included, before any build, test run or app start.
+Where the code-hosting platform has its own secret scanning and push protection, switch it on too: it catches new
+secrets as they are pushed, but it doesn't replace the gitleaks scan. Findings are recorded in the assessment file and
+the repo is blocked from running until they are resolved. A finding that isn't a real secret (a test fixture, an
+example key) is resolved only by adding it to the repo's `.gitleaksignore` with a one-line reason, in a pull request
+that the Security and Platform Owner, or someone they delegate, approves; so every exemption is reviewed and kept in
+source control. (The toolkit maintainers chose gitleaks over the platform's
+scanning as the default; an organisation may still narrow or replace this.)
 
 ### Consequences
 
-* the secrets scan.
+* The secrets scan, built on gitleaks, writes its findings into the assessment file.
 * The measurement run and classifier depend on a clean scan.
+* gitleaks is feature complete: it gets security fixes only. That suits a stable scanner, and it is rechecked at
+  each release under [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](../docs/decisions/0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md).
+* The scan is the first part of the safety inventory, in [Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](0057-before-any-code-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md).
 
 ## More Information
 

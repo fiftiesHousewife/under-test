@@ -838,6 +838,7 @@ items:
     owner_role: "Test Quality Lead"
     done_by: "ai"
     done_when:
+      - "Each starts from the toolkit's templates/testing-guide.md"
       - "Defaults refer to techniques by name; application-type guides state a target test mix; reviewed by tech leads from two organisation units"
     blocked_by:
       - "pilots-assessed-and-planned"
@@ -850,6 +851,7 @@ items:
     owner_role: "Toolkit Owner"
     done_by: "ai"
     done_when:
+      - "Each starts from the toolkit's templates/shared-test-kit.md"
       - "Each has a part for local tests and a part for container tests; published; used by a pilot"
     blocked_by:
       - "pilots-assessed-and-planned"

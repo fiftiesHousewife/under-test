@@ -27,7 +27,9 @@ Proposed: the first option.
 
 ### Consequences
 
-* `shared-test-kits/<system-id>/` and the catalogue (the shared test kits and their catalogue).
+* Each shared test kit holds the cleaning rules for its system, so every repo that records it cleans the same way;
+  its owner signs off changes to them (see [Captured data is cleaned inside the environment it was captured in, before it is copied anywhere](0062-captured-data-is-cleaned-inside-the-environment-it-was-captured-in-before-it-is-copied-anywhere.md)).
+* `shared-test-kits/<system-id>/` in the organisation repo, each started from [the toolkit's template](../templates/shared-test-kit.md), and a catalogue of them.
 
 ## More Information
 

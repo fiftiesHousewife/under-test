@@ -23,8 +23,8 @@ dependencyResolutionManagement {
 rootProject.name = "under-test"
 
 // Each directory that holds a build.gradle.kts becomes a project, named by its path:
-//   tools/<id>               -> :tools:<id>          (automated tools: assessment-file validator, convention plugin, scanners)
-//   shared-test-kits/<id>    -> :shared-test-kits:<id> (stand-ins for one widely shared system)
+//   tools/<id>               -> :tools:<id>             (tools adopting organisations run)
+//   maintainer-tools/<id>    -> :maintainer-tools:<id>  (tools that keep this repo itself in order)
 fun includeAll(root: String, subdir: String? = null) {
     rootDir.resolve(root).listFiles()?.sorted()?.forEach { dir ->
         val projectDir = if (subdir == null) dir else dir.resolve(subdir)
@@ -37,4 +37,4 @@ fun includeAll(root: String, subdir: String? = null) {
 }
 
 includeAll("tools")
-includeAll("shared-test-kits")
+includeAll("maintainer-tools")

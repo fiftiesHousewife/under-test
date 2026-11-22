@@ -23,11 +23,11 @@ This repo holds the rules, tools and AI assistant skills for the programme; less
 
 ## Decision Outcome
 
-Proposed: one folder per kind of content: `docs/decisions/` (the toolkit's own decisions), `decision-guides/` (guides for adopting organisations), `techniques/<id>/technique.yaml` (rules the tools read), lessons in their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons) (lesson, runnable example, exercise, video scripts), `testing-guides/technology-stacks/<id>/`, `testing-guides/application-types/<id>/`, `shared-test-kits/<system-id>/`, `applications/<app-id>/`, `schema/`, `tools/<id>/`, `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
+Proposed: one folder per kind of content: `docs/decisions/` (the toolkit's own decisions), `decision-guides/` (guides for adopting organisations), `techniques/<id>/technique.yaml` (rules the tools read), lessons in their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons) (lesson, runnable example, exercise, video scripts), `templates/` (starting points an organisation copies, including a testing guide and a shared test kit; see [Testing guides and shared test kits belong to each organisation, and the toolkit provides templates for them](0033-testing-guides-and-shared-test-kits-belong-to-each-organisation-and-the-toolkit-provides-templates-for-them.md)), `applications/<app-id>/`, `schema/`, `tools/<id>/`, `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
 
 ### Consequences
 
-* `settings.gradle.kts` automatically includes any `techniques/*/example`, `tools/*` or `shared-test-kits/*` folder containing a `build.gradle.kts`.
+* `settings.gradle.kts` automatically includes any `tools/*` folder containing a `build.gradle.kts`.
 
 ## More Information
 

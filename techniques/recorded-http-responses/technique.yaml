@@ -4,16 +4,19 @@ name: Recorded HTTP stubs (WireMock)
 workstream: make-it-run-on-its-own
 test_stand_in_approach: recorded-responses
 evidence_for_maturity_levels: [1, 2]
-tools: [wiremock, hurl]
+tools: [wiremock, logbook, hurl]
 adopt_when:
   - Dependency you do not own, over HTTP
   - A non-prod instance is reachable to record from
 reject_or_defer_when:
   - No reachable instance to record from
 precondition_checks:
-  - {done_by: tool, check: Outbound-call check lists the HTTP hosts tests contact}
+  - {done_by: tool, check: "The airgap agent's report lists the HTTP hosts the code contacts"}
+  - {done_by: tool, check: Recordings are cleaned in the capture environment and pass the detector check}
+  - {done_by: person, check: First sample of cleaned recordings signed off}
 fallback: Hand-written stubs taken from the API spec
 constraints:
   - "Commit recordings to the shared test kit for that system, not to each repo"
   - "Hurl suits plain-text HTTP checks that live alongside shell scripts"
+  - "Record with WireMock's record mode in non-production; Logbook inside the application in a test environment where a proxy can't sit"
 references: [test-doubles]

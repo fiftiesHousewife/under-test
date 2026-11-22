@@ -77,6 +77,7 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | **Knowledge Curator** | Client | Decides which knowledge sources count for an application (regression packs, wiki pages, tracker queries, other repos) and how current each is | The application's source list |
 | **Architecture Owner** | Client | Confirms an application's connection list and owns its boundary contracts | What the application connects to, and its contracts |
 | **Subject-matter expert** | Client | Knows the business rules | The expected results for tests against requirements |
+| **Data Protection Officer** | Client | The organisation's own data protection role, required in law for many organisations | Whether cleaned recordings of real data may be treated as anonymous; capture from production |
 | **Steering Group** | Both | Programme Sponsor, Engagement Lead, Technical Architect and Security and Platform Owner | Disputes, approving moves between phases, cross-cutting decisions |
 
 ## Phases
@@ -106,7 +107,11 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | flaky test | A test that sometimes passes and sometimes fails without any code change. |
 | Testcontainers, WireMock, Pact, PIT, ArchUnit, jetCheck, bats-core, VHS | Tool names. Say what the tool does the first time. |
 | **connection list** | A file listing everything an application connects to (interfaces, databases, queues, outside services), with what tests use instead of each one and which addresses tests must never reach. Written in FINOS CALM, an open standard format. | dependency map, architecture document |
-| **discovery** | The first step on every repo: a draft connection list, approval tests pinning current behaviour, and a source list. Coverage targets apply only afterwards. | |
+| **safety inventory** | The first step on every repo, before any of its code runs: secrets, keystores, real personal data, jobs that start by themselves, automatic migrations, build tasks that publish or deploy, fixed file paths and file shares. Some findings block the repo from running. | security scan (for the whole step) |
+| **discovery** | The step after the safety inventory: a draft connection list (from the airgap agent's report), a source list, and the tests and test assets that already exist, with their anti-patterns. Coverage targets apply only afterwards. | |
+| **test assets** | Tests that live outside the repo: automation suites run against a shared test environment, manual test scripts, regression packs. A source of behaviour, never evidence for a test maturity level. | QA artefacts |
+| **capture** (of current behaviour) | Recording what an application receives and sends, so it can become approval tests and recorded responses. Always followed by cleaning. | traffic sniffing |
+| **cleaning** (of captured data) | Removing or replacing personal and sensitive data in a capture, inside the environment it was captured in, before it is copied anywhere. | sanitising, scrubbing |
 | **current behaviour** / **intended behaviour** | What a system does today (pinned by approval tests) and what it should do (recorded in a specification). Every difference becomes an open question. | as-is / to-be |
 | **open question** | A difference or unknown that a named person must settle; for behaviour, the Application Owner decides: keep it, fix it, or correct the specification. | red card, hotspot |
 | **source list** | The knowledge sources the Knowledge Curator has chosen for an application, checked against a schema. Every drafted rule must cite one. | source manifest |

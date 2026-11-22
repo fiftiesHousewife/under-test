@@ -7,6 +7,7 @@ tools: [approvaltests-java, xmlunit, jsonunit, datacompy]
 adopt_when:
   - Output is deterministic or can be normalised
   - Structured output such as JSON, files or reports
+  - Captured and cleaned output from a real run is available as examples
 reject_or_defer_when:
   - Output is dominated by timestamps or IDs that cannot be normalised
   - The boundary is about to be replaced

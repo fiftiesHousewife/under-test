@@ -27,7 +27,7 @@ Proposed: the first list, extended when a pattern recurs in the review list.
 
 ### Consequences
 
-* `testing-guides/technology-stacks/` and `testing-guides/application-types/`.
+* Each organisation writes a testing guide per technology stack and per application type in its own repo, from [the toolkit's template](../../templates/testing-guide.md), using these ids.
 
 ## More Information
 

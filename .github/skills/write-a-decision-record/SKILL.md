@@ -29,7 +29,10 @@ a record in each, linking each other.
    [REFERENCES.md](../../../docs/REFERENCES.md).
 6. Decision Outcome: "Proposed: …" or "Not yet chosen." Mark it accepted only when the decision-makers chose it in
    conversation (say so) or approved its pull request.
-7. Rebuild the indexes with `./gradlew buildDecisionIndexes`, and add or update the decision item in
+7. **A decision guide** is linked from its step of the journey in the [README](../../../README.md), in the same pull
+   request (`./gradlew check` fails otherwise). When a guide's outcome changes, check the README's summary of that
+   step still says the same thing.
+8. Rebuild the indexes with `./gradlew buildDecisionIndexes`, and add or update the decision item in
    [plan/toolkit-backlog.yaml](../../../plan/toolkit-backlog.yaml) with `decision_record:` pointing at the file.
 
 ## Discussing a decision with a person

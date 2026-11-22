@@ -13,8 +13,9 @@ reject_or_defer_when:
 precondition_checks:
   - {done_by: person, check: Modernisation in scope}
   - {done_by: tool, check: Share of endpoints that are read-only}
-fallback: Replay recorded requests against old and new builds offline
+fallback: Replay saved, cleaned requests against old and new builds offline, with recorded responses for their dependencies
 constraints:
+  - Offline replay by default; live comparison only on read-only endpoints, with named approvals
   - Not Diffy - the original is archived and its only fork has a non-commercial licence
   - "For a parallel run inside the code (old and new side by side, compare, keep serving the old result), write a small wrapper: the Java and JavaScript ports of GitHub's Scientist library are no longer maintained"
 references: [legacy-code]

@@ -24,10 +24,9 @@ Name a product only as an option or an example.
 | [`decision-guides/`](decision-guides/README.md) | Decision guides for adopting organisations; each organisation accepts, narrows or replaces them in its organisation repo. |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background and sources. |
 | [`techniques/`](techniques/README.md) | One `technique.yaml` per technique: the rules the toolkit's tools read. |
-| `testing-guides/` | Default approach per technology stack and per application type. |
-| `shared-test-kits/` | Stand-ins for widely shared systems. |
-| `tools/` | Automated tools. Reuse existing tools before building anything. [`tools/repo-checks`](tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`). |
-| [`tools/sync/`](tools/sync/README.md), `tools/git-hooks/` | The maintainers' push script, and the hook that refuses a plain `git push`. |
+| [`templates/`](templates/) | Starting points an organisation copies into its own repo: its backlog, a testing guide, a shared test kit. Testing guides and shared test kits themselves belong to each organisation. |
+| `tools/` | Tools adopting organisations run. Reuse existing tools before building anything. |
+| `maintainer-tools/` | Tools that keep this repo itself in order, not used by adopters: [`repo-checks`](maintainer-tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`); [`sync`](maintainer-tools/sync/README.md) is the maintainers' push script; `git-hooks` refuses a plain `git push`. |
 | [`schema/`](schema/) | Schemas for every YAML format. |
 | [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |
 | [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo. |
@@ -66,7 +65,7 @@ External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with
 | Methods short and simple: cyclomatic complexity 10 or less, cognitive complexity 15 or less, 50 lines or fewer | Checkstyle and PMD |
 | No copy-pasted code (75 tokens or more) | PMD's copy-paste detector (`cpdCheck`) |
 | No bug patterns or security bugs | SpotBugs with FindSecBugs |
-| No dependency with a known vulnerability | OSV check in `tools/repo-checks` (planned; a one-off check found none) |
+| No dependency with a known vulnerability | OSV check in `maintainer-tools/repo-checks` (planned; a one-off check found none) |
 | Dependencies kept current (pre-releases ignored) | Ben Manes versions plugin: `./gradlew dependencyUpdates`; checked in CI, failing if `quality.failOnStaleDependencies=true` |
 | Local variables `final` where not reassigned; braces always; no star imports | Checkstyle |
 | Versions only in [`gradle/libs.versions.toml`](gradle/libs.versions.toml) | Review |
@@ -82,5 +81,5 @@ Never build or run code from another repo unless its secrets scan is clean, and 
 (see [Old code runs first only where production cannot be reached](decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md)).
 
 ## Before you finish
-Run `./gradlew check`. It must pass. Push only with `tools/sync/sync.sh "What changed"`, which syncs the issues and
+Run `./gradlew check`. It must pass. Push only with `maintainer-tools/sync/sync.sh "What changed"`, which syncs the issues and
 backlog page before pushing; never with a plain `git push`.
