@@ -293,6 +293,7 @@ Some of this repo is what an adopting organisation uses; the rest is how the too
 | [`schema/`](schema/) | JSON Schemas for every YAML and JSON format the toolkit reads or writes |
 | [`build-logic/`](build-logic/), [`config/quality/`](config/quality/) | The Gradle conventions and quality-check rules every repo's build applies (to be published as a plugin) |
 | [`tools/backlog-import/`](tools/backlog-import/README.md) | Loads your starting backlog into your issue tracker |
+| [`tools/safety-inventory/`](tools/safety-inventory/README.md) | The safety inventory's rules, run by gitleaks in CI before a repo's code is built |
 | Skills in [`.github/skills/`](.github/skills/) | [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) and [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md), and the prompt to [strengthen tests until PIT catches the planted bugs](.github/prompts/strengthen-tests-until-pit-catches-the-planted-bugs.prompt.md), for your AI assistant |
 | [`docs/design/`](docs/design/repo-journey.md) | Diagrams of a repo's journey, and designs for tools outside the toolkit, such as a survey tool |
 | [`GLOSSARY.md`](GLOSSARY.md) | The words we use, the words we avoid, the engagement roles and phases |

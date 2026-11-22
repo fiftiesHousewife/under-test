@@ -25,7 +25,7 @@ Name a product only as an option or an example.
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background and sources. |
 | [`techniques/`](techniques/README.md) | One `technique.yaml` per technique: the rules the toolkit's tools read. |
 | [`templates/`](templates/) | Starting points an organisation copies into its own repo: its backlog, a testing guide, a shared test kit. Testing guides and shared test kits themselves belong to each organisation. |
-| `tools/` | Tools adopting organisations run. Reuse existing tools before building anything. |
+| `tools/` | The few tools and rule files adopting organisations run. The toolkit is AI first: a step of the journey is a skill that runs existing tools, and code that must be code gets its own repo (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). |
 | `maintainer-tools/` | Tools that keep this repo itself in order, not used by adopters: [`repo-checks`](maintainer-tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`); [`sync`](maintainer-tools/sync/README.md) is the maintainers' push script; `git-hooks` refuses a plain `git push`. |
 | [`schema/`](schema/) | Schemas for every YAML format. |
 | [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |

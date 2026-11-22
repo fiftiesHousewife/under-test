@@ -21,6 +21,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Dependencies are checked for known vulnerabilities against the OSV database](0029-dependencies-are-checked-for-known-vulnerabilities-against-the-osv-database.md) | proposed (agreed in discussion) | Toolkit maintainers |
 | [This repo's own upkeep is kept apart from what adopting organisations use](0034-this-repos-own-upkeep-is-kept-apart-from-what-adopting-organisations-use.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The README describes the journey and links every decision guide, and the build checks it does](0035-the-readme-describes-the-journey-and-links-every-decision-guide-and-the-build-checks-it-does.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md) | accepted | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
@@ -47,6 +48,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Risky calls on developer machines are refused and reported by the airgap agent, built in its own repo](0036-risky-calls-on-developer-machines-are-refused-and-reported-by-the-airgap-agent-built-in-its-own-repo.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Keploy is trialled on a pilot application to record current behaviour from real traffic](0037-keploy-is-trialled-on-a-pilot-application-to-record-current-behaviour-from-real-traffic.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md) | accepted | Toolkit maintainers |
+| [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md) | accepted | Toolkit maintainers |
 
 ## Recording results and owning plans
 

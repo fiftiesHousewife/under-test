@@ -1,0 +1,16 @@
+batch-job-runs-at-start-up  src/main/resources/application.properties
+credentials-in-jdbc-url  src/main/resources/application.conf
+database-dump-file  backup.dump
+email-addresses-in-data-files  src/test/resources/orders.csv
+fixed-file-path  src/main/java/com/example/OrderReminderJob.java
+fixed-file-path  src/main/resources/application.properties
+keystore-file  src/main/resources/certs/payments-client.jks
+migration-tool  src/main/resources/application.properties
+native-library-file  lib/libnative.so
+native-library-loaded  src/main/java/com/example/OrderReminderJob.java
+password-in-settings  src/main/resources/application.properties
+publishing-build-task  build.gradle
+scheduled-job  src/main/java/com/example/OrderReminderJob.java
+schema-changed-at-start-up  src/main/resources/application.properties
+windows-file-share  src/main/java/com/example/Share.java
+windows-file-share  src/main/resources/application.properties

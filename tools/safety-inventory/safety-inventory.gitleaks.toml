@@ -1,0 +1,146 @@
+# The safety inventory's rules, for gitleaks (https://github.com/gitleaks/gitleaks), version 8.21 or later.
+#
+# Run over the repo's current files, before any of its code is built or run:
+#   gitleaks dir --config safety-inventory.gitleaks.toml --report-format json --report-path safety-inventory.json .
+# The secrets scan is a separate run of gitleaks' own rules over the whole history (gitleaks git).
+#
+# Every rule is tagged with:
+#   safety-inventory
+#   kind:<kind>   one of the safety finding kinds in schema/assessment.schema.json
+#   tier:<effect> blocks (no run until resolved) or neutralise (made harmless in the test profile or build)
+# A finding that isn't real is resolved like any other gitleaks finding: a line in .gitleaksignore with a reason,
+# in a pull request the Security and Platform Owner approves.
+#
+# Patterns are Go regular expressions (RE2): no look-ahead or look-behind.
+
+title = "Safety inventory"
+
+# Keystores and private keys ------------------------------------------------------------------------------------------
+
+[[rules]]
+id = "keystore-file"
+description = "A keystore or certificate store, which usually holds a private key"
+path = '''(?i)\.(?:jks|jceks|keystore|truststore|p12|pfx|bks|pkcs12)$'''
+tags = ["safety-inventory", "kind:keystore-or-private-key", "tier:blocks"]
+
+[[rules]]
+id = "private-key-file"
+description = "A private key file"
+path = '''(?i)(?:^|/)(?:id_(?:rsa|dsa|ecdsa|ed25519)|[^/]+\.(?:key|pem|ppk))$'''
+tags = ["safety-inventory", "kind:keystore-or-private-key", "tier:blocks"]
+
+# Production credentials in settings ----------------------------------------------------------------------------------
+
+[[rules]]
+id = "password-in-settings"
+description = "A password or secret written directly into the application's own settings, not read from a placeholder"
+regex = '''(?i)(?:^|[\s.:"'])(?:password|passwd|pwd|secret|client-secret|clientsecret|api-key|apikey|token)["']?\s*[:=]\s*["']?([^\s"'$#{}<>][^\s"'<>]{3,})'''
+secretGroup = 1
+path = '''(?i)(?:^|/)src/main/(?:resources|webapp)/.*\.(?:properties|ya?ml|xml|conf|json)$'''
+keywords = ["password", "passwd", "pwd", "secret", "key", "token"]
+tags = ["safety-inventory", "kind:production-credential", "tier:blocks"]
+
+[[rules]]
+id = "credentials-in-jdbc-url"
+description = "A database address with the user name and password inside it"
+regex = '''(?i)jdbc:[a-z0-9]+:[^\s"'<>]*(?:password|pwd)=[^\s"'&;<>]{3,}'''
+keywords = ["jdbc:"]
+tags = ["safety-inventory", "kind:production-credential", "tier:blocks"]
+
+# Real personal data in fixtures and dumps ----------------------------------------------------------------------------
+# A pattern can't tell real data from invented data. These find files to look at; a person decides, and records it
+# as a decision in the assessment file.
+
+[[rules]]
+id = "email-addresses-in-data-files"
+description = "Email addresses in a data file: check whether they belong to real people"
+regex = '''[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9-]{1,63}(?:\.[A-Za-z0-9-]{1,63})*\.[A-Za-z]{2,24}'''
+path = '''(?i)\.(?:csv|tsv|sql|json|xml|ya?ml|txt|dat|dump|bak|ldif)$'''
+keywords = ["@"]
+tags = ["safety-inventory", "kind:real-personal-data", "tier:blocks"]
+[[rules.allowlists]]
+description = "Addresses reserved for examples and tests"
+regexTarget = "match"
+regexes = ['''(?i)@(?:[a-z0-9-]+\.)*(?:example\.(?:com|org|net)|test|invalid|localhost)$''']
+
+[[rules]]
+id = "database-dump-file"
+description = "A database dump or backup: check whether it holds real data"
+path = '''(?i)\.(?:dump|bak|dmp|sql\.gz|mdb|accdb|sqlite3?|db)$'''
+tags = ["safety-inventory", "kind:real-personal-data", "tier:blocks"]
+
+# Jobs that start by themselves ---------------------------------------------------------------------------------------
+
+[[rules]]
+id = "scheduled-job"
+description = "A job that starts by itself on a timer or at start-up"
+regex = '''@(?:Scheduled|EnableScheduling|EnableBatchProcessing|Schedule)\b|\borg\.quartz\.|\bTimer\s*\(\s*\)\s*\.schedule|<task:scheduled\b'''
+path = '''(?i)\.(?:java|kt|groovy|scala|xml)$'''
+keywords = ["schedul", "quartz", "batchprocessing", "timer"]
+tags = ["safety-inventory", "kind:self-starting-job", "tier:neutralise"]
+
+[[rules]]
+id = "batch-job-runs-at-start-up"
+description = "Spring Batch is set to run its jobs when the application starts"
+regex = '''(?i)spring\.batch\.job\.enabled\s*[:=]\s*true'''
+keywords = ["spring.batch"]
+tags = ["safety-inventory", "kind:self-starting-job", "tier:neutralise"]
+
+# Database migrations at start-up -------------------------------------------------------------------------------------
+
+[[rules]]
+id = "migration-tool"
+description = "Flyway or Liquibase, which change the configured database when the application starts"
+regex = '''(?i)\b(?:flyway|liquibase)\b'''
+path = '''(?i)(?:^|/)(?:build\.gradle(?:\.kts)?|pom\.xml|libs\.versions\.toml|application[^/]*\.(?:properties|ya?ml))$'''
+keywords = ["flyway", "liquibase"]
+tags = ["safety-inventory", "kind:migration-at-start-up", "tier:neutralise"]
+
+[[rules]]
+id = "schema-changed-at-start-up"
+description = "Hibernate is set to create or change the database schema when the application starts"
+regex = '''(?i)(?:ddl-auto|hbm2ddl\.auto)["']?\s*[:=>]\s*["']?(?:update|create|create-drop)\b'''
+keywords = ["ddl-auto", "hbm2ddl"]
+tags = ["safety-inventory", "kind:migration-at-start-up", "tier:neutralise"]
+
+# Build tasks that publish or deploy ----------------------------------------------------------------------------------
+
+[[rules]]
+id = "publishing-build-task"
+description = "A build that can publish or deploy: check it can't run from an ordinary build"
+regex = '''(?i)\b(?:maven-publish|ivy-publish|com\.jfrog\.artifactory|io\.github\.gradle-nexus|nexus-publish|nexus-staging|distributionManagement|maven-deploy-plugin|cargo-maven|tomcat7?-maven-plugin|spring-boot-docker|jib|com\.bmuschko\.docker)\b|(?:dependsOn|finalizedBy)\s*\(?\s*["']?(?::)?(?:publish|deploy|upload)'''
+path = '''(?i)(?:^|/)(?:[^/]+\.gradle(?:\.kts)?|pom\.xml)$'''
+keywords = ["publish", "deploy", "artifactory", "nexus", "upload", "cargo", "tomcat", "docker", "jib"]
+tags = ["safety-inventory", "kind:publishing-build-task", "tier:neutralise"]
+
+# Fixed file paths and Windows file shares ----------------------------------------------------------------------------
+
+[[rules]]
+id = "windows-file-share"
+description = "A Windows file share or network path"
+regex = '''(?:^|[^:\\])(?:\\\\){1,2}[A-Za-z0-9][A-Za-z0-9._-]{0,62}\\|(?i)\b(?:smb|cifs)://[^\s"'<>]+'''
+path = '''(?i)(?:^|/)src/main/.*\.(?:java|kt|groovy|scala|properties|ya?ml|xml|conf|json)$'''
+tags = ["safety-inventory", "kind:fixed-path-or-file-share", "tier:neutralise"]
+
+[[rules]]
+id = "fixed-file-path"
+description = "A fixed path on a particular machine's disk"
+regex = '''["'=:\s](?:[A-Za-z]:\\|/(?:opt|var|mnt|srv|data|export|apps|home)/)[A-Za-z0-9._\\/-]+'''
+path = '''(?i)(?:^|/)src/main/.*\.(?:java|kt|groovy|scala|properties|ya?ml|xml|conf|json)$'''
+tags = ["safety-inventory", "kind:fixed-path-or-file-share", "tier:neutralise"]
+
+# Native libraries ----------------------------------------------------------------------------------------------------
+
+[[rules]]
+id = "native-library-loaded"
+description = "Code that loads a native library"
+regex = '''\bSystem\s*\.\s*load(?:Library)?\s*\(|\bRuntime\s*\.\s*getRuntime\s*\(\s*\)\s*\.\s*load(?:Library)?\s*\(|\bcom\.sun\.jna\.'''
+path = '''(?i)\.(?:java|kt|groovy|scala)$'''
+keywords = ["load", "jna"]
+tags = ["safety-inventory", "kind:native-library", "tier:neutralise"]
+
+[[rules]]
+id = "native-library-file"
+description = "A native library file"
+path = '''(?i)\.(?:dll|so|dylib|jnilib)(?:\.[0-9.]+)?$'''
+tags = ["safety-inventory", "kind:native-library", "tier:neutralise"]

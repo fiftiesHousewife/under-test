@@ -47,8 +47,8 @@ than fixed.
 
 ### Consequences
 
-* A safety inventory tool, built from existing scanners (gitleaks, file and pattern checks), that writes its findings
-  into the assessment file.
+* A safety inventory tool, built from existing scanners, that writes its findings into the assessment file: a gitleaks
+  rule file run next to the secrets scan (see [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](../docs/decisions/0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)).
 * The assessment file gains a section for the inventory's findings, with how each was resolved or neutralised.
 * The test profile switches off jobs that start by themselves and automatic migrations by default.
 * Discovery starts only once the blocking findings are resolved.
