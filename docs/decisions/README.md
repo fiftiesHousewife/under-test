@@ -46,6 +46,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Testing guides and shared test kits belong to each organisation, and the toolkit provides templates for them](0033-testing-guides-and-shared-test-kits-belong-to-each-organisation-and-the-toolkit-provides-templates-for-them.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Risky calls on developer machines are refused and reported by the airgap agent, built in its own repo](0036-risky-calls-on-developer-machines-are-refused-and-reported-by-the-airgap-agent-built-in-its-own-repo.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Keploy is trialled on a pilot application to record current behaviour from real traffic](0037-keploy-is-trialled-on-a-pilot-application-to-record-current-behaviour-from-real-traffic.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md) | accepted | Toolkit maintainers |
 
 ## Recording results and owning plans
 

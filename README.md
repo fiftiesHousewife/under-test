@@ -54,9 +54,10 @@ detail; this page only summarises them, and links to each so the two stay in ste
 ### 1. Safety inventory
 
 Before any of the repo's code runs, find what could reach production or real data. Its whole history is scanned for
-secrets with gitleaks, and the repo is searched for keystores and private keys, production credentials in its
-settings, real personal data in fixtures and dumps, jobs that start by themselves, database migrations that run at
-start-up, build tasks that publish or deploy, fixed file paths and Windows file shares, and native libraries. Secrets,
+secrets with gitleaks in CI; on laptops, FindSecBugs gives an early warning. The repo is also searched for keystores
+and private keys, production credentials in its settings, real personal data in fixtures and dumps, jobs that start
+by themselves, database migrations that run at start-up, build tasks that publish or deploy, fixed file paths and
+Windows file shares, and native libraries. Secrets,
 keys, production credentials and real personal data block every run until they're resolved, and a real production
 secret is handled as a security incident. The rest are made harmless in the test profile or the build, and recorded.
 The first run of the code happens only where production can't be reached: in CI on runners with no route out, and on
