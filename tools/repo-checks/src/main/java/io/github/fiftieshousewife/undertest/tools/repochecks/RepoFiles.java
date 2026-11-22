@@ -8,11 +8,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-/** The repository's own files that the checks look at, skipping build output and working notes. */
+/**
+ * The repository's own files that the checks look at, skipping build output, working notes and installed AI assistant
+ * skills ({@code .claude/}: external skills installed by APM, and links to this repo's own skills, which are checked
+ * where they live, in {@code .github/skills/}).
+ */
 public record RepoFiles(Path root) {
 
     private static final Set<String> SKIPPED = Set.of("build", ".gradle", ".git", ".idea", "node_modules",
-            "research_notes", "reports", "apm_modules", ".kotlin");
+            "research_notes", "reports", "apm_modules", ".kotlin", ".claude");
 
     public List<Path> withExtension(final String... extensions) {
         try (Stream<Path> paths = Files.walk(root)) {
