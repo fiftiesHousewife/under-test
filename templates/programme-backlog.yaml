@@ -300,7 +300,7 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Technical Architect, approved by the Security and Platform Owner"
+      - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Technical Architect"
     blocked_by:
       - "decide-old-code-runs-first-only-where-production-cannot-be-reached"
       - "decide-tests-are-split-by-what-they-need-local-tests-and-container-tests"
@@ -314,7 +314,7 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Technical Architect, approved by the Security and Platform Owner"
+      - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Technical Architect"
     blocked_by:
       - "decide-old-code-runs-first-only-where-production-cannot-be-reached"
       - "decide-tests-are-split-by-what-they-need-local-tests-and-container-tests"
@@ -517,19 +517,19 @@ items:
     blocked_by:
       - "decide-tests-are-split-by-what-they-need-local-tests-and-container-tests"
     decision_record: "decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md"
-  - key: "decide-contract-tests-share-pacts-through-a-self-hosted-open-source-pact-broker"
+  - key: "decide-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker"
     type: "decision"
-    title: "Contract tests share pacts through a self-hosted open-source Pact Broker"
+    title: "Contract tests share pacts as versioned artifacts through the package repository, without a broker"
     parent: "production-stays-safe-while-old-code-is-built-and-run"
     phase: "set-up"
     horizon: "next"
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Technical Architect, approved by the Security and Platform Owner"
+      - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Technical Architect"
     blocked_by:
       - "decide-order-of-preference-for-test-stand-in-approaches"
-    decision_record: "decision-guides/0037-contract-tests-share-pacts-through-a-self-hosted-open-source-pact-broker.md"
+    decision_record: "decision-guides/0037-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker.md"
     notes: "Needs from the toolkit: We reuse existing tools before building new ones"
   - key: "decide-an-in-memory-database-of-a-different-product-never-counts-as-evidence"
     type: "decision"

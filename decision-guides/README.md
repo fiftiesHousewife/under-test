@@ -88,7 +88,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 | Decision | Status | Who decides |
 |---|---|---|
 | [Order of preference for test stand-in approaches](0036-order-of-preference-for-test-stand-in-approaches.md) | proposed | Technical Architect |
-| [Contract tests share pacts through a self-hosted open-source Pact Broker](0037-contract-tests-share-pacts-through-a-self-hosted-open-source-pact-broker.md) | proposed | Technical Architect, approved by the Security and Platform Owner |
+| [Contract tests share pacts as versioned artifacts through the package repository, without a broker](0037-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker.md) | proposed | Technical Architect |
 | [An in-memory database of a different product never counts as evidence](0038-an-in-memory-database-of-a-different-product-never-counts-as-evidence.md) | proposed | Test Quality Lead, approved by the Steering Group |
 | [Recorded responses and fakes live in shared test kits, not in each repo](0039-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md) | proposed | Technical Architect |
 | [Who owns and maintains each shared test kit](0040-who-owns-and-maintains-each-shared-test-kit.md) | proposed | Steering Group |

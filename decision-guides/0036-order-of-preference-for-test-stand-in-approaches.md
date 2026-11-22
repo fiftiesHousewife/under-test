@@ -32,5 +32,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [Tests are split by what they need: local tests and container tests](0019-tests-are-split-by-what-they-need-local-tests-and-container-tests.md)
-* Later decisions that build on this: [Contract tests share pacts through a self-hosted open-source Pact Broker](0037-contract-tests-share-pacts-through-a-self-hosted-open-source-pact-broker.md), [Recorded responses and fakes live in shared test kits, not in each repo](0039-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md)
+* Later decisions that build on this: [Contract tests share pacts as versioned artifacts through the package repository, without a broker](0037-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker.md), [Recorded responses and fakes live in shared test kits, not in each repo](0039-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md)
 * Background: [test-doubles](../docs/REFERENCES.md#test-doubles)
