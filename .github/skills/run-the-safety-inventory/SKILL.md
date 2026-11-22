@@ -12,23 +12,33 @@ run. Two gitleaks scans find it; you turn their reports into the `safety` sectio
 **Never** build, test or start the repo's code, or run its build tool: a Gradle or Maven build runs the repo's own
 scripts. **Never** copy a report's `Secret` or `Match` value anywhere: not into the file, not into your reply.
 
-## 1. Get the two reports
+## 1. Get the reports
 
-If both reports already exist (CI makes them), use them. Otherwise, where gitleaks 8.21 or later is installed:
+If the reports already exist (CI makes them), use them. Otherwise, where gitleaks 8.21 or later is installed:
 
 ```bash
 gitleaks git --config <toolkit>/tools/safety-inventory/secrets.gitleaks.toml \
   --report-format json --report-path secrets.json .
 gitleaks dir --config <toolkit>/tools/safety-inventory/safety-inventory.gitleaks.toml \
   --report-format json --report-path safety-inventory.json .
+git log --all --diff-filter=A --name-only --format='commit %h' \
+  | awk '/^commit /{c=$2; next} tolower($0) ~ /\.(jks|jceks|keystore|truststore|p12|pfx|bks|pkcs12)$/ {print $0 "  " c}' \
+  | sort -u > keystores-ever-added.txt
 gitleaks version
 git rev-parse --short HEAD
 ```
 
 The first scans the whole history with [the secrets rules](../../../tools/safety-inventory/secrets.gitleaks.toml):
-gitleaks' own, plus keystores and key files by name, so one deleted from the current files is still found. The
-second scans current files with [the inventory's rules](../../../tools/safety-inventory/safety-inventory.gitleaks.toml).
-Both honour the repo's `.gitleaksignore`. If gitleaks isn't available, stop and say so: the scan runs in CI.
+gitleaks' own, plus key files by name. The second scans current files with
+[the inventory's rules](../../../tools/safety-inventory/safety-inventory.gitleaks.toml). Both honour the repo's
+`.gitleaksignore`. The third lists every keystore ever added, with the commit that added it: gitleaks skips binary
+files when it scans the history, and keystores are binary, so a keystore committed and later deleted is found only
+by this list. If gitleaks isn't available, stop and say so: the scan runs in CI.
+
+Each line of the keystore list is a `keystore-file` finding (kind `keystore-or-private-key`, effect `blocks`), the
+same as one from the secrets report, with `where` as `path, in commit <commit>`. If the secrets report found the
+same file, keep one finding with every `where`. A listed keystore that the repo's `.gitleaksignore` names by its
+path is left out.
 
 ## 2. Turn findings into the safety section
 
@@ -62,7 +72,7 @@ Write the section in full, replacing any `safety` section already there, finding
 
 ```yaml
 safety:
-  found_by: {tool: gitleaks, version: "<gitleaks version>", commit: <short commit>}
+  found_by: {tool: gitleaks, version: "<gitleaks version>", commit: "<short commit>"}
   findings:
     - id: keystore-file-payments-client
       kind: keystore-or-private-key

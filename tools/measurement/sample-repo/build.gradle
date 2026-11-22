@@ -1,0 +1,15 @@
+// A small old-style build for trying the measurement init script: Java 8 source, JUnit 4, no coverage or
+// mutation testing of its own. Its code is invented.
+apply plugin: 'java'
+
+group = 'com.example.orders'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}

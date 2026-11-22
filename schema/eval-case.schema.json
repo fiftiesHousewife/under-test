@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/fiftiesHousewife/under-test/main/schema/eval-case.schema.json",
+  "title": "Eval case settings",
+  "description": "The case.yaml of a claude plugin eval case, as the toolkit's evals use it. The format belongs to Claude Code and is not fully documented, so keys this schema doesn't name are allowed.",
+  "type": "object",
+  "required": ["schema_version", "name"],
+  "properties": {
+    "schema_version": {"const": "1.1"},
+    "name": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+    "context": {
+      "type": "object",
+      "properties": {
+        "scaffold_script": {"type": "string", "description": "The script that sets up the workspace; runs only with --scaffold."},
+        "add_dirs": {"type": "array", "items": {"type": "string"}},
+        "history_file": {"type": "string"}
+      }
+    }
+  }
+}

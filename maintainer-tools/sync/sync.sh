@@ -13,8 +13,8 @@ MESSAGE="${1:?usage: maintainer-tools/sync/sync.sh \"Commit message\"}"
 REPO="$(git remote get-url origin | sed -E 's#(git@[^:]+:|https://[^/]+/)##; s#\.git$##')"
 COAUTHOR='Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>'
 
-echo "== Waiting for any earlier issue import to finish"
-while pgrep -f "import_to_github.py" >/dev/null; do sleep 10; done
+echo "== Waiting for any earlier issue import of this repo to finish"
+while pgrep -f "import_to_github.py $REPO " >/dev/null; do sleep 10; done
 
 echo "== Build"
 ./gradlew --no-daemon check

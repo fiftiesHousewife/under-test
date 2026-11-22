@@ -50,7 +50,7 @@ One finding per kind that has at least one test. Leave out kinds with none.
 
 ```yaml
 anti_patterns:
-  found_by: {tool: find-test-anti-patterns, version: "<toolkit version, or unreleased>", commit: <short commit>}
+  found_by: {tool: find-test-anti-patterns, version: "<toolkit version, or unreleased>", commit: "<short commit>"}
   findings:
     - id: disabled
       kind: disabled

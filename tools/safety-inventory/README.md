@@ -5,7 +5,8 @@ files for [gitleaks](https://github.com/gitleaks/gitleaks), the secrets scanner 
 is nothing new to install or approve:
 
 * [`secrets.gitleaks.toml`](secrets.gitleaks.toml), run over the whole history: gitleaks' own rules, plus keystores and
-  private key files by name, which gitleaks' own rules don't all find;
+  private key files by name, which gitleaks' own rules don't all find. gitleaks skips binary files in the history, so
+  a binary keystore committed and later deleted is found by listing every file ever added with `git log` instead;
 * [`safety-inventory.gitleaks.toml`](safety-inventory.gitleaks.toml), run over the current files: everything else.
 
 ## What it finds
@@ -31,9 +32,12 @@ In CI, before the repo's code is built, next to the secrets scan over the whole 
 ```bash
 gitleaks git --config secrets.gitleaks.toml --report-format json --report-path secrets.json .
 gitleaks dir --config safety-inventory.gitleaks.toml --report-format json --report-path safety-inventory.json .
+git log --all --diff-filter=A --name-only --format='commit %h' \
+  | awk '/^commit /{c=$2; next} tolower($0) ~ /\.(jks|jceks|keystore|truststore|p12|pfx|bks|pkcs12)$/ {print $0 "  " c}' \
+  | sort -u > keystores-ever-added.txt
 ```
 
-The [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md) skill turns both reports into the `safety` section of `testing/assessment.yaml`. A finding
+The [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md) skill turns the reports and the list into the `safety` section of `testing/assessment.yaml`. A finding
 that isn't real goes in the repo's `.gitleaksignore` with a reason, in a pull request the Security and Platform Owner
 approves.
 

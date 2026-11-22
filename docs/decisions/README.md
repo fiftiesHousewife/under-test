@@ -20,8 +20,9 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md) | proposed (agreed in discussion) | Toolkit maintainers |
 | [Dependencies are checked for known vulnerabilities against the OSV database](0029-dependencies-are-checked-for-known-vulnerabilities-against-the-osv-database.md) | proposed (agreed in discussion) | Toolkit maintainers |
 | [This repo's own upkeep is kept apart from what adopting organisations use](0034-this-repos-own-upkeep-is-kept-apart-from-what-adopting-organisations-use.md) | accepted (chosen in discussion) | Toolkit maintainers |
-| [The README describes the journey and links every decision guide, and the build checks it does](0035-the-readme-describes-the-journey-and-links-every-decision-guide-and-the-build-checks-it-does.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The README describes the journey and links every decision guide, and the build checks it does](0035-the-readme-describes-the-journey-and-links-every-decision-guide-and-the-build-checks-it-does.md) | superseded | Toolkit maintainers |
 | [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md) | accepted | Toolkit maintainers |
+| [A short README summarises the journey, and a journey page links every decision guide, which the build checks](0042-a-short-readme-summarises-the-journey-and-a-journey-page-links-every-decision-guide-which-the-build-checks.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
@@ -50,6 +51,8 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md) | accepted | Toolkit maintainers |
 | [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md) | accepted | Toolkit maintainers |
 | [Keystores and private key files are found over the whole history, by rules added to the secrets scan](0041-keystores-and-private-key-files-are-found-over-the-whole-history-by-rules-added-to-the-secrets-scan.md) | accepted | Toolkit maintainers |
+| [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md) | proposed | Toolkit maintainers |
+| [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

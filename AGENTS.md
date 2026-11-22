@@ -20,6 +20,7 @@ Name a product only as an option or an example.
 ## Where things are
 | Path | What |
 |---|---|
+| [`docs/JOURNEY.md`](docs/JOURNEY.md) | A repo's journey step by step, linking every decision guide (the build checks it). |
 | [`docs/decisions/`](docs/decisions/README.md) | The toolkit's own decisions, made by its maintainers, in MADR form. |
 | [`decision-guides/`](decision-guides/README.md) | Decision guides for adopting organisations; each organisation accepts, narrows or replaces them in its organisation repo. |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Background and sources. |
@@ -38,18 +39,20 @@ Name a product only as an option or an example.
 | Skill | Use it to |
 |---|---|
 | [work-on-an-item](.github/skills/work-on-an-item/SKILL.md) | Pick up a work item from the issue tracker and finish it |
-| [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turn a repo's two gitleaks reports into the safety section of its assessment file, before any of its code runs |
+| [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turn a repo's gitleaks reports, and a list of keystores ever committed, into the safety section of its assessment file, before any of its code runs |
 | [draft-the-connection-list](.github/skills/draft-the-connection-list/SKILL.md) | Draft a repo's connection list from the airgap agent's reports, with a proposed stand-in for each connection |
 | [find-test-anti-patterns](.github/skills/find-test-anti-patterns/SKILL.md) | Count the anti-patterns in a repo's existing tests the same way every time, and note what the list misses |
+| [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Measure a Gradle repo under the airgap agent: five runs for flaky tests, coverage, planted bugs, test mix |
 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Propose adopt, defer or reject for every technique, each traced to the rule that decided it |
 | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fill the report template from a repo's files, and apply the changes people paste back from it |
 
-Each skill's trial, with and without it, is in [`docs/skill-evaluations/`](docs/skill-evaluations/). A new skill gets one too: it must save effort or make the result the same every time.
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |
 | [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) | Record an organisation's own choice in its private organisation repo |
 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turn a repo's approved testing plan into work items (placeholder until the loader exists) |
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
 | architecture-decision-records (installed by APM) | The mechanics of writing a MADR record; use it with write-a-decision-record, which adds this repo's rules |
+
+Each skill's trial, with and without it, is in [`docs/skill-evaluations/`](docs/skill-evaluations/). A new skill gets one too: it must save effort or make the result the same every time.
 
 Prompts, for short, repeatable jobs where a skill would add more than it saves:
 

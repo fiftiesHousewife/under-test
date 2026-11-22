@@ -58,6 +58,6 @@ public final class RepoChecks {
             throw new IllegalStateException(problems.size() + " problem(s) in the repository's own files");
         }
         log.info("Repository files are in order: links, YAML schemas, decision indexes, and every decision guide"
-                + " linked from the README.");
+                + " linked from the journey page.");
     }
 }

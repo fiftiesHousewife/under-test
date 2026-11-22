@@ -49,7 +49,7 @@ stand-in, say which technique its `fallback` points to.
 ## 3. Write it down
 
 * `techniques` section, rewritten in full: `found_by` `{tool: choose-techniques, version: "<toolkit version, or
-  unreleased>", commit: <short commit>}`, and a candidate for **every** technique, sorted by id, with `because`: the
+  unreleased>", commit: "<short commit>"}`, and a candidate for **every** technique, sorted by id, with `because`: the
   conditions you checked, each as a short line.
 * A decision `techniques/<id>` for every technique, `state: proposed`, `drafted_by: ai`, `choice` adopt, defer or
   reject, `reason` as above. Don't change a decision people have made; if yours would differ, say so in your reply

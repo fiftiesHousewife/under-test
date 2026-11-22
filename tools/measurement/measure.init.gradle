@@ -1,0 +1,145 @@
+// Measures any Gradle build's tests without changing that build: coverage with JaCoCo, flaky tests by keeping each
+// run's results apart, and planted bugs with PIT. Works with Gradle 5.6 and later. Run it together with the airgap
+// agent's init script, so no test reaches the network:
+//
+//   ./gradlew test jacocoTestReport -Dmeasure.run=1 \
+//       --init-script airgap.init.gradle --init-script measure.init.gradle
+//   ./gradlew measurePlantedBugs -Dmeasure.targets='com.example.orders.*' \
+//       --init-script airgap.init.gradle --init-script measure.init.gradle
+//
+// Settings, all optional:
+//   -Dmeasure.run=<n>             keep this run's test results in build/under-test/runs/<n>/<test task>/
+//   -Dmeasure.targets=<globs>     the classes to plant bugs in, comma-separated (default: <project group>.*)
+//   -Dmeasure.excludedTests=<globs>  test classes PIT leaves out, comma-separated: the flaky ones
+//   -Dmeasure.java=<path>         the java that runs PIT, when the build runs on a JDK older than 11
+//   -Dmeasure.network=blocked-by-runner   run without the airgap agent, on a CI runner with no route out
+//   -Dmeasure.jacoco.version, -Dmeasure.pit.version, -Dmeasure.pit.junit5.version
+//
+// JaCoCo and PIT come through the build's own repositories, so a company's proxy and package repository still apply.
+// Every test task, and PIT, refuses to start without the airgap agent unless the runner is declared to have no
+// route out. Test failures don't stop the run: the results are what's being measured.
+
+def jacocoVersion = System.getProperty("measure.jacoco.version", "0.8.16")
+def pitVersion = System.getProperty("measure.pit.version", "1.30.2")
+def pitJunit5Version = System.getProperty("measure.pit.junit5.version", "1.2.3")
+def run = System.getProperty("measure.run")
+def networkBlockedByRunner = System.getProperty("measure.network") == "blocked-by-runner"
+
+def airgapArgs = { Iterable<String> args -> args.findAll { it.startsWith("-javaagent:") && it.contains("airgap") } }
+
+def requireAirgap = { Task task, Iterable<String> args ->
+    if (!networkBlockedByRunner && airgapArgs(args).isEmpty()) {
+        throw new GradleException("${task.path} would run without the airgap agent. Add --init-script "
+                + "airgap.init.gradle, or -Dmeasure.network=blocked-by-runner on a CI runner with no route out.")
+    }
+}
+
+def junitXmlDir = { Test test ->
+    def report = test.reports.junitXml
+    report.hasProperty("outputLocation") ? report.outputLocation.get().asFile : report.destination
+}
+
+def enable = { report ->
+    if (report.hasProperty("required")) {
+        report.required.set(true)
+    } else {
+        report.enabled = true
+    }
+}
+
+allprojects { Project p ->
+    p.plugins.withId("java") {
+        p.apply plugin: "jacoco"
+        p.jacoco.toolVersion = jacocoVersion
+
+        p.tasks.withType(Test).configureEach { Test test ->
+            test.ignoreFailures = true
+            test.outputs.upToDateWhen { false }
+            test.doFirst { requireAirgap(test, test.allJvmArgs) }
+            if (run) {
+                test.doLast {
+                    def runDir = new File(p.layout.buildDirectory.get().asFile, "under-test/runs/${run}/${test.name}")
+                    p.delete(runDir)
+                    p.copy { from junitXmlDir(test); into runDir; include "*.xml" }
+                }
+            }
+        }
+
+        p.tasks.withType(JacocoReport).configureEach { JacocoReport report ->
+            enable(report.reports.xml)
+            enable(report.reports.html)
+        }
+
+        def pit = p.configurations.create("underTestPit") {
+            visible = false
+            canBeConsumed = false
+        }
+        p.dependencies.add("underTestPit", "org.pitest:pitest-command-line:${pitVersion}")
+
+        p.tasks.register("measurePlantedBugs", JavaExec) { JavaExec task ->
+            task.group = "verification"
+            task.description = "Plants bugs in the code with PIT and counts how many the tests catch."
+            task.dependsOn("testClasses")
+            task.classpath = pit
+            if (task.hasProperty("mainClass")) {
+                task.mainClass.set("org.pitest.mutationtest.commandline.MutationCoverageReport")
+            } else {
+                task.main = "org.pitest.mutationtest.commandline.MutationCoverageReport"
+            }
+            if (System.getProperty("measure.java")) {
+                task.executable = System.getProperty("measure.java")
+            }
+            def reportDir = new File(p.layout.buildDirectory.get().asFile, "under-test/planted-bugs")
+            task.outputs.dir(reportDir)
+            task.outputs.upToDateWhen { false }
+            task.doFirst {
+                def test = p.tasks.getByName("test") as Test
+                // PIT's own process only reads class files; the repo's code runs in the processes PIT starts, so those
+                // get the airgap agent, with a report of their own.
+                def report = new File(p.layout.buildDirectory.get().asFile, "airgap/measurePlantedBugs/calls.jsonl")
+                def minionArgs = airgapArgs(test.allJvmArgs).collect { it.replaceAll(/report=[^;,]*/, "report=${report}") }
+                requireAirgap(task, minionArgs)
+                def usesJunit5 = test.options.class.simpleName.startsWith("JUnitPlatformOptions")
+                if (usesJunit5) {
+                    def plugin = p.configurations.detachedConfiguration(p.dependencies.create(
+                            "org.pitest:pitest-junit5-plugin:${pitJunit5Version}"))
+                    task.classpath = task.classpath + plugin
+                }
+                def targets = System.getProperty("measure.targets") ?: (p.group ? "${p.group}.*" : null)
+                if (!targets) {
+                    throw new GradleException("${task.path}: name the classes to plant bugs in with -Dmeasure.targets")
+                }
+                def sourceSets = p.sourceSets
+                def classPath = (sourceSets.test.runtimeClasspath + sourceSets.main.output).files.findAll { it.exists() }
+                task.args(
+                        "--targetClasses", targets,
+                        "--sourceDirs", sourceSets.main.java.srcDirs.join(","),
+                        "--classPath", classPath.join(","),
+                        "--reportDir", reportDir.absolutePath,
+                        "--outputFormats", "XML,HTML",
+                        "--timestampedReports=false",
+                        "--skipFailingTests=true",
+                        "--threads", "2")
+                // Test classes often share the code's packages, so the target globs would match them too.
+                def testClasses = []
+                p.sourceSets.test.output.classesDirs.files.findAll { it.isDirectory() }.each { dir ->
+                    dir.eachFileRecurse { f ->
+                        if (f.name.endsWith(".class") && !f.name.contains('$')) {
+                            testClasses << dir.toPath().relativize(f.toPath()).toString()
+                                    .replace(File.separator, ".").replaceAll(/\.class$/, "")
+                        }
+                    }
+                }
+                if (testClasses) {
+                    task.args("--excludedClasses", testClasses.join(","))
+                }
+                if (System.getProperty("measure.excludedTests")) {
+                    task.args("--excludedTestClasses", System.getProperty("measure.excludedTests"))
+                }
+                if (minionArgs) {
+                    task.args("--jvmArgs", minionArgs.join(","))
+                }
+            }
+        }
+    }
+}

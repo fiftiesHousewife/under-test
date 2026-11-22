@@ -25,6 +25,13 @@ findings() {
 }
 
 status=0
+# gitleaks skips empty files, so an empty sample file would hide a rule that matches by file name.
+empty="$(find "$tools/sample-repo" -type f -empty)"
+if [ -n "$empty" ]; then
+  echo "sample-repo files must not be empty, or gitleaks skips them: $empty"
+  status=1
+fi
+
 for pair in "safety-inventory.gitleaks.toml:sample-repo-expected-findings.txt" \
             "secrets.gitleaks.toml:sample-repo-expected-secrets-findings.txt"; do
   rules="${pair%%:*}"; expected="${pair##*:}"
@@ -35,4 +42,22 @@ for pair in "safety-inventory.gitleaks.toml:sample-repo-expected-findings.txt" \
     status=1
   fi
 done
+# gitleaks skips binary files in the history, so the skill lists keystores ever added with git log. Check that list
+# finds a binary keystore committed and then deleted.
+history="$work/history"
+mkdir -p "$history/certs"
+git -C "$history" init -q
+cp "$tools/sample-repo/src/main/resources/certs/payments-client.jks" "$history/certs/old-client.jks"
+git -C "$history" add .
+git -C "$history" -c user.name=check -c user.email=check@example.invalid commit -qm "Add a keystore"
+git -C "$history" rm -q certs/old-client.jks
+git -C "$history" -c user.name=check -c user.email=check@example.invalid commit -qm "Delete it"
+listed="$(git -C "$history" log --all --diff-filter=A --name-only --format='commit %h' \
+  | awk '/^commit /{c=$2; next} tolower($0) ~ /\.(jks|jceks|keystore|truststore|p12|pfx|bks|pkcs12)$/ {print $0}')"
+if [ "$listed" = "certs/old-client.jks" ]; then
+  echo "keystore list: finds a deleted binary keystore"
+else
+  echo "keystore list: did not find a deleted binary keystore (got: $listed)"
+  status=1
+fi
 exit "$status"

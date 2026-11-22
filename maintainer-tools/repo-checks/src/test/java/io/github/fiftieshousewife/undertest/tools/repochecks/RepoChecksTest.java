@@ -22,10 +22,12 @@ class RepoChecksTest {
             Files.writeString(dir.resolve("README.md"), "# Index\n\n" + DecisionIndex.MARKER + "\n");
             Files.writeString(dir.resolve("0001-only.md"), DecisionIndexTest.record("Only decision", "Group"));
         }
-        Files.writeString(root.resolve("README.md"), "[broken](nowhere.md) " + GUIDE_LINK);
+        Files.writeString(root.resolve("README.md"), "[broken](nowhere.md)");
+        Files.createDirectories(root.resolve("docs"));
+        Files.writeString(root.resolve(GuideCoverage.JOURNEY), GUIDE_LINK);
     }
 
-    private static final String GUIDE_LINK = "[only](decision-guides/0001-only.md)";
+    private static final String GUIDE_LINK = "[only](../decision-guides/0001-only.md)";
 
     @Test
     void checkReportsBrokenLinksAndStaleIndexesUntilIndexesAreRebuilt() throws IOException {
@@ -45,7 +47,7 @@ class RepoChecksTest {
         RepoChecks.main("index", root.toString());
 
         assertThatIllegalStateException().isThrownBy(() -> RepoChecks.main("check", root.toString()));
-        Files.writeString(root.resolve("README.md"), GUIDE_LINK);
+        Files.writeString(root.resolve("README.md"), "No broken links.");
         RepoChecks.main("check", root.toString());
     }
 
@@ -64,7 +66,7 @@ class RepoChecksTest {
         writeRepo();
         RepoChecks.main("fix-links", root.toString());
 
-        assertThat(Files.readString(root.resolve("README.md"))).isEqualTo("[broken](nowhere.md) " + GUIDE_LINK);
+        assertThat(Files.readString(root.resolve("README.md"))).isEqualTo("[broken](nowhere.md)");
     }
 
     @Test

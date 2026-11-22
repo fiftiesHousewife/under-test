@@ -1,12 +1,14 @@
 ---
-status: accepted
+status: superseded
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The README describes the journey and links every decision guide, and the build checks it does
 
-**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [A short README summarises the journey, and a journey page links every decision guide, which the build checks](0042-a-short-readme-summarises-the-journey-and-a-journey-page-links-every-decision-guide-which-the-build-checks.md).
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 

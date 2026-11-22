@@ -70,7 +70,7 @@ relationships in the file sorted by `unique-id`. Top-level `metadata.under-test`
 ## 5. Record it in the assessment file
 
 Write the `running_offline` section of `testing/assessment.yaml` in full: `found_by`
-`{tool: draft-the-connection-list, version: "<toolkit version, or unreleased>", commit: <short commit>}`, the
+`{tool: draft-the-connection-list, version: "<toolkit version, or unreleased>", commit: "<short commit>"}`, the
 `reports`, and one finding per node (`id` the node's `unique-id`, `target` its first address, `kind` the most specific
 seen, in the order `database`, `http`, `mail`, `jndi`, `tcp`, `host-lookup`, `udp`), with `callers`, `setting` as
 `"<name>, <from>"`, `runs` and `tests`. Put every `callers` entry in double quotes. Leave the other sections as they are. If the file doesn't exist yet, create it with `schema: assessment/1`, a `repo:` with at least `name`, and the `# yaml-language-server: $schema=...` first line pointing at the toolkit's schema: a relative path to it where the toolkit is installed next to the repo, otherwise `https://raw.githubusercontent.com/fiftiesHousewife/under-test/main/schema/assessment.schema.json`.

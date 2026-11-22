@@ -14,12 +14,13 @@ class GuideCoverageTest {
     Path root;
 
     @Test
-    void reportsEachGuideTheReadmeDoesNotLink() throws IOException {
+    void reportsEachGuideTheJourneyPageDoesNotLink() throws IOException {
         final Path guides = Files.createDirectories(root.resolve("decision-guides"));
         Files.writeString(guides.resolve("0001-linked.md"), "# Linked\n");
         Files.writeString(guides.resolve("0002-new.md"), "# New\n");
         Files.writeString(guides.resolve("README.md"), "# Index\n");
-        Files.writeString(root.resolve("README.md"), "[Linked](decision-guides/0001-linked.md)\n");
+        Files.createDirectories(root.resolve("docs"));
+        Files.writeString(root.resolve(GuideCoverage.JOURNEY), "[Linked](../decision-guides/0001-linked.md)\n");
 
         assertThat(new GuideCoverage().check(root)).singleElement().extracting(Problem::message)
                 .isEqualTo("doesn't link the decision guide 0002-new.md; add it to its step of the journey");
@@ -31,7 +32,7 @@ class GuideCoverageTest {
     }
 
     @Test
-    void reportsEveryGuideWhenThereIsNoReadme() throws IOException {
+    void reportsEveryGuideWhenThereIsNoJourneyPage() throws IOException {
         final Path guides = Files.createDirectories(root.resolve("decision-guides"));
         Files.writeString(guides.resolve("0001-only.md"), "# Only\n");
 

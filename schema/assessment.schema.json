@@ -126,7 +126,8 @@
         "framework": {"type": "string", "description": "e.g. JUnit 4 on the Vintage engine."},
         "count": {"type": "integer", "minimum": 0},
         "runs": {"type": "integer", "minimum": 1, "description": "How many times the tests were run to find flaky ones."},
-        "flaky": {"type": "integer", "minimum": 0},
+        "flaky": {"type": "integer", "minimum": 0, "description": "Tests that passed in some runs and failed in others."},
+        "failing": {"type": "integer", "minimum": 0, "description": "Tests that failed in every run, often because the airgap agent refused a call they made."},
         "disabled": {"type": "integer", "minimum": 0},
         "line_coverage": {"type": "number", "minimum": 0, "maximum": 100},
         "branch_coverage": {"type": "number", "minimum": 0, "maximum": 100},
@@ -138,7 +139,13 @@
           "properties": {
             "planted": {"type": "integer", "minimum": 0},
             "caught": {"type": "integer", "minimum": 0},
-            "sampled": {"type": "boolean"}
+            "sampled": {"type": "boolean", "description": "Bugs were planted in some of the code only, named in targets."},
+            "targets": {"type": "string", "description": "The classes bugs were planted in, as given to PIT."},
+            "left_out": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Test classes left out because they are flaky or failing: a planted bug only they would catch isn't counted."
+            }
           }
         },
         "mix": {
