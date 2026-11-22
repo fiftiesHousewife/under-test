@@ -27,7 +27,8 @@ Proposed: report only at first; revisit after a quarter.
 
 ### Consequences
 
-* Convention plugin pull-request task.
+* A pull-request task in the convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). Until then, a CI template runs PIT
+  through the [measurement init script](../tools/measurement/measure.init.gradle) and reports the result on the pull request.
 
 ## More Information
 

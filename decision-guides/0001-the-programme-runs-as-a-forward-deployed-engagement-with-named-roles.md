@@ -23,7 +23,7 @@ Decisions and work need named owners. Naming a client's internal bodies ties the
 
 ## Decision Outcome
 
-Proposed: the first option. What each role does and decides is in `GLOSSARY.md`. Every decision record names the deciding role; every piece of work names an owner role.
+Proposed: the first option. What each role does and decides is in [GLOSSARY.md](../GLOSSARY.md), which has the full list of roles, including the Knowledge Curator, the Architecture Owner, the Data Protection Officer and the rest. Every decision record names the deciding role; every piece of work names an owner role.
 
 ### Consequences
 

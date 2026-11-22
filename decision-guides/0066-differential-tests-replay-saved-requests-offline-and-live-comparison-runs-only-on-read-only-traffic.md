@@ -33,7 +33,7 @@ Proposed: offline by default, the default the toolkit maintainers chose in discu
 ### Consequences
 
 * [The differential-testing technique](../techniques/differential-testing/technique.yaml) prefers offline replay.
-* A replay helper may be built, if no existing tool replays saved requests against two builds.
+* A replay helper may be built, in its own repo, if a pilot needs it and no existing tool replays saved requests against two builds.
 
 ## More Information
 

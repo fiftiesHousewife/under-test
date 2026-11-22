@@ -34,7 +34,8 @@ fails the check isn't kept.
 
 ### Consequences
 
-* A detector gate in the convention plugin, run on every committed capture.
+* The detector check goes with the capture cleaner, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). Until then, a CI template runs it
+  on every committed capture.
 * The sign-off is recorded in the assessment file, with the rules it covers.
 
 ## More Information

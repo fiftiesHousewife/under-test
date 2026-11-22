@@ -27,7 +27,8 @@ Proposed: the first option.
 
 ### Consequences
 
-* Convention plugin task that fails on expired quarantines.
+* A task in the convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), that fails on expired quarantines. Until then, each
+  quarantine's expiry is kept as a time-limited exception (see [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](../docs/decisions/0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md)).
 
 ## More Information
 

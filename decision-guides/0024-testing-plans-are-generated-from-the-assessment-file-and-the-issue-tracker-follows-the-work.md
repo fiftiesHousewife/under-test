@@ -16,7 +16,7 @@ Each repo needs a readable plan, a list of work, and a way to keep both in step 
 
 ## Considered Options
 
-* **The assessment file is the source; `testing/TESTING-PLAN.md` is generated from it and marked "do not edit"; the Application Owner approves both in one pull request. A tool then creates or updates one parent item per repo and one child item per piece of work in the organisation's issue tracker, each with a stable key so re-runs update instead of duplicating. Scope changes only through the plan pull request; the tracker shows who is doing what and what is finished**  
+* **The assessment file is the source; `testing/TESTING-PLAN.md` is generated from it and marked "do not edit"; the Application Owner approves both in one pull request. The load-repo-work-into-the-issue-tracker skill then creates or updates one parent item per repo and one child item per piece of work in the organisation's issue tracker, each with a stable key so re-runs update instead of duplicating. Scope changes only through the plan pull request; the tracker shows who is doing what and what is finished**  
   Consistent at scale; owners approve scope; progress visible
 * **Tracker items are the source and the plan is written by hand**  
   Hand edits across many repos drift and can't be checked
@@ -27,8 +27,10 @@ Proposed: the first option. A repo's own departures from its testing guides are 
 
 ### Consequences
 
-* Plan template and plan generator.
-* A tracker reconciler built on the tracker's existing API.
+* The [write-the-testing-plan](../.github/skills/write-the-testing-plan/SKILL.md) skill fills the plan template
+  ([`templates/testing-plan.md`](../templates/testing-plan.md)).
+* The [load-repo-work-into-the-issue-tracker](../.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) skill loads the work into the
+  tracker; its loader, built on the tracker's existing API, is code in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)).
 * A programme-level view with progress charts in the tracker.
 
 ## More Information

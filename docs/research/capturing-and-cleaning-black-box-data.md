@@ -12,7 +12,7 @@ for the toolkit's maintainers and adopting organisations to settle.
 
 ## The question
 
-[Every repo starts with discovery: a draft connection list, an approval-test baseline and a source list](../../decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list.md)
+[Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](../../decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md)
 makes approval tests (tests that save what the code does today and fail when it changes) the first deliverable on
 every old repo. For many old applications the quickest honest source of examples is the application itself, run as a
 black box: what requests and messages it receives, what it answers, what it asks of the systems behind it, and what

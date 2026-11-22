@@ -27,7 +27,8 @@ Proposed: the first option. Pilots chosen so the first batch covers the pairs wi
 
 ### Consequences
 
-* choosing pilot applications, assessing pilot applications by hand, writing the testing guides.
+* The programme backlog has work for choosing the pilot applications, assessing each one by hand, and writing the
+  testing guides from what they teach.
 
 ## More Information
 

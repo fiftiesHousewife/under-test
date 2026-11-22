@@ -35,7 +35,7 @@ Proposed: as a guide, choose by CI platform: Docker where it exists; otherwise k
 
 ### Consequences
 
-* The convention plugin reads the runtime from the environment, so repos don't change when the choice does.
+* The convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), reads the runtime from the environment, so repos don't change when the choice does.
 * The lesson on [real databases in tests](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/real-databases-in-tests/README.md) shows both a Docker and a Kubernetes-based set-up.
 
 ## More Information

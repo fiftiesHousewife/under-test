@@ -4,10 +4,10 @@ name: Comparing structured output (snapshot, approval or golden-master tests at 
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [2]
 tools: [approvaltests-java, xmlunit, jsonunit, datacompy]
-adopt_when:
-  - Output is deterministic or can be normalised
+needed_when:
   - Structured output such as JSON, files or reports
-  - Captured and cleaned output from a real run is available as examples
+possible_when:
+  - Output is deterministic or can be normalised
 reject_or_defer_when:
   - Output is dominated by timestamps or IDs that cannot be normalised
   - The boundary is about to be replaced

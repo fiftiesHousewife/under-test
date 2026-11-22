@@ -16,7 +16,7 @@ Knowing a connection exists isn't enough: tests also need to know what to use in
 
 ## Considered Options
 
-* **Each connection carries two pieces of information, recorded with CALM's own extension points (decorators and controls): the test stand-in approach and the shared test kit that provides it, and the addresses tests must never reach (production). The production-address check reads these; the outbound-call check flags any connection not on the list; the testing-plan generator chooses the test type from each connection (contract tests between in-house services, recorded responses or contracts for outside services, container tests for databases and queues)**  
+* **Each connection carries two pieces of information, recorded with CALM's own extension points (decorators and controls): the test stand-in approach and the shared test kit that provides it, and the addresses tests must never reach (production). The [draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) skill proposes a stand-in for each connection, which the Architecture Owner confirms; the airgap agent's report shows calls not on the list; the [write-the-testing-plan](../.github/skills/write-the-testing-plan/SKILL.md) skill turns each stand-in into work, choosing the test type from each connection (contract tests between in-house services, recorded responses or contracts for outside services, container tests for databases and queues); the production-address check comes later, in the convention plugin**  
   Safety and test design driven from one confirmed list
 * **Keep stand-ins and production addresses in separate files**  
   Two lists to keep in step
@@ -29,7 +29,9 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 * A schema for the toolkit's fields, kept in each connection's CALM `metadata` under `under-test`:
   [`schema/connection-list.schema.json`](../schema/connection-list.schema.json).
-* The production-address check, outbound-call check and testing-plan generator read the connection list.
+* The draft-the-connection-list skill writes the connection list and the write-the-testing-plan skill reads it; the
+  production-address check, in the convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), will read its never-reach
+  addresses.
 
 ## More Information
 

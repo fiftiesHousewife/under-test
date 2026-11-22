@@ -16,7 +16,7 @@ Work must be visible to owners and countable across the organisation.
 
 ## Considered Options
 
-* **Items in the organisation's issue tracker: a parent item per application, standard labels (obstacle, technique, maturity level, workstream, application, technology stack, application type, organisation unit, owner)**  
+* **Items in the organisation's issue tracker: a parent item per repo, each item labelled with its application, and standard labels (workstream, technique, maturity level, application; the organisation may add obstacle, technology stack, application type, organisation unit and owner)**  
   Uses tools people already have; queryable
 * **Free-form items with no standard labels**  
   Can't be counted or summarised across the organisation

@@ -4,12 +4,12 @@ name: Automatic test generation (Randoop)
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [2]
 tools: [randoop]
-adopt_when:
-  - Libraries and pure logic
+needed_when:
+  - The code is a library or pure logic
+possible_when:
   - JDK version supported by the tool
 reject_or_defer_when:
   - Framework-heavy code (Spring contexts)
-  - Unsupported JDK
 precondition_checks:
   - {done_by: tool, check: JDK version}
   - {done_by: tool, check: Framework annotation density}

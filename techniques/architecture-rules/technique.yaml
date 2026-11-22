@@ -4,9 +4,10 @@ name: Architecture rules (ArchUnit)
 workstream: make-code-testable
 evidence_for_maturity_levels: [2, 3]
 tools: [archunit]
-adopt_when:
-  - Layering exists or is wanted
-  - Protects replaceable dependencies once created (stops code going back to hard-wired dependencies)
+needed_when:
+  - Code has been or will be put behind interfaces, or its layers are to be kept apart
+possible_when:
+  - The layers or interfaces the rules would protect exist
 reject_or_defer_when:
   - Tiny repos
 precondition_checks:

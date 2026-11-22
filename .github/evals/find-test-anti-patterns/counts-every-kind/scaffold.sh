@@ -1,0 +1,20 @@
+#!/bin/bash
+# Sets up the case's workspace: the sample of 22 JUnit 4 tests from the skill's first trial, with a known number of
+# each anti-pattern, an assessment file holding only its repo name, and the assessment schema (the run without the
+# toolkit has no other copy). Run by claude plugin eval --scaffold, in the workspace.
+set -euo pipefail
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+toolkit="$(cd "$here/../../../.." && pwd)"
+echo "scaffold ran in $PWD" >&2
+cp -R "$toolkit/docs/skill-evaluations/find-test-anti-patterns/sample-repo/." .
+mkdir -p schema testing
+cp "$toolkit/schema/assessment.schema.json" schema/
+cat > testing/assessment.yaml <<'YAML'
+# yaml-language-server: $schema=../schema/assessment.schema.json
+schema: assessment/1
+repo:
+  name: orders-sample
+YAML
+git init -q
+git add .
+git -c user.name=eval -c user.email=eval@example.invalid commit -qm "The repo as it is now"

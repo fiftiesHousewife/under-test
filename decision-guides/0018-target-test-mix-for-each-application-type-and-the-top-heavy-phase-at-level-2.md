@@ -27,7 +27,7 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ### Consequences
 
-* Test mix measured in the measurement run (the coverage and test-mix measurement).
+* The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill measures the actual mix, in the assessment file's `tests.mix`.
 * A lesson on the test mix, planned in [the lessons catalogue](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/CATALOGUE.md).
 
 ## More Information

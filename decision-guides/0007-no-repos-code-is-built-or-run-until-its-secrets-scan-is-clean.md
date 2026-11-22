@@ -42,8 +42,10 @@ scanning as the default; an organisation may still narrow or replace this.)
 
 ### Consequences
 
-* The secrets scan, built on gitleaks, writes its findings into the assessment file.
-* The measurement run and classifier depend on a clean scan.
+* The [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) skill writes the findings into the assessment file, from
+  [`secrets.gitleaks.toml`](../tools/safety-inventory/secrets.gitleaks.toml) run over the whole history (gitleaks' own
+  rules plus the keystore and key-file rules) and a `git log` list of every keystore ever added.
+* The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill and the repo classifier depend on a clean scan.
 * On developer machines, where a native scanner usually can't be installed, FindSecBugs reports credentials written
   into code as the work goes on; it is an early warning, not the gate. See [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](../docs/decisions/0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md).
 * gitleaks is feature complete: it gets security fixes only. That suits a stable scanner, and it is rechecked at

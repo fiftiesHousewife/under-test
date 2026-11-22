@@ -1,9 +1,25 @@
 # Technique rules
 
 One folder per testing technique, holding `technique.yaml`: when to adopt, defer or reject the technique, the checks to
-run first, and what to use instead. These are rules, not teaching material: the toolkit's planning tools will read them
-to mark each technique adopt, defer or reject for a repo, and `./gradlew check` checks every file against
+run first, and what to use instead. These are rules, not teaching material: the
+[choose-techniques](../.github/skills/choose-techniques/SKILL.md) skill reads them to mark each technique adopt, defer
+or reject for a repo, and `./gradlew check` checks every file against
 [the technique schema](../schema/technique.schema.json).
+
+Each rule keeps apart three kinds of condition (see
+[Each technique rule separates what calls for the technique from what makes it possible](../docs/decisions/0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md)):
+
+| Field | Says | How it counts |
+|---|---|---|
+| `needed_when` | The technique is wanted | Any one true calls for it; every one false rejects it |
+| `possible_when` | The technique can be done | All must hold, or be planned work, to adopt it |
+| `reject_or_defer_when` | Something rules it out or postpones it | Any one true rejects it if it is about the framework, a vendor, a licence or who owns what, and defers it otherwise |
+
+Each fact goes in one list only. A `precondition_checks` entry marked `outside_approval: true` is an approval from
+outside the team doing the work (a provider team, a licence, the scope, security, capture); the technique waits until
+it is given. Every other check is part of the work.
+
+Reasons quote each condition word for word, so change a condition's wording only on purpose.
 
 **Lessons** that teach each technique (an explanation, a runnable before-and-after example, slides and a narrated
 video) are in their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons). The toolkit
@@ -38,4 +54,4 @@ the lessons repo.** See
 | [stand-in-commands](stand-in-commands/technique.yaml) | make it run on its own | 1–2 |
 | [structured-output-comparison](structured-output-comparison/technique.yaml) | record current behaviour | 2 |
 | [testcontainers](testcontainers/technique.yaml) | make it run on its own | 1–3 |
-| [traffic-record-and-replay](traffic-record-and-replay/technique.yaml) | make it run on its own | 1–2 |
+| [traffic-record-and-replay](traffic-record-and-replay/technique.yaml) | record current behaviour | 1–2 |

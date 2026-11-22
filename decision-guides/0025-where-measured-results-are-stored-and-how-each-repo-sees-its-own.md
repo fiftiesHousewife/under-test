@@ -27,7 +27,10 @@ Proposed: the first option.
 
 ### Consequences
 
-* The central results store, and summaries by organisation unit.
+* The central results store is a shared service: it is deployed through the platform's control layers, like any
+  other service, with a named owner who runs it (see [Using the toolkit inside a corporate network](../docs/CORPORATE-USE.md)). Until it exists, results stay in each repo's
+  assessment file.
+* Summaries by organisation unit.
 
 ## More Information
 

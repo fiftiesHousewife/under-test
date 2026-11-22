@@ -27,7 +27,7 @@ Proposed: retirement review.
 
 ### Consequences
 
-* Repo inventory tool (the repo inventory tool).
+* The repo classifier (planned), which an estate survey outside the toolkit calls (see [The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call](../docs/decisions/0024-the-estate-survey-sits-outside-the-toolkit-which-provides-a-repo-classifier-a-survey-tool-can-call.md)).
 
 ## More Information
 

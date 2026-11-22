@@ -5,7 +5,7 @@ workstream: make-it-run-on-its-own
 test_stand_in_approach: run-in-container
 evidence_for_maturity_levels: [1, 2, 3]
 tools: [arquillian, openejb-core, weld-junit5, artemis-junit-5, simple-jndi]
-adopt_when:
+needed_when:
   - "J2EE, Java EE or Jakarta EE code depends on container services: EJBs, CDI, JMS, JNDI data sources"
   - "Tests today need a deployed server, so nobody runs them"
 reject_or_defer_when:

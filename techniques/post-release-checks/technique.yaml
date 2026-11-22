@@ -4,8 +4,9 @@ name: Production verification (synthetic checks, canary)
 workstream: check-in-production
 evidence_for_maturity_levels: [5]
 tools: [harness]
-adopt_when:
+needed_when:
   - High business criticality
+possible_when:
   - Deployed with a pipeline that can gate
 reject_or_defer_when:
   - No staged rollout is possible

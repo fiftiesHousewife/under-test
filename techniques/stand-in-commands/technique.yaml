@@ -5,10 +5,8 @@ workstream: make-it-run-on-its-own
 test_stand_in_approach: fake-behind-an-interface
 evidence_for_maturity_levels: [1, 2]
 tools: [bats-core, shellcheck, kcov]
-adopt_when:
-  - "Shell scripts or batch jobs call other programs (curl, sqlplus, scp, a vendor command-line tool) that tests must not reach"
-  - "The real program is slow, needs credentials, or can reach production"
-  - "You need to test how a script reports progress, retries or fails, which the real program can't be made to do on demand"
+needed_when:
+  - "Scripts, batch jobs or application code start other programs (curl, sqlplus, scp, sendmail, a vendor command-line tool) that are slow, need credentials or can reach production, or that tests must make report progress, retry or fail on demand"
 reject_or_defer_when:
   - "The script's logic is mostly in the program it calls; test that program instead"
 precondition_checks:

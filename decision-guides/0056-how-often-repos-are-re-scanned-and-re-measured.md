@@ -27,7 +27,9 @@ Proposed: the first option.
 
 ### Consequences
 
-* Nightly workflow (the nightly re-scan).
+* A CI template re-runs the secrets scan and the inventory rules on changed repos. Re-measuring means a person runs
+  the [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill, or CI runs the [measurement init script](../tools/measurement/measure.init.gradle) on a runner with no
+  route out.
 
 ## More Information
 

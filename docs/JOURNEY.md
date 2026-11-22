@@ -27,10 +27,13 @@ keys, production credentials and real personal data block every run until they'r
 secret is handled as a security incident. The rest are made harmless in the test profile or the build, and recorded.
 The first run of the code happens only where production can't be reached: in CI on runners with no route out, and on
 an engineer's own machine only under the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), which
-refuses every call off the machine and reports it. From then on the repo runs with a test profile and dummy secrets by
-default, and tests stop at once if any configured address belongs to production.
+refuses every call off the machine and reports it. The test profile, with dummy secrets, is added in this step, and the
+findings that don't block are made harmless in it; from then on the repo runs with it by default. A check that stops
+tests at once if any configured address belongs to production comes later, with the convention plugin; until then
+the airgap agent refuses every call off the machine. The step ends with the first run of the tests under the airgap
+agent, whose reports feed discovery.
 
-- **Who:** a Forward Deployed Engineer, with the tools; the Security and Platform Owner approves anything accepted
+- **Who:** a Forward Deployed Engineer, with the [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) skill; the Security and Platform Owner approves anything accepted
   rather than fixed.
 - **Leaves in the repo:** the inventory's findings in the assessment file; a test profile; a `.gitleaksignore` with
   reasons.
@@ -38,13 +41,13 @@ default, and tests stop at once if any configured address belongs to production.
 
 ## 2. Discovery
 
-Find out what the code talks to and what tests it already has, before changing anything. The airgap agent's report
-from the first runs is the draft connection list: every interface, database, queue and outside service the code tried
-to reach, with what tests will use instead of each and which addresses tests must never reach; the Architecture Owner
-confirms it. The Knowledge Curator lists the sources that count: regression packs, wiki pages, tracker queries, other
+Find out what the code talks to and what tests it already has, before changing anything. The [draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) skill
+drafts the connection list from the airgap agent's reports of that first run: every interface, database, queue and
+outside service the code tried to reach, with a proposed stand-in for each and which addresses tests must never
+reach; the Architecture Owner confirms it. The Knowledge Curator lists the sources that count: regression packs, wiki pages, tracker queries, other
 repos, and the test assets that live outside the repo, such as automation suites run against a shared test
 environment and manual test scripts. Those keep running where they are until repo tests cover the same journeys, and
-never count as evidence. The repo's own tests are checked for anti-patterns: no real assertions, disabled tests,
+never count as evidence. The [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill checks the repo's own tests for anti-patterns: no real assertions, disabled tests,
 sleeps, order dependence, reaching shared systems, mocking everything. Each is recorded and triaged, and no existing
 test is deleted before current behaviour is recorded.
 
@@ -52,11 +55,12 @@ test is deleted before current behaviour is recorded.
   disabled tests).
 - **Leaves in the repo:** `testing/connections.calm.json`, the application's source list, the anti-pattern findings
   in the assessment file.
-- **Decided in:** [Every repo starts with discovery: a draft connection list, an approval-test baseline and a source list](../decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list.md), [Each application's connections are recorded as a CALM connection list](../decision-guides/0030-each-applications-connections-are-recorded-as-a-calm-connection-list.md), [The connection list says what tests use for each connection, and which addresses tests must never reach](../decision-guides/0031-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md), [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](../decision-guides/0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md), [Each application also has a knowledge curator and an architecture owner](../decision-guides/0002-each-application-also-has-a-knowledge-curator-and-an-architecture-owner.md), [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](../decision-guides/0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md).
+- **Decided in:** [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](../decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [Each application's connections are recorded as a CALM connection list](../decision-guides/0030-each-applications-connections-are-recorded-as-a-calm-connection-list.md), [The connection list says what tests use for each connection, and which addresses tests must never reach](../decision-guides/0031-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md), [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](../decision-guides/0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md), [Each application also has a knowledge curator and an architecture owner](../decision-guides/0002-each-application-also-has-a-knowledge-curator-and-an-architecture-owner.md), [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](../decision-guides/0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md).
 
 ## 3. Capture current behaviour
 
-Record what the code does today at its edges, so any later change in behaviour shows up. Behaviour is captured in
+Record a first baseline of what the code does today at its edges, before the testing plan, so any later change in
+behaviour shows up; the record current behaviour workstream extends it across the code. Behaviour is captured in
 order of preference: generated examples first, then recordings of the code's outgoing calls in a test environment,
 then a recording inside the application in a test environment, then copies from queues and batch files, then subsets
 of a test database; from production only with named approvals. Everything captured is cleaned inside the environment
@@ -73,13 +77,16 @@ agrees otherwise. The cleaned captures become approval tests and recorded respon
 
 ## 4. Measurement
 
-A measurement run builds the repo, checks it starts on its own with outbound calls blocked, runs its tests five times
-to find flaky ones, and measures coverage, the mix of test types and, on a sample, how many deliberately planted bugs
-the tests catch (mutation testing). Each obstacle to testing it finds is scored, with evidence.
+The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill runs the repo's tests five times under the airgap
+agent, through an init script that changes nothing in the build. It finds flaky and failing tests, measures coverage
+with JaCoCo, and counts how many deliberately planted bugs the tests catch with PIT (mutation testing), leaving the
+flaky and failing tests out of that run; it also records the mix of test types. Scoring each obstacle to testing,
+with evidence, is a planned skill.
 
-- **Who:** the measurement run, started by a Forward Deployed Engineer.
-- **Leaves in the repo:** the tests and level sections of `testing/assessment.yaml`; results also go to a central store.
-- **Decided in:** [The assessment file: where it lives, who writes which fields, and its schema version](../decision-guides/0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md), [Where measured results are stored and how each repo sees its own](../decision-guides/0025-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md), [The named list of obstacles to testing and how each is scored](../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md).
+- **Who:** the measure-a-repo skill, run by a Forward Deployed Engineer.
+- **Leaves in the repo:** the tests and level sections of `testing/assessment.yaml`. Results stay in the assessment
+  file; a central store comes later, deployed through the platform's control layers.
+- **Decided in:** [The assessment file: where it lives, who writes which fields, and its schema version](../decision-guides/0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md), [Where measured results are stored and how each repo sees its own](../decision-guides/0025-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md), [How flaky tests are found](../decision-guides/0043-how-flaky-tests-are-found.md), [The named list of obstacles to testing and how each is scored](../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md).
 
 ## 5. Intended behaviour
 
@@ -94,10 +101,12 @@ behaviour as a known issue, fix it deliberately, or correct the specification.
 
 ## 6. Testing plan
 
-The repo's target test maturity level follows from its business criticality. Each technique is marked adopt, defer or
-reject for the repo from its rules and the measurements. The testing plan is generated from the assessment file,
-never edited by hand, and approved by the Application Owner in one pull request. Its work then goes into the
-organisation's issue tracker, one item per piece of work, and the tracker follows the work from there.
+The repo's target test maturity level follows from its business criticality. The [choose-techniques](../.github/skills/choose-techniques/SKILL.md) skill marks each
+technique adopt, defer or reject for the repo from its rules and the measurements. The
+[write-the-testing-plan](../.github/skills/write-the-testing-plan/SKILL.md) skill generates the testing plan from the assessment
+file; it is never edited by hand, and the Application Owner approves it in one pull request. The
+[load-repo-work-into-the-issue-tracker](../.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) skill then loads its
+work into the organisation's issue tracker, one item per piece of work, and the tracker follows the work from there.
 
 - **Who:** the Test Quality Lead and a Forward Deployed Engineer; the Application Owner approves.
 - **Leaves in the repo:** decisions in `testing/assessment.yaml`, and `testing/TESTING-PLAN.md`.
@@ -109,8 +118,9 @@ The work goes in a fixed order of workstreams: make it run on its own, fix flaky
 code testable, test against requirements, strengthen tests, check in production; key-journey code and high-risk
 files first. For each thing the code talks to, the first stand-in that fits is used: a container, recorded responses,
 a contract with the other team, a fake behind an interface. People write the tests with AI help. An AI-written test is
-kept only once it passes the acceptance check (it compiles, passes five runs in a row with outbound calls blocked, and either
-raises coverage or catches a planted bug that nothing caught before), and a person reviews every one. A test that expects different behaviour goes to
+kept only once it passes the acceptance check (it compiles; passes five runs in a row with outbound calls blocked;
+raises coverage of its target or catches a planted bug that nothing caught before; is labelled as AI-written; and
+asserts more than "is not null"), and a person reviews every one. A test that expects different behaviour goes to
 triage, not the bin.
 
 - **Who:** Forward Deployed Engineers with AI coding assistance; the Test Quality Lead sets the checks.
@@ -124,8 +134,8 @@ rule in the specification), alongside coverage and mutation results. Changed rep
 in the current batch re-measured monthly and whenever a workstream finishes. Mutation testing in pull requests only
 reports at first.
 
-- **Who:** the measurement run; the Engagement Lead reports progress; the Application Owner accepts the results.
-- **Leaves in the repo:** an up-to-date assessment file, and a read-only copy of the repo's results.
+- **Who:** the measure-a-repo skill, run by a Forward Deployed Engineer; the Engagement Lead reports progress; the Application Owner accepts the results.
+- **Leaves in the repo:** an up-to-date assessment file, which holds the repo's results until a central store exists.
 - **Decided in:** [Progress is measured by required tests met, alongside coverage and mutation results](../decision-guides/0014-progress-is-measured-by-required-tests-met-alongside-coverage-and-mutation-results.md), [What counts as evidence for each test maturity level](../decision-guides/0013-what-counts-as-evidence-for-each-test-maturity-level.md), [How often repos are re-scanned and re-measured](../decision-guides/0056-how-often-repos-are-re-scanned-and-re-measured.md), [Mutation testing in pull requests reports only at first](../decision-guides/0055-mutation-testing-in-pull-requests-reports-only-at-first.md).
 
 ## Rules the work follows throughout

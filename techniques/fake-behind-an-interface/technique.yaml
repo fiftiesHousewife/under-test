@@ -5,9 +5,9 @@ workstream: make-it-run-on-its-own
 test_stand_in_approach: fake-behind-an-interface
 evidence_for_maturity_levels: [1, 2]
 tools: [archunit]
-adopt_when:
+needed_when:
   - Dependency has no image and no reachable non-prod (mainframe, licensed middleware, vendor SDK)
-  - Local tests need a stand-in for a system with no in-process substitute
+  - "A connection's stand-in needs a container or a real system, and the machines local tests run on can't provide one"
 reject_or_defer_when: []
 precondition_checks:
   - {done_by: tool, check: "Count of hard-wired dependencies, found by static scan"}

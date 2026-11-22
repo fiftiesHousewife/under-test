@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../../schema/assessment.schema.json
+schema: assessment/1
+repo:
+  name: orders-service
+  application: orders
+safety:
+  found_by: {tool: gitleaks, version: "8.28.0", commit: 4f3e2d1}
+  findings:
+    - id: scheduled-job-orderreminderjob
+      kind: self-starting-job
+      effect: neutralise
+      where: ["src/main/java/com/example/orders/OrderReminderJob.java:22"]
+decisions:
+  safety/scheduled-job-orderreminderjob:
+    state: decided
+    by: Application Owner
+    choice: off in the test profile

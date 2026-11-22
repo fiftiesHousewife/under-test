@@ -39,7 +39,8 @@ for fields whose exact format a system checks.
 ### Consequences
 
 * Each shared test kit's cleaning rules say, for each field, which kind of replacement it gets.
-* The recording cleaner implements all three kinds.
+* The capture cleaner implements all three kinds. It is code in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), deployed into the
+  capture environment through its control layers.
 
 ## More Information
 

@@ -4,8 +4,8 @@ name: Refactoring for testability (OpenRewrite recipes plus hand changes, so dep
 workstream: make-code-testable
 evidence_for_maturity_levels: [2, 3]
 tools: [openrewrite]
-adopt_when:
-  - Many hard-wired dependencies (clock, singletons, infrastructure created with new) on code that will survive
+needed_when:
+  - Many hard-wired dependencies (clock, singletons, infrastructure created with new)
 reject_or_defer_when:
   - Code to be retired
 precondition_checks:

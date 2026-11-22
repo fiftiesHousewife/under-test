@@ -27,7 +27,7 @@ Not yet chosen. The options are below. Open.
 
 ### Consequences
 
-* Summaries by organisation unit (summaries by organisation unit).
+* Summaries by organisation unit.
 
 ## More Information
 

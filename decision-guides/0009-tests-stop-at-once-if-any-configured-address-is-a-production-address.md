@@ -23,11 +23,12 @@ A second line of defence in case a machine can reach production after all.
 
 ## Decision Outcome
 
-Proposed: the convention plugin refuses to run tests if any configured address is on the central list or matches a pattern, or a production profile is active.
+Proposed: a production-address check refuses to run tests if any configured address is on the central list or matches a pattern, or a production profile is active. The check is part of the convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). Until then, the airgap agent refuses every call off the machine, and the never-reach addresses in the connection list say what must never be reached.
 
 ### Consequences
 
-* the production-address check.
+* The production-address check, part of the convention plugin, in its own repo, later; until then the airgap agent
+  refuses calls off the machine, and the connection list's never-reach addresses record what must never be reached.
 
 ## More Information
 

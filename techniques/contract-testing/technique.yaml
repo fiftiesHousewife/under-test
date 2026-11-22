@@ -5,13 +5,12 @@ workstream: make-it-run-on-its-own
 test_stand_in_approach: contract
 evidence_for_maturity_levels: [3]
 tools: [pact-jvm, pact-js]
-adopt_when:
-  - Consumer and provider are both owned by teams willing to run provider verification
+needed_when:
+  - The repo calls, or is called by, a service another team in the organisation owns
 reject_or_defer_when:
-  - The provider team will not verify
-  - External vendor API
+  - The provider is an external vendor's API
 precondition_checks:
-  - {done_by: person, check: Provider team agreement}
+  - {done_by: person, check: Provider team agreement, outside_approval: true}
 fallback: Recorded stubs plus scheduled checks against a live sandbox
 references: [test-doubles]
 constraints:

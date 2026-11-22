@@ -35,6 +35,17 @@ tasks.register<JavaExec>("fixDecisionLinks") {
     args("fix-links", repoRoot)
 }
 
+// Used by maintainer-tools/skill-evals/run-all.sh: -PoutputReport=<file> -Pworkspaces=<dir>:<dir>:...
+tasks.register<JavaExec>("validateSkillOutput") {
+    group = "verification"
+    description = "Checks the files skills wrote in eval workspaces against the toolkit's schemas."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = mainClassName
+    val report = providers.gradleProperty("outputReport").getOrElse("")
+    val workspaces = providers.gradleProperty("workspaces").getOrElse("").split(":").filter { it.isNotBlank() }
+    args(listOf("validate-output", repoRoot, report) + workspaces)
+}
+
 checkRepoFiles.configure {
     mustRunAfter("fixDecisionLinks", "buildDecisionIndexes")
 }

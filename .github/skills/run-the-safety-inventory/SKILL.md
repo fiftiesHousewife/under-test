@@ -1,20 +1,21 @@
 ---
 name: run-the-safety-inventory
-description: Run a repo's safety inventory with gitleaks, before any of its code is built or run, and write the safety section of its testing/assessment.yaml. Use when starting work on a repo, when asked for its safety inventory or secrets scan, or when gitleaks reports need turning into the assessment file.
+description: Turn a repo's gitleaks reports into the safety section of its testing/assessment.yaml, before any of its code is built or run. Use when starting work on a repo, or when asked for its safety inventory or secrets scan.
 ---
 
 # Running the safety inventory
 
-The safety inventory finds what in a repo could reach production or real data, before any of its code is built or
-run. Two gitleaks scans find it; you turn their reports into the `safety` section of `testing/assessment.yaml`
-([its schema](../../../schema/assessment.schema.json)) and tell the person what blocks the repo.
+Turn two gitleaks reports and a keystore list into the `safety` section of `testing/assessment.yaml`
+([its schema](../../../schema/assessment.schema.json)), then say what blocks the repo. Why:
+[The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](../../../docs/decisions/0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)
+and [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](../../../docs/decisions/0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md).
 
-**Never** build, test or start the repo's code, or run its build tool: a Gradle or Maven build runs the repo's own
-scripts. **Never** copy a report's `Secret` or `Match` value anywhere: not into the file, not into your reply.
+**Never** build, test or start the repo's code, or run its build tool. **Never** write a report's `Secret` or
+`Match` value anywhere: not in the file, not in your reply.
 
-## 1. Get the reports
+## 1. Get the inputs
 
-If the reports already exist (CI makes them), use them. Otherwise, where gitleaks 8.21 or later is installed:
+Use whichever of the three files exist (CI makes them); make the missing ones in the repo's root:
 
 ```bash
 gitleaks git --config <toolkit>/tools/safety-inventory/secrets.gitleaks.toml \
@@ -24,107 +25,127 @@ gitleaks dir --config <toolkit>/tools/safety-inventory/safety-inventory.gitleaks
 git log --all --diff-filter=A --name-only --format='commit %h' \
   | awk '/^commit /{c=$2; next} tolower($0) ~ /\.(jks|jceks|keystore|truststore|p12|pfx|bks|pkcs12)$/ {print $0 "  " c}' \
   | sort -u > keystores-ever-added.txt
-gitleaks version
-git rev-parse --short HEAD
 ```
 
-The first scans the whole history with [the secrets rules](../../../tools/safety-inventory/secrets.gitleaks.toml):
-gitleaks' own, plus key files by name. The second scans current files with
-[the inventory's rules](../../../tools/safety-inventory/safety-inventory.gitleaks.toml). Both honour the repo's
-`.gitleaksignore`. The third lists every keystore ever added, with the commit that added it: gitleaks skips binary
-files when it scans the history, and keystores are binary, so a keystore committed and later deleted is found only
-by this list. If gitleaks isn't available, stop and say so: the scan runs in CI.
+The rules are [the secrets rules](../../../tools/safety-inventory/secrets.gitleaks.toml) (whole history) and
+[the inventory's rules](../../../tools/safety-inventory/safety-inventory.gitleaks.toml) (current files). If a report
+is missing and gitleaks 8.21 or later isn't installed, stop and say so: the scan runs in CI.
 
-Each line of the keystore list is a `keystore-file` finding (kind `keystore-or-private-key`, effect `blocks`), the
-same as one from the secrets report, with `where` as `path, in commit <commit>`. If the secrets report found the
-same file, keep one finding with every `where`. A listed keystore that the repo's `.gitleaksignore` names by its
-path is left out.
+* **version**: the version of gitleaks that made the reports: what `gitleaks version` prints if you made them, else
+  the version the person or CI states, else `unknown`.
+* **commit**: what `git rev-parse --short HEAD` prints in the repo.
 
-## 2. Turn findings into the safety section
+Read only `RuleID`, `File`, `StartLine`, `Commit`, `Description` and `Tags` from each report (a JSON array); `Secret`
+is read only by the check in step 5, which never prints it.
 
-Each report is a JSON array; use `RuleID`, `File`, `StartLine`, `Commit`, `Description` and `Tags` only.
+## 2. Make the findings
 
-**Group** by rule and file: one finding per rule per file, with every line in `where`.
+**Sources.** Every object in either report, and every line `<path>  <commit>` of `keystores-ever-added.txt`. A list
+line is a finding of rule `keystore-file`, `Description` "A keystore or certificate store, which usually holds a
+private key", kind `keystore-or-private-key`, effect `blocks`, found by name. Skip a list line whose path is a whole
+line, or a `:`-separated field of a line, in `.gitleaksignore`. If `secrets.json` has a `keystore-file` finding for the same
+path, add the list line's `where` entry to it instead of making a new finding. A list line counts as tagged, so its
+id gets no `secret-`.
 
-**Ids** must come out the same on every run, because decisions point at them:
-`<RuleID>-<file name without its extension>`, lower case, anything but letters and digits turned into `-`, repeated
-`-` collapsed. If two findings would share an id, add the parent folder's name before the file name. A finding
-from one of gitleaks' own rules (it has no tags) gets `secret-` in front. Examples: `keystore-file-payments-client`,
-`scheduled-job-orderreminderjob`, `secret-aws-access-token-application`.
+**Group** by `RuleID` and `File`: one finding each, even for a file now gone from the current files.
+
+**id** (decisions point at it, so it must be the same on every run):
+
+1. Take the last part of `File`'s path and remove its last extension, unless its only `.` is its first character.
+2. Join as `<RuleID>-<name>`; a rule with no tags (one of gitleaks' own) gets `secret-` in front.
+3. Lower-case; replace each run of characters other than `a-z` and `0-9` with one `-`; trim `-` from both ends.
+4. If findings share an id, every one of them keeps its extension when that makes them all differ
+   (`application-properties`); otherwise each adds its parent folders, nearest first, before the name without its
+   extension, until they all differ. A file in the repo's root adds none.
 
 | Finding | `kind` | `effect` |
 |---|---|---|
-| has `kind:` and `tier:` tags (either report) | from the `kind:` tag | from the `tier:` tag |
-| no tags, rule id contains `private-key`, `pkcs12`, `jks` or `keystore` | `keystore-or-private-key` | `blocks` |
+| has `kind:` and `tier:` tags | the `kind:` tag's value | the `tier:` tag's value |
+| no tags, `RuleID` contains `private-key`, `pkcs12`, `jks` or `keystore` | `keystore-or-private-key` | `blocks` |
 | no tags, any other rule | `committed-secret` | `blocks` |
 
-A keystore or secret deleted from the current files is still a finding while it is in the history: it blocks until
-the history is rewritten and the scan no longer finds it.
+**what**: the `Description`, never the matched text; left out if empty.
 
-Fill each finding:
+**where**: one entry per line found, `<c7>` being the commit's first 7 characters. Drop duplicates; sort by path,
+then line as a number, then commit.
 
-* `what`: the rule's `Description`, never the matched text.
-* `where`: `path:line` for each line, sorted. For a finding from the secrets report add the commit, as
-  `path:line, in commit <first 7 characters>`, or `path, in commit <first 7 characters>` for a file found by its
-  name alone. For a file the inventory found by its name alone, just the path.
+| Source | `StartLine` above 0 | `StartLine` 0 (found by its name) |
+|---|---|---|
+| `safety-inventory.json` | `path:line` | `path` |
+| `secrets.json` | `path:line, in commit <c7>` | `path, in commit <c7>` |
+| `keystores-ever-added.txt` | | `path, in commit <c7>` |
 
-Write the section in full, replacing any `safety` section already there, findings sorted by id:
+## 3. Write the section
+
+Replace the `safety` section in place, or insert it where the schema's order of sections puts it, with no blank line
+between sections. Edit the text;
+never rewrite the file through a YAML library. Findings sorted by id in byte order (`findings: []` if none), in
+this form:
 
 ```yaml
 safety:
-  found_by: {tool: gitleaks, version: "<gitleaks version>", commit: "<short commit>"}
+  found_by: {tool: gitleaks, version: "<version>", commit: "<commit>"}
   findings:
-    - id: keystore-file-payments-client
-      kind: keystore-or-private-key
-      effect: blocks
-      what: A keystore or certificate store, which usually holds a private key
-      where: ["src/main/resources/certs/payments-client.jks, in commit c0ffee1"]
-    - id: scheduled-job-orderreminderjob
-      kind: self-starting-job
+    - id: publishing-build-task-build
+      kind: publishing-build-task
       effect: neutralise
-      what: A job that starts by itself on a timer or at start-up
-      where: ["src/main/java/com/example/OrderReminderJob.java:3"]
+      what: "A build that can publish or deploy: check it can't run from an ordinary build"
+      where: ["build.gradle:1", "build.gradle:2"]
 ```
 
-Put every `where` entry in double quotes: a `path:line` left bare breaks some YAML readers.
+Always double-quote `version`, `commit` and each `where` entry; double-quote any other text value that starts with
+anything but a letter or contains `:` or `#`, writing `"` as `\"` and `\` as `\\`. Lists stay on one line, joined by
+`, `.
 
-If the file doesn't exist yet, create it with `schema: assessment/1`, a `repo:` with at least `name`, and the
-`# yaml-language-server: $schema=...` first line pointing at the toolkit's schema: a relative path to it where the toolkit is installed next to the repo, otherwise `https://raw.githubusercontent.com/fiftiesHousewife/under-test/main/schema/assessment.schema.json`. Leave every other section as it is.
+A new file starts `# yaml-language-server: $schema=<schema>` (the relative path from `testing/` to the toolkit's
+`schema/assessment.schema.json` if the toolkit is installed next to the repo, otherwise
+`https://raw.githubusercontent.com/fiftiesHousewife/under-test/main/schema/assessment.schema.json`), then
+`schema: assessment/1`, then `repo:` with `name:` the repo's folder name. Leave every other section as it is.
 
-## 3. Keep people's decisions
+## 4. Keep people's decisions
 
-`decisions` belong to people. Don't change one, except:
+`decisions` belong to people. Change a `safety/<id>` decision only to set its `state`:
 
-* a `safety/<id>` decision whose finding has gone: set `state: stale`, keep the rest;
-* a stale decision whose finding is back: set `state: proposed`, and tell the person.
+* `stale` if its id has no finding now;
+* `proposed` if it was `stale` and its id has a finding again: tell the person.
 
-Then add a **proposed** decision, only where none exists for that id, marked `state: proposed` and `drafted_by: ai`:
+Then for each finding with no `safety/<id>` decision, in id order, add one at the end of `decisions` (a new section
+goes where the schema's order puts it): one key per line, unquoted, as below. Kinds with no field get
+only `state` and `drafted_by`.
 
-| Kind | Proposed |
+```yaml
+decisions:
+  safety/scheduled-job-orderreminderjob:
+    state: proposed
+    drafted_by: ai
+    choice: off in the test profile
+```
+
+| `kind` | Field |
 |---|---|
-| `real-personal-data` | `question:` "Do these files hold real people's details? If not, say how you know." (no `choice`) |
-| `self-starting-job`, `migration-at-start-up` | `choice:` "off in the test profile" |
-| `publishing-build-task` | `choice:` "unhooked from the ordinary build" |
-| `fixed-path-or-file-share` | `choice:` "a temporary folder in the test profile" |
-| `native-library` | `choice:` "not loaded in tests" |
+| `real-personal-data` | `question: Do these files hold real people's details? If not, say how you know.` |
+| `self-starting-job`, `migration-at-start-up` | `choice: off in the test profile` |
+| `publishing-build-task` | `choice: unhooked from the ordinary build` |
+| `fixed-path-or-file-share` | `choice: a temporary folder in the test profile` |
+| `native-library` | `choice: not loaded in tests` |
+| any other | no field: a person must rotate and remove a secret, key or credential, or excuse a false finding |
 
-Propose nothing for secrets, keys and credentials: a person must rotate and remove them, or excuse a false finding.
+## 5. Check, then report
 
-## 4. Check, then report
+Check the file against [the schema](../../../schema/assessment.schema.json) if a validator is to hand, and that ids are
+unique. Then check no secret is in it, which must print `0`:
+`jq -r '.[].Secret | select(length > 0)' secrets.json safety-inventory.json | grep -cFf - testing/assessment.yaml`.
+If it prints more than 0, find the matching line (without printing the secret) and remove the value from it; if
+the match is only a path or a rule's description, say so and carry on.
 
-Check the file against [the schema](../../../schema/assessment.schema.json) with a JSON Schema validator if one is to
-hand (an editor reading the first line does it). Either way, check that every `kind` and `effect` is one the schema
-lists, every id is unique and follows the rule above, and no secret value appears.
+Then tell the person, briefly, in this order, each item's findings by id and file, in id order, and an empty item as "none":
 
-Then tell the person, briefly, blocking findings first:
-
-1. **Blocks the repo:** each finding, by id and file. For a secret or key: rotate it, then remove it from the
-   history; if it is a real production secret, it is a security incident
+1. **Blocks the repo:** each `blocks` finding except personal data, by id and file. For a secret or key: rotate it,
+   then remove it from the history; a real production secret is a security incident
    ([A production secret found in a repo is handled as a security incident](../../../decision-guides/0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md)).
-   A finding that isn't real goes in `.gitleaksignore` with a reason, in a pull request the Security and Platform Owner
-   approves ([No repo's code is built or run until its secrets scan is clean](../../../decision-guides/0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md)).
-2. **Needs a person's answer:** suspected personal data.
+   A finding that isn't real goes in `.gitleaksignore` with a reason, in a pull request the Security and Platform
+   Owner approves ([No repo's code is built or run until its secrets scan is clean](../../../decision-guides/0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md)).
+2. **Needs a person's answer:** suspected personal data, which blocks until answered.
 3. **To neutralise:** the rest, with the proposed choices.
 4. Decisions marked stale or reopened.
-
-Nothing in the repo may be built or run until every blocking finding is resolved.
+5. End with: "Nothing in the repo may be built or run until every blocking finding is resolved."

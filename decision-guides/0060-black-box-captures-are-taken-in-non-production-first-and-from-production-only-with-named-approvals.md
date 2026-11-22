@@ -36,6 +36,8 @@ Capturing, cleaning and checking production data all happen inside production's 
 
 * Each capture is recorded in the assessment file with its environment and its approvals.
 * A production capture needs a data protection impact assessment, which the Data Protection Officer reviews.
+* Capture and cleaning tools inside production's boundary go in only through the platform's control layers, under
+  change control (see [Using the toolkit inside a corporate network](../docs/CORPORATE-USE.md)).
 
 ## More Information
 

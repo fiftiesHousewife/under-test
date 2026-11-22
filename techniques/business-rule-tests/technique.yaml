@@ -4,12 +4,11 @@ name: Specification tests for journeys (L3)
 workstream: test-against-requirements
 evidence_for_maturity_levels: [3]
 tools: [junit5, assertj]
-adopt_when:
-  - Key user journeys in high- and medium-criticality applications
-  - SME available
+needed_when:
+  - A high- or medium-criticality application whose key user journeys are named in the source list or by the Application Owner
 reject_or_defer_when:
-  - "No SME and no spec: record as an open risk, not a reject"
+  - "No subject-matter expert (SME) is available and there is no specification"
 precondition_checks:
-  - {done_by: person, check: SME available}
+  - {done_by: person, check: An SME is named for the journeys}
 fallback: differential-testing
 references: [legacy-code]

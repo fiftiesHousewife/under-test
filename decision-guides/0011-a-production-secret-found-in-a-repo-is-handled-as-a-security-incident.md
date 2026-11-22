@@ -27,7 +27,8 @@ Proposed: the first option.
 
 ### Consequences
 
-* The secrets-scan tool opens an incident, not a testing issue.
+* The [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) skill reports a production secret as a security incident for
+  the Security and Platform Owner, not as a testing issue.
 
 ## More Information
 

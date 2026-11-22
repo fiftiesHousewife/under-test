@@ -30,8 +30,8 @@ Proposed: the first option. This toolkit only provides the switch and the checks
 ### Consequences
 
 * `commit_messages` in the organisation profile schema.
-* A commit-message check in the convention plugin and CI template, off unless the profile turns it on.
-* Every skill that commits reads the profile.
+* The commit-message check, off unless the profile turns it on, is code in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)).
+* The CI template, and every skill that commits, read the organisation profile.
 
 ## More Information
 

@@ -47,8 +47,9 @@ than fixed.
 
 ### Consequences
 
-* A safety inventory tool, built from existing scanners, that writes its findings into the assessment file: a gitleaks
-  rule file run next to the secrets scan (see [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](../docs/decisions/0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)).
+* The [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) skill, which writes its findings into the assessment file:
+  the secrets rules over the whole history, a `git log` list of every keystore ever added, and the inventory rules over
+  current files (see [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](../docs/decisions/0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)).
 * The assessment file gains a section for the inventory's findings, with how each was resolved or neutralised.
 * The test profile switches off jobs that start by themselves and automatic migrations by default.
 * Discovery starts only once the blocking findings are resolved.
@@ -56,5 +57,5 @@ than fixed.
 ## More Information
 
 * Builds on: [No repo's code is built or run until its secrets scan is clean](0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md), [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md), [A production secret found in a repo is handled as a security incident](0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md)
-* Later decisions that build on this: [Every repo starts with discovery: a draft connection list, an approval-test baseline and a source list](0032-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list.md)
+* Later decisions that build on this: [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md)
 * Background: [production-safety](../docs/REFERENCES.md#production-safety)

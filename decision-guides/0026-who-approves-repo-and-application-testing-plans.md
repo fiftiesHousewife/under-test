@@ -27,7 +27,7 @@ Proposed: the first option. Role names follow the engagement roles in `GLOSSARY.
 
 ### Consequences
 
-* Plan templates and the issue generator.
+* The [plan template](../templates/testing-plan.md) and the [load-repo-work-into-the-issue-tracker](../.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) skill.
 
 ## More Information
 

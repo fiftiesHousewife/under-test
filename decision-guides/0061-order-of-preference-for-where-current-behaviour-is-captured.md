@@ -47,7 +47,10 @@ certificate or elevated rights, and see other people's traffic.
 
 ### Consequences
 
-* A tool that turns the airgap agent's report into a recording plan: which connections to record, where and how.
+* A skill (planned) that turns the airgap agent's report into a recording plan: which connections to record, where
+  and how.
+* A recording proxy or a filter inside the application in a test environment goes in only through the platform's
+  control layers (see [Using the toolkit inside a corporate network](../docs/CORPORATE-USE.md)).
 * Technique files for recorded responses, structured-output comparison and record and replay name their capture tools.
 
 ## More Information

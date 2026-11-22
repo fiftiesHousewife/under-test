@@ -4,7 +4,7 @@ name: "Machine state checks (check the files, services, ports and packages an in
 workstream: strengthen-tests
 evidence_for_maturity_levels: [2]
 tools: [goss]
-adopt_when:
+needed_when:
   - "Install, deploy or configuration scripts set up servers or containers"
   - "Failures show up only after deployment, as a missing file, wrong permission or closed port"
 reject_or_defer_when:

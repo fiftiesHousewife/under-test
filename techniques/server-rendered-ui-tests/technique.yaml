@@ -4,8 +4,9 @@ name: "Server-rendered UI tests (drive old JSP, JSF or Struts pages in a browser
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [2, 3]
 tools: [playwright, htmlunit]
-adopt_when:
+needed_when:
   - "Pages are built on the server (JSP, JSF, Struts, templates) and the logic behind them is hard to reach"
+possible_when:
   - "A few user journeys matter most and can be named by the Application Owner"
 reject_or_defer_when:
   - "The logic can be tested below the page; prefer that, and keep browser tests to a few journeys"

@@ -5,8 +5,8 @@
       "application": "orders",
       "node": "orders-service",
       "reports": [
-        "build/airgap/test/calls.jsonl",
-        "build/airgap/bootRun/calls.jsonl"
+        "build/airgap/bootRun/calls.jsonl",
+        "build/airgap/test/calls.jsonl"
       ],
       "commit": "1a2b3c4"
     }
@@ -16,7 +16,7 @@
       "unique-id": "db-orders-prod-example-com",
       "node-type": "database",
       "name": "db-orders.prod.example.com",
-      "description": "The orders database, found by the airgap agent.",
+      "description": "A database reached from OrderRepository, found by the airgap agent.",
       "interfaces": [
         {
           "unique-id": "db-orders-prod-example-com-1521",
@@ -48,7 +48,7 @@
       "unique-id": "payments-example-com",
       "node-type": "service",
       "name": "payments.example.com",
-      "description": "Another team's payments service, found by the airgap agent.",
+      "description": "An HTTP service reached from PaymentClient, found by the airgap agent.",
       "interfaces": [
         {
           "unique-id": "payments-example-com-443",
@@ -67,7 +67,7 @@
       "unique-id": "smtp-example-com",
       "node-type": "system",
       "name": "smtp.example.com",
-      "description": "The mail server for order confirmations, found by the airgap agent.",
+      "description": "A mail server reached from MailNotifier, found by the airgap agent.",
       "interfaces": [
         {
           "unique-id": "smtp-example-com-25",
@@ -86,7 +86,6 @@
   "relationships": [
     {
       "unique-id": "orders-service-to-db-orders-prod-example-com",
-      "description": "orders-service reads and writes orders in db-orders.prod.example.com.",
       "protocol": "JDBC",
       "relationship-type": {
         "connects": {
@@ -112,6 +111,10 @@
           "kinds": [
             "database"
           ],
+          "runs": [
+            "application",
+            "test"
+          ],
           "callers": [
             "com.example.orders.OrderRepository.connect(OrderRepository.java:41)"
           ],
@@ -120,10 +123,6 @@
             "from": "application.yml:12"
           },
           "tests": 38,
-          "runs": [
-            "test",
-            "application"
-          ],
           "stand-in": {
             "approach": "run-in-container",
             "kit": "orders-database-kit"
@@ -136,7 +135,6 @@
     },
     {
       "unique-id": "orders-service-to-payments-example-com",
-      "description": "orders-service calls payments.example.com.",
       "protocol": "HTTPS",
       "relationship-type": {
         "connects": {
@@ -156,10 +154,15 @@
           "state": "proposed",
           "drafted_by": "ai",
           "found-by": [
-            "airgap-agent"
+            "airgap-agent",
+            "settings"
           ],
           "kinds": [
             "http"
+          ],
+          "runs": [
+            "application",
+            "test"
           ],
           "callers": [
             "com.example.orders.PaymentClient.charge(PaymentClient.java:57)"
@@ -169,10 +172,6 @@
             "from": "application.yml:27"
           },
           "tests": 9,
-          "runs": [
-            "test",
-            "application"
-          ],
           "stand-in": {
             "approach": "not-chosen"
           }
@@ -181,7 +180,6 @@
     },
     {
       "unique-id": "orders-service-to-smtp-example-com",
-      "description": "orders-service sends order confirmations through smtp.example.com.",
       "protocol": "TCP",
       "relationship-type": {
         "connects": {
@@ -207,6 +205,9 @@
           "kinds": [
             "mail"
           ],
+          "runs": [
+            "test"
+          ],
           "callers": [
             "com.example.orders.MailNotifier.send(MailNotifier.java:19)"
           ],
@@ -215,9 +216,6 @@
             "from": "application.yml:40"
           },
           "tests": 4,
-          "runs": [
-            "test"
-          ],
           "stand-in": {
             "approach": "run-in-container"
           }

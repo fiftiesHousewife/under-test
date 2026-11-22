@@ -27,7 +27,9 @@ Proposed: the first option.
 
 ### Consequences
 
-* The convention plugin excludes the tag by default.
+* The convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), leaves the tag out of normal runs by default. Until then, the
+  [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill flags these tests as `reaches-shared-system`, and
+  tagging them is a change made by hand.
 
 ## More Information
 

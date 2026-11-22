@@ -23,11 +23,15 @@ AI-written tests can look plausible and test nothing. Checks catch that before a
 
 ## Decision Outcome
 
-Proposed: the five checks, as an `acceptanceCheck` Gradle task (and an npm equivalent). The CI result counts. A person still reviews before merging ([People do the work with AI coding assistance, and review everything it produces](0005-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)).
+Proposed: the five checks. Until the convention plugin exists, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), they run through the
+[measurement init script](../tools/measurement/measure.init.gradle) (five runs under the airgap agent, JaCoCo for coverage, PIT for planted bugs), started by a
+skill or a prompt such as [strengthen-tests-until-pit-catches-the-planted-bugs](../.github/prompts/strengthen-tests-until-pit-catches-the-planted-bugs.prompt.md),
+which also checks the label and the assertions. The CI result counts. A person still reviews before merging ([People do the work with AI coding assistance, and review everything it produces](0005-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)).
 
 ### Consequences
 
-* Convention plugin (the convention plugin every repo applies); AI assistant instructions tell it to run the check.
+* The checks become part of the convention plugin, in its own repo, later; until then they run through the
+  measurement init script. AI assistant instructions tell it to run them.
 
 ## More Information
 

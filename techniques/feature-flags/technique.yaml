@@ -4,7 +4,7 @@ name: Feature flags (branch by abstraction and gradual release, through OpenFeat
 workstream: make-code-testable
 evidence_for_maturity_levels: [5]
 tools: [openfeature]
-adopt_when:
+needed_when:
   - A risky change to code on a key user journey
   - Old and new code should run side by side to be compared
   - A high-criticality application needs gradual release with a quick switch-off

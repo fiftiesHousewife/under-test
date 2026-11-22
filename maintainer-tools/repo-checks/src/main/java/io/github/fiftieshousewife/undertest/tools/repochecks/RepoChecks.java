@@ -1,5 +1,7 @@
 package io.github.fiftieshousewife.undertest.tools.repochecks;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -9,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Entry point. {@code check <root>} fails on broken links, YAML files that don't match their schema, and out-of-date
  * decision indexes. {@code index <root>} rebuilds the decision indexes. {@code fix-links <root>} re-points links to
- * decision records at their current files, after renumbering or moving them.
+ * decision records at their current files, after renumbering or moving them. {@code validate-output <root> <report>
+ * <workspace>...} checks the files skills wrote in each workspace against the schemas in {@code <root>}, and writes
+ * one line per workspace to {@code <report>}: the workspace, its number of problems, and the first.
  */
 @Slf4j
 public final class RepoChecks {
@@ -20,8 +24,13 @@ public final class RepoChecks {
     }
 
     public static void main(final String... args) {
+        if (args.length >= 3 && "validate-output".equals(args[0])) {
+            writeOutputReport(Path.of(args[1]), Path.of(args[2]), List.of(args).subList(3, args.length));
+            return;
+        }
         if (args.length != 2) {
-            throw new IllegalArgumentException("usage: RepoChecks check|index|fix-links <repository root>");
+            throw new IllegalArgumentException("usage: RepoChecks check|index|fix-links <repository root>, or"
+                    + " RepoChecks validate-output <repository root> <report file> <workspace>...");
         }
         final Path root = Path.of(args[1]);
         switch (args[0]) {
@@ -45,6 +54,22 @@ public final class RepoChecks {
             }
         }
         return problems;
+    }
+
+    static void writeOutputReport(final Path root, final Path report, final List<String> workspaces) {
+        final OutputValidator validator = new OutputValidator(root);
+        final StringBuilder lines = new StringBuilder();
+        for (final String workspace : workspaces) {
+            final List<Problem> problems = validator.validate(Path.of(workspace));
+            final String first = problems.isEmpty() ? ""
+                    : problems.get(0).toString().replace('\t', ' ').replace('\n', ' ');
+            lines.append(workspace).append('\t').append(problems.size()).append('\t').append(first).append('\n');
+        }
+        try {
+            Files.writeString(report, lines.toString());
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     /** The decision folders this repo has: not every repo that reuses these checks has decision guides. */

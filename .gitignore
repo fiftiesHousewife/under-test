@@ -58,4 +58,4 @@ reports/
 ### Python ###
 __pycache__/
 *.pyc
-evals/results/
+.github/evals/results/

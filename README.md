@@ -17,8 +17,8 @@ organisation, works inside locked-down corporate networks, and never lets an AI 
 |---|---|---|
 | **1. Safety inventory** | Before any code runs, find secrets, production credentials, real data and anything that could reach production. Some findings block the run; the first run happens only where production can't be reached. | Safety findings; a test profile |
 | **2. Discovery** | Record what the code talks to and a stand-in for each connection, the knowledge that counts, and what's wrong with the existing tests. | Connection list, source list |
-| **3. Capture current behaviour** | Record what the code does today at its edges, cleaned of personal data where it was captured. | Approval tests |
-| **4. Measurement** | Run it on its own with outbound calls blocked; measure flaky tests, coverage and how many planted bugs the tests catch. | Measured results |
+| **3. Capture current behaviour** | Record a first baseline of what the code does today at its edges, cleaned of personal data where it was captured; later work extends it. | Approval tests |
+| **4. Measurement** | Run its tests five times under the airgap agent; measure flaky tests, coverage, how many planted bugs the tests catch, and the test mix. | Measured results |
 | **5. Intended behaviour** | Draft cited rules from the sources; every difference from today's behaviour is a question for the Application Owner. | A specification |
 | **6. Testing plan** | Set the target level, choose the techniques, and generate the plan for the Application Owner to approve. | The testing plan |
 | **7. The work** | Workstreams in a fixed order; a person reviews every AI-written test. | The tests |
@@ -42,11 +42,13 @@ the result the same every time.
 | 2 | [draft-the-connection-list](.github/skills/draft-the-connection-list/SKILL.md) | Drafts the connection list from the airgap agent's reports, with a stand-in for each connection | [A third fewer tool calls; production marked and stand-ins proposed, which the run without it missed](docs/skill-evaluations/draft-the-connection-list.md) |
 | 2 | [find-test-anti-patterns](.github/skills/find-test-anti-patterns/SKILL.md) | Counts anti-patterns in the existing tests, and notes what the list misses | [The same counts every time, and more problems found](docs/skill-evaluations/find-test-anti-patterns.md) |
 | 4 | [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Runs the tests five times under the airgap agent, with coverage and planted bugs, through an init script that changes nothing in the build | [A third fewer tool calls and half the time; the same result shape on Gradle 6.9 and 9](docs/skill-evaluations/measure-a-repo.md) |
+| 4 | [score-obstacles](.github/skills/score-obstacles/SKILL.md) | Scores each obstacle to testing 0 to 3 by the named list, with the evidence for each | Not yet tried: its eval case runs with the baseline |
 | 6 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Proposes adopt, defer or reject for every technique, each traced to its rule | [Two runs agree on 22 of 23 techniques](docs/skill-evaluations/choose-techniques.md) |
+| 6 | [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generates the testing plan from the assessment file, every piece of work with a stable key for the tracker | [Two runs give the same 15 pieces of work, keys and order](docs/skill-evaluations/write-the-testing-plan.md) |
+| 6 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turns an approved testing plan into work items | Not yet: waits for the loader |
 | All | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fills the report page from the repo's files, and applies people's changes back | [Half the tool calls and tokens, a sixth of the time; the same page for every repo](docs/skill-evaluations/render-the-assessment-report.md) |
-| 7 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turns an approved testing plan into work items | Not yet: waits for the loader |
 
-Skills for the testing plan and for classifying repos are next.
+Each journey skill is also evaluated repeatably with `claude plugin eval`: [the latest results](docs/skill-evaluations/eval-results.md).
 
 ## Where to start
 

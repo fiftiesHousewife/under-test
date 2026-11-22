@@ -4,11 +4,11 @@ name: Property-based tests (jetCheck for Java, fast-check for TypeScript)
 workstream: test-against-requirements
 evidence_for_maturity_levels: [3]
 tools: [jetcheck, fast-check]
-adopt_when:
-  - Pure calculations, parsers, serialisation round-trips
-  - Invariants a domain expert can state
-reject_or_defer_when:
-  - No invariant anyone can state
+needed_when:
+  - The code has calculations, parsers or serialisation round-trips
+possible_when:
+  - A domain expert can state an invariant (a rule that holds for every input)
+reject_or_defer_when: []
 precondition_checks:
   - {done_by: person, check: SME names an invariant}
 fallback: business-rule-tests

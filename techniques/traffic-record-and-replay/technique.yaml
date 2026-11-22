@@ -4,20 +4,19 @@ name: Record and replay of traffic (Keploy records an application's incoming cal
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [1, 2]
 tools: [keploy]
-adopt_when:
-  - HTTP service whose outgoing calls are HTTP or HTTPS, MySQL or MongoDB (what Keploy understands on every platform)
-  - The application can run in a test environment where its real dependencies answer, and capture there is approved
+needed_when:
+  - "An HTTP service with outgoing calls that tests can't reach offline"
+possible_when:
+  - "Keploy understands every one of the service's outgoing calls where it captures: HTTP or HTTPS, MySQL or MongoDB on every platform; PostgreSQL, Redis or Kafka except on Windows, where they are captured only as raw bytes, which usually don't replay"
+  - The application can run in a test environment where its real dependencies answer
   - On Windows (x86-64) or macOS on Apple silicon, where Keploy runs as an ordinary user; or on Linux in CI where it may run as root for eBPF
   - The Keploy trial on a pilot application has passed
 reject_or_defer_when:
-  - Outgoing calls to PostgreSQL, Redis or Kafka on Windows (captured only as raw bytes, which usually don't replay)
-  - Linux machines where eBPF capture as root isn't permitted
   - Keploy is found to need contact with its own servers on a closed network
   - The recordings can't have personal data removed before they leave the capture environment
-  - Its closed-source protocol components aren't approved by the security review
 precondition_checks:
-  - {done_by: person, check: Security and Platform Owner approves the Keploy binary and its closed components}
-  - {done_by: person, check: Capture in the chosen environment is approved}
+  - {done_by: person, check: Security and Platform Owner approves the Keploy binary and its closed components, outside_approval: true}
+  - {done_by: person, check: Capture in the chosen environment is approved, outside_approval: true}
   - {done_by: tool, check: Trial capture on a machine with no route out shows no contact with Keploy's servers}
   - {done_by: tool, check: Recordings pass the personal-data detector gate}
 fallback: recorded-http-responses

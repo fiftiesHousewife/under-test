@@ -4,10 +4,8 @@ name: Mutation testing (PIT, StrykerJS)
 workstream: strengthen-tests
 evidence_for_maturity_levels: [4]
 tools: [pitest, strykerjs]
-adopt_when:
-  - Code has tests worth hardening
-  - Suite has no flaky tests
-  - Business criticality warrants it
+needed_when:
+  - Business criticality is high
 reject_or_defer_when:
   - Coverage of the target close to zero
   - Flaky suite

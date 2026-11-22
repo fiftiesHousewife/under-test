@@ -64,7 +64,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [The named list of obstacles to testing and how each is scored](0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md) | proposed (open) | Test Quality Lead, approved by the Steering Group |
+| [The named list of obstacles to testing and how each is scored](0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md) | proposed | Test Quality Lead, approved by the Steering Group |
 
 ## Knowing what each system connects to
 
@@ -77,7 +77,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [Every repo starts with discovery: a draft connection list, an approval-test baseline and a source list](0032-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
+| [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
 | [Behaviour is captured in two tracks, current and intended, and every difference is an open question](0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
 | [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
 | [Expert time is booked as a budget of short question sessions](0035-expert-time-is-booked-as-a-budget-of-short-question-sessions.md) | proposed (agreed in discussion) | Engagement Lead, with the Programme Sponsor |

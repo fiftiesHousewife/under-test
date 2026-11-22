@@ -4,8 +4,9 @@ name: "Batch file-in, file-out tests (run a job on known input files and compare
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [1, 2, 3]
 tools: [spring-batch-test, datafaker, datacompy, bats-file]
-adopt_when:
+needed_when:
   - "A batch job reads files or tables and writes files or tables"
+possible_when:
   - "Output can be compared once timestamps, run numbers and row order are set aside"
 reject_or_defer_when:
   - "Inputs can only come from production; get synthetic or masked data first"

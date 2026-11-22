@@ -450,9 +450,9 @@ items:
       - "decide-each-applications-connections-are-recorded-as-a-calm-connection-list"
       - "decide-tests-stop-at-once-if-any-configured-address-is-a-production-address"
     decision_record: "decision-guides/0031-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md"
-  - key: "decide-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list"
+  - key: "decide-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows"
     type: "decision"
-    title: "Every repo starts with discovery: a draft connection list, an approval-test baseline and a source list"
+    title: "Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows"
     parent: "pilot-applications-prove-the-approach"
     phase: "set-up"
     horizon: "now"
@@ -463,7 +463,7 @@ items:
     blocked_by:
       - "decide-each-applications-connections-are-recorded-as-a-calm-connection-list"
       - "decide-each-application-also-has-a-knowledge-curator-and-an-architecture-owner"
-    decision_record: "decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list.md"
+    decision_record: "decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md"
   - key: "decide-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question"
     type: "decision"
     title: "Behaviour is captured in two tracks, current and intended, and every difference is an open question"
@@ -475,7 +475,7 @@ items:
     done_when:
       - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Test Quality Lead, approved by the Steering Group"
     blocked_by:
-      - "decide-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list"
+      - "decide-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows"
     decision_record: "decision-guides/0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md"
   - key: "decide-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum"
     type: "decision"
@@ -814,7 +814,7 @@ items:
       - "Assessment file records discovery complete"
       - "Coverage targets apply only after discovery"
     blocked_by:
-      - "decide-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list"
+      - "decide-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows"
     notes: "Needs from the toolkit: Draft a connection list from the repo classifier output, for a person to confirm; Source list schema and an example, for the Knowledge Curator"
   - key: "pilots-assessed-and-planned"
     type: "deliverable"

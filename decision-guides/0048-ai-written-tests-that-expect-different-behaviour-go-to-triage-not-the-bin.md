@@ -27,7 +27,7 @@ Proposed: the first option.
 
 ### Consequences
 
-* The acceptance check moves such tests and opens an issue.
+* Whatever runs the acceptance check (see [The checks an AI-written test must pass before it is kept](0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md)) moves such tests and opens an issue.
 
 ## More Information
 

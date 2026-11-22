@@ -1,0 +1,228 @@
+{
+  "$schema": "https://calm.finos.org/release/1.3/meta/calm.json",
+  "metadata": {
+    "under-test": {
+      "application": "orders",
+      "node": "orders-service",
+      "reports": [
+        "build/airgap/test/calls.jsonl",
+        "build/airgap/bootRun/calls.jsonl"
+      ],
+      "commit": "1a2b3c4"
+    }
+  },
+  "nodes": [
+    {
+      "unique-id": "db-orders-prod-example-com",
+      "node-type": "database",
+      "name": "db-orders.prod.example.com",
+      "description": "The orders database, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "db-orders-prod-example-com-1521",
+          "port": 1521
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "db-orders.prod.example.com:1521"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service",
+      "node-type": "service",
+      "name": "orders-service",
+      "description": "Takes and changes customer orders for the web shop and the call centre.",
+      "metadata": {
+        "under-test": {
+          "programs-started": [
+            "sendmail"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "payments-example-com",
+      "node-type": "service",
+      "name": "payments.example.com",
+      "description": "Another team's payments service, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "payments-example-com-443",
+          "port": 443
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "payments.example.com:443"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "smtp-example-com",
+      "node-type": "system",
+      "name": "smtp.example.com",
+      "description": "The mail server for order confirmations, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "smtp-example-com-25",
+          "port": 25
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "smtp.example.com:25"
+          ]
+        }
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "unique-id": "orders-service-to-db-orders-prod-example-com",
+      "description": "orders-service reads and writes orders in db-orders.prod.example.com.",
+      "protocol": "JDBC",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "db-orders-prod-example-com",
+            "interfaces": [
+              "db-orders-prod-example-com-1521"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "decided",
+          "by": "Architecture Owner",
+          "found-by": [
+            "airgap-agent",
+            "settings"
+          ],
+          "kinds": [
+            "database"
+          ],
+          "callers": [
+            "com.example.orders.OrderRepository.connect(OrderRepository.java:41)"
+          ],
+          "setting": {
+            "name": "spring.datasource.url",
+            "from": "application.yml:12"
+          },
+          "tests": 38,
+          "runs": [
+            "test",
+            "application"
+          ],
+          "stand-in": {
+            "approach": "run-in-container",
+            "kit": "orders-database-kit"
+          },
+          "never-reach": [
+            "db-orders.prod.example.com"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-payments-example-com",
+      "description": "orders-service calls payments.example.com.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "payments-example-com",
+            "interfaces": [
+              "payments-example-com-443"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent"
+          ],
+          "kinds": [
+            "http"
+          ],
+          "callers": [
+            "com.example.orders.PaymentClient.charge(PaymentClient.java:57)"
+          ],
+          "setting": {
+            "name": "payments.base-url",
+            "from": "application.yml:27"
+          },
+          "tests": 9,
+          "runs": [
+            "test",
+            "application"
+          ],
+          "stand-in": {
+            "approach": "not-chosen"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-smtp-example-com",
+      "description": "orders-service sends order confirmations through smtp.example.com.",
+      "protocol": "TCP",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "smtp-example-com",
+            "interfaces": [
+              "smtp-example-com-25"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent",
+            "settings"
+          ],
+          "kinds": [
+            "mail"
+          ],
+          "callers": [
+            "com.example.orders.MailNotifier.send(MailNotifier.java:19)"
+          ],
+          "setting": {
+            "name": "spring.mail.host",
+            "from": "application.yml:40"
+          },
+          "tests": 4,
+          "runs": [
+            "test"
+          ],
+          "stand-in": {
+            "approach": "run-in-container"
+          }
+        }
+      }
+    }
+  ]
+}

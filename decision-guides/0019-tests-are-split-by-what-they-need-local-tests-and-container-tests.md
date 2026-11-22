@@ -27,7 +27,8 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ### Consequences
 
-* The convention plugin creates both test sets and the skip rule.
+* The convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), creates both test sets and the skip rule. Until then, adding
+  them is an agreed change in the "make it run on its own" workstream.
 
 ## More Information
 

@@ -23,11 +23,12 @@ Some work must come before other work: you can't strengthen tests that don't run
 
 ## Decision Outcome
 
-Proposed: the first option.
+Proposed: the first option. The "record current behaviour" workstream extends the first baseline of approval tests
+recorded when [current behaviour is captured](../docs/JOURNEY.md#3-capture-current-behaviour), the journey's third step.
 
 ### Consequences
 
-* Work-ordering tool (the work-ordering tool).
+* The [write-the-testing-plan](../.github/skills/write-the-testing-plan/SKILL.md) skill orders the work.
 
 ## More Information
 

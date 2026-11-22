@@ -23,6 +23,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [The README describes the journey and links every decision guide, and the build checks it does](0035-the-readme-describes-the-journey-and-links-every-decision-guide-and-the-build-checks-it-does.md) | superseded | Toolkit maintainers |
 | [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md) | accepted | Toolkit maintainers |
 | [A short README summarises the journey, and a journey page links every decision guide, which the build checks](0042-a-short-readme-summarises-the-journey-and-a-journey-page-links-every-decision-guide-which-the-build-checks.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
@@ -53,6 +54,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Keystores and private key files are found over the whole history, by rules added to the secrets scan](0041-keystores-and-private-key-files-are-found-over-the-whole-history-by-rules-added-to-the-secrets-scan.md) | accepted | Toolkit maintainers |
 | [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md) | proposed | Toolkit maintainers |
 | [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Each technique rule separates what calls for the technique from what makes it possible](0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

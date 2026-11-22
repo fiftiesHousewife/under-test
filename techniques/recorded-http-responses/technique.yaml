@@ -5,11 +5,11 @@ workstream: make-it-run-on-its-own
 test_stand_in_approach: recorded-responses
 evidence_for_maturity_levels: [1, 2]
 tools: [wiremock, logbook, hurl]
-adopt_when:
+needed_when:
   - Dependency you do not own, over HTTP
+possible_when:
   - A non-prod instance is reachable to record from
-reject_or_defer_when:
-  - No reachable instance to record from
+reject_or_defer_when: []
 precondition_checks:
   - {done_by: tool, check: "The airgap agent's report lists the HTTP hosts the code contacts"}
   - {done_by: tool, check: Recordings are cleaned in the capture environment and pass the detector check}

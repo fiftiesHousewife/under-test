@@ -4,14 +4,13 @@ name: Differential testing (replay recorded traffic against old and new versions
 workstream: check-in-production
 evidence_for_maturity_levels: [3, 5]
 tools: [keploy, wiremock, approvaltests]
-adopt_when:
-  - Migrations, refactors or platform moves where the old version is the source of expected results
-  - Read-heavy endpoints
+needed_when:
+  - Code migrations, refactors or platform moves (not database schema migrations) where the old version gives the expected results
 reject_or_defer_when:
   - Endpoints with side effects (writes) and no isolated sink
   - No traffic mirroring
 precondition_checks:
-  - {done_by: person, check: Modernisation in scope}
+  - {done_by: person, check: Modernisation in scope, outside_approval: true}
   - {done_by: tool, check: Share of endpoints that are read-only}
 fallback: Replay saved, cleaned requests against old and new builds offline, with recorded responses for their dependencies
 constraints:

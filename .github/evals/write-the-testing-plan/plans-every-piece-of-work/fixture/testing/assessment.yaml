@@ -1,0 +1,394 @@
+# yaml-language-server: $schema=../../../../../../schema/assessment.schema.json
+schema: assessment/1
+repo:
+  name: orders-service
+  application: orders
+  summary: Takes and changes customer orders for the web shop and the call centre.
+  technology_stacks:
+  - spring-boot
+  application_types:
+  - web-service
+  business_criticality: high
+  application_owner: Orders and Fulfilment
+  batch: '2'
+level:
+  found_by:
+    tool: measurement-run
+    version: 0.1.0
+    commit: 1a2b3c4
+  reached: 0
+  evidence:
+  - Builds cleanly on JDK 8 in CI
+safety:
+  found_by:
+    tool: safety-inventory
+    version: 0.1.0
+    commit: 1a2b3c4
+  findings:
+  - id: db-password
+    kind: production-credential
+    effect: blocks
+    what: Production database password
+    where:
+    - src/main/resources/application.yml:14
+  - id: payments-keystore
+    kind: keystore-or-private-key
+    effect: blocks
+    what: Keystore with a private key for the payments client
+    where:
+    - src/main/resources/certs/payments-client.jks
+  - id: reminder-job
+    kind: self-starting-job
+    effect: neutralise
+    what: Nightly job that emails customers
+    where:
+    - src/main/java/com/example/orders/OrderReminderJob.java:22
+  - id: flyway-at-start
+    kind: migration-at-start-up
+    effect: neutralise
+    where:
+    - build.gradle
+    - src/main/resources/application.yml:30
+  - id: publish-on-build
+    kind: publishing-build-task
+    effect: neutralise
+    where:
+    - build.gradle
+  - id: invoice-share
+    kind: fixed-path-or-file-share
+    effect: neutralise
+    what: Windows file share for invoices
+    where:
+    - src/main/java/com/example/orders/InvoiceExporter.java:31
+  - id: fixture-customers
+    kind: real-personal-data
+    effect: none
+    what: 40 rows checked; synthetic
+    where:
+    - src/test/resources/orders.csv
+running_offline:
+  found_by:
+    tool: draft-connection-list
+    version: 0.1.0
+    commit: 1a2b3c4
+  reports:
+  - build/airgap/test/calls.jsonl
+  - build/airgap/bootRun/calls.jsonl
+  findings:
+  - id: orders-db
+    target: db-orders.prod.example.com:1521
+    kind: database
+    callers:
+    - com.example.orders.OrderRepository.connect(OrderRepository.java:41)
+    setting: spring.datasource.url, application.yml:12
+    runs:
+    - test
+    - application
+    tests: 38
+  - id: payments-api
+    target: payments.example.com:443
+    kind: http
+    callers:
+    - com.example.orders.PaymentClient.charge(PaymentClient.java:57)
+    setting: payments.base-url, application.yml:27
+    runs:
+    - test
+    - application
+    tests: 9
+  - id: smtp
+    target: smtp.example.com:25
+    kind: mail
+    callers:
+    - com.example.orders.MailNotifier.send(MailNotifier.java:19)
+    setting: spring.mail.host, application.yml:40
+    runs:
+    - test
+    tests: 4
+tests:
+  found_by:
+    tool: measurement-run
+    version: 0.1.0
+    commit: 1a2b3c4
+  framework: JUnit 4 on the Vintage engine
+  count: 212
+  runs: 5
+  flaky: 7
+  disabled: 11
+  line_coverage: 61
+  branch_coverage: 38
+  planted_bugs:
+    planted: 100
+    caught: 23
+    sampled: true
+  mix:
+    local: 71
+    container: 0
+    broad: 29
+anti_patterns:
+  found_by:
+    tool: test-anti-pattern-check
+    version: 0.1.0
+    commit: 1a2b3c4
+  findings:
+  - id: no-real-assertion
+    kind: no-real-assertion
+    tests: 14
+    examples:
+    - src/test/java/com/example/orders/OrderServiceTest.java:33
+  - id: disabled
+    kind: disabled
+    tests: 11
+    examples:
+    - src/test/java/com/example/orders/RefundTest.java
+  - id: reaches-shared-system
+    kind: reaches-shared-system
+    tests: 6
+    examples:
+    - src/test/java/com/example/orders/OrderRepositoryIT.java
+techniques:
+  found_by:
+    tool: choose-techniques
+    version: unreleased
+    commit: 02fbc8d
+  candidates:
+  - id: ai-written-tests
+    because:
+    - "possible_when 'The target class's dependencies can already be replaced in tests': Spring injection, Mockito already in use, 71% of tests are local"
+    - "possible_when 'Runs in a JVM test without the network': true only once stand-ins for orders-db, payments-api and smtp are in place"
+    - "reject_or_defer_when 'Target scheduled for deletion': nothing says the service is being retired"
+  - id: architecture-rules
+    because:
+    - "needed_when 'Layering exists or is wanted': OrderRepository, OrderService, PaymentClient, MailNotifier show repository, service and client layers"
+    - "needed_when 'Protects replaceable dependencies once created': refactoring-for-testability is adopted"
+    - "reject_or_defer_when 'Tiny repos': not tiny, 212 tests"
+  - id: automatic-test-generation
+    because:
+    - "reject_or_defer_when 'Framework-heavy code (Spring contexts)': Spring Boot web service with Spring Data JPA"
+    - "fallback ai-written-tests, which is adopted"
+  - id: batch-file-in-file-out
+    because:
+    - "needed_when 'A batch job reads files or tables and writes files or tables': unknown; OrderReminderJob sends mail, and InvoiceExporter writes invoices to a file share but may run per request rather than as a job"
+    - "precondition 'Synthetic or masked input data': test fixtures are synthetic (fixture-customers)"
+  - id: business-rule-tests
+    because:
+    - "needed_when 'Key user journeys in high- and medium-criticality applications': business criticality high; placing, changing and cancelling orders, refunds"
+    - "possible_when 'SME available': the source list names the Orders and Fulfilment knowledge curator and a current refund-policy specification"
+  - id: characterisation-tests
+    because:
+    - "needed_when 'the tests only run the code without checking results': 14 tests with no real assertion; planted bugs caught 23 of 100"
+    - "reject_or_defer_when 'The code is being retired rather than changed': nothing says so"
+    - "precondition 'The code builds and runs on its own': waits for make-it-run-on-its-own"
+  - id: contract-testing
+    because:
+    - "possible_when 'Consumer and provider are both owned by teams willing to run provider verification': payments.example.com is another team's service; their agreement is not recorded"
+    - "reject_or_defer_when 'External vendor API': not a vendor, so not rejected"
+    - "constraint: JDK 8 service needs the Pact JVM 4.5 line"
+  - id: database-unit-tests
+    because:
+    - "needed_when 'Business rules live in stored procedures, functions or triggers': unknown for the Oracle orders database"
+    - "precondition 'The database licence allows running the engine in a test container': not yet checked"
+  - id: differential-testing
+    because:
+    - "needed_when 'Migrations, refactors or platform moves': precondition 'Modernisation in scope' needs a person's answer (Spring Boot 2.3 on JDK 8)"
+    - "reject_or_defer_when 'Endpoints with side effects (writes) and no isolated sink': the service takes and changes orders"
+  - id: embedded-jakarta-ee-tests
+    because:
+    - "needed_when 'depends on container services: EJBs, CDI, JMS, JNDI': false; Spring Boot with no Java EE dependencies in build.gradle"
+  - id: fake-behind-an-interface
+    because:
+    - "needed_when 'Local tests need a stand-in for a system with no in-process substitute': developer machines have no container runtime, so the Oracle orders database and the mail path need fakes for local tests"
+    - "also the fallback for the sendmail program the service starts and for the invoice file share"
+  - id: feature-flags
+    because:
+    - "evidence_for_maturity_levels [5] is above the target level 4"
+  - id: machine-state-checks
+    because:
+    - "needed_when 'Install, deploy or configuration scripts set up servers or containers': unknown; the code is not in this copy and no such script is in the findings"
+  - id: mutation-testing
+    because:
+    - "needed_when 'Business criticality warrants it': high, target level 4"
+    - "reject_or_defer_when 'Flaky suite': 7 flaky tests in 5 runs, to be fixed by the flaky-test workstream"
+    - "coverage is 61% lines, not close to zero"
+  - id: post-release-checks
+    because:
+    - "evidence_for_maturity_levels [5] is above the target level 4"
+  - id: property-based-testing
+    because:
+    - "possible_when 'Invariants a domain expert can state': refund rounding is the likely invariant, but the open question refund-rounding is unanswered"
+    - "precondition 'SME names an invariant': not yet done"
+  - id: recorded-http-responses
+    because:
+    - "needed_when 'Dependency you do not own, over HTTP': payments-api, another team's service, 9 tests reach it"
+    - "reject_or_defer_when 'No reachable instance to record from': unknown; if none, its fallback 'Hand-written stubs taken from the API spec' still uses WireMock"
+  - id: refactoring-for-testability
+    because:
+    - "needed_when 'Many hard-wired dependencies (clock, singletons, infrastructure created with new)': OrderRepository.connect opens its own connection, InvoiceExporter has a fixed share path, the service starts sendmail, OrderReminderJob starts itself"
+    - "reject_or_defer_when 'Code to be retired': nothing says so"
+  - id: server-rendered-ui-tests
+    because:
+    - "needed_when 'Pages are built on the server (JSP, JSF, Struts, templates)': false; a web service with no template engine in build.gradle"
+    - "the QA team's Selenium suite (uat-regression-suite) keeps running as it is"
+  - id: stand-in-commands
+    because:
+    - "needed_when 'batch jobs call other programs ... that tests must not reach': the service starts sendmail (connection list)"
+    - "precondition 'Scripts call programs by name (found on PATH), not by fixed absolute path': unknown"
+  - id: structured-output-comparison
+    because:
+    - "application type web-service is listed for this technique"
+    - "needed_when 'Structured output such as JSON, files or reports': JSON responses and invoice files"
+    - "precondition 'Run twice and diff the outputs': to be run once the service runs on its own"
+  - id: testcontainers
+    because:
+    - "needed_when 'Infrastructure you own (database, broker, cache) that has an image': the orders database (connection orders-service-to-db-orders-prod-example-com, decided run-in-container with orders-database-kit) and the mail server (orders-service-to-smtp-example-com, proposed run-in-container)"
+    - "possible_when 'A container runtime is available to tests (CI today...)': CI only; developer machines have none"
+    - "reject_or_defer_when 'No container runtime anywhere tests run': false, CI has one"
+  - id: traffic-record-and-replay
+    because:
+    - "needed_when 'HTTP service whose outgoing calls are HTTP or HTTPS, MySQL or MongoDB': false; the main outgoing calls are Oracle JDBC and SMTP"
+    - "possible_when 'The Keploy trial on a pilot application has passed': not recorded"
+    - "fallback recorded-http-responses, which is adopted for payments-api"
+decisions:
+  safety/db-password:
+    state: decided
+    by: Security and Platform Owner
+    choice: rotated, being removed
+    reason: Rotated; history rewrite booked.
+  safety/payments-keystore:
+    state: decided
+    by: Security and Platform Owner
+    choice: test keystore only; the real one is removed and the history rewritten
+    reason: A self-signed test keystore replaces it in the test profile.
+  safety/reminder-job:
+    state: proposed
+    drafted_by: ai
+    choice: off in the test profile
+  anti-patterns/disabled:
+    state: proposed
+    drafted_by: ai
+    choice: Application Owner decides
+  level/target:
+    state: decided
+    by: Test Quality Lead
+    choice: '4'
+    reason: High business criticality.
+  questions/refund-rounding:
+    state: proposed
+    drafted_by: ai
+    question: Partial refunds round down to the penny today, but the policy says round
+      to nearest. Keep today's behaviour or fix it?
+  techniques/ai-written-tests:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'The target class's dependencies can already be replaced in tests', Spring injection and Mockito are already used and 71% of tests are local. 'Runs in a JVM test without the network' holds only after the stand-ins for orders-db, payments-api and smtp are in place, so this follows make-it-run-on-its-own. Every draft must pass the checks in the decision guide on the checks an AI-written test must pass before it is kept."
+  techniques/architecture-rules:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Protects replaceable dependencies once created', refactoring-for-testability will put OrderRepository, PaymentClient, MailNotifier and InvoiceExporter behind interfaces, and 'Layering exists' (repository, service and client classes). ArchUnit runs on JDK 8."
+  techniques/automatic-test-generation:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: 'Framework-heavy code (Spring contexts)', a Spring Boot web service with Spring Data JPA. Its fallback, ai-written-tests, is adopted."
+  techniques/batch-file-in-file-out:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'A batch job reads files or tables and writes files or tables' is unknown. OrderReminderJob sends mail rather than writing files; InvoiceExporter writes invoices to a file share (invoice-share) but may run per request. Brought back if InvoiceExporter turns out to be a scheduled job that reads order tables and writes invoice files; until then structured-output-comparison covers invoice files."
+  techniques/business-rule-tests:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Key user journeys in high- and medium-criticality applications', business criticality high, journeys for placing, changing and cancelling orders and refunds; 'SME available', the Orders and Fulfilment knowledge curator and the current refund-policy specification (source list). The open question refund-rounding must be answered before the refund tests are written."
+  techniques/characterisation-tests:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'the tests only run the code without checking results', 14 tests with no real assertion (anti-pattern no-real-assertion) and only 23 of 100 planted bugs caught. Waits for make-it-run-on-its-own. Known bugs, such as refund rounding, stay recorded and go to the Application Owner as open questions. Mockito 3.12 needs mockito-inline to replace static or final methods."
+  techniques/contract-testing:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: needs 'Provider team agreement', payments.example.com belongs to another team and their agreement to run provider verification is not recorded. Not rejected, since it is not an external vendor API. Brought back when the payments team agrees; on JDK 8 it needs the Pact JVM 4.5 line. Until then the fallback, recorded stubs (recorded-http-responses), stands in for payments-api."
+  techniques/database-unit-tests:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Business rules live in stored procedures, functions or triggers' is unknown for the Oracle orders database. Check the Flyway migrations for PL/SQL procedures, functions or triggers holding business rules, and whether the Oracle licence allows the engine in a test container; if both, adopt with utPLSQL on the orders-database-kit container in CI. Either way, run Flyway validate against the real engine in the container tests."
+  techniques/differential-testing:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Migrations, refactors or platform moves' depends on the person check 'Modernisation in scope', not yet answered (Spring Boot 2.3 on JDK 8 is a likely candidate); most endpoints write orders, so only offline replay would apply. Brought back if an upgrade or platform move is planned."
+  techniques/embedded-jakarta-ee-tests:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: nothing calls for it; no EJBs, CDI, JMS or JNDI, the service is Spring Boot (build.gradle)."
+  techniques/fake-behind-an-interface:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Local tests need a stand-in for a system with no in-process substitute', developer machines have no container runtime, so local tests need in-memory fakes behind interfaces for the orders database (OrderRepository) and for sending mail (MailNotifier, which also starts sendmail), and for the invoice file share (InvoiceExporter). The container tests in CI check the real connection code."
+  techniques/feature-flags:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: every level in evidence_for_maturity_levels (5) is above the target level 4. Brought back if the target rises to 5 or a risky change to a key journey needs a switch-off."
+  techniques/machine-state-checks:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Install, deploy or configuration scripts set up servers or containers' is unknown; the code is not in this copy and no such script is in the findings. Check the repo for install or deploy scripts; if there are none, reject."
+  techniques/mutation-testing:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Flaky suite', 7 flaky tests in 5 runs; this changes through the flaky-test work already planned. Business criticality high and target level 4 call for it, and line coverage is 61%, so it comes back once the suite has no flaky tests, run only on high-risk files and changed code."
+  techniques/post-release-checks:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: every level in evidence_for_maturity_levels (5) is above the target level 4. Brought back if the target rises to 5."
+  techniques/property-based-testing:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Invariants a domain expert can state' needs a person's answer; the likely invariant, refund rounding, waits on the open question refund-rounding, and no SME has named an invariant yet. Brought back when the question is answered and the Orders and Fulfilment curator names one; its fallback, business-rule-tests, is adopted."
+  techniques/recorded-http-responses:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Dependency you do not own, over HTTP', the payments service (connection orders-service-to-payments-example-com, 9 tests, stand-in not yet chosen). Whether a non-production payments instance can be recorded from is unknown; if not, use the fallback 'Hand-written stubs taken from the API spec'. Recordings go in the shared test kit for the payments service, cleaned and signed off first. WireMock runs in-process, so these are local tests."
+  techniques/refactoring-for-testability:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Many hard-wired dependencies (clock, singletons, infrastructure created with new) on code that will survive', OrderRepository.connect opens its own connection, InvoiceExporter writes to a fixed share path, the service starts sendmail itself and OrderReminderJob starts itself (and needs an injected clock). Confirm the count with the static scan."
+  techniques/server-rendered-ui-tests:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: nothing calls for it; a web service with no JSP, JSF, Struts or template engine in build.gradle. The QA team's Selenium suite (uat-regression-suite) keeps running as it is."
+  techniques/stand-in-commands:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: the service starts sendmail (connection list), but whether it calls it by name on PATH or by a fixed absolute path is unknown, and no shell scripts are known. Check how MailNotifier starts sendmail; if by name, a stand-in sendmail first on PATH tests it; otherwise fake-behind-an-interface (adopted) covers it."
+  techniques/structured-output-comparison:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Structured output such as JSON, files or reports', the web service's JSON responses and the invoice files InvoiceExporter writes. Run twice and diff to find what must be normalised; compare with JSONUnit, using versions that run on JDK 8."
+  techniques/testcontainers:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Infrastructure you own (database, broker, cache) that has an image', the orders database (connection orders-service-to-db-orders-prod-example-com, decided run-in-container with orders-database-kit) and the mail server (orders-service-to-smtp-example-com, proposed run-in-container); 'A container runtime is available to tests (CI today...)'. Container tests only, in the integrationTest source set, run in CI and skipping themselves on developer machines; check the Oracle and mail server images are in the organisation's package repository. Use the Testcontainers 1.x line, which supports JDK 8 and JUnit 4."
+  techniques/traffic-record-and-replay:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: 'HTTP service whose outgoing calls are HTTP or HTTPS, MySQL or MongoDB' is false and won't change; its main outgoing calls are Oracle JDBC and SMTP. Its fallback, recorded-http-responses, is adopted for payments-api."
+notes: ''

@@ -16,7 +16,7 @@ Flaky tests make every other measurement unreliable, including mutation testing.
 
 ## Considered Options
 
-* **Run the suite 5 times (Gradle test-retry plugin in detection mode, or comparing JUnit results); group tests that fail together**  
+* **Run the suite in five separate runs through the measurement init script, comparing each run's JUnit results, without changing the build; group tests that fail together**  
   Uses existing tools; finds shared causes
 * **Wait for people to report them**  
   Slow and incomplete
@@ -27,7 +27,8 @@ Proposed: the first option. Fix groups of tests that fail together before single
 
 ### Consequences
 
-* Measurement run (the flaky-test measurement).
+* The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill groups tests that failed in the same runs, and leaves flaky and
+  failing tests out of the planted-bug run.
 
 ## More Information
 

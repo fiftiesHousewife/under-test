@@ -25,7 +25,7 @@ class files; the tests it runs get the agent, with their own report in `build/ai
 
 # Planted bugs, leaving out the tests that were flaky or failing in the five runs
 ./gradlew measurePlantedBugs -Dmeasure.targets='com.example.orders.*' \
-    -Dmeasure.excludedTests='com.example.orders.ReminderMarkerTest' \
+    -Dmeasure.excludedTests='com.example.orders.MailerTest,com.example.orders.ReminderMarkerTest' \
     --init-script airgap.init.gradle --init-script measure.init.gradle
 ```
 

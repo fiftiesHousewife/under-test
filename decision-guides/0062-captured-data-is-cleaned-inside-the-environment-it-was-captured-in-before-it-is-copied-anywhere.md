@@ -32,7 +32,8 @@ for each system are kept with its shared test kit, so every repo that records it
 
 ### Consequences
 
-* A recording cleaner, run where the capture is taken, applying a shared test kit's rules.
+* The capture cleaner, applying a shared test kit's rules: code in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), deployed into the
+  capture environment through its control layers.
 * No AI assistant sees a capture before it is cleaned.
 
 ## More Information

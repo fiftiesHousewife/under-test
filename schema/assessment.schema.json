@@ -19,7 +19,7 @@
         "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"}
       }
     },
-    "where": {"type": "array", "items": {"type": "string"}, "description": "Where it was found: a path, with a line number after a colon where there is one."},
+    "where": {"type": "array", "items": {"type": "string"}, "description": "Where it was found: a path, with a line number after a colon where there is one, and \", in commit <first 7 characters>\" when it was found in the history."},
     "decision": {
       "type": "object",
       "additionalProperties": false,
@@ -209,7 +209,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["found_by", "candidates"],
-      "description": "Techniques the technique rules mark as fitting this repo. Whether to adopt each is a decision (techniques/<technique id>).",
+      "description": "Every technique in the toolkit's techniques folder, one candidate each, with the result of each of its rules for this repo. Whether to adopt, defer or reject each is a decision (techniques/<technique id>).",
       "properties": {
         "found_by": {"$ref": "#/$defs/found_by"},
         "candidates": {
@@ -220,7 +220,7 @@
             "required": ["id", "because"],
             "properties": {
               "id": {"$ref": "#/$defs/id", "description": "A technique id from the toolkit's techniques folder."},
-              "because": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "The rules that matched."}
+              "because": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "One line per needed_when, possible_when and reject_or_defer_when condition, in the technique rule's order, each with its result (true, false or unknown) and the fact behind it; then one line per precondition check; then the evidence line, only when it decides the choice."}
             }
           }
         }
@@ -228,7 +228,7 @@
     },
     "decisions": {
       "type": "object",
-      "description": "What people decided, keyed by section and id: safety/<finding>, running-offline/<finding>, anti-patterns/<finding>, techniques/<technique>, level/target, repo/<field>, questions/<question>. Tools never write here; the AI assistant writes only proposed entries.",
+      "description": "What people decided, keyed by section and id: safety/<finding>, running-offline/<finding>, anti-patterns/<finding>, techniques/<technique>, level/target, repo/<field>, questions/<question>. Tools never write here. The AI assistant writes only proposed entries, and marks an entry stale when its finding has gone, or proposed again when it comes back.",
       "propertyNames": {"pattern": "^(repo|level|safety|running-offline|tests|anti-patterns|obstacles|techniques|questions)/[a-z0-9]+(-[a-z0-9]+)*$"},
       "additionalProperties": {"$ref": "#/$defs/decision"}
     },

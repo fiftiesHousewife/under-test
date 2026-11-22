@@ -4,8 +4,9 @@ name: AI-written tests that record current behaviour, kept only if they pass the
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [2]
 tools: [ai-assistant, acceptance-check]
-adopt_when:
-  - The target class's dependencies can already be replaced in tests
+needed_when:
+  - "Code has few tests, or tests that don't check its results"
+possible_when:
   - Runs in a JVM test without the network
 reject_or_defer_when:
   - Code whose dependencies cannot be replaced (produces fragile tests full of mocks)

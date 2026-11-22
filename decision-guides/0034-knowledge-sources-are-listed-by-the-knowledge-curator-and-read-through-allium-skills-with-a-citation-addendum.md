@@ -30,7 +30,7 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ### Consequences
 
 * `schema/source-list.schema.json`.
-* The toolkit addendum to Allium's skills, in the skills bundle.
+* The toolkit addendum to Allium's skills, as a skill in [`.github/skills/`](../.github/skills/) (planned).
 
 ## More Information
 

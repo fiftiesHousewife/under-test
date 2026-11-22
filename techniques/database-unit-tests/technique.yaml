@@ -4,14 +4,15 @@ name: "Database unit tests (test stored procedures and functions inside the data
 workstream: test-against-requirements
 evidence_for_maturity_levels: [2, 3]
 tools: [utplsql, tsqlt, pgtap, testcontainers]
-adopt_when:
+needed_when:
   - "Business rules live in stored procedures, functions or triggers"
+possible_when:
   - "The database engine can run in a container, or a disposable test schema is available"
 reject_or_defer_when:
   - "The procedures are being moved out of the database soon; characterise them from the application side instead"
 precondition_checks:
   - {done_by: tool, check: "The schema can be created from scripts or migrations in source control"}
-  - {done_by: person, check: "The database licence allows running the engine in a test container"}
+  - {done_by: person, check: "The database licence allows running the engine in a test container", outside_approval: true}
 fallback: characterisation-tests
 constraints:
   - "Use the engine's own test framework: utPLSQL for Oracle, tSQLt for SQL Server, pgTAP for PostgreSQL"

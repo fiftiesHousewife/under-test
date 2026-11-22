@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/fiftieshousewife/under-test/schema/technique.schema.json",
   "title": "Technique rules (techniques/<id>/technique.yaml)",
-  "description": "Machine-readable rules for one testing technique: when to adopt, defer or reject it, checks to run first, and what to use instead. The technique decision tool reads these to mark each technique for a repo. Lessons are not recorded here: each lesson, in the lessons repo (under-test-lessons), names the technique ids it teaches in its own lesson.yaml, and that repo's build checks the two agree. Renaming or removing a technique id therefore needs the same change in the lessons repo. Words follow GLOSSARY.md.",
+  "description": "Machine-readable rules for one testing technique: what calls for it (needed_when), what makes it possible (possible_when), what rules it out or postpones it (reject_or_defer_when), checks to run first, and what to use instead. The technique decision tool reads these to mark each technique for a repo. Lessons are not recorded here: each lesson, in the lessons repo (under-test-lessons), names the technique ids it teaches in its own lesson.yaml, and that repo's build checks the two agree. Renaming or removing a technique id therefore needs the same change in the lessons repo. Words follow GLOSSARY.md.",
   "type": "object",
   "required": [
     "id",
     "name",
     "workstream",
     "evidence_for_maturity_levels",
-    "adopt_when",
+    "needed_when",
     "reject_or_defer_when",
     "precondition_checks",
     "fallback",
@@ -39,19 +39,27 @@
         "type": "string"
       }
     },
-    "adopt_when": {
+    "needed_when": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Conditions that say the technique is wanted. Any one known true calls for it. If every one is known false, the technique is rejected; if none is known true but one is unknown, it is deferred. Each is quoted word for word in reasons, so keep its wording stable."
+    },
+    "possible_when": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "All must hold to adopt."
+      "description": "Conditions that say the technique can be done. To adopt, every one must hold or be planned work. One that is unknown, or false and not planned work, defers the technique. Each is quoted word for word in reasons, so keep its wording stable."
     },
     "reject_or_defer_when": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Any one rules the technique out (reject) or postpones it until another track meets it (defer)."
+      "description": "Facts that rule the technique out or postpone it. One known true rejects it when it is about the framework, a vendor, a licence or who owns what, and defers it otherwise; one that is unknown defers it. A condition the repo's files don't mention counts as false. A fact goes in only one of needed_when, possible_when and reject_or_defer_when: a fact that is true now but planned work will change goes here, and what makes the technique possible goes in possible_when."
     },
     "precondition_checks": {
       "type": "array",
@@ -72,6 +80,11 @@
           },
           "check": {
             "type": "string"
+          },
+          "outside_approval": {
+            "type": "boolean",
+            "default": false,
+            "description": "true when the check is an approval or agreement from outside the team doing the work: a provider team, a licence, the scope, security, or capture in an environment. While it isn't given, the technique is deferred. Every other check is part of the work and never defers it."
           }
         }
       }

@@ -1,6 +1,0 @@
-{
-  "name": "under-test",
-  "description": "The under-test toolkit's AI assistant skills for each step of a repo's journey. This manifest exists so the skills can be evaluated with claude plugin eval; see evals/README.md.",
-  "skills": ["./.github/skills/"],
-  "experimental": {"evals": "evals"}
-}

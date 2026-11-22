@@ -27,7 +27,7 @@ Proposed: the first option. Mutation testing shows where only one state of a fla
 
 ### Consequences
 
-* A check in the convention plugin for flags past their removal date.
+* A check for flags past their removal date, in the convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)).
 
 ## More Information
 

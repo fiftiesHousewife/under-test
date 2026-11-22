@@ -27,7 +27,7 @@ Name a product only as an option or an example.
 | [`techniques/`](techniques/README.md) | One `technique.yaml` per technique: the rules the toolkit's tools read. |
 | [`templates/`](templates/) | Starting points an organisation copies into its own repo: its backlog, a testing guide, a shared test kit. Testing guides and shared test kits themselves belong to each organisation. |
 | `tools/` | The few tools and rule files adopting organisations run. The toolkit is AI first: a step of the journey is a skill that runs existing tools, and code that must be code gets its own repo (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). |
-| `maintainer-tools/` | Tools that keep this repo itself in order, not used by adopters: [`repo-checks`](maintainer-tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`); [`sync`](maintainer-tools/sync/README.md) is the maintainers' push script; `git-hooks` refuses a plain `git push`. |
+| `maintainer-tools/` | Tools that keep this repo itself in order, not used by adopters: [`repo-checks`](maintainer-tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`); [`sync`](maintainer-tools/sync/README.md) is the maintainers' push script; [`skill-evals`](.github/evals/README.md) runs every skill's eval cases with `claude plugin eval` and writes [the results page](docs/skill-evaluations/eval-results.md); `git-hooks` refuses a plain `git push`. |
 | [`schema/`](schema/) | Schemas for every YAML format. |
 | [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |
 | [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo. |
@@ -43,7 +43,9 @@ Name a product only as an option or an example.
 | [draft-the-connection-list](.github/skills/draft-the-connection-list/SKILL.md) | Draft a repo's connection list from the airgap agent's reports, with a proposed stand-in for each connection |
 | [find-test-anti-patterns](.github/skills/find-test-anti-patterns/SKILL.md) | Count the anti-patterns in a repo's existing tests the same way every time, and note what the list misses |
 | [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Measure a Gradle repo under the airgap agent: five runs for flaky tests, coverage, planted bugs, test mix |
+| [score-obstacles](.github/skills/score-obstacles/SKILL.md) | Score a repo's obstacles to testing from what is already recorded, by the named list in the decision guide |
 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Propose adopt, defer or reject for every technique, each traced to the rule that decided it |
+| [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generate a repo's testing plan from its assessment file and connection list, each piece of work with a stable key |
 | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fill the report template from a repo's files, and apply the changes people paste back from it |
 
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |
@@ -52,7 +54,7 @@ Name a product only as an option or an example.
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
 | architecture-decision-records (installed by APM) | The mechanics of writing a MADR record; use it with write-a-decision-record, which adds this repo's rules |
 
-Each skill's trial, with and without it, is in [`docs/skill-evaluations/`](docs/skill-evaluations/). A new skill gets one too: it must save effort or make the result the same every time.
+Each journey skill has an eval case in [`.github/evals/`](.github/evals/README.md), run five times with and without the skills by `claude plugin eval` (see [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](docs/decisions/0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md)); the latest results are in [`docs/skill-evaluations/eval-results.md`](docs/skill-evaluations/eval-results.md). A new skill gets a case too: it must save effort or make the result the same every time, and a change to a skill is kept only if its case still passes in every run.
 
 Prompts, for short, repeatable jobs where a skill would add more than it saves:
 

@@ -33,5 +33,5 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ## More Information
 
 * Builds on: [The programme runs as a forward deployed engagement with named roles](0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md)
-* Later decisions that build on this: [Every repo starts with discovery: a draft connection list, an approval-test baseline and a source list](0032-every-repo-starts-with-discovery-a-draft-connection-list-an-approval-test-baseline-and-a-source-list.md), [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md)
+* Later decisions that build on this: [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md), [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md)
 * Background: none

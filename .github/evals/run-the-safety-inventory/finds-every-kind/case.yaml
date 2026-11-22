@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../schema/eval-case.schema.json
+schema_version: "1.1"
+name: finds-every-kind
+context:
+  scaffold_script: scaffold.sh

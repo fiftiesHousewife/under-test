@@ -1,81 +1,85 @@
 ---
 name: measure-a-repo
-description: Measure a Gradle repo's tests with the toolkit's measurement init script, under the airgap agent - five runs for flaky tests, coverage with JaCoCo, planted bugs with PIT, the test mix - and write the tests and level sections of its testing/assessment.yaml. Use after the safety inventory, when asked to measure a repo, find its flaky tests, or get its coverage or mutation score.
+description: Measure a Gradle repo's tests under the airgap agent with the toolkit's measurement init script (five runs for flaky tests, JaCoCo coverage, PIT planted bugs, the test mix) and write the tests and level sections of its testing/assessment.yaml. Use after the safety inventory, or when asked to measure a repo, find its flaky tests, or get its coverage or mutation score.
 ---
 
 # Measuring a repo
 
-[`measure.init.gradle`](../../../tools/measurement/measure.init.gradle) adds JaCoCo, per-run test results and PIT to
-any Gradle build (5.6 or later) without changing it. Your part is to run it the same way every time, read its
-reports, and write the `tests` and `level` sections of `testing/assessment.yaml`
-([its schema](../../../schema/assessment.schema.json)). Maven isn't covered yet: say so and stop.
+Run [`measure.init.gradle`](../../../tools/measurement/measure.init.gradle)
+([why](../../../docs/decisions/0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md))
+and write the `tests` and `level` sections of `testing/assessment.yaml` ([schema](../../../schema/assessment.schema.json)).
+Planted bugs measure the [mutation testing](../../../techniques/mutation-testing/technique.yaml) technique. Never
+change the repo's build files or tests.
 
-## 1. Check it is safe to run
+## 1. Stop unless
 
-Running the build runs the repo's code. Go on only if:
+| Check | Otherwise |
+|---|---|
+| It builds with Gradle | Maven or another build tool isn't covered yet: say so and stop |
+| Its Gradle is 5.6 or later | Say the measurement script needs Gradle 5.6 or later, and stop |
+| The assessment file has a `safety` section, and each finding with `effect: blocks` has a decided `safety/<id>` decision | Stop; name the findings still blocking |
+| Every run uses the airgap agent's `airgap.init.gradle` ([its repo](https://github.com/fiftiesHousewife/under-test-airgap)) | Stop. Only a CI runner with no route out may pass `-Dmeasure.network=blocked-by-runner` instead; **never** pass it anywhere else |
+| It has a Gradle wrapper | Ask which Gradle the team uses, and use that `gradle` for `./gradlew` throughout |
 
-* the assessment file has a `safety` section, and every finding with effect `blocks` has a decided `safety/<id>`
-  decision; otherwise stop and say which findings still block;
-* you will run under the airgap agent (its `airgap.init.gradle`, from
-  [its repo](https://github.com/fiftiesHousewife/under-test-airgap)), or on a CI runner with no route out. The init
-  script refuses to run tests otherwise; **never** pass `-Dmeasure.network=blocked-by-runner` anywhere else.
+The **JDK** is the one set by `org.gradle.java.home` or a toolchain in the build, else `JAVA_HOME`
+(`sourceCompatibility` doesn't choose it); if older than 11, pass `-Dmeasure.java=<bin/java of a JDK 11 or later>`. If
+Gradle stops at once with `Unsupported class file major version` and `airgap.agent` isn't set in `gradle.properties`,
+download `io.github.fiftieshousewife.airgap:airgap-agent` from the organisation's package repository (or Maven
+Central), check it against its `.sha512`, and pass `-Dairgap.agent=<the jar>`.
 
-Use the repo's own Gradle wrapper and the JDK its build expects; with no wrapper, ask the person which Gradle the
-team uses. If that JDK is older than 11, find a JDK 11 or later
-for PIT and pass `-Dmeasure.java=<its bin/java>`.
+## 2. Run
 
-## 2. Run it
-
-`I` stands for `--init-script <airgap.init.gradle> --init-script <toolkit>/tools/measurement/measure.init.gradle`.
-
-```bash
-./gradlew clean test jacocoTestReport -Dmeasure.run=1 I
-./gradlew test -Dmeasure.run=2 I      # and runs 3, 4 and 5 the same way
-```
-
-Only run 1 cleans: a test that leaves files behind then fails on the run after, and shows as flaky, which it is.
-Run 1 also writes the coverage report. If run 1 doesn't compile, stop: write nothing, and tell the person the first
-error.
-
-Then compare the five runs (step 3) and plant bugs, leaving out every flaky or failing test class:
+`I` is `--init-script <airgap.init.gradle> --init-script <toolkit>/tools/measurement/measure.init.gradle`.
 
 ```bash
-./gradlew measurePlantedBugs -Dmeasure.targets='<globs>' -Dmeasure.excludedTests='<flaky and failing classes>' I
+./gradlew clean test jacocoTestReport -Dmeasure.run=1 I   # only run 1 cleans
+./gradlew test -Dmeasure.run=2 I                          # then 3, 4, 5 the same way
+./gradlew measurePlantedBugs -Dmeasure.targets='<targets>' -Dmeasure.excludedTests='<left out>' I   # after step 3
 ```
 
-**Targets:** the project's group, as `<group>.*`, if its main code has 200 classes or fewer. Otherwise PIT takes too
-long: ask the person which packages hold the key code, plant bugs there, and mark the result `sampled`.
+* If a run fails to build: stop, write nothing, give the first error.
+* `<targets>`: `<group>.*` for each project's `group`, comma-separated, if the main code has 200 classes or fewer
+  (`.class` files without `$`). Otherwise, or with no `group`, ask which packages hold the key code. `sampled` is
+  `true` only when the targets leave some main code out.
+* `<left out>`: each test class with a flaky or failing test (including ones PIT would skip anyway), fully
+  qualified, sorted, comma-separated; no flag if none.
 
 ## 3. Read the reports
 
-For each project in the build (sum the counts across projects):
+Sum over all projects. A test is its task, class and method; name it in the reply as `<Class>.<method>`.
 
-| What | From | How |
+| Field | From | Rule |
 |---|---|---|
-| Each test's result in each run | `build/under-test/runs/<n>/<task>/*.xml` | Each `testcase` by class and name: failed if it has `failure` or `error`, disabled if it has `skipped`, otherwise passed |
-| `count` | run 1 | every `testcase`, disabled ones included |
-| `disabled` | run 1 | `testcase`s with `skipped` |
-| `flaky` | all five runs | tests that passed in at least one run and failed in at least one |
-| `failing` | all five runs | tests that failed in every run |
-| `line_coverage`, `branch_coverage` | `build/reports/jacoco/test/jacocoTestReport.xml` | the `LINE` and `BRANCH` `counter`s directly under `report`: covered ÷ (missed + covered) × 100, to one decimal place |
-| `planted_bugs` | `build/under-test/planted-bugs/mutations.xml` | `planted`: every `mutation`; `caught`: those with status `KILLED`, `TIMED_OUT` or `MEMORY_ERROR` (not `RUN_ERROR`, which is PIT failing, not a test catching the bug) |
-| `mix` | the run 1 results | per cent of `count` in the `test` task (`local`), in a task named `integrationTest` (`container`), and in any task whose name has `e2e`, `acceptance` or `system` in it (`broad`) |
+| result | `build/under-test/runs/<n>/<task>/*.xml` | a `testcase` with `failure` or `error` failed; with `skipped`, disabled; else passed |
+| `count` | run 1 | every `testcase` |
+| `disabled` | run 1 | with `skipped` |
+| `flaky` | five runs | passed in one or more and failed in one or more |
+| `failing` | five runs | failed in all five |
+| `line_coverage`, `branch_coverage` | `build/reports/jacoco/test/jacocoTestReport.xml` | `LINE`, `BRANCH` `counter` directly under `report`: covered ÷ (missed + covered) × 100 (0 when missed + covered is 0), summing over projects first |
+| `planted`, `caught` | `build/under-test/planted-bugs/mutations.xml` | every `mutation`; those with status `KILLED`, `TIMED_OUT` or `MEMORY_ERROR` (not `RUN_ERROR`) |
+| `mix` | run 1 | per cent of `count`, each test in exactly one: `broad` if its fully qualified class or method name contains `e2e`, `acceptance` or `system` in any case; otherwise by task, `test` (`local`) or `integrationTest` (`container`); a test in any other task is in none, and its task is named in the report |
 
-A test that fails with `refused by the airgap agent` in its message failed because it tried to reach something: name
-the target from `build/airgap/test/calls.jsonl` or `build/airgap/calls.jsonl`. Its connection needs a stand-in (see the
-draft-the-connection-list skill). Group flaky tests that failed in exactly the same runs: they likely share a cause,
-so they are fixed together (see [How flaky tests are found](../../../decision-guides/0043-how-flaky-tests-are-found.md)).
+Per cents: round half up to one decimal, dropping `.0` (`64.7`, `100`, `0`).
 
-## 4. Write it down
+For each test failing in every run, give the host it tried to reach, from its failure message (one containing
+`refused by the airgap agent`) or the agent's report (`build/airgap/test/calls.jsonl` or `build/airgap/calls.jsonl`),
+as a host name, not an address; if neither names one, say so. Its connection needs a stand-in
+([draft-the-connection-list](../draft-the-connection-list/SKILL.md)). Group flaky tests that failed in exactly the same
+runs ([How flaky tests are found](../../../decision-guides/0043-how-flaky-tests-are-found.md)).
 
-Rewrite both sections in full, leaving every other section as it is. `found_by` is `{tool: measure-a-repo, version:
-"<toolkit version, or unreleased>", commit: "<short commit>"}`. The commit is the measured repo's (`git rev-parse
---short HEAD` in it), in quotes: unquoted, a commit such as `1234567` or `1e12345` is read as a number.
+## 4. Write
+
+Replace each section where it is; a new one goes where the schema orders it (`level` after `repo`; `tests` after
+`running_offline`, else after `safety`), with no blank line between sections. Keys within each section go in the
+order shown. Leave the first line and the other sections as they are. `version`: the
+organisation profile's `toolkit.version` if you have it, else `unreleased`. `commit`: `git rev-parse --short HEAD` in
+the measured repo, in double quotes. Quote `targets`, each `evidence` line, and any other text value starting with a digit or
+containing `:` or `#`; numbers stay bare. Write every field (`0`, `false`, `[]` when empty).
 
 ```yaml
 tests:
   found_by: {tool: measure-a-repo, version: unreleased, commit: "1a2b3c4"}
-  framework: JUnit 4             # from the build file; add the engine if it runs on the JUnit Platform, e.g. "JUnit 4 on the Vintage engine"
+  framework: JUnit 4
   count: 6
   runs: 5
   flaky: 1
@@ -97,13 +101,17 @@ level:
     - "Built and ran its tests five times on Gradle 6.9.4 and JDK 11, under the airgap agent"
 ```
 
-**Level** ([What each test maturity level means](../../../decision-guides/0012-what-each-test-maturity-level-means.md)):
-0 when all five runs built. 1 only when the runs were on a CI runner with no route out and no test failed or was
-flaky. A run on a developer's machine never shows more than 0: level 1 is proved in CI. If the existing `level` shows
-more than you measured, leave it and say why yours differs.
+* `framework`, from the build file: `JUnit 3`, `JUnit 4`, `JUnit 5` or `TestNG`; JUnit 3 or 4 under
+  `useJUnitPlatform()` adds ` on the Vintage engine`.
+* `left_out`: the `<left out>` classes, same order.
+* `evidence`: exactly one line, `"Built and ran its tests five times on Gradle <version from ./gradlew --version> and
+  JDK <the JDK's major version: 8, 11, 17>, under the airgap agent"`, with `on a CI runner with no route out` in place of
+  `under the airgap agent` there.
+* `reached` ([levels](../../../decision-guides/0012-what-each-test-maturity-level-means.md)): `1` only on a CI runner
+  with no route out with `flaky` and `failing` both `0`; otherwise `0`. If the existing `level.reached` is higher,
+  leave the whole `level` section unchanged, still write `tests`, and say why yours differs.
 
 ## 5. Report
 
-Tell the person, briefly: the level, the counts, each flaky group, each test that fails every run and why, the
-coverage and planted-bug figures (with `sampled` and what was left out). The reports stay in `build/`, which isn't
-committed.
+Briefly: the level; the counts; each flaky group by test name; each test failing every run and the host the agent
+refused; coverage; planted bugs, with `sampled` and what was left out. Reports stay in `build/`, not committed.

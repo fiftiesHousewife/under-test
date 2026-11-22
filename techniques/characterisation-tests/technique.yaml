@@ -4,9 +4,9 @@ name: "Characterisation tests (record what the code does today, at a place where
 workstream: record-current-behaviour
 evidence_for_maturity_levels: [1, 2]
 tools: [approvaltests-java, mockito, system-stubs, logcaptor]
-adopt_when:
+needed_when:
   - "Code must change soon and nobody can say exactly what it does"
-  - "There are no tests, or the tests only run the code without checking results"
+  - "Many tests run the code without checking results, or few planted bugs are caught"
 reject_or_defer_when:
   - "The code is being retired rather than changed"
 precondition_checks:
