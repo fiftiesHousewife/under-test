@@ -1,0 +1,11 @@
+{
+  "name": "under-test",
+  "description": "The under-test toolkit's AI assistant skills, gathered as one plugin so they can be evaluated with claude plugin eval. maintainer-tools/skill-evals/run-all.sh runs it on a clean copy of the toolkit, where evals/ links to .github/evals/; see .github/evals/README.md.",
+  "skills": [
+    "./.github/skills/"
+  ],
+  "experimental": {
+    "evals": "evals"
+  },
+  "version": "0.0.0"
+}

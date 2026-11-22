@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: mockito-well-used
+name: "Test doubles used well (stand-ins only for what the code doesn't own, checking what the code sent rather than mocking everything)"
+workstream: strengthen-tests
+evidence_for_maturity_levels: [2, 3]
+tools: [mockito]
+needed_when:
+  - "Tests mock everything, including the code's own classes and plain values (the mocks-everything anti-pattern)"
+reject_or_defer_when: []
+precondition_checks:
+  - {done_by: tool, check: "Mocks per test, and mocks of the code's own classes, counted in the tests named by the anti-pattern check"}
+fallback: fake-behind-an-interface
+constraints:
+  - "Mock only what the code doesn't own; use the real classes for values and for the code's own logic"
+  - "Check what the code sent with Mockito's ArgumentCaptor, rather than only that a call was made"
+  - "Mockito 4 is the last line that runs on JDK 8; Mockito 5 needs JDK 11"
+  - "Never PowerMock or JMockit, which no longer work on current Java"
+references: [test-doubles]

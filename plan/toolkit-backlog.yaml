@@ -987,6 +987,18 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md"
+  - key: "decide-skill-evals-run-on-a-clean-copy-of-the-toolkit"
+    type: "decision"
+    title: "Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Toolkit Owner"
+    done_by: "person"
+    done_when:
+      - "Approved by Toolkit maintainers"
+    decision_record: "docs/decisions/0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md"
+    notes: "Proposed after a trial run showed the eval's sessions can read only the plugin's folder. When approved, it replaces The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them."
   - key: "measurement-run"
     status: "done"
     type: "deliverable"

@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: tests-from-cases
+name: "Tests from cases (one test run for each row of a table of named cases, tests made from data at run time, and tests grouped by situation so a missing case shows)"
+workstream: strengthen-tests
+evidence_for_maturity_levels: [2, 3]
+tools: [junit5, junit4, junitparams]
+needed_when:
+  - "Tests are copied and pasted with only their values changed (the copy-pasted anti-pattern)"
+  - "The source list names manual test scripts or tables of examples to turn into tests"
+reject_or_defer_when: []
+precondition_checks:
+  - {done_by: tool, check: "Tests that differ only in their values, found by the copy-paste detector"}
+fallback: "Separate test methods, each named for its case"
+constraints:
+  - "Each case has a name that says what it shows, so a failure reads as a sentence"
+  - "On JUnit 5 (runs on JDK 8; JUnit 6 needs JDK 17), use @ParameterizedTest, @TestFactory for tests made from data, and @Nested for groups"
+  - "On JUnit 4, use the Parameterized runner or JUnitParams, and the Enclosed runner for groups; tests made from data at run time need JUnit 5, which can run beside JUnit 4 on the Vintage engine"
+references: [legacy-code]

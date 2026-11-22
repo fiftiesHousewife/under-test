@@ -44,14 +44,21 @@ the lessons repo.** See
 | [embedded-jakarta-ee-tests](embedded-jakarta-ee-tests/technique.yaml) | make it run on its own | 1–3 |
 | [fake-behind-an-interface](fake-behind-an-interface/technique.yaml) | make it run on its own | 1–2 |
 | [feature-flags](feature-flags/technique.yaml) | make code testable | 5 |
+| [in-memory-databases](in-memory-databases/technique.yaml) | make it run on its own | 0 |
+| [junit-tags](junit-tags/technique.yaml) | make it run on its own | 1 |
 | [machine-state-checks](machine-state-checks/technique.yaml) | strengthen tests | 2 |
+| [mockito-well-used](mockito-well-used/technique.yaml) | strengthen tests | 2–3 |
 | [mutation-testing](mutation-testing/technique.yaml) | strengthen tests | 4 |
+| [openapi-response-checks](openapi-response-checks/technique.yaml) | test against requirements | 3 |
 | [post-release-checks](post-release-checks/technique.yaml) | check in production | 5 |
 | [property-based-testing](property-based-testing/technique.yaml) | test against requirements | 3 |
 | [recorded-http-responses](recorded-http-responses/technique.yaml) | make it run on its own | 1–2 |
 | [refactoring-for-testability](refactoring-for-testability/technique.yaml) | make code testable | 2–3 |
+| [repeatable-tests](repeatable-tests/technique.yaml) | fix flaky tests | 0–1 |
 | [server-rendered-ui-tests](server-rendered-ui-tests/technique.yaml) | record current behaviour | 2–3 |
+| [spring-tests-in-slices](spring-tests-in-slices/technique.yaml) | record current behaviour | 2–3 |
 | [stand-in-commands](stand-in-commands/technique.yaml) | make it run on its own | 1–2 |
 | [structured-output-comparison](structured-output-comparison/technique.yaml) | record current behaviour | 2 |
 | [testcontainers](testcontainers/technique.yaml) | make it run on its own | 1–3 |
+| [tests-from-cases](tests-from-cases/technique.yaml) | strengthen tests | 2–3 |
 | [traffic-record-and-replay](traffic-record-and-replay/technique.yaml) | record current behaviour | 1–2 |

@@ -35,7 +35,7 @@ all 25 checks; without them, it passed 2 and wrote the passwords it found into t
 
 ### Consequences
 
-* `.github/` is the plugin: [its manifest](../../.github/.claude-plugin/plugin.json) makes `.github/skills/` one
+* `.github/` is the plugin: [its manifest](../../.claude-plugin/plugin.json) makes `.github/skills/` one
   plugin, and the cases live in [`.github/evals/`](../../.github/evals/README.md).
 * Checks are patterns that must, or must not, appear in the files a run writes or in its reply, from answers worked
   out by hand from the fixture and the skill's rules. No AI judge, so a result can't drift with the judge.

@@ -31,11 +31,24 @@ if [ "${WITHOUT:-yes}" = "no" ]; then options+=(--ablation none); fi
 model="${MODEL:-sonnet}"
 if [ "$model" != "default" ]; then options+=(--model "$model"); fi
 
-echo "== Running the skill evals with ${model}; full results go to $json"
-cd "$root/.github" || exit 1
+# The eval runs the plugin in place and lets its sessions read only the plugin's folder, so the plugin is a clean copy
+# of the whole toolkit (its tracked and new files, without build output): the skills' links to templates, schemas and
+# technique rules then work. The download cache is shared with the repo, so Gradle and the airgap agent are fetched once.
+copy="$(mktemp -d "${TMPDIR:-/tmp}/under-test-evals.XXXXXX")"
+(cd "$root" && git ls-files -co --exclude-standard | while IFS= read -r f; do [ -f "$f" ] && printf '%s\n' "$f"; done |
+  rsync -a --files-from=- . "$copy")
+# The eval takes no symbolic links, and the cases folder only by a plain name, so in the copy the cases move to
+# evals/, and the repo's download cache is named in .eval-cache instead of linked.
+mkdir -p "$root/.github/evals/results/cache"
+mv "$copy/.github/evals" "$copy/evals"
+printf '%s\n' "$root/.github/evals/results/cache" > "$copy/.eval-cache"
+
+echo "== Running the skill evals with ${model} on a copy of the toolkit in $copy; results go to $json"
+cd "$copy" || exit 1
 claude plugin eval . ${options[@]+"${options[@]}"} --scaffold --trust-plugin --allow-tools Bash Write Edit \
   --no-publish --keep-temp --max-cost-usd "${MAX_COST_USD:-60}" --json "$json"
 status=$?
+cd "$root" || exit 1
 # Exit 1 means a case scored below 1.0: a result to record, not a failure of the run.
 if [ ! -s "$json" ]; then
   echo "No results were written (exit $status)"
@@ -52,7 +65,10 @@ while IFS=$'\t' read -r dir arm run trace; do
   workspace=""
   if [ -n "$trace" ]; then
     base="$(dirname "$(dirname "$trace")")"
-    testing="$(find "$base" -maxdepth 4 -type d -name testing ! -path '*/out/*' 2>/dev/null | head -1)"
+    # The eval seals what a run wrote (mode 000) and says to open it with chmod 700 to inspect it. Nothing is run in it.
+    chmod 700 "$base" "$base/sealed" 2>/dev/null || true
+    find "$base/sealed" -type d -exec chmod u+rx {} + 2>/dev/null || true
+    testing="$(find "$base" -maxdepth 7 -type d -name testing ! -path '*/out/*' 2>/dev/null | head -1)"
     if [ -n "$testing" ]; then workspace="$(dirname "$testing")"; fi
   fi
   printf '%s\t%s\t%s\t%s\n' "$dir" "$arm" "$run" "$workspace" >> "$workspaces"

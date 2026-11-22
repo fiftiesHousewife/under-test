@@ -26,8 +26,8 @@ Give each `needed_when`, `possible_when` and `reject_or_defer_when` condition a 
 * A `needed_when` or `possible_when` condition is **true** when the build files, the testing files or the request show
   it holds; **false** when they show it can't hold; **unknown** when it depends on code or facts you weren't given.
   Something missing from the files is unknown, not false, unless a file that would list it leaves it out: the build
-  file for dependencies and frameworks, the measurement run for tests, the connection list for connections and the
-  programs the application starts.
+  file for dependencies and frameworks, the measurement run for tests, the anti-pattern check for anti-patterns, the
+  connection list for connections and the programs the application starts.
 * A `reject_or_defer_when` condition the files don't mention is false. One they mention but don't settle is unknown.
   A condition counts as mentioned only when a file speaks to every part of it.
 * A fact the person states in the request counts as known; say so in the fact ("stated in the request").

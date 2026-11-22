@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: repeatable-tests
+name: "Repeatable tests (each test puts back what it changed, works in its own temporary folder and waits for slow work instead of sleeping; a new test is trusted after five clean runs)"
+workstream: fix-flaky-tests
+evidence_for_maturity_levels: [0, 1]
+tools: [junit5, junit4, awaitility]
+needed_when:
+  - "Tests pass in some runs and fail in others (tests.flaky above 0)"
+  - "Tests sleep for a fixed time, or depend on the order they run in (the sleeps or order-dependent anti-patterns)"
+reject_or_defer_when: []
+precondition_checks:
+  - {done_by: tool, check: "Five runs of the tests, recording which tests failed in which runs"}
+fallback: "Quarantine the flaky tests with an expiry date, as the decision guide on quarantining flaky tests says"
+constraints:
+  - "Put shared state back after each test with a JUnit 5 extension; on JUnit 4, use a rule (ExternalResource)"
+  - "Give each test its own temporary folder: @TempDir on JUnit 5, the TemporaryFolder rule on JUnit 4"
+  - "Wait for slow work with Awaitility (version 4 runs on JDK 8), never a fixed sleep"
+  - "A new or changed test is trusted only after five clean runs"
+references: [flaky-tests]

@@ -12,8 +12,9 @@ whether one run worked.
 | `<skill>/<case>/scaffold.sh`, `fixture/` | That script, and the files it copies in |
 | `<skill>/<case>/graders/` | One check per file: a pattern that must or must not appear, or criteria for an AI judge |
 
-`.github/` is the plugin: [its manifest](../.claude-plugin/plugin.json) makes the skills in `.github/skills/` one
-plugin that can be tested, with the cases here. The write-ups of each skill's trials are in
+The plugin is the whole toolkit: [its manifest](../../.claude-plugin/plugin.json) names the skills in
+`.github/skills/` and the cases here. The eval lets its sessions read only the plugin's folder, so the scripts below
+run it on a clean copy of the toolkit, without build output. The write-ups of each skill's trials are in
 [docs/skill-evaluations/](../../docs/skill-evaluations/).
 
 ## Running them
@@ -39,12 +40,10 @@ in `testing/` are checked against the toolkit's schemas, as well as by the case'
 
 Run it in your own terminal, not inside an AI assistant's sandbox: the eval starts its own sessions, which can't
 start inside another sandbox. It spends tokens on your own account. The scripts pass `--scaffold`, so each case's
-set-up script runs; they are all in this folder, written by the toolkit's maintainers. One case by hand, as a cheap
-first try:
+set-up script runs; they are all in this folder, written by the toolkit's maintainers. One case, once, with the skills only, as a cheap first try:
 
 ```bash
-cd .github
-claude plugin eval . --case finds-every-kind --runs 1 --scaffold --allow-tools Bash Write Edit --no-publish
+RUNS=1 WITHOUT=no maintainer-tools/skill-evals/run-all.sh shows-every-decision
 ```
 
 On a Claude subscription the runs come out of the plan's usage, not money; the costs reported are what they would cost at API prices, which is still the measure to tune against. Runs use Sonnet unless `MODEL=<model>` names another (`MODEL=default` for Claude Code's own default); compare results only between runs with the same model.
@@ -60,6 +59,6 @@ Full results go to `.github/evals/results/`, which isn't committed.
 | find-test-anti-patterns | `counts-every-kind` | The sample of 22 JUnit 4 tests from the skill's first trial. Each of the seven kinds with the right count and the id the rule gives; the test expecting an exception and the test calling `localhost` not counted; every example a method's declaration line; the schema line kept and the tests unchanged |
 | measure-a-repo | `measures-five-runs` | The measurement sample repo (Java 8 source, JUnit 4) on a Gradle 6.9.4 wrapper and JDK 11, under the airgap agent. Six tests, one flaky, one failing every run, one disabled; 64.7% line and 62.5% branch coverage; 14 bugs planted and 5 caught, with the flaky and failing tests left out; level 0; the build file and tests unchanged. Needs a JDK 11, and fetches the airgap agent from Maven Central (see its `scaffold.sh`) |
 | score-obstacles | `scores-every-obstacle` | The example order service's assessment file and connection list. Each of the 14 obstacles with the score the guide's table gives, and the one whose fact isn't measured left unscored; evidence with counts and totals; scores as bare numbers; the other sections kept |
-| choose-techniques | `decides-every-technique` | The example order service: Spring Boot 2.3 on JDK 8, Oracle, high criticality, a decided target of level 4, flaky and weak tests, container tests in CI only, and developers' machines that can't run containers (stated in the prompt). A proposed decision and a candidate for each of the 23 techniques; the choice the rules settle for every one of them; every other section and the decisions people made kept |
+| choose-techniques | `decides-every-technique` | The example order service: Spring Boot 2.3 on JDK 8, Oracle, high criticality, a decided target of level 4, flaky and weak tests, container tests in CI only, and developers' machines that can't run containers (stated in the prompt). A proposed decision and a candidate for each of the 30 techniques; the choice the rules settle for every one of them; every other section and the decisions people made kept |
 | write-the-testing-plan | `plans-every-piece-of-work` | The example order service after its techniques were chosen. The 15 pieces of work with the keys the skill's rules give, and no others; six workstreams in the guide's order, with check in production left out; marked as generated, with the template's note removed; level 4 shown as reached by no adopted technique; the open question listed; 14 techniques not in the plan, each with its state; the assessment file unchanged |
 | render-the-assessment-report | `shows-every-decision` | The example assessment file, connection list and source list, with a question quoting `</script>` and notes holding HTML markup. The page is the template, unchanged but for its data block; the block holds all three files with every `</` escaped; nothing loaded from the network; the three files untouched; the reply's three answers (not safe to run: the payments keystore; doesn't run on its own: the payments connection has no stand-in; tests not trusted: 23 of 100 planted bugs caught) |

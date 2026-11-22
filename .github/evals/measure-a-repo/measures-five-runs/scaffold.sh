@@ -10,8 +10,11 @@
 # The Gradle distribution is downloaded once, checked against its published checksum, and kept in
 # .github/evals/results/cache/, which isn't committed.
 set -euo pipefail
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-toolkit="$(cd "$here/../../../.." && pwd)"
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+toolkit="$here"
+# The toolkit is the nearest folder above with AGENTS.md (the cases sit at .github/evals/ in the repo, evals/ in the
+# copy run-all.sh makes).
+while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$toolkit" = "/" ] && exit 1; done
 airgap_init="https://raw.githubusercontent.com/fiftiesHousewife/under-test-airgap/v0.1.0/tools/try-it/airgap.init.gradle"
 jdk11="${EVAL_JDK11_HOME:-$(/usr/libexec/java_home -v 11 2>/dev/null || true)}"
 if [ -z "$jdk11" ] || [ ! -x "$jdk11/bin/java" ]; then
@@ -19,7 +22,8 @@ if [ -z "$jdk11" ] || [ ! -x "$jdk11/bin/java" ]; then
   exit 1
 fi
 
-cache="$toolkit/.github/evals/results/cache"
+# run-all.sh names the repo's own cache in .eval-cache, so a copy of the toolkit doesn't download again.
+cache="$(cat "$toolkit/.eval-cache" 2>/dev/null || echo "$toolkit/.github/evals/results/cache")"
 dist="$cache/gradle-6.9.4-bin.zip"
 if [ ! -f "$dist" ]; then
   mkdir -p "$cache"

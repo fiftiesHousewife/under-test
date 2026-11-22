@@ -14,8 +14,8 @@ styles, or put anything in the data that isn't in the files. The files follow
 
 ## 1. Make the report
 
-Run this from the repo's root, with `TEMPLATE` set to the template's path (the link above, from this skill's
-folder):
+Run this from the repo's root, with `TEMPLATE` set to the template's path: the toolkit's root is three folders up
+from this skill's folder (`<skill folder>/../../..`), and the template is `templates/repo-assessment-report.html` there:
 
 ```bash
 ruby -ryaml -rjson -e '

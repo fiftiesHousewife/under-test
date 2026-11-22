@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: openapi-response-checks
+name: "API document checks (a service's answers checked against its published OpenAPI document, where contract tests can't reach)"
+workstream: test-against-requirements
+evidence_for_maturity_levels: [3]
+tools: [swagger-request-validator]
+needed_when:
+  - "The repo serves an HTTP API that has a published OpenAPI document"
+  - "The repo calls an HTTP API that has a published OpenAPI document and no contract tests with its provider"
+possible_when:
+  - "The OpenAPI document is kept current by the API's owner"
+reject_or_defer_when: []
+precondition_checks:
+  - {done_by: tool, check: "The OpenAPI document parses and its version is supported by the validator"}
+fallback: structured-output-comparison
+constraints:
+  - "A separate check from contract tests: it shows answers match the published document, not that what each consumer needs is met; use contract-testing where both sides take part"
+  - "Check both real answers in tests (MockMvc, REST Assured) and the stubs that stand in for an API (WireMock), so stubs can't drift from the document"
+  - "Atlassian's swagger-request-validator (Apache 2.0 licence) reads OpenAPI 3 as well as Swagger 2 documents; check its release's minimum JDK against the repo's"
+references: [test-doubles]

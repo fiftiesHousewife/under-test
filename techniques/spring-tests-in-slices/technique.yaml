@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: spring-tests-in-slices
+name: "Framework slice tests (one layer of a Spring application started on its own, with one whole-application test kept for the wiring)"
+workstream: record-current-behaviour
+evidence_for_maturity_levels: [2, 3]
+tools: [spring-boot-test]
+needed_when:
+  - "The application is built on Spring Boot"
+possible_when:
+  - "Spring Boot 1.4 or newer, where the slice annotations exist"
+reject_or_defer_when:
+  - "The application is about to move off Spring; test the logic behind interfaces instead"
+precondition_checks:
+  - {done_by: tool, check: "The Spring Boot version and starters in the build file"}
+fallback: "Whole-application tests (@SpringBootTest), kept to a few journeys"
+constraints:
+  - "Start one layer: @WebMvcTest for controllers, @DataJpaTest for repositories, @JsonTest for JSON mapping"
+  - "Keep one whole-application test (@SpringBootTest) to check the wiring"
+  - "@DataJpaTest swaps in an in-memory database by default; where the real database's behaviour matters, turn that off (@AutoConfigureTestDatabase with replace NONE) and run the real engine with testcontainers"
+  - "Spring Boot 2 runs on JDK 8, and its slices work on JUnit 4 with SpringRunner; Spring Boot 3 needs JDK 17"
+references: [test-mix]

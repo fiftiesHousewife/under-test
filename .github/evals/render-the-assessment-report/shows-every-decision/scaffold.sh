@@ -4,8 +4,11 @@
 # the run with the skill gets the template through the plugin, and the run without it has only the request. Run by
 # claude plugin eval --scaffold, in the workspace.
 set -euo pipefail
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-toolkit="$(cd "$here/../../../.." && pwd)"
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+toolkit="$here"
+# The toolkit is the nearest folder above with AGENTS.md (the cases sit at .github/evals/ in the repo, evals/ in the
+# copy run-all.sh makes).
+while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$toolkit" = "/" ] && exit 1; done
 echo "scaffold ran in $PWD" >&2
 mkdir -p schema testing
 cp "$here/fixture/assessment.yaml" "$here/fixture/connections.calm.json" "$here/fixture/sources.yaml" testing/

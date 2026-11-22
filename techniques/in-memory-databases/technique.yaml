@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/technique.schema.json
+id: in-memory-databases
+name: "In-memory databases (a fresh in-memory database with the real schema for each test, as a quick local check alongside tests on the real database, never in place of them)"
+workstream: make-it-run-on-its-own
+evidence_for_maturity_levels: [0]
+tools: [h2, testcontainers]
+needed_when:
+  - "The code reads or writes a relational database, and the machines local tests run on can't run containers"
+possible_when:
+  - "The code's SQL uses only features the in-memory database shares with the real one"
+  - "Tests on the real database engine (testcontainers or a disposable test schema) are in place or planned"
+reject_or_defer_when: []
+precondition_checks:
+  - {done_by: tool, check: "The schema can be built from the migrations or scripts in source control"}
+  - {done_by: tool, check: "A check that fails the build when the code's SQL uses features the in-memory database doesn't share with the real one"}
+fallback: testcontainers
+constraints:
+  - "Never counts as evidence of the real database's behaviour, whatever the level; see the decision guide: an in-memory database of a different product never counts as evidence"
+  - "The database's own behaviour (vendor-only SQL, stored procedures, locking, transactions, isolation) is tested only on the real engine"
+  - "Build the schema from the real migrations, in a fresh database for each test"
+  - "A compatibility mode (for example H2's MODE=Oracle) narrows the differences but doesn't remove them"
+  - "H2 2.1 runs on JDK 8; check a newer line's minimum JDK before upgrading"
+note: "Evidence is level 0 only: these tests show the build and the code's portable SQL work, and nothing about the real database. Where the in-memory database is itself the product used in production, it is the real engine, and testcontainers' levels apply."
+references: [test-doubles]

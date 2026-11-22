@@ -77,7 +77,8 @@ that node's `name`, and its `stand-in.approach`, `stand-in.kit`, `state`, `never
 
 ## 3. Write `testing/TESTING-PLAN.md`
 
-Fill [the plan template](../../../templates/testing-plan.md). If you can't read the template, stop and say so; don't
+Fill [the plan template](../../../templates/testing-plan.md): the toolkit's root is three folders up from this
+skill's folder (`<skill folder>/../../..`), and the template is `templates/testing-plan.md` there. If you can't read the template, stop and say so; don't
 write the plan from memory. Replace each `{...}` as below; keep every other
 character, the generated-file comment included. Remove the "Template note" comment and each line that is only a
 braced instruction ending in `:}`, each with the blank line after it. A list placeholder becomes one line per item; a

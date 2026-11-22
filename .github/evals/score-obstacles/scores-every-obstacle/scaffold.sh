@@ -3,8 +3,11 @@
 # case's fixture), plus what the run without the toolkit needs: the decision guide with the obstacle table and the
 # assessment schema. Run by claude plugin eval --scaffold, in the workspace.
 set -euo pipefail
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-toolkit="$(cd "$here/../../../.." && pwd)"
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+toolkit="$here"
+# The toolkit is the nearest folder above with AGENTS.md (the cases sit at .github/evals/ in the repo, evals/ in the
+# copy run-all.sh makes).
+while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$toolkit" = "/" ] && exit 1; done
 cp -R "$toolkit/.github/evals/write-the-testing-plan/plans-every-piece-of-work/fixture/." .
 mkdir -p schema decision-guides
 cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/connection-list.schema.json" schema/

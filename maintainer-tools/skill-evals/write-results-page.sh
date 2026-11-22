@@ -31,7 +31,7 @@ if [ -s "$workspaces" ] && [ -s "$shape" ]; then
 fi
 
 rows="$(jq -r '
-  def mean(f): if length == 0 then 0 else (map(f) | add) / length end;
+  def mean(f): if length == 0 then 0 else (map(f // 0) | add) / length end;
   def r2: (. * 100 | round) / 100;
   .cases[] |
   (.dir | split("/")) as $p |
