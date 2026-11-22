@@ -79,6 +79,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #206 | [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](https://github.com/fiftiesHousewife/under-test/issues/206) | decision | Technical Architect | person | – |
+| #213 | [Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](https://github.com/fiftiesHousewife/under-test/issues/213) | decision | Toolkit Owner | person | – |
 | #65 | [Scan every repo for committed secrets before it is built or run, using an existing tool](https://github.com/fiftiesHousewife/under-test/issues/65) | deliverable | Security and Platform Owner | tool | – |
 | #193 | [Trial Keploy on a pilot application: record and replay on Windows, without admin rights or a route out](https://github.com/fiftiesHousewife/under-test/issues/193) | deliverable | Technical Architect | person | – |
 | #210 | [Each skill costs less per run without losing accuracy, judged by its eval results](https://github.com/fiftiesHousewife/under-test/issues/210) | deliverable | Toolkit Owner | ai | – |
