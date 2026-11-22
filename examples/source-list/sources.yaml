@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/source-list.schema.json
+application: orders
+curator: Orders and Fulfilment, knowledge curator
+sources:
+  - id: uat-regression-suite
+    kind: test-automation-suite
+    location: qa-automation repo, orders/ folder (Selenium, run against the shared test environment)
+    owner: QA team
+    currency: mostly-current
+    notes: Covers placing, changing and cancelling an order. Keeps running until repo tests cover the same journeys.
+  - id: orders-release-pack
+    kind: manual-test-scripts
+    location: Test management tool, "Orders release pack", exported to exports/orders-release-pack.csv
+    owner: QA team
+    currency: out-of-date
+    notes: Refunds and partial shipments; mined for examples.
+  - id: refund-policy
+    kind: specification-document
+    location: Wiki, Orders space, "Refund policy"
+    owner: Orders and Fulfilment
+    currency: current

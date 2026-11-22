@@ -2,7 +2,8 @@
 #
 # Run over the repo's current files, before any of its code is built or run:
 #   gitleaks dir --config safety-inventory.gitleaks.toml --report-format json --report-path safety-inventory.json .
-# The secrets scan is a separate run of gitleaks' own rules over the whole history (gitleaks git).
+# Keystores and private key files are found over the whole history instead, by the secrets scan's rules in
+# secrets.gitleaks.toml (gitleaks git), because one deleted from the current files is still in the history.
 #
 # Every rule is tagged with:
 #   safety-inventory
@@ -14,20 +15,6 @@
 # Patterns are Go regular expressions (RE2): no look-ahead or look-behind.
 
 title = "Safety inventory"
-
-# Keystores and private keys ------------------------------------------------------------------------------------------
-
-[[rules]]
-id = "keystore-file"
-description = "A keystore or certificate store, which usually holds a private key"
-path = '''(?i)\.(?:jks|jceks|keystore|truststore|p12|pfx|bks|pkcs12)$'''
-tags = ["safety-inventory", "kind:keystore-or-private-key", "tier:blocks"]
-
-[[rules]]
-id = "private-key-file"
-description = "A private key file"
-path = '''(?i)(?:^|/)(?:id_(?:rsa|dsa|ecdsa|ed25519)|[^/]+\.(?:key|pem|ppk))$'''
-tags = ["safety-inventory", "kind:keystore-or-private-key", "tier:blocks"]
 
 # Production credentials in settings ----------------------------------------------------------------------------------
 

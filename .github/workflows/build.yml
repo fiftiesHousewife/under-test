@@ -21,3 +21,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
       - name: Run all checks
         run: ./gradlew check
+
+  safety-inventory-rules:
+    # Not required yet: it becomes required once it has passed on CI.
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check the safety inventory rules with gitleaks
+        run: maintainer-tools/safety-inventory-rules/check.sh

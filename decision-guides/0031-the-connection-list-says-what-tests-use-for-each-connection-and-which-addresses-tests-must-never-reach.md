@@ -27,7 +27,8 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ### Consequences
 
-* A CALM decorator schema for test stand-ins and never-reach addresses.
+* A schema for the toolkit's fields, kept in each connection's CALM `metadata` under `under-test`:
+  [`schema/connection-list.schema.json`](../schema/connection-list.schema.json).
 * The production-address check, outbound-call check and testing-plan generator read the connection list.
 
 ## More Information

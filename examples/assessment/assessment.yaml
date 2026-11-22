@@ -23,57 +23,57 @@ safety:
       kind: production-credential
       effect: blocks
       what: Production database password
-      where: [src/main/resources/application.yml:14]
+      where: ["src/main/resources/application.yml:14"]
     - id: payments-keystore
       kind: keystore-or-private-key
       effect: blocks
       what: Keystore with a private key for the payments client
-      where: [src/main/resources/certs/payments-client.jks]
+      where: ["src/main/resources/certs/payments-client.jks"]
     - id: reminder-job
       kind: self-starting-job
       effect: neutralise
       what: Nightly job that emails customers
-      where: [src/main/java/com/example/orders/OrderReminderJob.java:22]
+      where: ["src/main/java/com/example/orders/OrderReminderJob.java:22"]
     - id: flyway-at-start
       kind: migration-at-start-up
       effect: neutralise
-      where: [build.gradle, src/main/resources/application.yml:30]
+      where: ["build.gradle", "src/main/resources/application.yml:30"]
     - id: publish-on-build
       kind: publishing-build-task
       effect: neutralise
-      where: [build.gradle]
+      where: ["build.gradle"]
     - id: invoice-share
       kind: fixed-path-or-file-share
       effect: neutralise
       what: Windows file share for invoices
-      where: [src/main/java/com/example/orders/InvoiceExporter.java:31]
+      where: ["src/main/java/com/example/orders/InvoiceExporter.java:31"]
     - id: fixture-customers
       kind: real-personal-data
       effect: none
       what: 40 rows checked; synthetic
-      where: [src/test/resources/orders.csv]
+      where: ["src/test/resources/orders.csv"]
 running_offline:
   found_by: {tool: draft-connection-list, version: "0.1.0", commit: 1a2b3c4}
-  reports: [build/airgap/test/calls.jsonl, build/airgap/bootRun/calls.jsonl]
+  reports: ["build/airgap/test/calls.jsonl", "build/airgap/bootRun/calls.jsonl"]
   findings:
     - id: orders-db
       target: db-orders.prod.example.com:1521
       kind: database
-      callers: [com.example.orders.OrderRepository.connect(OrderRepository.java:41)]
+      callers: ["com.example.orders.OrderRepository.connect(OrderRepository.java:41)"]
       setting: spring.datasource.url, application.yml:12
       runs: [test, application]
       tests: 38
     - id: payments-api
       target: payments.example.com:443
       kind: http
-      callers: [com.example.orders.PaymentClient.charge(PaymentClient.java:57)]
+      callers: ["com.example.orders.PaymentClient.charge(PaymentClient.java:57)"]
       setting: payments.base-url, application.yml:27
       runs: [test, application]
       tests: 9
     - id: smtp
       target: smtp.example.com:25
       kind: mail
-      callers: [com.example.orders.MailNotifier.send(MailNotifier.java:19)]
+      callers: ["com.example.orders.MailNotifier.send(MailNotifier.java:19)"]
       setting: spring.mail.host, application.yml:40
       runs: [test]
       tests: 4
@@ -94,15 +94,15 @@ anti_patterns:
     - id: no-real-assertion
       kind: no-real-assertion
       tests: 14
-      examples: [src/test/java/com/example/orders/OrderServiceTest.java:33]
+      examples: ["src/test/java/com/example/orders/OrderServiceTest.java:33"]
     - id: disabled
       kind: disabled
       tests: 11
-      examples: [src/test/java/com/example/orders/RefundTest.java]
+      examples: ["src/test/java/com/example/orders/RefundTest.java"]
     - id: reaches-shared-system
       kind: reaches-shared-system
       tests: 6
-      examples: [src/test/java/com/example/orders/OrderRepositoryIT.java]
+      examples: ["src/test/java/com/example/orders/OrderRepositoryIT.java"]
 techniques:
   found_by: {tool: technique-rules, version: "0.1.0", commit: 1a2b3c4}
   candidates:

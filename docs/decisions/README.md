@@ -49,6 +49,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Keploy is trialled on a pilot application to record current behaviour from real traffic](0037-keploy-is-trialled-on-a-pilot-application-to-record-current-behaviour-from-real-traffic.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md) | accepted | Toolkit maintainers |
 | [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md) | accepted | Toolkit maintainers |
+| [Keystores and private key files are found over the whole history, by rules added to the secrets scan](0041-keystores-and-private-key-files-are-found-over-the-whole-history-by-rules-added-to-the-secrets-scan.md) | accepted | Toolkit maintainers |
 
 ## Recording results and owning plans
 

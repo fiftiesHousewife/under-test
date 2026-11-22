@@ -17,7 +17,8 @@
         "required": ["id", "kind", "location", "currency"],
         "properties": {
           "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Descriptive key, used in rule citations."},
-          "kind": {"enum": ["regression-pack", "manual-test-scripts", "wiki-pages", "tracker-query", "other-repo", "specification-document", "expert-notes", "other"]},
+          "kind": {"enum": ["regression-pack", "manual-test-scripts",
+            "test-automation-suite", "wiki-pages", "tracker-query", "other-repo", "specification-document", "expert-notes", "other"]},
           "location": {"type": "string", "description": "Where it is: an exported file path, a page space, a tracker query, a repo. The AI assistant reads only what people export or make reachable."},
           "owner": {"type": "string"},
           "currency": {"enum": ["current", "mostly-current", "out-of-date", "unknown"], "description": "How far the source can be trusted to reflect today's system."},
