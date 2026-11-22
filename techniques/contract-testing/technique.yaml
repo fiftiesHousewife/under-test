@@ -15,6 +15,6 @@ precondition_checks:
 fallback: Recorded stubs plus scheduled checks against a live sandbox
 references: [test-doubles]
 constraints:
-  - Pacts are shared as versioned artifacts through the package repository, without a broker, unless the platform team hosts one
+  - Pacts are shared as versioned artifacts through the package repository, without a broker, until a team owns one
   - Current Pact JVM needs JDK 17 or newer; services on older JDKs need the 4.5 line
   - JUnit 6 support in Pact JVM is not yet documented; check before relying on it

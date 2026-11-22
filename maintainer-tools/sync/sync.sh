@@ -17,8 +17,7 @@ echo "== Waiting for any earlier issue import to finish"
 while pgrep -f "import_to_github.py" >/dev/null; do sleep 10; done
 
 echo "== Build"
-./gradlew --stop >/dev/null 2>&1 || true
-./gradlew check
+./gradlew --no-daemon check
 
 echo "== Commit"
 git add -A -- . ':!.idea'

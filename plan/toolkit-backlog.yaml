@@ -558,7 +558,7 @@ items:
     done_when:
       - "Accepts a sample assessment file and rejects a broken one"
       - "Runs in CI"
-    notes: "Needs from the programme: The assessment file: where it lives, who writes which fields, and its schema version"
+    notes: "Schema done: schema/assessment.schema.json, with examples/assessment/assessment.yaml checked by this repo's own checks. Still to do: the validator adopting repos run in CI, through the convention plugin. Needs from the programme: The assessment file: where it lives, who writes which fields, and its schema version"
   - key: "convention-plugin-every-repo-applies"
     type: "deliverable"
     title: "Gradle convention plugin every repo applies"
@@ -766,8 +766,8 @@ items:
     owner_role: "Technical Architect"
     done_by: "tool"
     done_when:
-      - "Uses the airgap agent's released version, from the organisation's package repository"
-      - "Writes the report where discovery reads it"
+      - "Applies the airgap Gradle plugin (io.github.fiftieshousewife.airgap), at its released version from the organisation's package repository"
+      - "Discovery reads every task's report, at build/airgap/<task name>/calls.jsonl"
     blocked_by:
       - "convention-plugin-every-repo-applies"
   - key: "draft-connection-list-from-the-airgap-report"
@@ -779,7 +779,8 @@ items:
     owner_role: "Technical Architect"
     done_by: "tool"
     done_when:
-      - "Each distinct target in the report becomes a draft connection, with its kind, its callers and the setting behind it"
+      - "Reads every task's report (build/airgap/<task name>/calls.jsonl), so test runs, application starts and builds all count"
+      - "Each distinct target becomes a draft connection, with its kind, its callers and the setting behind it"
       - "Checked against the connection list's schema"
     blocked_by:
       - "connection-list-template-and-check"

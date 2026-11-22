@@ -16,18 +16,34 @@ Each repo needs one machine-readable record of what was measured and what people
 
 ## Considered Options
 
-* **`testing/assessment.yaml` in each repo; tools write `measured:`; people write decision fields; schema version 1**  
-  One place per repo; clear ownership of fields
+* **`testing/assessment.yaml` in each repo: tools rewrite their own sections; people's answers kept apart in `decisions`**  
+  Each tool section (the safety inventory, running offline, tests, anti-patterns, obstacles, techniques, the level
+  reached) says which tool wrote it and at which commit, and is rewritten in full on every run. Every finding has an
+  id that stays the same between runs. People's answers live only in `decisions`, keyed by section and finding id
+  (`safety/db-password`, `techniques/recorded-http-responses`, `level/target`), which tools never write, so a re-run
+  can't overwrite them. A decision whose finding has gone is marked stale, not deleted
+* **Fields kept inline, each marked by owner**  
+  One place to read each finding, but every tool must merge carefully to keep people's fields, and one mistake loses
+  a decision
+* **Separate files for tools and for people**  
+  Nothing to merge, but two places to look, and every reader has to join them
 * **Central store only**  
   Repo owners can't see or change their own decisions in a pull request
 
 ## Decision Outcome
 
-Proposed: the first option, with plain field names (`measured:` not `probe:`).
+Proposed: the first option, at schema version `assessment/1`. The AI assistant may add decisions only as `proposed`,
+marked `drafted_by: ai`; a person confirms one by setting `state: decided` and `by:` to their role. The file doesn't
+repeat what has its own home: stand-ins are in the connection list and test assets in the source list, and the repo
+assessment report reads all three. (The toolkit maintainers chose this in discussion; an organisation may still
+narrow or replace it.)
 
 ### Consequences
 
-* `schema/assessment.schema.json` and its validator (the assessment-file schema and validator).
+* [`schema/assessment.schema.json`](../schema/assessment.schema.json), with an
+  [example](../examples/assessment/assessment.yaml) checked against it.
+* Every tool that writes a section keeps its finding ids the same between runs.
+* The repo assessment report renders the file, and turns edits into changes to `decisions`.
 
 ## More Information
 
