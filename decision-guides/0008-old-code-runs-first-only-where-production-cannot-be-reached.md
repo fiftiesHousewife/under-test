@@ -29,15 +29,30 @@ The risk being guarded against is accidental calls from old business code, throu
 
 ## Decision Outcome
 
-Proposed: the first option. The first run of any repo happens on the dedicated runners, separated by network. On developer machines, every build, test run and application start runs under the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), which refuses every risky call (network connections, host lookups, JNDI and LDAP lookups, starting programs, loading native code, `System.exit`) as an unplugged machine would, and reports each one with the test and code that made it. For now the agent's own init script adds it to the build, and the [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill runs with it; the convention plugin that will add it is in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). The report feeds the draft connection list in discovery. Because the agent works inside the JVM, it is a safety net against accidental calls, not separation; the first run in CI stays the separation.
+Proposed: the first option, with the airgap agent as the way onto developer machines rather than a condition of
+starting. Old code runs only where production can't be reached: on CI runners whose outbound traffic is blocked except
+to the organisation's package repository, or on a developer machine under the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap),
+which refuses every risky call (network connections, host lookups, JNDI and LDAP lookups, starting programs, loading
+native code, `System.exit`) as an unplugged machine would, and reports each one with the test and code that made it.
+The first run of any repo is on the runners. An organisation that hasn't yet approved the agent runs old code on the
+runners only; nothing else in the journey waits for it. Because the agent works inside the JVM, it is a safety net
+against accidental calls, not separation; the runners stay the separation.
+
+Only the steps that build or run a repo's code need either. Reading code, scan reports and recorded facts (the safety
+inventory, counting anti-patterns, scoring obstacles, choosing techniques, writing the plan) runs no code and can start
+at once.
 
 ### Consequences
 
-* Dedicated runners that cannot reach production, for every repo's first run.
-* The airgap agent in every JVM started on a developer machine, and in the build itself: added for now by the agent's
-  own init script, which the measure-a-repo skill runs; later by the convention plugin, in its own repo.
-* Tests never run with the network open: the airgap agent refuses every call off the machine, and the [measurement init script](../tools/measurement/measure.init.gradle)
+* Dedicated runners that cannot reach production, for every repo's first run, and for every run until the organisation
+  approves the airgap agent.
+* Once the agent is approved: the agent in every JVM started on a developer machine, and in the build itself, added for
+  now by the agent's own init script, which the measure-a-repo skill runs; later by the convention plugin, in its own
+  repo (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)).
+* Tests never run with a route to production: the [measurement init script](../tools/measurement/measure.init.gradle)
   refuses to run tests without the agent unless the CI runner is declared to have no route out.
+* The connection list is drafted from the repo's settings files, and from the agent's reports where it has run, which
+  add the connections the settings don't show.
 * Moving a repo onto the JUnit Platform, so the agent's report names the test behind each call (JUnit 4 tests run
   unchanged on its Vintage engine), is an agreed change in the "make it run on its own" workstream, not something done
   to the repo in discovery.

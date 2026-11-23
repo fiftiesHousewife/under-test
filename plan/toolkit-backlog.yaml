@@ -419,6 +419,18 @@ items:
     done_when:
       - "Toolkit maintainers accept or replace the proposed record"
     decision_record: "docs/decisions/0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md"
+  - key: "draft-the-connection-list-from-settings-files"
+    type: "deliverable"
+    title: "The connection list is drafted from a repo's settings files, and the airgap agent's reports add what they miss"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "With no airgap reports, the draft-the-connection-list skill drafts a connection for each address in the repo's settings files, marked as found in settings"
+      - "With reports, a connection found in both is one connection with both sources, and one found only by the agent is added"
+      - "Its eval case has a variant with no reports, and both pass in every run"
   - key: "field-trial-the-journey-on-messy-public-repos"
     type: "deliverable"
     title: "Field trial: run the whole journey on two or three messy public repos and turn each break into an eval case"

@@ -28,13 +28,14 @@ by themselves, database migrations that run at start-up, build tasks that publis
 Windows file shares, and native libraries. Secrets,
 keys, production credentials and real personal data block every run until they're resolved, and a real production
 secret is handled as a security incident. The rest are made harmless in the test profile or the build, and recorded.
-The first run of the code happens only where production can't be reached: in CI on runners with no route out, and on
-an engineer's own machine only under the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), which
-refuses every call off the machine and reports it. The test profile, with dummy secrets, is added in this step, and the
+This step runs none of the repo's code. When code does run, it is only where production can't be reached: in CI on
+runners with no route out, and, once the organisation has approved it, on an engineer's own machine under the
+[airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), which refuses every call off the machine and
+reports it. The test profile, with dummy secrets, is added in this step, and the
 findings that don't block are made harmless in it; from then on the repo runs with it by default. A check that stops
-tests at once if any configured address belongs to production comes later, with the convention plugin; until then
-the airgap agent refuses every call off the machine. The step ends with the first run of the tests under the airgap
-agent, whose reports feed discovery.
+tests at once if any configured address belongs to production comes later, with the convention plugin. The step ends
+with the first run of the tests, on the runners, under the airgap agent where it is approved; its reports feed
+discovery.
 
 - **Who:** a Forward Deployed Engineer, with the [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) skill; the Security and Platform Owner approves anything accepted
   rather than fixed.
@@ -45,8 +46,8 @@ agent, whose reports feed discovery.
 ## 2. Discovery
 
 Find out what the code talks to and what tests it already has, before changing anything. The [draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) skill
-drafts the connection list from the airgap agent's reports of that first run: every interface, database, queue and
-outside service the code tried to reach, with a proposed stand-in for each and which addresses tests must never
+drafts the connection list from the airgap agent's reports of that first run, where the agent was used: every
+interface, database, queue and outside service the code tried to reach, with a proposed stand-in for each and which addresses tests must never
 reach; the Architecture Owner confirms it. The Knowledge Curator lists the sources that count: regression packs, wiki pages, tracker queries, other
 repos, and the test assets that live outside the repo, such as automation suites run against a shared test
 environment and manual test scripts. Those keep running where they are until repo tests cover the same journeys, and
@@ -80,8 +81,8 @@ agrees otherwise. The cleaned captures become approval tests and recorded respon
 
 ## 4. Measurement
 
-The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill runs the repo's tests five times under the airgap
-agent, through an init script that changes nothing in the build. It finds flaky and failing tests, measures coverage
+The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill runs the repo's tests five times, on a runner with no
+route out or under the airgap agent, through an init script that changes nothing in the build. It finds flaky and failing tests, measures coverage
 with JaCoCo, and counts how many deliberately planted bugs the tests catch with PIT (mutation testing), leaving the
 flaky and failing tests out of that run; it also records the mix of test types. Scoring each obstacle to testing,
 with evidence, is a planned skill.
