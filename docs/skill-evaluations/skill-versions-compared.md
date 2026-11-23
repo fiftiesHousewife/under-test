@@ -47,6 +47,15 @@ Saying which line in more words doesn't settle it: two runs again gave the line 
 line of a copy-pasted block, and a call that depends on an earlier test). Over four rounds the skill misses this in
 one or two runs of every five, and nothing else.
 
+## Round 5: find-test-anti-patterns, with each test's line taken from a search
+
+| Skill | Case | Without, round 5 | With, round 5 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.51 (0 of 5), $0.12, 7 turns | 0.99 (4 of 5), $0.16, 7 turns |
+
+Taking each test's line from `grep -n` halves the turns (7, against 15 in round 2) at the same cost. One run still gave
+the line of a call that depends on an earlier test. The rule stays as it is: the miss is one check in one run of five.
+
 ## What the rounds show
 
 * **With the skills, the results hold.** In both rounds every case scores 0.98 or more, and 74 of the 80 runs with the
