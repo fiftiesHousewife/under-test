@@ -5,19 +5,22 @@ have strong prior art. Michael Feathers gives a method for each change, and the 
 what code does today, bugs included. Approval testing saves what the code produces and compares every later run
 against it. Google's Test Certified programme gives a team levels to reach, starting with measurement. Research covers
 test smells (patterns in test code that suggest a problem), flaky tests (tests that pass and fail with no change to the
-code) and mutation testing (planting small bugs to see whether the tests catch them). Contract tests, which run one
-set of checks against a fake and against the real system, keep fakes honest. Meta has published the checks it runs on
-AI-written tests.
+code) and mutation testing (planting small bugs to see whether the tests catch them). Static analysis research covers
+call graphs, which show which methods can call which. Contract tests, which run one set of checks against a fake and
+against the real system, keep fakes honest. Meta has published the checks it runs on AI-written tests.
 
-Two parts of the toolkit's [journey](JOURNEY.md) have no precedent: the **safety inventory before any code runs**, and
-**sorting existing tests that reach external systems**. No evidence supports or refutes either, so the
+Three parts of the toolkit's [journey](JOURNEY.md) have little or no precedent: **finding, before any test runs, which
+tests may reach an external system through the production code**, where one paid tool comes close; the **safety
+inventory as a gate before the first run**; and **sorting existing tests that reach external systems**. The
 [field trial](decisions/0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md)
-tests them hardest.
+and the [checks on real public repos](decisions/0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md)
+test them hardest.
 
 | Step | Nearest prior art | Support |
 |---|---|---|
-| Safety inventory | Forum advice: a start-up check that refuses production | None; the toolkit's own |
-| Discovery | Test-smell catalogues; Sonar and PMD rules; change-history analysis | Supported; searching settings goes further |
+| Discovery: anti-patterns in tests | Test-smell catalogues; Sonar and PMD rules | Supported; run through PMD with the toolkit's rules |
+| Discovery: what the code connects to, and which tests reach it | Static call graphs; one paid tool (Moderne Prethink); open tools that each do one part | Partial; the toolkit's own tool combines them |
+| Safety inventory, the gate before the first run | Forum advice: a start-up check that refuses production | None; the toolkit's own |
 | Measurement | Test Certified's first level; flaky-test and mutation research | Strong |
 | Capture current behaviour | Characterisation and approval tests | Strong |
 | Obstacles and techniques | Measurable success criteria | Partial; no published scoring scheme |
@@ -26,48 +29,36 @@ tests them hardest.
 
 ## What changes when AI assistants do the work
 
-The prior art assumes people do the reading and writing. In the toolkit, people work with an AI assistant, and five
+The prior art assumes people do the reading and writing. In the toolkit, people work with an AI assistant, and six
 things follow.
 
+* **Tools do what a program can decide; the assistant does what needs judgement**
+  ([A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](decisions/0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)).
+  The toolkit's own trials showed why. Reading a module's tests to find anti-patterns, an assistant printed whole files
+  and its answers varied between runs; PMD with the toolkit's rules read the 61 test files of Openfire's server module in about a second, the
+  same way every time. Following the connection-list steps by hand on Openfire, nearly every step was one a program
+  does better, so they moved into a tool, [connection-paths](https://github.com/fiftiesHousewife/connection-paths).
 * **It searches, then reads only what the searches find,** so no file goes unread on large repos
   ([A skill finds what to read by searching, and reads only what the searches find](decisions/0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md)),
   reading only the instructions for the kind of repo in front of it
   ([A skill keeps each kind of repo in its own file, and reads only the ones that apply](decisions/0056-a-skill-keeps-each-kind-of-repo-in-its-own-file-and-reads-only-the-ones-that-apply.md)),
   one module at a time ([The journey works module by module](decisions/0060-the-journey-works-module-by-module.md)).
+  It reads a tool's output through queries, never by printing it whole.
 * **It drafts, and people confirm**
   ([People do the work with AI coding assistance, and review everything it produces](../decision-guides/0005-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md)).
   In Google's AI-assisted test migrations, human review, not generation, set the pace
   ([Google](https://arxiv.org/html/2501.06972v1)).
 * **Its tests pass checks before a person sees them** (see [Tests written by AI](#tests-written-by-ai)).
 * **Skills are evaluated against known answers, with and without the skill**
-  ([The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](decisions/0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md)).
+  ([The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](decisions/0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md)),
+  and checked on real public repos, where a person reviews a sample
+  ([Every skill and tool is also checked against real public repos, by a person's review of a sample](decisions/0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md)).
   One replication found a plain model matched or beat several specialised test-writing tools
   ([replication](https://arxiv.org/html/2601.09695v1)), so a skill has to show what it adds.
 * **Results vary from run to run,** even for identical requests ([Ouyang et al.](https://arxiv.org/html/2308.02828v2)),
-  so each evaluation runs five times each way.
+  so each evaluation runs five times each way, and the mechanical steps that varied most became tools.
 
-## Safety inventory
-
-**Prior art.** No published source makes production safety a first step; the legacy-code literature assumes code runs
-safely in a test harness. The nearest advice comes from forums: a check at test start-up that refuses production, and
-test credentials production rejects ([python-list](https://www.python.org/pipermail/python-list/2013-March/792574.html);
-[hoop.dev](https://hoop.dev/blog/your-integration-tests-are-lying-to-you/)). No source names
-jobs that start themselves, such as schedulers started when a Spring context loads, though a characterisation test
-that loads the context starts them.
-
-**In the toolkit.** [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) turns a secrets
-scan of the whole history, and searches for keystores, production credentials, real personal data, jobs that start
-themselves and build tasks that deploy, into findings, some of which block every run
-([Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](../decision-guides/0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)).
-Neither this step nor discovery runs the repo's code
-([A repo's code first runs in measurement, which comes before capturing current behaviour and again after it](decisions/0058-a-repos-code-first-runs-in-measurement-which-comes-before-capturing-current-behaviour-and-again-after-it.md)),
-and later runs happen only where production can't be reached
-([Old code runs first only where production cannot be reached](../decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md)).
-
-**With an AI assistant.** The assistant reads scan reports and never repeats a secret. In the skill's evaluation, a
-run with the skill passed all 25 checks; a run without it passed 2 and wrote the passwords it found into its reply.
-
-## Discovery
+## Discovery: anti-patterns in existing tests
 
 **Prior art.** Developers mostly discount smells about readability: one study found 87.5% rated low severity
 ([Campos et al.](https://arxiv.org/pdf/2107.13902)). Problems that make results vary matter more. In 51 Apache
@@ -76,12 +67,13 @@ projects, asynchronous waits, concurrency and test order caused 77% of fixed fla
 ([Luo et al.](https://huang.isis.vanderbilt.edu/cs8395/paper/flakytest.pdf)). Disabled tests stay disabled: 41% are
 never resolved ([Kim et al.](https://petertsehsun.github.io/papers/fse2021_disabled_test.pdf)). The toolkit's
 anti-patterns are about whether a test can be trusted, and each has names in the
-[Open Catalog of Test Smells](https://test-smell-catalog.readthedocs.io/en/latest/):
+[Open Catalog of Test Smells](https://test-smell-catalog.readthedocs.io/en/latest/), and checks in Sonar and PMD:
 
-| Toolkit's kind | Names in the literature |
+| Toolkit's kind | Names in the literature and the tools |
 |---|---|
-| `never-runs`, `disabled` | Unknown Test, Commented Test, Ignored Test |
-| `no-real-assertion` | Assertionless Test, Empty Test |
+| `never-runs`, `disabled` | Unknown Test, Commented Test, Ignored Test; Sonar's JUnit 5 tests silently skipped for being private, static or returning a value ([S5810](https://raw.githubusercontent.com/SonarSource/sonar-java/master/sonar-java-plugin/src/main/resources/org/sonar/l10n/java/rules/java/S5810.html)); PMD's JUnit 3-style method that never runs ([PMD](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html)) |
+| `no-real-assertion` | Assertionless Test, Empty Test; Sonar's `assertThat(x)` or `verify(mock)` with nothing after it ([S2970](https://raw.githubusercontent.com/SonarSource/sonar-java/master/sonar-java-plugin/src/main/resources/org/sonar/l10n/java/rules/java/S2970.html)) |
+| `swallows-failures` | Exception Catching Throwing, in tsDetect's catalogue; a test that catches `AssertionError` or `Throwable` and does nothing with it cannot fail |
 | `sleeps` | Sleepy Test |
 | `order-dependent` | Order Dependent Tests, Test Run War |
 | `reaches-external-system` | Mystery Guest, Resource Optimism |
@@ -92,24 +84,130 @@ A search finds a test with no assertion but cannot prove one weak. Methods whose
 test failing turn up everywhere ([Vera-Pérez et al.](https://ar5iv.arxiv.org/html/1807.05030)), and only planted bugs
 find them, so discovery's searches and measurement's planted bugs are both needed.
 
-**No tool or study found reads Spring XML, `.properties` or `application.yml` for external hosts**; research detectors
-look only inside test code ([testsmells.org](https://testsmells.org/pages/testsmells.html)). Searching settings goes
-further, but misses hosts built at run time, so a guard at run time is still needed. Adam Tornhill's "hotspot" analysis
-combines how often a file changes with its size, and finds a small share of files takes most of the change
-([Software (r)Evolution](https://adamtornhill.com/articles/software-revolution/part1/index.html)). It needs only the
-version history.
-
-**In the toolkit.** [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) counts each kind
+**In the toolkit.** [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) runs PMD with the
+toolkit's rules and its copy-paste detector, then reads only the methods PMD flags
+([find-test-anti-patterns runs PMD with the toolkit's rules and searches only what PMD cannot read](decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md)),
+and records each kind
 ([Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
-The connection list is drafted from settings files, and packages are ranked by change frequency times size. Every test
-something is learned about goes into one list, keyed by class and name, which later steps add to instead of searching
-again
+Every test something is learned about goes into one list, keyed by class and name, which later steps add to instead of
+searching again
 ([The tests something is recorded about are kept in one list, each step adding its own fields](decisions/0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md)).
+Packages are ranked by change frequency times size, after Adam Tornhill's "hotspot" analysis, which finds a small share
+of files takes most of the change
+([Software (r)Evolution](https://adamtornhill.com/articles/software-revolution/part1/index.html)).
+
+**Real code corrects the rules.** Run over Openfire 4.6.0's server module, three of the toolkit's rules misread real
+code that the example repo never had: a `test...` helper that a test calls, flagged as never running; `assertNull` as
+the check itself, flagged as weak; a `catch (Throwable)` that records the exception for a later assertion, flagged as
+swallowing it. Each was fixed and added to the example repo, which is why tools and skills are also checked on real
+repos.
 
 **With an AI assistant.** Assistants find smells, but not reliably alone: the best model in one study scored 80.32%
-against a detector's labels ([Santana et al.](https://arxiv.org/abs/2506.07594)). So searches find, the assistant reads
-each hit, and the skill is checked against known answers rather than by its own results
+against a detector's labels ([Santana et al.](https://arxiv.org/abs/2506.07594)). So PMD finds, the assistant reads
+each hit it can't settle, and the skill is checked against known answers rather than by its own results
 ([Panichella et al.](https://pure.tudelft.nl/ws/portalfiles/portal/137994226/s10664_022_10207_5.pdf)).
+
+## Discovery: what the code connects to, and which tests reach it
+
+Test-smell detectors find a test that names a host in its own body (Mystery Guest, Resource Optimism), and look no
+further ([testsmells.org](https://testsmells.org/pages/testsmells.html)). Most tests in old code reach a database or a
+service through the production code: a test of an order service that ends in a JDBC call three classes down. Finding
+those before any test runs needs a call graph, which records which methods can call which, walked back from every
+place a connection is opened to the tests.
+
+**Class level is not enough.** A graph of which classes use which, built by searching, marked 356 of Openfire's 426
+tests (84%) as reaching the database, for every kind of connection alike. Three classes joined everything up: a logging
+class used by 260 others, the server class (192) and the settings class (151); a test that logs anything "reached" the
+database. A plan built on that would treat almost every test as external.
+
+**Method level, and its known trade-offs.** Static call graphs for object-oriented code resolve a call through an
+interface to the methods that may answer it. Class hierarchy analysis takes every overriding method in the class
+hierarchy ([Dean, Grove and Chambers](https://doi.org/10.1007/3-540-49538-X_5)); rapid type analysis keeps only
+classes the program creates ([Bacon and Sweeney](https://doi.org/10.1145/236337.236371)); points-to analyses go
+further at more cost. Practical analyses are knowingly unsound for reflection and similar dynamic features, which their
+authors call "soundiness" ([Livshits et al.](https://doi.org/10.1145/2644805)), and studies of Java call graph tools
+find each misses edges from such features
+([Reif et al.](https://doi.org/10.1145/3293882.3330555); [Sui et al.](https://doi.org/10.1145/3377811.3380441)). So a
+static graph says which tests **may** reach a system, and the first run confirms or clears each one.
+
+On Openfire, two rules made the method-level graph useful. Following calls through the JDK's own interfaces (`Map.put`
+into a project class that extends a map) marked 260 of 415 tests; not following them, 155. And calls through
+dispatch points with many implementations ("notify every registered listener", "every packet handler") marked every
+test as opening a socket; reporting dispatch points with more than three implementations instead of following them took
+that from 169 tests to none, while the database paths, through an interface with three implementations, stayed.
+
+**The tools.** No free tool finds a Java program's connections, their addresses and the tests that reach them. Checked
+for use inside a company, on private code, on Windows without admin rights:
+
+| Tool | Connections | Addresses | Tests that reach them | Fit |
+|---|---|---|---|---|
+| [Moderne Prethink](https://docs.moderne.io/user-documentation/agent-tools/prethink) | Databases, HTTP, messaging | Not documented | A test-to-code mapping | Closest, but proprietary: Moderne licence only ([licensing](https://docs.openrewrite.org/licensing/openrewrite-licensing)) |
+| [OpenRewrite](https://docs.moderne.io/user-documentation/recipes/recipe-catalog/core/findcallgraph), open source (Apache-2.0) | From method patterns we supply | No | One row per call; chains and interfaces are ours to follow | Runs through the build's Maven or Gradle plug-in |
+| [jQAssistant](https://github.com/jQAssistant/jqassistant) (GPL-3.0) | By our own graph queries | No | By queries over compiled classes | Needs a graph database and its query language |
+| [CodeQL](https://github.com/github/codeql/pull/12081) | Models for JDBC URLs, opened URLs and more | Partly | Yes | Paid for private code ([licence](https://github.com/github/codeql-cli-binaries/blob/main/LICENSE.md)) |
+| [Joern](https://docs.joern.io/frontends/java/) (Apache-2.0) | By queries | No | Method-level graph from source | Scala; a 1.8 GB distribution, or about 90 MB of libraries assembled by hand |
+| [codeanalyzer-java](https://github.com/codellm-devkit/codeanalyzer-java) (Apache-2.0) | JPA only | No | Partly | Needs Linux, macOS or WSL |
+| [Konveyor](https://github.com/konveyor/kantra/blob/main/docs/containerless.md), Red Hat MTA, [Azure AppCAT](https://learn.microsoft.com/azure/migrate/appcat/java-preview) | Technology tags, as file and line | No | No | Migration assessment, not test planning |
+| [Semgrep](https://docs.semgrep.dev/semgrep-pro-vs-oss) | Patterns | No | Cross-file only in the paid edition | — |
+| [SootUp](https://soot-oss.github.io/SootUp/latest/call-graph-construction/), WALA, OPAL, [java-callgraph](https://github.com/gousiosg/java-callgraph), [jdeps](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jdeps.html) | — | — | Call graphs from compiled classes | Libraries to build on, or class level only |
+| [Teamscale](https://docs.teamscale.com/howto/providing-testwise-coverage), OpenClover | — | — | Per-test coverage | Only by running the tests |
+
+**Compared on Openfire.** OpenRewrite's open-source call graph, walked with the toolkit's rules, against
+connection-paths, on Openfire's server module with the same classpath:
+
+| | connection-paths | OpenRewrite's tables |
+|---|---|---|
+| Time | 20 s, one jar | 1 min 45 s, through the Maven plug-in |
+| Calls resolved | 99.8% | all, from the compiler's own types; 33 files flagged as partly extracted |
+| Tests reaching a connection from their own body | 122 | the same 122 |
+| Tests reaching one through set-up methods and fields | 40 more | can't tell: the tables hold no annotations, and no calls from field initialisers |
+| Connection points | 54 | 37: the tables hold only the repo's own class hierarchy, so a call on a library's subclass (`CloseableHttpClient.execute`) can't match a rule on `HttpClient` |
+| Where an address comes from | traced from the syntax tree | nothing to trace it from |
+
+An adapter over OpenRewrite would have to rebuild most of connection-paths, so the toolkit builds its own, on
+JavaParser's symbol solver, and borrows the connection-call lists of Prethink's and Konveyor's documented detectors
+(connection-paths' [decision](https://github.com/fiftiesHousewife/connection-paths/blob/main/docs/decisions/0005-connection-paths-is-built-not-adopted-after-checking-the-existing-tools.md)).
+The comparison also found two mail calls the toolkit's rules had missed.
+
+**In the toolkit.** [connection-paths](https://github.com/fiftiesHousewife/connection-paths) reads a module's source
+with the classpath its build resolves (building without running tests is allowed before the safety gate:
+[why](decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)). It finds every
+connection point, walks the graph back to the tests, follows set-up methods and field initialisers, and reports what it
+couldn't resolve and the dispatch points it didn't follow. On Openfire it found that 162 of 415 tests may reach the
+database, every one through one seam (the test kit's fixtures, the settings class, the connection manager), which is
+what a plan needs: one stand-in covers them all.
+[draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) runs it, settles what the tool
+can't, and drafts the connection list, one system per host, else per setting, else per class that opens it
+([A connection whose address isn't known is a system of its own per class that opens it](decisions/0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md)).
+Measurement's first run then confirms or clears each test; the
+[airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), where approved, catches what no static graph
+can: reflection, beans wired only in XML, addresses built at run time.
+
+**With an AI assistant.** The tool decides; the assistant reads its facts by query, traces the few addresses the tool
+couldn't, and asks a person about alternatives (two database providers a program chooses between at run time) and
+placeholder values (`YOUR-CROWD-SERVER` in a shipped settings file).
+
+## Safety inventory: the gate before the first run
+
+**Prior art.** No published source makes production safety a step of its own; the legacy-code literature assumes code
+runs safely in a test harness. The nearest advice comes from forums: a check at test start-up that refuses production,
+and test credentials production rejects
+([python-list](https://www.python.org/pipermail/python-list/2013-March/792574.html);
+[hoop.dev](https://hoop.dev/blog/your-integration-tests-are-lying-to-you/)). No source names jobs that start
+themselves, such as schedulers started when a Spring context loads, though a characterisation test that loads the
+context starts them.
+
+**In the toolkit.** [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) turns a secrets
+scan of the whole history, and searches for keystores, production credentials, real personal data, jobs that start
+themselves and build tasks that deploy, into findings, some of which block every run
+([Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](../decision-guides/0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)).
+It runs alongside discovery and is settled before any test or the application runs; discovery itself runs nothing but
+the build ([The safety inventory is a gate before the first run, and no skill ever copies a secret](decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)),
+and later runs happen only where production can't be reached
+([Old code runs first only where production cannot be reached](../decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md)).
+
+**With an AI assistant.** The assistant reads scan reports and never repeats a secret. In the skill's evaluation, a
+run with the skill passed all 25 checks; a run without it passed 2 and wrote the passwords it found into its reply.
 
 ## Measurement
 
@@ -120,6 +218,12 @@ bugs and counts how many the tests catch, refuses a suite that is not passing, a
 ([PIT FAQ](https://pitest.org/faq/); [Lam et al., iDFlakies](https://par.nsf.gov/servlets/purl/10101224)). AI
 assistants copy the flakiness of tests in front of them, and the researchers advise fixing flaky tests first
 ([study](https://arxiv.org/abs/2601.08998)). So the existing suite is measured before anything is added.
+
+**Old code often doesn't build at first.** Openfire 4.6.0 is a well-kept project, yet one of its libraries is now in
+only one of the Maven repositories its build names, and another of those refuses it; a module also depends on a
+sibling module that was never published. So measurement goes in stages, each gating the next, and a repo that stops
+after any stage still has a result
+([Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](decisions/0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md)).
 
 **Order matters more than the number of runs.** In iDFlakies' sample, 50.5% of flaky tests depended on test order,
 which reruns in one order "cannot detect". Lam et al. advise more orders with fewer runs each, and about five reruns
@@ -135,11 +239,11 @@ By that model, a connection refused on `localhost` is a missing local service, n
 computes no whole-codebase score ([Petrović et al.](https://arxiv.org/abs/2102.11378)), and PIT advises targeting the
 packages of interest.
 
-**In the toolkit.** [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) is the first run of the repo's code. It
-leaves out by filter the tests discovery found reaching external systems; runs once in the original order, once
-reversed and three times shuffled with a recorded seed; reruns each failure to tell flaky, order-dependent and
-always-failing tests apart; and sorts connection errors by destination, off the machine being external and `localhost`
-set-up work
+**In the toolkit.** [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) is the first run of the repo's tests.
+It builds; runs every test once, leaving out by filter the tests discovery found reaching external systems; runs the
+tests that passed once reversed and three times shuffled with a recorded seed, rerunning each failure to tell flaky,
+order-dependent and always-failing tests apart; and sorts connection errors by destination, off the machine being
+external and `localhost` set-up work
 ([Measurement leaves out external tests, varies the test order, and sorts connection errors by where they were going](decisions/0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md)).
 Maven's test runner runs every test when no exclude is set
 ([JUnit 4 wiki](https://github.com/junit-team/junit4/wiki/Categories)), so a run with its filter missing stops. Planted
@@ -244,7 +348,8 @@ review every test, as with TestGen-LLM and ACH.
 
 ## Tests that reach external systems
 
-A test double is a stand-in for a real dependency: a fake (a working, simplified version), a stub (canned answers) or
+Discovery finds which tests may reach an external system ([above](#discovery-what-the-code-connects-to-and-which-tests-reach-it));
+measurement confirms them. What happens to them then has less precedent. A test double is a stand-in for a real dependency: a fake (a working, simplified version), a stub (canned answers) or
 a mock (which also checks how it was called).
 
 **The order of preference.** Google prefers the real implementation, then a fake, then stubs used sparingly, then
@@ -292,15 +397,19 @@ failure opens a work item and never breaks a normal build
 
 ## The limits of the evidence, and false confidence to avoid
 
-The larger risk is false confidence, not a missing step. Three things read as stronger evidence than they are:
+The larger risk is false confidence, not a missing step. Four things read as stronger evidence than they are:
 
 * **A clean five-run report.** A test failing one time in ten shows both results in five runs only about 41% of the
   time; one failing one time in a hundred, about 5%. Studies running suites thousands of times keep finding new flaky
   tests ([Parry et al.](https://philmcminn.com/publications/parry2021.pdf)). The result is "flaky tests found in five
   runs", a lower bound, never "no flaky tests".
-* **A high coverage figure.** Coverage correlates only weakly with finding faults once suite size is controlled. Planted bugs do better, though the link weakens
-  once suite size is controlled ([Papadakis et al.](https://orbilu.uni.lu/handle/10993/34950)), and coverage that varies
-  between runs moves the score by about four points ([Shi et al.](https://par.nsf.gov/servlets/purl/10104340)).
+* **A high coverage figure.** Coverage correlates only weakly with finding faults once suite size is controlled.
+  Planted bugs do better, though the link weakens once suite size is controlled
+  ([Papadakis et al.](https://orbilu.uni.lu/handle/10993/34950)), and coverage that varies between runs moves the score
+  by about four points ([Shi et al.](https://par.nsf.gov/servlets/purl/10104340)).
+* **A static list of the tests that reach external systems.** A call graph both over-reaches (an interface with
+  several implementations, a code path a test never takes) and misses (reflection, beans wired only in XML, addresses
+  built at run time). "May reach" is a plan to check, not a finding, until the first run confirms or clears it.
 * **A passing AI-written test.** Its expected values confirm what the code does today.
 
 No study evaluates the safety inventory, the sorting of external tests, blocking the network inside the JVM,
@@ -317,22 +426,20 @@ Do not cite it. Figures that sources back only with slides, search snippets or s
   and calls it risky work needing care. Until the field trial shows which option would have handled each case, the
   skill stops and records the refactoring as work
   ([What the follow-up skill does where an external test has no seam](decisions/0064-what-the-follow-up-skill-does-where-an-external-test-has-no-seam.md)).
+* **How precise "may reach" is on real code.** On Openfire every chain read looked real, but no one has yet compared
+  the static list with what the tests do when they run. The field trial measures both.
+* **Connections that no call matches.** Clients declared as annotated interfaces (Feign, some JAX-RS clients) have no
+  supertype for a rule to match, and need a rule on the annotation.
 * **The full record of which tests catch each planted bug.** PIT stops at the first, and its documentation calls the
   full record partially supported, with no stated cost. The field trial tries it on one module, with its run time.
 * **The mocks-everything threshold has no published basis.** Developers say excessive mocking hides design problems,
   but no study gives a number
   ([Spadini et al.](https://repository.tudelft.nl/record/uuid:a0b02521-ad00-4f96-9d96-17a85dc23f99)). The toolkit's
   five mocks should be calibrated from an organisation's repos, or replaced by a count with no cut-off.
+* **Which other steps become tools.** Most skills have mechanical steps (turning reports into the assessment file,
+  applying the techniques' rules, generating the plan); whether they become one tool with a step each is
+  [proposed](decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md).
 * **Smaller additions still to come:**
-  * **Tests that swallow exceptions,** a new anti-pattern: a test that catches an exception, or `AssertionError`,
-    `Error` or `Throwable` around its assertions, and does nothing with it, so it cannot fail. It is distinct from the
-    correct JUnit idiom, where `fail()` follows the call inside the try and only the expected exception is caught.
-  * One-search checks from Sonar and PMD: JUnit 5 tests silently skipped for being private, static or returning a value
-    ([Sonar](https://raw.githubusercontent.com/SonarSource/sonar-java/master/sonar-java-plugin/src/main/resources/org/sonar/l10n/java/rules/java/S5810.html));
-    `assertThat(x)` or `verify(mock)` with nothing after it
-    ([Sonar](https://raw.githubusercontent.com/SonarSource/sonar-java/master/sonar-java-plugin/src/main/resources/org/sonar/l10n/java/rules/java/S2970.html));
-    TestNG's `enabled = false`; JUnit 3-style methods that never run under JUnit 4
-    ([PMD](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html)).
   * Unstable output removed from approval tests; keeping them (Feathers) or retiring them after the change (Carlo).
   * A written policy that new code comes with tests, and checks on new tests at commit time.
   * Stand-ins and test frameworks pinned to each JDK line: JUnit 6 needs Java 17
