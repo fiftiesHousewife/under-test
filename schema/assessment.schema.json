@@ -176,7 +176,7 @@
             "required": ["id", "kind", "tests"],
             "properties": {
               "id": {"$ref": "#/$defs/id"},
-              "kind": {"enum": ["no-real-assertion", "disabled", "never-runs", "sleeps", "order-dependent", "reaches-external-system", "mocks-everything", "copy-pasted", "other"]},
+              "kind": {"enum": ["no-real-assertion", "disabled", "never-runs", "swallows-failures", "sleeps", "order-dependent", "reaches-external-system", "mocks-everything", "copy-pasted", "other"]},
               "tests": {"type": "integer", "minimum": 1},
               "examples": {"$ref": "#/$defs/where"}
             }

@@ -14,7 +14,7 @@ group: Test hygiene
 
 An old repo's tests often look better than they are: tests with no real assertions, tests switched off years ago,
 tests that wait with fixed sleeps, tests that only pass in a certain order, tests that reach external systems, tests that
-mock everything they touch, copy-pasted tests and whole copied classes, and methods that look like tests but never run
+mock everything they touch, copy-pasted tests and whole copied classes, tests that swallow their own failures in a catch block, and methods that look like tests but never run
 (an annotation missing or commented out, or a folder or class name the build doesn't pick up). Coverage figures count them all, so they overstate how far the tests
 can be trusted. Some of them still pin behaviour nothing else records.
 

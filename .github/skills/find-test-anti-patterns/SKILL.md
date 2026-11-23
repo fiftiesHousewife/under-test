@@ -37,7 +37,7 @@ unless its test task's `include` or `exclude` filters leave it out. Use `grep -r
 
 | A test is | Its line |
 |---|---|
-| A method marked `@Test`, `@ParameterizedTest`, `@RepeatedTest` or `@TestFactory` | The line with its name, not its annotation: the first `void <name>(` line after the annotation |
+| A method marked `@Test`, `@ParameterizedTest`, `@RepeatedTest` or `@TestFactory` | The line with its name, not its annotation: the first method line after the annotation |
 | A public `void test...()` in a class extending `TestCase` | The line with its name |
 
 ```bash
@@ -52,6 +52,8 @@ kind:
 * a method marked `@Ignore` or `@Disabled` with no test annotation (one with a test annotation is `disabled`);
 * a method whose test annotation is commented out (`// @Test`);
 * a `public void test...()` method with no test annotation, in a class that doesn't extend `TestCase`;
+* in a JUnit 5 or 6 class (one importing `org.junit.jupiter`), a test method that is `private` or `static`, or returns
+  a value (anything but `void`, except a `@TestFactory`): JUnit skips it without a word;
 * every test in a folder the build doesn't name as a test source set;
 * with Maven, every test in a class the test runner doesn't pick up ([maven.md](maven.md)).
 
@@ -76,7 +78,8 @@ methods or superclasses. Each kind has a search; read only the tests and files i
 |---|---|
 | `never-runs` | It looks like a test but never runs (step 1). |
 | `disabled` | It or its class has `@Ignore` or `@Disabled`. |
-| `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertNull`, `assertTrue(true)`, `isNotNull()`. `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real. |
+| `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertNull`, `assertTrue(true)`, `isNotNull()`, a bare `assertThat(x);` with nothing after it, a bare `verify(mock);`, or `expected = Exception.class` or `Throwable.class`. `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real. |
+| `swallows-failures` | Its body catches an exception around the code it tests and does nothing that fails: the catch block is empty, or only logs or prints. Or it catches `AssertionError`, `Error` or `Throwable`, which swallows its own failures. **Not** the expected-exception idiom: a `try` whose last statement is `fail(...)`, with a catch of the expected exception that is empty or checks it. |
 | `sleeps` | Its body, or a `@Before`/`@BeforeEach` method of its class (then every test in the class), calls `Thread.sleep` or `TimeUnit.<unit>.sleep`. |
 | `order-dependent` | Its class has `@FixMethodOrder` or `@TestMethodOrder`, whatever its argument. |
 | `reaches-external-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context ([spring-xml.md](spring-xml.md)). **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
@@ -93,7 +96,8 @@ grep -rnE '@(FixMethodOrder|TestMethodOrder)' <test folders>                    
 grep -rcE '@Mock\b|@MockBean\b|[^A-Za-z.]mock\(|Mockito\.mock\(' --include='*.java' <test folders>   # mocks-everything: read files with 5 or more
 grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>   # reaches-external-system: drop the never-a-host lines
 find <test folders> -name '*.java' | sed 's|.*/||' | sort | uniq -d                    # copy-pasted: classes under more than one folder; compare each pair with cmp or diff
-grep -rnE 'assertNotNull|assertNull|assertTrue\(true\)|isNotNull\(\)' --include='*.java' <test folders>
+grep -rnE -A3 'catch *\((final )?[A-Za-z.]*(Exception|AssertionError|Error|Throwable)[ |A-Za-z.]* [A-Za-z_]+\) *\{' --include='*.java' <test folders>   # swallows-failures: read each try and catch
+grep -rnE 'assertNotNull|assertNull|assertTrue\(true\)|isNotNull\(\)|assertThat\([^,;.()]*(\([^,;.()]*\))?\) *;|verify\([A-Za-z0-9_]+\) *;|expected *= *(Exception|Throwable)\.class' --include='*.java' <test folders>
 ```
 
 For `no-real-assertion`, run this skill's [scripts/no-real-assertion.awk](scripts/no-real-assertion.awk) (run it; don't
@@ -108,6 +112,13 @@ For `copy-pasted`, run PMD's `cpd --minimum-tokens 75 --dir <test folders>` if P
 tests within each class, and the classes the search above finds under more than one folder, and say in the report
 that copying between other classes wasn't checked. `other` has no search:
 look for it only in the tests you read for the other kinds.
+
+The same problems go by other names in the research and in tools such as tsDetect and Sonar, worth knowing when
+comparing: `never-runs` is an unknown or commented-out test; `disabled` an ignored test; `no-real-assertion` an
+assertion-free, empty or unchecked test; `swallows-failures` an exception-catching test; `sleeps` a sleepy test;
+`order-dependent` interacting tests; `reaches-external-system` a mystery guest or resource optimism; `mocks-everything`
+excessive mocking; `copy-pasted` test clones. The five-mock threshold for `mocks-everything` has no published basis:
+the report gives each counted class's number of mocks, so the threshold can be judged against the repo.
 
 ## 3. Write the section
 
@@ -200,7 +211,7 @@ decisions:
 | `never-runs` | `"Application Owner decides: make it a real test, or delete once the approval-test baseline exists"` |
 | `reaches-external-system` | `tagged and left out of normal runs` |
 | `sleeps`, `order-dependent` | `fixed in the fix-flaky-tests workstream` |
-| `no-real-assertion`, `mocks-everything`, `copy-pasted`, `other` | `fixed in the strengthen-tests workstream` |
+| `no-real-assertion`, `swallows-failures`, `mocks-everything`, `copy-pasted`, `other` | `fixed in the strengthen-tests workstream` |
 
 ## 5. Report
 

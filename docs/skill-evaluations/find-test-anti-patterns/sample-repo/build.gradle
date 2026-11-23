@@ -21,6 +21,9 @@ tasks.register('integrationTest', Test) {
 
 dependencies {
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.3'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.10.3'
     testImplementation 'org.mockito:mockito-core:3.12.4'
     testImplementation 'org.springframework:spring-test:5.3.39'
     testImplementation 'io.cucumber:cucumber-junit:7.14.0'
