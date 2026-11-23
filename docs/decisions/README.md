@@ -61,6 +61,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [A Maven repo is measured with the agents in JAVA_TOOL_OPTIONS, and JaCoCo and PIT run from the command line](0049-a-maven-repo-is-measured-with-the-agents-in-java-tool-options-and-jacoco-and-pit-run-from-the-command-line.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The toolkit reaches each repo through APM, pinned to a release tag, and nothing in it is copied](0051-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag-and-nothing-in-it-is-copied.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [An organisation adopts every decision guide in its toolkit version by default, and records only its departures](0052-an-organisation-adopts-every-decision-guide-in-its-toolkit-version-by-default-and-records-only-its-departures.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [A skill finds what to read by searching, and reads only what the searches find](0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

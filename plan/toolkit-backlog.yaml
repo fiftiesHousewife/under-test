@@ -401,6 +401,7 @@ items:
     done_by: "person"
     done_when:
       - "With no airgap reports, the draft-the-connection-list skill drafts a connection for each address in the repo's settings files, marked as found in settings"
+      - "Settings files include Spring XML contexts and the files they load (imports and property placeholders); XML namespace, schema-location and DTD addresses are never connections"
       - "With reports, a connection found in both is one connection with both sources, and one found only by the agent is added"
       - "Its eval case has a variant with no reports, and both pass in every run"
   - key: "field-trial-the-journey-on-messy-public-repos"
@@ -1468,3 +1469,15 @@ items:
       - "An eval case with a repo holding two applications passes in every run, each skill touching only the folder it was given"
     blocked_by:
       - "decide-a-repo-with-several-applications-keeps-each-applications-testing-files-in-their-own-folder"
+  - key: "decide-a-skill-finds-what-to-read-by-searching"
+    status: "done"
+    type: "decision"
+    title: "A skill finds what to read by searching, and reads only what the searches find"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md"
