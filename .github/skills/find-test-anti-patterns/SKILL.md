@@ -5,7 +5,8 @@ description: Find anti-patterns in a repo's existing tests, by searching the tes
 
 # Finding anti-patterns in existing tests
 
-Write the `anti_patterns` section of `testing/assessment.yaml` ([schema](../../../schema/assessment.schema.json)).
+Write two files: every test found in `testing/tests.yaml` ([schema](../../../schema/tests.schema.json)), and a summary in
+the `anti_patterns` section of `testing/assessment.yaml` ([schema](../../../schema/assessment.schema.json)). Both, every time.
 Read code only: **never** build, test or run the repo, or change or delete a test
 ([why](../../../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
 
@@ -155,7 +156,7 @@ where it is installed with the repo, otherwise
 `https://raw.githubusercontent.com/fiftiesHousewife/under-test/main/schema/assessment.schema.json`), `schema:
 assessment/1`, `repo: {name: <the repo's folder name>}`, then the section.
 
-## 3a. Record every test found
+## 3a. Write every test found to testing/tests.yaml
 
 Later steps work from this list instead of searching again: the stand-ins for each connection, the flaky-test fixes,
 and the Application Owner's decisions. It is shared: other skills record their own findings about the same tests
@@ -164,7 +165,7 @@ In `testing/tests.yaml` ([schema](../../../schema/tests.schema.json)), this skil
 and each entry's `anti_patterns`; never change anything else.
 
 * Each test counted under any kind has an entry, found by its `test`: `<fully qualified class>.<method>`, as JUnit's
-  reports name it. Add an entry if there is none; set its `at` to `"path:line"` from step 1, and its `anti_patterns`:
+  reports name it, always in double quotes (a scenario's name holds a `:`). Add an entry if there is none; set its `at` to `"path:line"` from step 1, and its `anti_patterns`:
   * `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...);
   * `reaches`, for `reaches-external-system`: each host (no scheme, port or path; a JNDI name for a JNDI lookup),
     its `kind` (`database`, `http`, `mail`, `directory`, `queue`, `file-share` or `other`), `through` (`code`,
@@ -181,7 +182,7 @@ schema: tests/1
 found_by:
   find-test-anti-patterns: {version: unreleased, commit: "1a2b3c4"}
 tests:
-  - test: com.example.orders.OrderRepositoryIT.findsAnOrder
+  - test: "com.example.orders.OrderRepositoryIT.findsAnOrder"
     at: "src/test/java/com/example/orders/OrderRepositoryIT.java:13"
     anti_patterns:
       kinds: [reaches-external-system]

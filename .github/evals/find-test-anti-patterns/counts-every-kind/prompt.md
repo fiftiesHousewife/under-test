@@ -1,7 +1,7 @@
 ---
 runs: 5
 max_turns: 30
-timeout_seconds: 600
+timeout_seconds: 1200
 allowed_tools: [Read, Glob, Grep, Write, Edit, Bash, Skill]
 ---
 How good are this repo's existing tests? Find the anti-patterns in them and record them in the `anti_patterns`
