@@ -10,6 +10,10 @@ the `anti_patterns` section of `testing/assessment.yaml` ([schema](../../../sche
 Read code only: **never** build, test or run the repo, or change or delete a test
 ([why](../../../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
 
+Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
+your reply: point at its file and line instead
+([why](../../../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
 ## 0. Read what applies
 
 Find out which of these the repo has, and read the file for each one that applies, now, before searching. Read no

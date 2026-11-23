@@ -12,6 +12,10 @@ styles, or put anything in the data that isn't in the files. The files follow
 [the connection list's](../../../schema/connection-list.schema.json) and
 [the source list's](../../../schema/source-list.schema.json). The page is never edited: make it again instead.
 
+Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
+your reply: point at its file and line instead
+([why](../../../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
 ## 1. Make the report
 
 Run this from the repo's root, with `TEMPLATE` set to the template's path: the toolkit's root is three folders up

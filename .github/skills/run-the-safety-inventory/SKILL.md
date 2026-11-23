@@ -1,6 +1,6 @@
 ---
 name: run-the-safety-inventory
-description: Turn a repo's gitleaks reports into the safety section of its testing/assessment.yaml, before any of its code is built or run. Use when starting work on a repo, or when asked for its safety inventory or secrets scan.
+description: Turn a repo's gitleaks reports into the safety section of its testing/assessment.yaml, before any of its tests or its application run. Use when starting work on a repo, or when asked for its safety inventory or secrets scan.
 ---
 
 # Running the safety inventory

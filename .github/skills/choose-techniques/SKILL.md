@@ -7,6 +7,10 @@ description: Propose adopt, defer or reject for every technique in techniques/ a
 
 You propose; people decide. Don't build or run anything.
 
+Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
+your reply: point at its file and line instead
+([why](../../../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
 ## 1. Read
 
 The repo's `testing/assessment.yaml` ([its schema](../../../schema/assessment.schema.json)), or stop if it is missing;

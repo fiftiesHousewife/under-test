@@ -10,6 +10,10 @@ The plan is generated, never edited by hand
 and [load-repo-work-into-the-issue-tracker](../load-repo-work-into-the-issue-tracker/SKILL.md) matches it to tracker
 items by key. Follow these rules exactly, add nothing that isn't in the files, and change no other file.
 
+Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
+your reply: point at its file and line instead
+([why](../../../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
 ## 1. Read and check
 
 Read `testing/assessment.yaml` ([its schema](../../../schema/assessment.schema.json));

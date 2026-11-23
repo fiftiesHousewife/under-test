@@ -11,6 +11,10 @@ exactly, and write the `obstacles` section of `testing/assessment.yaml` ([schema
 If the organisation repo's own version of that guide has a different table, the person will say so: use theirs.
 Read only `testing/assessment.yaml` and `testing/connections.calm.json`; don't read or run the repo's code.
 
+Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
+your reply: point at its file and line instead
+([why](../../../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
 ## 1. Facts
 
 * A **connection** is a relationship in the connection list whose `metadata.under-test.state` isn't `stale`; its

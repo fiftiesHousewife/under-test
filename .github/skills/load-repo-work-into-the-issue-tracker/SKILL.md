@@ -13,6 +13,10 @@ description: Load a repo's approved testing/TESTING-PLAN.md into the organisatio
 > item by any other means: not the backlog importer, not an MCP server, not by hand. The rules below are what the
 > loader does, so it can be built to them.
 
+Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
+your reply: point at its file and line instead
+([why](../../../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
 The plan comes from the [write-the-testing-plan](../write-the-testing-plan/SKILL.md) skill, which keeps each row's
 Tracker item when it regenerates the plan.
 

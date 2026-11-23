@@ -11,6 +11,10 @@ and write the `tests` and `level` sections of `testing/assessment.yaml` ([schema
 Planted bugs measure the [mutation testing](../../../techniques/mutation-testing/technique.yaml) technique. Never
 change the repo's build files or tests.
 
+Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
+your reply: point at its file and line instead
+([why](../../../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
 ## 1. Stop unless
 
 | Check | Otherwise |
