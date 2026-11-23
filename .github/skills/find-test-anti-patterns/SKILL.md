@@ -38,8 +38,8 @@ methods or superclasses.
 * A finding for each kind with at least one test, keys in this order: `id` (the kind, or `other-...`), `kind`,
   `tests` (the count), `examples`. Findings sorted by `id`.
 * `examples`: one line, the first three counted tests sorted by path (byte order) then by line as a number, as
-  quoted `"path:line"`. The line is the test's own line, the one with its method name, even when the problem shows
-  on a later line, such as a call that depends on an earlier test.
+  quoted `"path:line"`. The line is the test's own line, the one with its method name: not the `@Test` line above
+  it, and not a later line where the problem shows, such as a call that depends on an earlier test.
 * `found_by`: `tool: find-test-anti-patterns`; `version`: the organisation profile's `toolkit.version` if you have it,
   else `unreleased`; `commit`: `git rev-parse --short HEAD` in the repo, in double quotes (no git repository:
   stop and say so).
