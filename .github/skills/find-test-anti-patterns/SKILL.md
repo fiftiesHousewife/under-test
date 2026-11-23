@@ -21,11 +21,12 @@ other.
 | It builds with Maven (a `pom.xml`, no Gradle build file) | [maven.md](maven.md) |
 | The test folders hold `.feature` files | [cucumber.md](cucumber.md) |
 | The build uses Spring Boot (`org.springframework.boot` in a build file) | [spring-boot.md](spring-boot.md) |
-| There is no `pmd` command (below) | [without-pmd.md](without-pmd.md) |
+| Neither `pmd` nor `.pmd/pmd` runs (the check below prints no PMD version) | [without-pmd.md](without-pmd.md) |
 | Test code loads Spring XML: `@ContextConfiguration` or `@ImportResource` naming XML, `getConfigLocations()`, or `new ...XmlApplicationContext(` | [spring-xml.md](spring-xml.md) |
 
 ```bash
 ls settings.gradle* build.gradle* pom.xml 2>/dev/null; grep -lE '^\s*include|<modules>' settings.gradle* pom.xml 2>/dev/null
+(pmd --version || .pmd/pmd --version) 2>/dev/null | head -1           # PMD: on the path, or installed by the toolkit's set-up in .pmd/
 find <test folders> -name '*.feature' | head -1
 grep -lE 'org\.springframework\.boot' build.gradle* pom.xml */build.gradle* */pom.xml 2>/dev/null
 grep -rlE '@(ContextConfiguration|ImportResource)\(.*\.xml|getConfig(Locations|Paths)|XmlApplicationContext\(' --include='*.java' <test folders>
