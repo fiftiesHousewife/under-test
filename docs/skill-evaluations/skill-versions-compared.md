@@ -96,3 +96,14 @@ is Maven's only. One run without the skill timed out while the network was down.
   deferral in one run, a different one each time) with a few turns fewer.
 * **Chance moves the results a little.** The same instructions vary by up to 0.04 in mean score and a few turns
   between rounds, so a smaller change after an edit to a skill isn't evidence either way.
+
+## Round 8: the list of tests, swallowed failures and tests JUnit 5 skips
+
+| Skill | Case | Without, round 8 | With, round 8 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.40 (0 of 5), $0.17, 7 turns | 0.99 (4 of 5), $0.31, 11 turns |
+
+With the skill, every run wrote `testing/tests.yaml` keyed by class and method, found both tests that swallow their
+own failures and left the try, fail, catch idiom alone, and found the JUnit 5 tests that silently never run. The one
+miss is one example's line again. The larger example repo and the extra checks cost $0.09 a run more than round 7.
+
