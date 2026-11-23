@@ -1,6 +1,6 @@
 ---
 name: find-test-anti-patterns
-description: Find anti-patterns in a repo's existing tests, by searching the test code and reading only what the searches find, write every test it finds to testing/anti-pattern-tests.yaml, and summarise them in the anti_patterns section of its testing/assessment.yaml. Use in discovery, or when asked how good a repo's existing tests are.
+description: Find anti-patterns in a repo's existing tests, by searching the test code and reading only what the searches find, record every test it finds in testing/tests.yaml, and summarise them in the anti_patterns section of its testing/assessment.yaml. Use in discovery, or when asked how good a repo's existing tests are.
 ---
 
 # Finding anti-patterns in existing tests
@@ -137,30 +137,38 @@ where it is installed with the repo, otherwise
 `https://raw.githubusercontent.com/fiftiesHousewife/under-test/main/schema/assessment.schema.json`), `schema:
 assessment/1`, `repo: {name: <the repo's folder name>}`, then the section.
 
-## 3a. List every test found
+## 3a. Record every test found
 
 Later steps work from this list instead of searching again: the stand-ins for each connection, the flaky-test fixes,
-and the Application Owner's decisions. Write `testing/anti-pattern-tests.yaml`
-([schema](../../../schema/anti-pattern-tests.schema.json)), replacing any earlier one: one entry for every test
-counted under any kind, sorted like the examples.
+and the Application Owner's decisions. It is shared: other skills record their own findings about the same tests
+([why](../../../docs/decisions/0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md)).
+In `testing/tests.yaml` ([schema](../../../schema/tests.schema.json)), this skill owns only `found_by.find-test-anti-patterns`
+and each entry's `anti_patterns`; never change anything else.
 
-* `at`: `"path:line"`, as in step 1. `name`: `<Class>.<method>`.
-* `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...).
-* `reaches`, for `reaches-external-system`: each host (no scheme, port or path), `through` (`code`, `properties`,
-  `yaml`, `spring-xml` for a host in a Spring XML context or a file that context loads, or `airgap-report`), and
-  `where`, the `path:line` naming it.
-* `copy_of`, for `copy-pasted`: the `path:line` of one test it is a copy of.
+* Each test counted under any kind has an entry, found by its `test`: `<fully qualified class>.<method>`, as JUnit's
+  reports name it. Add an entry if there is none; set its `at` to `"path:line"` from step 1, and its `anti_patterns`:
+  * `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...);
+  * `reaches`, for `reaches-external-system`: each host (no scheme, port or path), `through` (`code`, `properties`,
+    `yaml`, `spring-xml` for a host in a Spring XML context or a file that context loads, or `airgap-report`), and
+    `where`, the `path:line` naming it;
+  * `copy_of`, for `copy-pasted`: the `test` of one test it is a copy of.
+* From every other entry, remove `anti_patterns`; an entry left with only `test` and `at` goes.
+* Set `found_by.find-test-anti-patterns` to the same `version` and `commit` as the summary. Keep entries sorted by `test`.
+* No file yet: create it with `# yaml-language-server: $schema=<path>` (as for the assessment file, with
+  `schema/tests.schema.json`), `schema: tests/1`, then `found_by` and `tests`.
 
 ```yaml
-# yaml-language-server: $schema=<path to the toolkit's schema/anti-pattern-tests.schema.json>
-schema: anti-pattern-tests/1
-found_by: {tool: find-test-anti-patterns, version: unreleased, commit: "1a2b3c4"}
+# yaml-language-server: $schema=<path to the toolkit's schema/tests.schema.json>
+schema: tests/1
+found_by:
+  find-test-anti-patterns: {version: unreleased, commit: "1a2b3c4"}
 tests:
-  - at: "src/test/java/com/example/orders/OrderRepositoryIT.java:13"
-    name: OrderRepositoryIT.findsAnOrder
-    kinds: [reaches-external-system]
-    reaches:
-      - {host: orders-uat.internal, through: code, where: "src/test/java/com/example/orders/OrderRepositoryIT.java:10"}
+  - test: com.example.orders.OrderRepositoryIT.findsAnOrder
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:13"
+    anti_patterns:
+      kinds: [reaches-external-system]
+      reaches:
+        - {host: orders-uat.internal, through: code, where: "src/test/java/com/example/orders/OrderRepositoryIT.java:10"}
 ```
 
 ## 4. Propose decisions

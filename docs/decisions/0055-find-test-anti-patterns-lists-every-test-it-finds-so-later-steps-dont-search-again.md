@@ -35,7 +35,7 @@ connection list already holds one entry per system, with its kind and proposed s
 ## Decision Outcome
 
 Chosen in discussion: the first option. The skill writes `testing/anti-pattern-tests.yaml`
-([schema](../../schema/anti-pattern-tests.schema.json)): one entry per test found, with its kinds, and for a test
+([schema](../../schema/tests.schema.json)): one entry per test found, with its kinds, and for a test
 reaching a shared system each host and where it is named (the test's code, a properties or YAML file, a Spring XML
 context, or the airgap agent's reports). The assessment file's `anti_patterns` section summarises it. The connection
 list's entry for each connection names the tests that use it, instead of counting them, from this file and the

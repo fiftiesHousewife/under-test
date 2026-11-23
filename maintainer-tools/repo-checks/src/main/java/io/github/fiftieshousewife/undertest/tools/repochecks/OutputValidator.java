@@ -26,7 +26,7 @@ public final class OutputValidator {
             "testing/assessment.yaml", "schema/assessment.schema.json",
             "testing/sources.yaml", "schema/source-list.schema.json",
             "testing/connections.calm.json", "schema/connection-list.schema.json",
-            "testing/anti-pattern-tests.yaml", "schema/anti-pattern-tests.schema.json");
+            "testing/tests.yaml", "schema/tests.schema.json");
 
     private final Path toolkit;
     private final SchemaRegistry registry = SchemaRegistry.withDefaultDialect(SpecificationVersion.DRAFT_2020_12);

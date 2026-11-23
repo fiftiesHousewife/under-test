@@ -7,7 +7,7 @@ Read this when the test folders hold `.feature` files.
 * A Cucumber runner class (`@RunWith(Cucumber.class)`, or `@Suite` with Cucumber options) holds no tests itself.
 * **The only kind counted** for a scenario is `disabled`: the scenario or its feature has the tag `@ignore` or
   `@disabled`, in any case.
-* In `testing/anti-pattern-tests.yaml`, its `name` is `<feature file>: <scenario title>`, with the row's line for an
+* In `testing/tests.yaml`, its `test` is `<feature file path>: <scenario title>`, with ` (row <line>)` added for an
   examples row. In the report, give how many of the tests are scenarios and example rows.
 
 ```bash

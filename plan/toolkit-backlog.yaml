@@ -1511,7 +1511,7 @@ items:
     done_by: "person"
     done_when:
       - "The connection list schema holds, for each connection, the tests that use it as path:line, instead of a count"
-      - "The draft-the-connection-list skill fills them from testing/anti-pattern-tests.yaml and the airgap agent's reports"
+      - "The draft-the-connection-list skill fills them from testing/tests.yaml and the airgap agent's reports"
       - "Its eval case checks the tests named for a connection reached only through Spring XML"
     blocked_by:
       - "decide-find-test-anti-patterns-lists-every-test-it-finds"
