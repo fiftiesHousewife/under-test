@@ -27,6 +27,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md) | proposed | Toolkit maintainers |
 | [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The toolkit calls a system a test cannot run without an external system](0062-the-toolkit-calls-a-system-a-test-cannot-run-without-an-external-system.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Every skill and tool is also checked against real public repos, by a person's review of a sample](0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
