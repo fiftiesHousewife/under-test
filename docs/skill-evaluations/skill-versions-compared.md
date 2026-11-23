@@ -131,3 +131,16 @@ list of tests is now written first and the summary worked out from it. One run t
 assertion, which PMD's rules recognise. One check was wrong again: a test whose profile points mail at a server on
 `localhost` that nothing starts is rightly listed as `other-server-nothing-starts`.
 
+## Round 11: find-test-anti-patterns on PMD
+
+| Skill | Case | Without, round 11 | With, round 11 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.29 (0 of 5), $0.23, 9 turns | 0.97 (2 of 5), $0.44, 15 turns |
+
+Every run found PMD in the workspace and ran it, and every run wrote both files: the mean rose from 0.88 to 0.97. The
+cost didn't fall, and runs took longer (190 s against 115 s): the transcripts show the money going on long listings and
+whole test files read into the run, not on finding things. The misses were labels and lines: a host in a properties
+file that Spring XML loads recorded as reached through `properties`, and `at` lines taken from annotations. The skill
+now lists one line per test, reads only each hit's method, and says that `through` is the route and `at` the method's
+line.
+
