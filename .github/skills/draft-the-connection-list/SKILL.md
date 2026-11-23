@@ -35,73 +35,73 @@ grep -rlE '<beans|@ImportResource|@ContextConfiguration\(.*\.xml|XmlApplicationC
 
 ## 1. Run connection-paths
 
-[connection-paths](https://github.com/fiftiesHousewife/connection-paths) finds, from source, every method that opens or
-uses a connection and every test that may reach one, with a chain of calls for each. It needs Java 17 or later and its
-jar: the organisation profile's `tools.connection_paths_jar`, else `$CONNECTION_PATHS_JAR`. With neither, stop and say
-so: the jar is built from its repo with `./gradlew allInOneJar`.
+[connection-paths](https://github.com/fiftiesHousewife/connection-paths) finds, from source, every place the code opens
+or uses a connection, where each address comes from, which points stay on the machine, the systems they make, and every
+test that may reach each one with the chain of calls
+([why](../../../docs/decisions/0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md)).
+It needs Java 17 or later and its jar: the organisation profile's `tools.connection_paths_jar`, else
+`$CONNECTION_PATHS_JAR`. With neither, stop and say so.
 
-The classpath comes from the build, which only resolves dependencies:
+The classpath comes from the build, which may compile but runs no test. Use the repo's wrapper (`sh mvnw`, `./gradlew`)
+if it has one, else the organisation profile's `tools.maven` or `tools.gradle`, else `mvn` or `gradle`:
 
 ```bash
-mvn -q dependency:build-classpath -Dmdep.outputFile=build/connection-paths-classpath.txt          # Maven
-./gradlew -q --init-script <this skill's folder>/print-classpath.gradle connectionPathsClasspath   # Gradle: prints the file per module
+mvn -q -pl <module> -am -DskipTests compile dependency:build-classpath -Dmdep.outputFile=build/connection-paths-classpath.txt   # Maven; drop -pl/-am for the root
+gradle -q --init-script <this skill's folder>/print-classpath.gradle connectionPathsClasspath                                 # Gradle: prints each module's file
 ```
 
-If the build can't resolve them, run without `--classpath` and say so in the reply. Then, for each module (the repo
-root if there is one):
+If the build can't resolve them (a dependency in a repository that has gone or refuses it), say which artifact and
+repository, and run without `--classpath`. Then, for each module (the repo root if there is one):
 
 ```bash
-java -jar "$CONNECTION_PATHS_JAR" --module <module folder> --classpath @<its classpath file> --out <facts file>
+java -jar "$CONNECTION_PATHS_JAR" --module <module folder> --classpath @<its classpath file> \
+  --settings <any other folder of settings files> --out <facts file>
 ```
 
 The facts file is `testing/connection-paths.json`, or `testing/connection-paths/<module folder, / as ->.json` for a
-module. Read only its `summary`, `connection_points`, `not_resolved` (the first five) and, for the tests, what step 4
-needs: with `python3 -c` or `jq`, never by printing the file. If more than 5% of calls are not resolved, say which
-types are missing, from `not_resolved`.
+module. Read only its `summary`, `systems`, `not_resolved` (the first five), and per test its `systems` and `reaches`:
+with `python3 -c` or `jq`, never by printing the file. If more than 5% of calls are not resolved, say which types are
+missing, from `not_resolved`.
 
-## 2. Find each connection's address
+## 2. Settle what the tool can't
 
-For each method in `connection_points`, read that method only (`sed -n '<line>,<line + 40>p' <file>`, stopping at its
-end) and follow where the address it connects to comes from, as far as the repo goes:
+Each system in `systems` is one connection. Points with a `local` reason, and `process` and `host-lookup` points, are
+in no system: list them in the reply, the last two for the safety inventory. For each system:
 
-| It comes from | Then |
-|---|---|
-| A literal | its host (lower-cased; no scheme, port or path) |
-| A setting, by name: a properties or YAML key, a Spring placeholder, `@Value`, a key passed to a settings class | its value in the repo's main settings files (and see spring-boot.md or spring-xml.md); no value anywhere means unknown, `address-from: "setting <name>, which has no value in the repo"` |
-| A parameter or field | its callers or assignments, by `grep -rn` on the method or field name; at most two steps, then unknown |
-| An environment variable, a system property, a JNDI name | unknown: `address-from: "environment variable <name>"`, `"system property <name>"`, `"JNDI name <name>"` |
-| Built at run time, or anything else | unknown: `address-from: "built at run time in <Class>.<method>"` |
-
-`process` and `host-lookup` points make no node: list them in the reply, for the safety inventory.
+* **Address `built-at-run-time` or `parameter`:** read only the methods in its `points` (`sed -n` from each point's
+  line, to its method's end) and follow where the address comes from, at most two steps by `grep -rn` on the method or
+  field; record what you find, or keep it unknown.
+* **A setting with no `setting_value`:** look for its value in settings the tool wasn't given (spring-boot.md,
+  spring-xml.md; deployment descriptors); none means unknown.
+* **`placeholder`, and `alternatives`:** never decide these; list them for the person (alternatives are systems a
+  program picks between at run time, which may be one system).
 
 ## 3. One node and one relationship per system
 
-Group the connection points into systems: the same host is one system; else the same setting name is one; else each
-class that opens a connection is one. A method with two kinds (a JNDI lookup that returns a database) belongs to one
-system, whose **kind** is the first of its kinds in this order: `database`, `http`, `mail`, `directory`, `queue`,
-`jndi`, `socket`, `url`.
+The **kind** of a system is the first of its `kinds` in this order: `database`, `http`, `mail`, `directory`, `queue`,
+`jndi`, `socket`, `url` ([why](../../../docs/decisions/0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md)).
 
 | Node key | Value |
 |---|---|
-| `unique-id` | from the host as from-airgap-reports.md step 2 makes it; else `<kind>-<setting name>` or `<kind>-via-<class's simple name>`, lower-cased, every character but `a-z` and `0-9` turned to `-`, runs collapsed, ends trimmed |
+| `unique-id` | `named_by: host`: the host as from-airgap-reports.md step 2 makes it; a setting, variable or JNDI name: `<kind>-<name>`; `class`: `<kind>-via-<the class's simple name>`; lower-cased, every character but `a-z` and `0-9` turned to `-`, runs collapsed, ends trimmed |
 | `node-type` | `database` for a database; `ldap` for a directory; `service` for `http`; else `system` |
-| `name` | the host; else `<A database / A directory / An HTTP service / A mail server / A queue / A system>, address unknown, opened by <class's simple name>` |
+| `name` | the host; else `<A database / A directory / An HTTP service / A mail server / A queue / A system>, address from <setting / environment variable / system property / JNDI name> <name>`, or `..., address unknown, opened by <the class's simple name>` |
 | `description` | `<Thing> opened by <the opening classes' simple names, sorted, joined by ", ">, found in the code by connection-paths.` |
-| `metadata.under-test` | `addresses` (the hosts or URLs as written, sorted) if known, else `address-from`; and `opened-by`, the methods as connection-paths names them, sorted |
+| `metadata.under-test` | `addresses`: the literal, or a setting's value that isn't a placeholder, as written; else `address-from`: `setting <name>, which has no value in the repo`, `setting <name>, whose value in <file>:<line> is a placeholder`, `environment variable <name>`, `system property <name>`, `JNDI name <name>`, or `built at run time in <value>`; and `opened-by`, the system's `points` |
 
 The relationship is as from-airgap-reports.md step 3 makes it, except: `found-by` `["code"]`, plus `"settings"` when
-the address came from a setting; `kinds` the system's kinds, sorted; `callers` its connection points as
-`<type>.<method>(<file name>:<line>)`, sorted, first five; `setting` the setting's `name` and `from` (`path:line`) if
-any; `tests` how many tests step 4 gives a `connections` entry for it; no `runs`; `stand-in` and `never-reach` by the
-same rules, with a queue's stand-in `run-in-container` and a `url`'s `not-chosen`.
+the address is a setting; `kinds` the system's kinds; `callers` its points as `<type>.<method>(<file name>:<line>)`,
+each point's file and line from `connection_points`, sorted, first five; `setting` `{name, from: "<file>:<line>"}` if
+the tool found its value; `tests` the system's `tests`; no `runs`; `stand-in` and `never-reach` by the same rules, with
+a queue's stand-in `run-in-container` and a `url`'s `not-chosen`.
 
 The application's node, the merge with an existing file, and how the file is written are as from-airgap-reports.md
 steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none.
 
 ## 4. Record each test's connections in testing/tests.yaml
 
-For each test in the facts file's `tests`, one `connections` entry per system it may reach (the system holding the
-reach's `point`), keys in this order:
+For each test in the facts file's `tests`, one `connections` entry per name in its `systems`, keys in this order (the
+reach is the one whose `point` is among the system's `points`):
 
 * `node`: the system's `unique-id`; `kind`: its kind; `found_by: code-path`;
 * `through_set_up`: the reach's `through_set_up`;
@@ -125,8 +125,10 @@ Check the files against their schemas if a validator is at hand. Then tell the p
 
 1. Each system, with its kind, address or where the address comes from, how many tests may reach it, and its proposed
    stand-in: production addresses first, then by node id.
-2. What the Architecture Owner must confirm: every `proposed` connection, every address not known, and, without an
-   organisation profile, every host not marked `never-reach`.
+   Where a system has a `shared_chain`, name the call nearest the system that every test goes through: one stand-in
+   there covers them all.
+2. What the Architecture Owner must confirm: every `proposed` connection, every address not known, every placeholder,
+   every set of alternatives, and, without an organisation profile, every host not marked `never-reach`.
 3. How much connection-paths resolved, and the dispatch points it didn't follow that a person should look at: the
    three with most implementations.
 4. For the safety inventory: the `process` and `host-lookup` points, by method.

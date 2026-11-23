@@ -5,35 +5,135 @@
   "description": "What connection-paths found in a module's source: each place the code opens or uses a connection to something outside the program, each test that may reach one with a chain of calls showing how, and what it could not resolve or chose not to follow. Written by connection-paths and read by the connection-list skill; 'may' means measurement confirms or clears each test.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema", "tool_version", "summary", "connection_points", "tests", "not_resolved", "dispatch_points_not_followed", "classpath_notes"],
+  "required": [
+    "schema",
+    "tool_version",
+    "summary",
+    "connection_points",
+    "tests",
+    "not_resolved",
+    "dispatch_points_not_followed",
+    "classpath_notes"
+  ],
   "$defs": {
     "kind": {
       "description": "The kind of connection, from connection-paths' rules. A url may be a file or jar as well as a remote server.",
       "type": "string",
-      "enum": ["database", "http", "mail", "directory", "jndi", "queue", "socket", "url", "host-lookup", "process"]
+      "enum": [
+        "database",
+        "http",
+        "mail",
+        "directory",
+        "jndi",
+        "queue",
+        "socket",
+        "url",
+        "host-lookup",
+        "process"
+      ]
     },
     "method": {
       "description": "A method as type#name(parameter types), the types as simple names without generics; constructors are <init>, a type's field initialisers <fields>.",
       "type": "string",
       "pattern": "^[^#]+#[^(]+\\(.*\\)$"
     },
-    "count": {"type": "integer", "minimum": 0}
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "address": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source"
+      ],
+      "description": "Where a connection's address comes from, as far as the source shows.",
+      "properties": {
+        "source": {
+          "enum": [
+            "literal",
+            "setting",
+            "environment-variable",
+            "system-property",
+            "jndi-name",
+            "classpath-resource",
+            "local-file",
+            "dns",
+            "parameter",
+            "built-at-run-time"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "description": "The literal ({?} for parts that can't be known), the setting's, variable's or JNDI name, 'x of method' for a parameter, or the code that builds it."
+        },
+        "via": {
+          "type": "string",
+          "description": "For a setting: the method that reads it, or @Value."
+        },
+        "setting_value": {
+          "type": "string",
+          "description": "For a setting: its value in the repo's settings files."
+        },
+        "setting_file": {
+          "type": "string"
+        },
+        "setting_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "placeholder": {
+          "const": true,
+          "description": "The setting's value looks like a placeholder for a person to fill in."
+        }
+      }
+    }
   },
   "properties": {
-    "schema": {"const": "connection-paths/1"},
-    "tool_version": {"type": "string"},
+    "schema": {
+      "enum": [
+        "connection-paths/1",
+        "connection-paths/2"
+      ],
+      "description": "Version 2 adds each point's address and whether it stays local, the systems, and each test's systems; nothing is removed."
+    },
+    "tool_version": {
+      "type": "string"
+    },
     "summary": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["files", "files_not_parsed", "methods", "calls_resolved", "calls_not_resolved", "tests", "tests_reaching"],
+      "required": [
+        "files",
+        "files_not_parsed",
+        "methods",
+        "calls_resolved",
+        "calls_not_resolved",
+        "tests",
+        "tests_reaching"
+      ],
       "properties": {
-        "files": {"$ref": "#/$defs/count"},
-        "files_not_parsed": {"$ref": "#/$defs/count"},
-        "methods": {"$ref": "#/$defs/count"},
-        "calls_resolved": {"$ref": "#/$defs/count"},
-        "calls_not_resolved": {"$ref": "#/$defs/count"},
-        "tests": {"$ref": "#/$defs/count"},
-        "tests_reaching": {"$ref": "#/$defs/count"}
+        "files": {
+          "$ref": "#/$defs/count"
+        },
+        "files_not_parsed": {
+          "$ref": "#/$defs/count"
+        },
+        "methods": {
+          "$ref": "#/$defs/count"
+        },
+        "calls_resolved": {
+          "$ref": "#/$defs/count"
+        },
+        "calls_not_resolved": {
+          "$ref": "#/$defs/count"
+        },
+        "tests": {
+          "$ref": "#/$defs/count"
+        },
+        "tests_reaching": {
+          "$ref": "#/$defs/count"
+        }
       }
     },
     "connection_points": {
@@ -41,13 +141,99 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["kind", "call", "method", "file", "line"],
+        "required": [
+          "kind",
+          "call",
+          "method",
+          "file",
+          "line"
+        ],
         "properties": {
-          "kind": {"$ref": "#/$defs/kind"},
-          "call": {"description": "The rule the call matched, as type#method.", "type": "string"},
-          "method": {"$ref": "#/$defs/method"},
-          "file": {"type": "string"},
-          "line": {"$ref": "#/$defs/count"}
+          "kind": {
+            "$ref": "#/$defs/kind"
+          },
+          "call": {
+            "description": "The rule the call matched, as type#method.",
+            "type": "string"
+          },
+          "method": {
+            "$ref": "#/$defs/method"
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "$ref": "#/$defs/count"
+          },
+          "address": {
+            "$ref": "#/$defs/address"
+          },
+          "local": {
+            "type": "string",
+            "description": "Present only when the point stays on this machine: the reason, such as an in-memory or file database, a classpath resource, or a parameter no code passes."
+          }
+        }
+      }
+    },
+    "systems": {
+      "type": "array",
+      "description": "The systems the connection points make: by host, else by setting, variable or JNDI name, else by the class that opens them. Local, host-lookup and process points belong to none.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "named_by",
+          "kinds",
+          "points",
+          "tests"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "named_by": {
+            "enum": [
+              "host",
+              "setting",
+              "environment-variable",
+              "system-property",
+              "jndi-name",
+              "class"
+            ]
+          },
+          "kinds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/kind"
+            }
+          },
+          "address": {
+            "$ref": "#/$defs/address"
+          },
+          "points": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/method"
+            }
+          },
+          "alternatives": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Other systems whose points override the same interface or superclass method: alternatives a program picks between, for a person to say whether they are one."
+          },
+          "tests": {
+            "$ref": "#/$defs/count"
+          },
+          "shared_chain": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/method"
+            },
+            "description": "Calls every test reaching it goes through, nearest the test first: the seam where one stand-in covers them all."
+          }
         }
       }
     },
@@ -57,25 +243,62 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["test", "file", "line", "reaches"],
+        "required": [
+          "test",
+          "file",
+          "line",
+          "reaches"
+        ],
         "properties": {
-          "test": {"type": "string"},
-          "file": {"type": "string"},
-          "line": {"$ref": "#/$defs/count"},
+          "test": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "$ref": "#/$defs/count"
+          },
           "reaches": {
             "type": "array",
             "minItems": 1,
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["kind", "point", "through_set_up", "chain"],
+              "required": [
+                "kind",
+                "point",
+                "through_set_up",
+                "chain"
+              ],
               "properties": {
-                "kind": {"$ref": "#/$defs/kind"},
-                "point": {"$ref": "#/$defs/method"},
-                "through_set_up": {"description": "True when the chain goes through the test's set-up methods or fields, not its own body.", "type": "boolean"},
-                "chain": {"description": "From the test to the connection point, one method a step.", "type": "array", "minItems": 1, "items": {"$ref": "#/$defs/method"}}
+                "kind": {
+                  "$ref": "#/$defs/kind"
+                },
+                "point": {
+                  "$ref": "#/$defs/method"
+                },
+                "through_set_up": {
+                  "description": "True when the chain goes through the test's set-up methods or fields, not its own body.",
+                  "type": "boolean"
+                },
+                "chain": {
+                  "description": "From the test to the connection point, one method a step.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/method"
+                  }
+                }
               }
             }
+          },
+          "systems": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Version 2: the systems the test may reach, by name."
           }
         }
       }
@@ -86,11 +309,22 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["reason", "count", "example"],
+        "required": [
+          "reason",
+          "count",
+          "example"
+        ],
         "properties": {
-          "reason": {"type": "string"},
-          "count": {"$ref": "#/$defs/count"},
-          "example": {"description": "The first place it was seen, as file:line and the message.", "type": "string"}
+          "reason": {
+            "type": "string"
+          },
+          "count": {
+            "$ref": "#/$defs/count"
+          },
+          "example": {
+            "description": "The first place it was seen, as file:line and the message.",
+            "type": "string"
+          }
         }
       }
     },
@@ -100,13 +334,25 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["method", "implementations"],
+        "required": [
+          "method",
+          "implementations"
+        ],
         "properties": {
-          "method": {"$ref": "#/$defs/method"},
-          "implementations": {"$ref": "#/$defs/count"}
+          "method": {
+            "$ref": "#/$defs/method"
+          },
+          "implementations": {
+            "$ref": "#/$defs/count"
+          }
         }
       }
     },
-    "classpath_notes": {"type": "array", "items": {"type": "string"}}
+    "classpath_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
   }
 }

@@ -1940,11 +1940,11 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "A classpath step uses the repo's wrapper, else the build tool the organisation profile names, compiling sibling modules without tests"
+      - "A classpath step uses the repo's wrapper, else the build tool the organisation profile names, compiling sibling modules without tests (the skill does this step; connection-paths reads sibling modules' source)"
       - "Each connection point has an address hint, a setting's value looked up in the repo's settings files, and placeholders flagged"
       - "Local points are marked: file and in-memory databases, classpath resources, file and jar URLs, DNS through JNDI, methods nothing calls"
       - "Systems are proposed by host, else setting, else opening class, with alternatives behind one interface marked"
-      - "On Openfire 4.6.0's xmppserver the tool alone gives the 14 systems and 162 tests the hand trial did"
+      - "On Openfire 4.6.0's xmppserver the tool alone gives the systems and tests the hand trial did (it now gives 24 systems and 230 tests, following static initialisers and tear-down the hand trial didn't; a person's review of the difference is still to do)"
     blocked_by:
       - "decide-what-connection-paths-does-and-what-the-skill-does"
   - key: "decide-mechanical-steps-are-tools"
@@ -2069,7 +2069,7 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "The skill asks which modules, settles the addresses the tool couldn't, asks about alternatives and placeholders, writes the connection list and testing/tests.yaml, and reports"
+      - "The skill asks which modules, settles the addresses the tool couldn't, asks about alternatives and placeholders, writes the connection list and testing/tests.yaml, and reports (written for connection-paths' facts version 2)"
       - "Its eval case for the discovery pass, built from what Openfire showed, passes in every run"
       - "On Openfire 4.6.0 it gives the 14 systems and 162 tests the hand trial did"
     blocked_by:
