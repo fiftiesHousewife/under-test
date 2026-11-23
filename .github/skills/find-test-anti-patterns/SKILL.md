@@ -12,7 +12,8 @@ Read code only: **never** build, test or run the repo, or change or delete a tes
 ## 1. List the tests
 
 Search; don't read every file. Test code is each module's `src/test/`, `src/integrationTest/` and any other test
-source set the build names, with its resources. Use `grep -rn` (or the Grep tool with line numbers): a test's
+source set the build names, with its resources, and any other `src/<name>/java` folder except `src/main/`: one the build
+doesn't name holds tests that never run. Use `grep -rn` (or the Grep tool with line numbers): a test's
 **line** always comes from a search, never from counting lines while reading, and its **path** is from the repo root.
 
 | A test is | Its line |
@@ -32,22 +33,45 @@ grep -rnE '^\s*Scenario (Outline|Template):|^\s*Examples:|^\s*\|' --include='*.f
 
 A Cucumber runner class (`@RunWith(Cucumber.class)` or `@Suite` with Cucumber options) holds no tests itself.
 
+Also list what looks like a test but **never runs**; it counts only under `never-runs`, never as a test of any other
+kind:
+
+* a method marked `@Ignore` or `@Disabled` with no test annotation (one with a test annotation is `disabled`);
+* a method whose test annotation is commented out (`// @Test`);
+* a `public void test...()` method with no test annotation, in a class that doesn't extend `TestCase`;
+* every test in a folder the build doesn't name as a test source set;
+* with Maven, every test in a class the test runner doesn't pick up: unless the pom's Surefire `<includes>` say
+  otherwise, only classes named `Test*`, `*Test`, `*Tests` or `*TestCase` run, and `*IT` classes run only where the
+  pom configures the Failsafe plugin.
+
+Its line is the line with the method's name.
+
+```bash
+grep -rnE -A2 '^\s*@(Ignore|Disabled)\b' --include='*.java' <test folders>        # then check for a test annotation above
+grep -rnE '//\s*@(Test|ParameterizedTest|RepeatedTest|TestFactory)' --include='*.java' <test folders>
+grep -rnE -B2 'public void test[A-Za-z0-9_]*\(' --include='*.java' <test folders>
+find . -type d -path '*/src/*/java' -not -path '*/src/main/*'                         # compare with the build's source sets
+grep -nE 'sourceSets|testSourceDirectory|add-test-source|<includes>|maven-failsafe-plugin' build.gradle* pom.xml */build.gradle* */pom.xml
+```
+
 ## 2. Count
 
-A test counts once under each kind it shows; a disabled test counts under `disabled` only. The lists are closed.
+A test counts once under each kind it shows; a disabled test counts under `disabled` only, and one that never runs
+under `never-runs` only. The lists are closed.
 Look only at the test's own body and the `@Before`/`@BeforeEach` methods declared in its class: don't follow helper
 methods or superclasses. Each kind has a search; read only the tests and files it finds. For a Cucumber scenario,
 `disabled` is the only kind counted.
 
 | `kind` | A test counts when |
 |---|---|
+| `never-runs` | It looks like a test but never runs (step 1). |
 | `disabled` | It or its class has `@Ignore` or `@Disabled`; a scenario, or its feature, has the tag `@ignore` or `@disabled`, in any case. |
 | `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertNull`, `assertTrue(true)`, `isNotNull()`. `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real. |
 | `sleeps` | Its body, or a `@Before`/`@BeforeEach` method of its class (then every test in the class), calls `Thread.sleep` or `TimeUnit.<unit>.sleep`. |
 | `order-dependent` | Its class has `@FixMethodOrder` or `@TestMethodOrder`, whatever its argument. |
 | `reaches-shared-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context named by `@ContextConfiguration` or `@ImportResource`, and the files that context loads in turn: `<import resource=...>` and a property placeholder's `location`. **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
 | `mocks-everything` | Its class has five or more mocks in total: `@Mock` and `@MockBean` fields, and `mock(` and `Mockito.mock(` calls (a field set by `mock(` counts once; `@Spy` doesn't count). |
-| `copy-pasted` | Ten or more consecutive non-blank lines between its method's braces are the same as another test's once every string, number and character literal is ignored: count every test in the group. |
+| `copy-pasted` | Ten or more consecutive non-blank lines between its method's braces are the same as another test's once every string, number and character literal is ignored: count every test in the group. Also every test in a test class that has a copy, the same or nearly the same, under another test folder or module. |
 | `other` | It can't catch a bug for a reason the list misses: an expected value bent to pass (`size() + 1`), a server on `localhost` nothing starts, a word in the test's name that an asserted expected value contradicts, set-up copied and never changed (only where not already `copy-pasted`). Only these four, one finding each, holding every test that shows it, with a fixed id: `other-bent-expected-value`, `other-server-nothing-starts`, `other-name-does-not-match-assertions`, `other-copied-setup-unchanged`. Anything else you notice goes in the report, not the file. |
 
 The searches, over test code and its resources; read only what they find:
@@ -60,13 +84,24 @@ grep -rnE '@(FixMethodOrder|TestMethodOrder)' <test folders>                    
 grep -rcE '@Mock\b|@MockBean\b|[^A-Za-z.]mock\(|Mockito\.mock\(' --include='*.java' <test folders>   # mocks-everything: read files with 5 or more
 grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>   # reaches-shared-system: drop the never-a-host lines
 grep -rnE '@(ContextConfiguration|ImportResource)' --include='*.java' <test folders>     # the Spring XML each class loads; follow its imports and placeholders
-grep -rcE 'assert[A-Z]|assertThat|verify\(|fail\(|assertThrows|expected *=|ExpectedException' --include='*.java' <test folders>
+find <test folders> -name '*.java' | sed 's|.*/||' | sort | uniq -d                    # copy-pasted: classes under more than one folder; compare each pair with cmp or diff
 grep -rnE 'assertNotNull|assertNull|assertTrue\(true\)|isNotNull\(\)' --include='*.java' <test folders>
 ```
 
-For `no-real-assertion`, read the tests in files whose count from the second-last search is lower than their number of
-tests, or that the last search finds. For `copy-pasted`, run PMD's `cpd --minimum-tokens 75 --dir <test folders>` if
-PMD is installed; otherwise compare only tests in the same class, and say so in the report. `other` has no search:
+For `no-real-assertion`, this prints every test whose body (an empty one included) has no assertion at all; then read
+the tests the last search above finds, for those whose only assertions are weak:
+
+```bash
+find <test folders> -name '*.java' | sort | xargs awk '
+  /@(Test|ParameterizedTest|RepeatedTest|TestFactory)([^A-Za-z]|$)/ { ann = ann $0; want = 1 }
+  want && /void [A-Za-z0-9_]+\(/ { line = FNR; body = ""; depth = 0; open = 0; inbody = 1; want = 0 }
+  inbody { body = body $0 "\n"; o = gsub(/\{/, "{"); c = gsub(/\}/, "}"); depth += o - c; if (o) open = 1
+    if (open && depth <= 0) { if (body ann !~ /assert[A-Z(]|assertThat|verify\(|fail\(|assertThrows|expected *=|ExpectedException/) print FILENAME ":" line; inbody = 0; ann = "" } }'
+```
+
+For `copy-pasted`, run PMD's `cpd --minimum-tokens 75 --dir <test folders>` if PMD is installed; otherwise compare
+tests within each class, and the classes the search above finds under more than one folder, and say in the report
+that copying between other classes wasn't checked. `other` has no search:
 look for it only in the tests you read for the other kinds.
 
 ## 3. Write the section
@@ -124,13 +159,14 @@ decisions:
 | Kind | `choice` |
 |---|---|
 | `disabled` | `"Application Owner decides: re-enable, or delete once the approval-test baseline exists"` |
+| `never-runs` | `"Application Owner decides: make it a real test, or delete once the approval-test baseline exists"` |
 | `reaches-shared-system` | `tagged and left out of normal runs` |
 | `sleeps`, `order-dependent` | `fixed in the fix-flaky-tests workstream` |
 | `no-real-assertion`, `mocks-everything`, `copy-pasted`, `other` | `fixed in the strengthen-tests workstream` |
 
 ## 5. Report
 
-Briefly: the total number of tests (Cucumber scenarios and example rows among them), and how many show at least one anti-pattern; each kind's count and examples; disabled tests need the Application Owner; tests
+Briefly: the total number of tests (Cucumber scenarios and example rows among them), and how many show at least one anti-pattern; each kind's count and examples; disabled tests, and tests that never run, need the Application Owner; tests
 reaching shared systems need tagging before the tests run anywhere; read coverage and planted-bug results with these
 in mind (a test with no real assertion adds coverage but catches nothing); and anything the searches couldn't settle, such
 as copy-pasting across classes without PMD.
