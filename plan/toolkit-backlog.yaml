@@ -1866,4 +1866,31 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md"
+  - key: "decide-connections-are-found-by-connection-paths"
+    status: "done"
+    type: "decision"
+    title: "Connections and the test paths to them are found by connection-paths, a JavaParser tool in its own repo"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0072-connections-and-the-test-paths-to-them-are-found-by-connection-paths-a-javaparser-tool-in-its-own-repo.md"
+  - key: "connection-paths-first-version"
+    type: "deliverable"
+    title: "connection-paths: a command-line jar that finds where code opens connections and which tests reach them, from source"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Reads a module's source and dependency jars; writes a facts file matching a schema in this toolkit"
+      - "Reports unresolved calls by reason and the dispatch points it did not follow"
+      - "Reads Maven POMs to list dependency jars, without running Maven"
+      - "Passes an example repo with known chains, and a person's review of its findings on Openfire"
+    blocked_by:
+      - "decide-connections-are-found-by-connection-paths"
 
