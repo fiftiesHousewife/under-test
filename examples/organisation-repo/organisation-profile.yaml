@@ -36,6 +36,10 @@ commit_messages:
 deployment_records: The organisation's deployment tool
 secrets_scanning: none yet
 production_hosts: DNS zones marked as production
+tools:
+  connection_paths_jar: https://packages.example.com/tools/connection-paths/0.2.0/connection-paths.jar
+  maven: mvn
+  gradle: gradle
 roles:
   programme_sponsor: example-sponsor
   engagement_lead: example-engagement-lead

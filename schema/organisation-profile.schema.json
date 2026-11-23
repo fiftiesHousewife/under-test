@@ -229,6 +229,16 @@
       "type": "string",
       "description": "Secret-scanning tool already in use, if any."
     },
+    "tools": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Where the tools the skills run are kept inside the organisation, when not on each machine's path.",
+      "properties": {
+        "connection_paths_jar": {"type": "string", "description": "Path or URL of the mirrored connection-paths jar, which the draft-the-connection-list skill runs."},
+        "maven": {"type": "string", "description": "The Maven command to use where a repo has no Maven wrapper, such as mvn or a path to it."},
+        "gradle": {"type": "string", "description": "The Gradle command to use where a repo has no Gradle wrapper; old builds may need an old Gradle."}
+      }
+    },
     "production_hosts": {
       "type": "string",
       "description": "Source of the list of production host names (DNS zones, configuration database, naming rule)."
