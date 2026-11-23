@@ -1,6 +1,6 @@
 # Safety inventory
 
-Finds what in a repo could reach production or real data, before any of its code is built or run. It is two rule
+Finds what in a repo could reach production or real data, before any of its tests or its application run. It is two rule
 files for [gitleaks](https://github.com/gitleaks/gitleaks), the secrets scanner every repo's CI already runs, so there
 is nothing new to install or approve:
 

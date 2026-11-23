@@ -1,6 +1,6 @@
 # The safety inventory's rules, for gitleaks (https://github.com/gitleaks/gitleaks), version 8.21 or later.
 #
-# Run over the repo's current files, before any of its code is built or run:
+# Run over the repo's current files, before any of its tests or its application run:
 #   gitleaks dir --config safety-inventory.gitleaks.toml --report-format json --report-path safety-inventory.json .
 # Keystores and private key files are found over the whole history instead, by the secrets scan's rules in
 # secrets.gitleaks.toml (gitleaks git), because one deleted from the current files is still in the history.

@@ -21,7 +21,7 @@ as long as someone has looked.
 
 ## Considered Options
 
-* **A safety inventory before any code runs, tiered: some findings block the run until resolved, the rest are recorded
+* **A safety inventory before any test or the application runs, tiered: some findings block the run until resolved, the rest are recorded
   and neutralised in the test profile or the build**  
   Every danger is looked for and written down; only the ones a test profile can't make safe hold the repo up
 * **Every finding blocks until resolved or accepted**  
