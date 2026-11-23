@@ -106,7 +106,7 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | parallel run | Sending the same work to the old and the new version, comparing results, and still trusting the old one until they agree. |
 | strangler fig | Replacing a system piece by piece, routing each piece to the new version as it is ready, instead of all at once. |
 | flaky test | A test that sometimes passes and sometimes fails without any code change. |
-| Testcontainers, WireMock, Pact, PIT, ArchUnit, jetCheck, bats-core, VHS | Tool names. Say what the tool does the first time. |
+| Testcontainers, WireMock, Pact, PIT, ArchUnit, jetCheck, bats-core | Tool names. Say what the tool does the first time. |
 | **connection list** | A file listing everything an application connects to (interfaces, databases, queues, outside services), with what tests use instead of each one and which addresses tests must never reach. Written in FINOS CALM, an open standard format. | dependency map, architecture document |
 | **safety inventory** | The gate before any of a repo's tests or its application first runs, done alongside discovery: secrets, keystores, real personal data, jobs that start by themselves, automatic migrations, build tasks that publish or deploy, fixed file paths and file shares. Some findings block the repo from running. | security scan (for the whole step) |
 | **discovery** | The first step on every repo, in which nothing runs but its build: a draft connection list (from its code and settings), a source list, and the tests and test assets that already exist, with their anti-patterns. Coverage targets apply only afterwards. | |

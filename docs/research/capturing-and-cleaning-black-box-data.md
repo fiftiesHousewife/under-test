@@ -332,35 +332,6 @@ output as a source of examples).
 
 ---
 
-## Lessons implications
-
-In [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons), against its catalogue and backlog:
-
-| Lesson | Change |
-|---|---|
-| [Recorded HTTP responses](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/recorded-http-responses/README.md) | Its planned fix, "records from a stand-in service and removes personal data before saving", gets a concrete shape: WireMock records from a small stand-in "supplier" service; the before saves a customer's name, email and bearer token into the stubs; the after cleans during recording with a transformer (keyed substitutes for the customer, the token dropped), and a detector-gate test fails the before. Java only. |
-| [Differential testing](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/differential-testing/README.md) | Today it compares old and new code in-process. Add, or follow with, offline replay of saved requests against two running builds, with a second run of the old build to separate noise from real differences. Java only. |
-| [Comparing structured output](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/structured-output-comparison/README.md) | A short addition: substitutes made by the cleaner are stable, so they need no ignore rule, while timestamps and generated identifiers still do. |
-| [Batch file-in, file-out](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/batch-file-in-file-out/README.md) | Its planned move to Datafaker input stays. Add, as the "after" or a follow-on, a captured settlement file cleaned with keyed substitutes, so the account numbers still match between input and output. |
-| Running old code unplugged (planned) | End with the next step: the report's HTTP targets become a recording plan (WireMock proxy mappings and draft cleaning rules). No change to the agent's refusal story. |
-| Black-box tests of a whole application (planned) | Name capture as one source of its inputs, and point to the new capture lessons. |
-| Message consumers (planned) | Add browsing a JMS queue and reading a Kafka topic with its own consumer group to collect example messages, cleaned before use. |
-| Recorded traffic replayed against a new version (traffic-record-and-replay, last) | Stays last; revisit if a Keploy trial passes on Windows without outside contact. |
-
-New lessons:
-
-1. **Capturing what an old service receives and sends,** with Logbook: a servlet filter and a client interceptor on a
-   small service, the before logging an `Authorization` header and a customer's email, the after filtering them at
-   source and saving examples that become approval tests. Java only.
-2. **Cleaning captured data so tests still work:** fixed text versus keyed substitutes versus seeded synthetic
-   values, shown on the same capture; the before's tests break when names are replaced with `REMOVED`, the after's
-   keyed substitutes keep joins and repeated values. Includes the detector gate failing on a missed field. Java only;
-   waits on the recording cleaner if the toolkit builds it, or uses the JDK's HMAC and Datafaker directly if not.
-3. **Possibly: what counts as anonymous,** a slides-only lesson on pseudonymised versus anonymous data, motivated
-   intruders and why recordings stay in internal repos. Better as a section of lesson 2 unless the decks run long.
-
----
-
 ## Open questions
 
 1. **Keploy on closed networks:** does the native Windows mode, or the Linux mode, need a Keploy account or any
