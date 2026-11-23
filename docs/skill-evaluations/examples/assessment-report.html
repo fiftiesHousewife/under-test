@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repo assessment report</title>
+<!--
+  The repo assessment report. One self-contained page per repo: no network, no server, no libraries.
+  The render-the-assessment-report skill fills the data block below from three files, and changes nothing else:
+    assessment   testing/assessment.yaml        (schema/assessment.schema.json)
+    connections  testing/connections.calm.json  (schema/connection-list.schema.json)
+    sources      testing/sources.yaml           (schema/source-list.schema.json)
+  Changes people make on the page come out as text to paste into those files, in a pull request.
+-->
+<style>
+:root {
+  --bg: #ffffff; --fg: #1d232a; --muted: #5d6670; --rule: #d9dee3; --wash: #f2f4f6; --accent: #2b5d8c;
+  --block: #b3261e; --block-wash: #fbe9e7; --warn: #8a5a00; --warn-wash: #fdf2d8; --ok: #1f6b3a; --ok-wash: #e2f2e7;
+  --ai: #6b4799;
+  --text: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15191e; --fg: #e3e7eb; --muted: #9aa4ae; --rule: #2c343c; --wash: #1d232a; --accent: #84b2df;
+  --block: #ff8a80; --block-wash: #3a1b19; --warn: #f0c04d; --warn-wash: #33290f; --ok: #7fd39b; --ok-wash: #15301f;
+  --ai: #c6a4ea; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #15191e; --fg: #e3e7eb; --muted: #9aa4ae; --rule: #2c343c; --wash: #1d232a; --accent: #84b2df;
+  --block: #ff8a80; --block-wash: #3a1b19; --warn: #f0c04d; --warn-wash: #33290f; --ok: #7fd39b; --ok-wash: #15301f;
+  --ai: #c6a4ea; color-scheme: dark }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 var(--text); }
+.page { max-width: 1060px; margin: 0 auto; padding: 24px 16px 140px; display: grid; gap: 20px; }
+h1 { font-size: 1.6rem; margin: 0; } h2 { font-size: 1.15rem; margin: 0; } h3 { font-size: 0.95rem; margin: 0; }
+p { margin: 0; max-width: 72ch; }
+code, .mono { font-family: var(--mono); font-size: 0.85em; }
+.muted { color: var(--muted); }
+.label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.fact { background: var(--wash); border-radius: 3px; padding: 2px 8px; font-size: 0.82rem; }
+.bar-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.summary { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 14px 0; display: grid;
+  gap: 18px; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+@media (max-width: 760px) { .summary { grid-template-columns: minmax(0, 1fr); } }
+.answer { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; margin-bottom: 8px; }
+.light { width: 12px; height: 12px; border-radius: 50%; margin-top: 5px; background: var(--rule); }
+.light.block { background: var(--block); } .light.warn { background: var(--warn); } .light.ok { background: var(--ok); }
+.rungs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; margin-top: 6px; }
+.rung { border-radius: 4px; padding: 6px 4px; text-align: center; background: var(--wash); font-size: 0.7rem; line-height: 1.25; }
+.rung b { display: block; font-size: 1rem; }
+.rung.reached { background: var(--accent); color: var(--bg); }
+.rung.target { outline: 2px dashed var(--accent); outline-offset: -2px; }
+section { border-top: 1px solid var(--rule); padding-top: 16px; display: grid; gap: 10px; }
+.head { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; justify-content: space-between; }
+.empty { color: var(--muted); font-style: italic; }
+.wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 0.87rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--wash); }
+tr:last-child td { border-bottom: 0; }
+td.where { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); overflow-wrap: anywhere; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.blocks td:first-child { box-shadow: inset 4px 0 var(--block); }
+tr.neutralise td:first-child { box-shadow: inset 4px 0 var(--warn); }
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
+.pill.block { color: var(--block); background: var(--block-wash); } .pill.warn { color: var(--warn); background: var(--warn-wash); }
+.pill.ok { color: var(--ok); background: var(--ok-wash); } .pill.ai { color: var(--ai); border: 1px solid var(--ai); }
+.pill.stale { color: var(--muted); border: 1px solid var(--rule); }
+.state { display: block; margin-top: 4px; }
+select, input[type="text"], textarea { font: inherit; font-size: 0.84rem; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--rule); border-radius: 4px; padding: 3px 6px; max-width: 100%; }
+textarea { width: 100%; min-height: 2.6em; }
+.changed { box-shadow: 0 0 0 2px var(--accent); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+.stat { border: 1px solid var(--rule); border-radius: 4px; padding: 8px 10px; }
+.stat b { display: block; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.mix { display: flex; height: 20px; border-radius: 4px; overflow: hidden; border: 1px solid var(--rule); font-size: 0.68rem; }
+.mix span { display: flex; align-items: center; justify-content: center; color: var(--bg); font-weight: 600; }
+.drawer { position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg); border-top: 1px solid var(--rule);
+  padding: 10px 16px; box-shadow: 0 -4px 16px rgb(0 0 0 / 0.08); }
+.drawer .inner { max-width: 1060px; margin: 0 auto; display: grid; gap: 8px; }
+.drawer pre { margin: 0; max-height: 34vh; overflow: auto; background: var(--wash); border-radius: 4px; padding: 10px;
+  font: 0.78rem/1.5 var(--mono); white-space: pre; }
+button { font: inherit; font-size: 0.84rem; font-weight: 600; border-radius: 4px; padding: 5px 11px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: var(--bg); }
+button.quiet { background: transparent; color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+</style>
+</head>
+<body>
+<script type="application/json" id="report-data">
+{"assessment":{"schema":"assessment/1","repo":{"name":"orders-service","application":"orders","summary":"Takes and changes customer orders for the web shop and the call centre.","technology_stacks":["spring-boot"],"application_types":["web-service"],"business_criticality":"high","application_owner":"Orders and Fulfilment","batch":"2"},"level":{"found_by":{"tool":"measurement-run","version":"0.1.0","commit":"1a2b3c4"},"reached":0,"evidence":["Builds cleanly on JDK 8 in CI"]},"safety":{"found_by":{"tool":"safety-inventory","version":"0.1.0","commit":"1a2b3c4"},"findings":[{"id":"db-password","kind":"production-credential","effect":"blocks","what":"Production database password","where":["src/main/resources/application.yml:14"]},{"id":"payments-keystore","kind":"keystore-or-private-key","effect":"blocks","what":"Keystore with a private key for the payments client","where":["src/main/resources/certs/payments-client.jks"]},{"id":"reminder-job","kind":"self-starting-job","effect":"neutralise","what":"Nightly job that emails customers","where":["src/main/java/com/example/orders/OrderReminderJob.java:22"]},{"id":"flyway-at-start","kind":"migration-at-start-up","effect":"neutralise","where":["build.gradle","src/main/resources/application.yml:30"]},{"id":"publish-on-build","kind":"publishing-build-task","effect":"neutralise","where":["build.gradle"]},{"id":"invoice-share","kind":"fixed-path-or-file-share","effect":"neutralise","what":"Windows file share for invoices","where":["src/main/java/com/example/orders/InvoiceExporter.java:31"]},{"id":"fixture-customers","kind":"real-personal-data","effect":"none","what":"40 rows checked; synthetic","where":["src/test/resources/orders.csv"]}]},"running_offline":{"found_by":{"tool":"draft-connection-list","version":"0.1.0","commit":"1a2b3c4"},"reports":["build/airgap/test/calls.jsonl","build/airgap/bootRun/calls.jsonl"],"findings":[{"id":"orders-db","target":"db-orders.prod.example.com:1521","kind":"database","callers":["com.example.orders.OrderRepository.connect(OrderRepository.java:41)"],"setting":"spring.datasource.url, application.yml:12","runs":["test","application"],"tests":38},{"id":"payments-api","target":"payments.example.com:443","kind":"http","callers":["com.example.orders.PaymentClient.charge(PaymentClient.java:57)"],"setting":"payments.base-url, application.yml:27","runs":["test","application"],"tests":9},{"id":"smtp","target":"smtp.example.com:25","kind":"mail","callers":["com.example.orders.MailNotifier.send(MailNotifier.java:19)"],"setting":"spring.mail.host, application.yml:40","runs":["test"],"tests":4}]},"tests":{"found_by":{"tool":"measurement-run","version":"0.1.0","commit":"1a2b3c4"},"framework":"JUnit 4 on the Vintage engine","count":212,"runs":5,"flaky":7,"disabled":11,"line_coverage":61,"branch_coverage":38,"planted_bugs":{"planted":100,"caught":23,"sampled":true},"mix":{"local":71,"container":0,"broad":29}},"anti_patterns":{"found_by":{"tool":"test-anti-pattern-check","version":"0.1.0","commit":"1a2b3c4"},"findings":[{"id":"no-real-assertion","kind":"no-real-assertion","tests":14,"examples":["src/test/java/com/example/orders/OrderServiceTest.java:33"]},{"id":"disabled","kind":"disabled","tests":11,"examples":["src/test/java/com/example/orders/RefundTest.java"]},{"id":"reaches-shared-system","kind":"reaches-shared-system","tests":6,"examples":["src/test/java/com/example/orders/OrderRepositoryIT.java"]}]},"techniques":{"found_by":{"tool":"technique-rules","version":"0.1.0","commit":"1a2b3c4"},"candidates":[{"id":"characterisation-tests","because":["no tests pin down pricing"]},{"id":"recorded-http-responses","because":["an HTTP connection to another team's service"]},{"id":"contract-testing","because":["an HTTP connection to an in-house service"]}]},"decisions":{"safety/db-password":{"state":"decided","by":"Security and Platform Owner","choice":"rotated, being removed","reason":"Rotated; history rewrite booked."},"safety/reminder-job":{"state":"proposed","drafted_by":"ai","choice":"off in the test profile"},"anti-patterns/disabled":{"state":"proposed","drafted_by":"ai","choice":"Application Owner decides"},"techniques/recorded-http-responses":{"state":"proposed","drafted_by":"ai","choice":"adopt","reason":"The payments service is another team's; record it in UAT and clean the recordings there."},"techniques/contract-testing":{"state":"decided","by":"Test Quality Lead","choice":"reject","reason":"The payments team doesn't verify contracts yet."},"level/target":{"state":"decided","by":"Test Quality Lead","choice":"4","reason":"High business criticality."},"questions/refund-rounding":{"state":"proposed","drafted_by":"ai","question":"Partial refunds round down to the penny today, but the policy says round to nearest. Keep today's behaviour or fix it?"},"questions/order-notes-markup":{"state":"proposed","drafted_by":"ai","question":"A customer who types \"<\/script>\" in the order notes breaks the call centre screen. Escape it, or strip it?"}},"notes":"From the wiki's Orders space, markup and all: <p>Partial refunds round down to the penny.<\/p>"},"connections":{"$schema":"https://calm.finos.org/release/1.3/meta/calm.json","metadata":{"under-test":{"application":"orders","node":"orders-service","reports":["build/airgap/test/calls.jsonl","build/airgap/bootRun/calls.jsonl"],"commit":"1a2b3c4"}},"nodes":[{"unique-id":"db-orders-prod-example-com","node-type":"database","name":"db-orders.prod.example.com","description":"The orders database, found by the airgap agent.","interfaces":[{"unique-id":"db-orders-prod-example-com-1521","port":1521}],"metadata":{"under-test":{"addresses":["db-orders.prod.example.com:1521"]}}},{"unique-id":"orders-service","node-type":"service","name":"orders-service","description":"Takes and changes customer orders for the web shop and the call centre.","metadata":{"under-test":{"programs-started":["sendmail"]}}},{"unique-id":"payments-example-com","node-type":"service","name":"payments.example.com","description":"Another team's payments service, found by the airgap agent.","interfaces":[{"unique-id":"payments-example-com-443","port":443}],"metadata":{"under-test":{"addresses":["payments.example.com:443"]}}},{"unique-id":"smtp-example-com","node-type":"system","name":"smtp.example.com","description":"The mail server for order confirmations, found by the airgap agent.","interfaces":[{"unique-id":"smtp-example-com-25","port":25}],"metadata":{"under-test":{"addresses":["smtp.example.com:25"]}}}],"relationships":[{"unique-id":"orders-service-to-db-orders-prod-example-com","description":"orders-service reads and writes orders in db-orders.prod.example.com.","protocol":"JDBC","relationship-type":{"connects":{"source":{"node":"orders-service"},"destination":{"node":"db-orders-prod-example-com","interfaces":["db-orders-prod-example-com-1521"]}}},"metadata":{"under-test":{"state":"decided","by":"Architecture Owner","found-by":["airgap-agent","settings"],"kinds":["database"],"callers":["com.example.orders.OrderRepository.connect(OrderRepository.java:41)"],"setting":{"name":"spring.datasource.url","from":"application.yml:12"},"tests":38,"runs":["test","application"],"stand-in":{"approach":"run-in-container","kit":"orders-database-kit"},"never-reach":["db-orders.prod.example.com"]}}},{"unique-id":"orders-service-to-payments-example-com","description":"orders-service calls payments.example.com.","protocol":"HTTPS","relationship-type":{"connects":{"source":{"node":"orders-service"},"destination":{"node":"payments-example-com","interfaces":["payments-example-com-443"]}}},"metadata":{"under-test":{"state":"proposed","drafted_by":"ai","found-by":["airgap-agent"],"kinds":["http"],"callers":["com.example.orders.PaymentClient.charge(PaymentClient.java:57)"],"setting":{"name":"payments.base-url","from":"application.yml:27"},"tests":9,"runs":["test","application"],"stand-in":{"approach":"not-chosen"}}}},{"unique-id":"orders-service-to-smtp-example-com","description":"orders-service sends order confirmations through smtp.example.com.","protocol":"TCP","relationship-type":{"connects":{"source":{"node":"orders-service"},"destination":{"node":"smtp-example-com","interfaces":["smtp-example-com-25"]}}},"metadata":{"under-test":{"state":"proposed","drafted_by":"ai","found-by":["airgap-agent","settings"],"kinds":["mail"],"callers":["com.example.orders.MailNotifier.send(MailNotifier.java:19)"],"setting":{"name":"spring.mail.host","from":"application.yml:40"},"tests":4,"runs":["test"],"stand-in":{"approach":"run-in-container"}}}}]},"sources":{"application":"orders","curator":"Orders and Fulfilment, knowledge curator","sources":[{"id":"uat-regression-suite","kind":"test-automation-suite","location":"qa-automation repo, orders/ folder (Selenium, run against the shared test environment)","owner":"QA team","currency":"mostly-current","notes":"Covers placing, changing and cancelling an order. Keeps running until repo tests cover the same journeys."},{"id":"orders-release-pack","kind":"manual-test-scripts","location":"Test management tool, \"Orders release pack\", exported to exports/orders-release-pack.csv","owner":"QA team","currency":"out-of-date","notes":"Refunds and partial shipments; mined for examples."},{"id":"refund-policy","kind":"specification-document","location":"Wiki, Orders space, \"Refund policy\"","owner":"Orders and Fulfilment","currency":"current"}]}}
+</script>
+
+<div class="page" id="page"></div>
+<aside class="drawer" aria-label="Your changes"><div class="inner">
+  <div class="bar-top">
+    <span id="count"></span>
+    <span style="display:flex; gap:8px; flex-wrap:wrap">
+      <button type="button" class="quiet" id="show" hidden>Show the changes</button>
+      <button type="button" id="copy" hidden>Copy the changes</button>
+      <button type="button" class="quiet" id="undo" hidden>Undo all</button>
+    </span>
+  </div>
+  <pre id="out" hidden></pre>
+</div></aside>
+
+<script>
+(function () {
+  "use strict";
+  var data = JSON.parse(document.getElementById("report-data").textContent);
+  var A = data.assessment || {}, C = data.connections, S = data.sources;
+  var decisions = A.decisions || {};
+  var page = document.getElementById("page");
+  var fields = [];
+
+  var ROLES = ["Application Owner", "Architecture Owner", "Security and Platform Owner", "Test Quality Lead",
+    "Technical Architect", "Knowledge Curator", "Data Protection Officer", "Forward Deployed Engineer"];
+  var LEVELS = ["builds reliably", "runs on its own", "current behaviour recorded", "checked against requirements",
+    "tests catch bugs", "checked in production"];
+  var SAFETY_CHOICES = {
+    blocks: ["rotated and removed from the history", "not real: excused in .gitleaksignore", "accepted by the Security and Platform Owner"],
+    "real-personal-data": ["invented: not real people", "real: to be replaced with invented data"],
+    neutralise: ["off in the test profile", "unhooked from the ordinary build", "a temporary folder in the test profile",
+      "not loaded in tests", "accepted as it is"]
+  };
+  var AP_CHOICES = ["Application Owner decides: re-enable, or delete once the approval-test baseline exists",
+    "tagged and left out of normal runs", "fixed in the fix-flaky-tests workstream", "fixed in the strengthen-tests workstream"];
+  var STAND_INS = ["not-chosen", "run-in-container", "recorded-responses", "contract", "fake-behind-an-interface",
+    "shared-test-environment", "accept-risk"];
+
+  function el(tag, attrs, kids) {
+    var e = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) {
+      if (k === "text") { e.textContent = attrs[k]; } else if (k === "cls") { e.className = attrs[k]; } else { e.setAttribute(k, attrs[k]); }
+    });
+    (kids || []).forEach(function (k) { if (k) { e.appendChild(typeof k === "string" ? document.createTextNode(k) : k); } });
+    return e;
+  }
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+  function list(xs) { return (xs || []).join("\n"); }
+
+  function statePill(d) {
+    if (!d) { return el("span", {cls: "pill stale", text: "no decision"}); }
+    if (d.state === "decided") { return el("span", {cls: "pill ok", text: "decided by " + (d.by || "?")}); }
+    if (d.state === "stale") { return el("span", {cls: "pill stale", text: "stale"}); }
+    return el("span", {cls: "pill ai", text: d.drafted_by === "ai" ? "proposed by AI: review" : "proposed"});
+  }
+
+  // A control people change. Each records which file and which entry its change belongs to.
+  function chooser(target, key, options, current, label) {
+    var opts = options.slice();
+    if (current && opts.indexOf(current) < 0) { opts.unshift(current); }
+    var s = el("select", {id: slug(target + "-" + key), "aria-label": label});
+    if (!current) { s.appendChild(el("option", {value: "", text: "choose"})); }
+    opts.forEach(function (o) { s.appendChild(el("option", {value: o, text: o})); });
+    s.value = current || "";
+    fields.push({input: s, target: target, key: key, start: s.value});
+    return s;
+  }
+  function decisionCell(key, options, label) {
+    var d = decisions[key];
+    var td = el("td");
+    td.appendChild(chooser("decision", key, options, d && d.choice, label));
+    var st = statePill(d); st.classList.add("state"); td.appendChild(st);
+    if (d && d.reason) { td.appendChild(el("span", {cls: "muted state", text: d.reason})); }
+    return td;
+  }
+  function table(headings, rows) {
+    var t = el("table", {}, [el("thead", {}, [el("tr", {}, headings.map(function (h) { return el("th", {text: h}); }))]), el("tbody", {}, rows)]);
+    return el("div", {cls: "wrap"}, [t]);
+  }
+  function section(id, title, who, intro, body) {
+    var s = el("section", {id: id}, [el("div", {cls: "head"}, [el("h2", {text: title}), who ? el("span", {cls: "muted", text: who}) : null])]);
+    if (intro) { s.appendChild(el("p", {cls: "muted", text: intro})); }
+    body.forEach(function (b) { s.appendChild(b); });
+    page.appendChild(s);
+  }
+  function foundBy(sec) { return sec && sec.found_by ? "Found by " + sec.found_by.tool + " at " + sec.found_by.commit : ""; }
+  function nothing(text) { return el("p", {cls: "empty", text: text}); }
+
+  // ---- Header
+  var r = A.repo || {};
+  var header = el("header", {}, [
+    el("div", {cls: "bar-top"}, [el("span", {cls: "label", text: "Repo assessment report"}),
+      el("label", {}, ["Your role ", (function () {
+        var s = el("select", {id: "your-role"}); ROLES.forEach(function (x) { s.appendChild(el("option", {value: x, text: x})); });
+        return s; })()])]),
+    el("h1", {text: r.name || "?"}),
+    r.summary ? el("p", {cls: "muted", text: r.summary}) : null,
+    el("div", {cls: "facts"}, [
+      r.application ? el("span", {cls: "fact", text: "Application: " + r.application}) : null,
+      (r.technology_stacks || []).length ? el("span", {cls: "fact", text: "Stack: " + r.technology_stacks.join(", ")}) : null,
+      (r.application_types || []).length ? el("span", {cls: "fact", text: "Type: " + r.application_types.join(", ")}) : null,
+      r.business_criticality ? el("span", {cls: "fact", text: "Business criticality: " + r.business_criticality}) : null,
+      r.application_owner ? el("span", {cls: "fact", text: "Application Owner: " + r.application_owner}) : null,
+      r.batch ? el("span", {cls: "fact", text: "Batch " + r.batch}) : null])]);
+  page.appendChild(header);
+  var commits = {};
+  ["safety", "running_offline", "tests", "anti_patterns", "techniques", "level"].forEach(function (k) {
+    if (A[k] && A[k].found_by) { (commits[A[k].found_by.commit] = commits[A[k].found_by.commit] || []).push(k.replace(/_/g, " ")); } });
+  if (C && C.metadata && C.metadata["under-test"] && C.metadata["under-test"].commit) {
+    var cc = C.metadata["under-test"].commit; (commits[cc] = commits[cc] || []).push("connection list"); }
+  if (Object.keys(commits).length > 1) {
+    page.appendChild(el("p", {cls: "pill warn", text: "Found at different commits: " + Object.keys(commits).map(function (c) { return c + " (" + commits[c].join(", ") + ")"; }).join("; ") +
+      ". Re-run the older ones if the code has changed since."}));
+  }
+
+  // ---- Summary
+  function undecided(prefix, ids) { return ids.filter(function (id) { var d = decisions[prefix + id]; return !d || d.state !== "decided"; }); }
+  var sf = (A.safety || {}).findings || [];
+  var blocking = undecided("safety/", sf.filter(function (f) { return f.effect === "blocks"; }).map(function (f) { return f.id; }));
+  var toNeutralise = undecided("safety/", sf.filter(function (f) { return f.effect === "neutralise"; }).map(function (f) { return f.id; }));
+  var rels = (C && C.relationships) || [];
+  var noStandIn = rels.filter(function (x) { var u = (x.metadata || {})["under-test"] || {}; return !u["stand-in"] || u["stand-in"].approach === "not-chosen"; });
+  var unconfirmed = rels.filter(function (x) { var u = (x.metadata || {})["under-test"] || {}; return u.state !== "decided"; });
+  var toProduction = rels.filter(function (x) { var u = (x.metadata || {})["under-test"] || {};
+    return (u["never-reach"] || []).length && (u.tests || (u.runs || []).length) && !(u.state === "decided" && u["stand-in"] && u["stand-in"].approach !== "not-chosen"); });
+  var T = A.tests, aps = ((A.anti_patterns || {}).findings || []);
+  function answer(light, q, text) { return el("div", {cls: "answer"}, [el("span", {cls: "light " + light, "aria-hidden": "true"}), el("div", {}, [el("h3", {text: q}), el("p", {text: text})])]); }
+  var safe = toProduction.length ? answer("block", "Is it safe to run?", "No. The code reaches " + toProduction.length + " production address(es) with no confirmed stand-in" + (blocking.length ? ", and " + blocking.length + " safety finding(s) block every run." : "."))
+    : !A.safety ? answer("", "Is it safe to run?", "Not known: the safety inventory hasn't run.")
+    : blocking.length ? answer("block", "Is it safe to run?", "No. " + blocking.length + " finding(s) block every run until resolved.")
+    : toNeutralise.length ? answer("warn", "Is it safe to run?", "Once " + toNeutralise.length + " finding(s) are made harmless in the test profile or build.")
+    : answer("ok", "Is it safe to run?", "Yes: nothing blocks, and every finding has a decision.");
+  var offline = !C ? answer("", "Does it run on its own?", "Not known: no connection list yet.")
+    : noStandIn.length ? answer("block", "Does it run on its own?", "Not yet: " + noStandIn.length + " connection(s) have no stand-in.")
+    : unconfirmed.length ? answer("warn", "Does it run on its own?", "Once the Architecture Owner confirms " + unconfirmed.length + " connection(s).")
+    : answer("ok", "Does it run on its own?", "Every connection has a confirmed stand-in.");
+  var trust;
+  if (!T) { trust = answer("", "Can its tests be trusted?", "Not known: the tests haven't been measured."); }
+  else {
+    var pb = T.planted_bugs, ratio = pb && pb.planted ? pb.caught / pb.planted : null;
+    var weak = aps.reduce(function (n, f) { return n + (f.tests || 0); }, 0);
+    var text = (T.line_coverage != null ? T.line_coverage + "% of lines run in tests" : "Coverage not measured") +
+      (pb ? "; they caught " + pb.caught + " of " + pb.planted + " planted bugs" : "") + (weak ? "; anti-patterns flagged in " + weak + " test(s)" : "") + ".";
+    trust = answer(ratio == null ? "warn" : ratio < 0.5 ? "block" : ratio < 0.8 ? "warn" : "ok", "Can its tests be trusted?", text);
+  }
+  var reached = A.level ? A.level.reached : null;
+  var target = decisions["level/target"] && decisions["level/target"].choice;
+  var rungs = el("div", {cls: "rungs"}, LEVELS.map(function (name, i) {
+    return el("div", {cls: "rung" + (reached != null && i <= reached ? " reached" : "") + (String(i) === String(target) ? " target" : "")}, [el("b", {text: String(i)}), name]);
+  }));
+  page.appendChild(el("div", {cls: "summary"}, [el("div", {}, [safe, offline, trust]),
+    el("div", {}, [el("span", {cls: "label", text: "Test maturity level" + (reached != null ? ": " + reached + " reached" : "") + (target ? ", target " + target : "")}), rungs])]));
+
+  // ---- Safety inventory
+  section("safety", "Safety inventory", foundBy(A.safety), "Found before any of the repo's code ran. Red findings block every run until resolved.",
+    !sf.length ? [nothing(A.safety ? "Nothing found." : "The safety inventory hasn't run.")] : [table(["Finding", "Where", "Effect", "Decision"],
+      sf.map(function (f) {
+        var opts = f.kind === "real-personal-data" ? SAFETY_CHOICES["real-personal-data"] : (SAFETY_CHOICES[f.effect] || SAFETY_CHOICES.neutralise);
+        return el("tr", {cls: f.effect}, [el("td", {}, [el("div", {text: f.what || f.kind}), el("span", {cls: "muted mono", text: f.id})]),
+          el("td", {cls: "where", text: list(f.where)}),
+          el("td", {}, [el("span", {cls: "pill " + (f.effect === "blocks" ? "block" : f.effect === "neutralise" ? "warn" : "ok"), text: f.effect})]),
+          decisionCell("safety/" + f.id, opts, "Decision on " + f.id)]);
+      }))]);
+
+  // ---- Running offline: the connection list
+  section("running", "What it talks to", C ? "From the connection list, drafted from the airgap agent's reports" : "",
+    "Each connection needs a stand-in before the tests run offline. The Architecture Owner confirms each one.",
+    !rels.length ? [nothing(C ? "No connections." : "No connection list yet.")] : [table(["Connection", "Callers and setting", "Tests", "Stand-in"],
+      rels.map(function (x) {
+        var u = (x.metadata || {})["under-test"] || {};
+        var dest = (((x["relationship-type"] || {}).connects || {}).destination || {}).node;
+        var never = (u["never-reach"] || []).length;
+        var td = el("td");
+        td.appendChild(chooser("connection", x["unique-id"], STAND_INS, (u["stand-in"] || {}).approach, "Stand-in for " + dest));
+        var st = statePill(u.state ? u : null); st.classList.add("state"); td.appendChild(st);
+        return el("tr", {cls: never ? "blocks" : ""}, [el("td", {}, [el("div", {cls: "mono", text: dest}), el("span", {cls: "muted", text: (x.protocol || "") + (never ? " · production: tests must never reach it" : "")})]),
+          el("td", {cls: "where", text: list(u.callers) + (u.setting ? "\n" + u.setting.name + (u.setting.from ? ", " + u.setting.from : "") : "")}),
+          el("td", {cls: "num", text: u.tests != null ? String(u.tests) : ""}), td]);
+      }))]);
+
+  // ---- Tests
+  var tb = [];
+  if (T) {
+    function stat(label, value, sub) { return el("div", {cls: "stat"}, [el("span", {cls: "label", text: label}), el("b", {text: value}), sub ? el("span", {cls: "muted", text: sub}) : null]); }
+    tb.push(el("div", {cls: "stats"}, [
+      T.count != null ? stat("Tests", String(T.count), T.framework) : null,
+      T.line_coverage != null ? stat("Line coverage", T.line_coverage + "%", T.branch_coverage != null ? "branch " + T.branch_coverage + "%" : "") : null,
+      T.planted_bugs ? stat("Planted bugs caught", T.planted_bugs.caught + " / " + T.planted_bugs.planted, T.planted_bugs.sampled ? "sampled" : "") : null,
+      T.flaky != null ? stat("Flaky", String(T.flaky), T.runs ? "in " + T.runs + " runs" : "") : null,
+      T.disabled != null ? stat("Disabled", String(T.disabled)) : null]));
+    if (T.mix) {
+      var segs = [["local", "var(--accent)"], ["container", "var(--ok)"], ["broad", "var(--warn)"]];
+      tb.push(el("div", {}, [el("span", {cls: "label", text: "Test mix"}), el("div", {cls: "mix"}, segs.filter(function (s) { return T.mix[s[0]]; }).map(function (s) {
+        var sp = el("span", {text: s[0] + " " + T.mix[s[0]] + "%"}); sp.style.width = T.mix[s[0]] + "%"; sp.style.background = s[1]; return sp; }))]));
+    }
+  }
+  section("tests", "Tests and coverage", foundBy(T), "", T ? tb : [nothing("The tests haven't been measured.")]);
+
+  // ---- Anti-patterns
+  section("antipatterns", "Anti-patterns in the existing tests", foundBy(A.anti_patterns), "No existing test is deleted before the approval-test baseline exists.",
+    !aps.length ? [nothing(A.anti_patterns ? "None found." : "Not looked for yet.")] : [table(["Anti-pattern", "Tests", "Examples", "What happens"],
+      aps.map(function (f) { return el("tr", {}, [el("td", {}, [el("div", {text: f.kind === "other" ? f.id.replace(/^other-/, "").replace(/-/g, " ") : f.kind.replace(/-/g, " ")}), el("span", {cls: "muted mono", text: f.id})]),
+        el("td", {cls: "num", text: String(f.tests)}), el("td", {cls: "where", text: list(f.examples)}), decisionCell("anti-patterns/" + f.id, AP_CHOICES, "What happens to " + f.id)]); }))]);
+
+  // ---- Test assets and other sources
+  var srcs = (S && S.sources) || [];
+  section("sources", "Sources of intended behaviour", S && S.curator ? "Listed by " + S.curator : "", "Test assets outside the repo keep running where they are until repo tests cover the same journeys, and never count as evidence.",
+    !srcs.length ? [nothing(S ? "No sources listed." : "No source list yet.")] : [table(["Source", "Where", "How current", "Notes"],
+      srcs.map(function (x) { return el("tr", {}, [el("td", {}, [el("div", {text: x.kind.replace(/-/g, " ")}), el("span", {cls: "muted mono", text: x.id})]),
+        el("td", {cls: "where", text: x.location}), el("td", {text: x.currency}), el("td", {cls: "muted", text: x.notes || ""})]); }))]);
+
+  // ---- Techniques
+  var cands = ((A.techniques || {}).candidates) || [];
+  section("techniques", "Techniques for this repo", foundBy(A.techniques), "",
+    !cands.length ? [nothing("No techniques marked yet.")] : [table(["Technique", "Because", "Decision"],
+      cands.map(function (x) { return el("tr", {}, [el("td", {cls: "mono", text: x.id}), el("td", {text: (x.because || []).join("; ")}),
+        decisionCell("techniques/" + x.id, ["adopt", "defer", "reject"], "Decision on " + x.id)]); }))]);
+
+  // ---- Open questions, and the target level
+  var qs = Object.keys(decisions).filter(function (k) { return decisions[k].question; });
+  var qrows = qs.map(function (k) {
+    var d = decisions[k];
+    var input = el("input", {type: "text", id: slug("answer-" + k), "aria-label": "Answer to " + k, value: d.choice || ""});
+    input.style.width = "100%";
+    fields.push({input: input, target: "decision", key: k, start: input.value});
+    var st = statePill(d); st.classList.add("state");
+    return el("tr", {}, [el("td", {text: d.question}), el("td", {}, [input, st])]);
+  });
+  var tgt = el("tr", {}, [el("td", {text: "Target test maturity level"}), el("td", {}, [chooser("decision", "level/target", ["0", "1", "2", "3", "4", "5"], target, "Target level")])]);
+  section("questions", "Questions and targets", "", "", [table(["Question", "Answer"], qrows.concat([tgt]))]);
+
+  // ---- Changes, written out for the files they belong to
+  var out = document.getElementById("out"), count = document.getElementById("count");
+  var show = document.getElementById("show"), copy = document.getElementById("copy"), undo = document.getElementById("undo");
+  function y(s) { return /^[A-Za-z0-9 ,.()'\-]+$/.test(s) && s.trim() === s && !/^(yes|no|true|false|null|\d+)$/i.test(s) ? s : JSON.stringify(s); }
+  function render() {
+    var role = document.getElementById("your-role").value;
+    var changed = fields.filter(function (f) { return f.input.value !== f.start && f.input.value !== ""; });
+    fields.forEach(function (f) { f.input.classList.toggle("changed", changed.indexOf(f) >= 0); });
+    var dec = changed.filter(function (f) { return f.target === "decision"; });
+    var con = changed.filter(function (f) { return f.target === "connection"; });
+    var lines = [];
+    if (dec.length) {
+      lines.push("# testing/assessment.yaml: put these under decisions, replacing any entry with the same key");
+      dec.forEach(function (f) {
+        var d = decisions[f.key] || {};
+        lines.push("  " + f.key + ":", "    state: decided", "    by: " + y(role));
+        if (d.question) { lines.push("    question: " + y(d.question)); }
+        lines.push("    choice: " + y(f.input.value));
+        if (d.reason) { lines.push("    reason: " + y(d.reason)); }
+      });
+    }
+    if (con.length) {
+      if (lines.length) { lines.push(""); }
+      lines.push("# testing/connections.calm.json: in each relationship's metadata.under-test, set");
+      con.forEach(function (f) {
+        lines.push("#   " + f.key + ": \"stand-in\": {\"approach\": " + JSON.stringify(f.input.value) + "}, \"state\": \"decided\", \"by\": " + JSON.stringify(role));
+      });
+    }
+    out.textContent = lines.join("\n");
+    var any = changed.length > 0;
+    count.textContent = any ? changed.length + " change(s), to paste into the repo's files in a pull request." : "No changes yet. Choose a decision above to change it.";
+    show.hidden = copy.hidden = undo.hidden = !any;
+    if (!any) { out.hidden = true; show.textContent = "Show the changes"; }
+  }
+  fields.forEach(function (f) { f.input.addEventListener("input", render); f.input.addEventListener("change", render); });
+  document.getElementById("your-role").addEventListener("change", render);
+  show.addEventListener("click", function () { out.hidden = !out.hidden; show.textContent = out.hidden ? "Show the changes" : "Hide the changes"; });
+  copy.addEventListener("click", function () {
+    var done = function () { copy.textContent = "Copied"; setTimeout(function () { copy.textContent = "Copy the changes"; }, 1500); };
+    var select = function () { out.hidden = false; var rg = document.createRange(); rg.selectNodeContents(out); var s = window.getSelection(); s.removeAllRanges(); s.addRange(rg); copy.textContent = "Selected: press Ctrl+C"; };
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(out.textContent).then(done, select); } else { select(); }
+  });
+  undo.addEventListener("click", function () { fields.forEach(function (f) { f.input.value = f.start; }); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

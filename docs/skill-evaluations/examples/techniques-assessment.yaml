@@ -1,0 +1,520 @@
+# yaml-language-server: $schema=../../../schema/assessment.schema.json
+schema: assessment/1
+repo:
+  name: orders-service
+  application: orders
+  summary: Takes and changes customer orders for the web shop and the call centre.
+  technology_stacks:
+  - spring-boot
+  application_types:
+  - web-service
+  business_criticality: high
+  application_owner: Orders and Fulfilment
+  batch: '2'
+level:
+  found_by:
+    tool: measurement-run
+    version: 0.1.0
+    commit: 1a2b3c4
+  reached: 0
+  evidence:
+  - Builds cleanly on JDK 8 in CI
+safety:
+  found_by:
+    tool: safety-inventory
+    version: 0.1.0
+    commit: 1a2b3c4
+  findings:
+  - id: db-password
+    kind: production-credential
+    effect: blocks
+    what: Production database password
+    where:
+    - src/main/resources/application.yml:14
+  - id: payments-keystore
+    kind: keystore-or-private-key
+    effect: blocks
+    what: Keystore with a private key for the payments client
+    where:
+    - src/main/resources/certs/payments-client.jks
+  - id: reminder-job
+    kind: self-starting-job
+    effect: neutralise
+    what: Nightly job that emails customers
+    where:
+    - src/main/java/com/example/orders/OrderReminderJob.java:22
+  - id: flyway-at-start
+    kind: migration-at-start-up
+    effect: neutralise
+    where:
+    - build.gradle
+    - src/main/resources/application.yml:30
+  - id: publish-on-build
+    kind: publishing-build-task
+    effect: neutralise
+    where:
+    - build.gradle
+  - id: invoice-share
+    kind: fixed-path-or-file-share
+    effect: neutralise
+    what: Windows file share for invoices
+    where:
+    - src/main/java/com/example/orders/InvoiceExporter.java:31
+  - id: fixture-customers
+    kind: real-personal-data
+    effect: none
+    what: 40 rows checked; synthetic
+    where:
+    - src/test/resources/orders.csv
+running_offline:
+  found_by:
+    tool: draft-connection-list
+    version: 0.1.0
+    commit: 1a2b3c4
+  reports:
+  - build/airgap/test/calls.jsonl
+  - build/airgap/bootRun/calls.jsonl
+  findings:
+  - id: orders-db
+    target: db-orders.prod.example.com:1521
+    kind: database
+    callers:
+    - com.example.orders.OrderRepository.connect(OrderRepository.java:41)
+    setting: spring.datasource.url, application.yml:12
+    runs:
+    - test
+    - application
+    tests: 38
+  - id: payments-api
+    target: payments.example.com:443
+    kind: http
+    callers:
+    - com.example.orders.PaymentClient.charge(PaymentClient.java:57)
+    setting: payments.base-url, application.yml:27
+    runs:
+    - test
+    - application
+    tests: 9
+  - id: smtp
+    target: smtp.example.com:25
+    kind: mail
+    callers:
+    - com.example.orders.MailNotifier.send(MailNotifier.java:19)
+    setting: spring.mail.host, application.yml:40
+    runs:
+    - test
+    tests: 4
+tests:
+  found_by:
+    tool: measurement-run
+    version: 0.1.0
+    commit: 1a2b3c4
+  framework: JUnit 4 on the Vintage engine
+  count: 212
+  runs: 5
+  flaky: 7
+  disabled: 11
+  line_coverage: 61
+  branch_coverage: 38
+  planted_bugs:
+    planted: 100
+    caught: 23
+    sampled: true
+  mix:
+    local: 71
+    container: 0
+    broad: 29
+anti_patterns:
+  found_by:
+    tool: test-anti-pattern-check
+    version: 0.1.0
+    commit: 1a2b3c4
+  findings:
+  - id: no-real-assertion
+    kind: no-real-assertion
+    tests: 14
+    examples:
+    - src/test/java/com/example/orders/OrderServiceTest.java:33
+  - id: disabled
+    kind: disabled
+    tests: 11
+    examples:
+    - src/test/java/com/example/orders/RefundTest.java
+  - id: reaches-shared-system
+    kind: reaches-shared-system
+    tests: 6
+    examples:
+    - src/test/java/com/example/orders/OrderRepositoryIT.java
+techniques:
+  found_by: {tool: choose-techniques, version: unreleased, commit: "90f684b"}
+  candidates:
+  - id: ai-written-tests
+    because:
+    - "needed_when 'Code has few tests, or tests that don't check its results': true; 14 tests have no real assertion and 23 of 100 planted bugs are caught"
+    - "possible_when 'Runs in a JVM test without the network': false; 38 tests reach the orders database and 9 reach the payments API today, planned work make-it-run-on-its-own will change that"
+    - "reject_or_defer_when 'Code whose dependencies cannot be replaced (produces fragile tests full of mocks)': false; no file says so"
+    - "reject_or_defer_when 'Target scheduled for deletion': false; no file says so"
+    - "precondition 'Count of hard-wired dependencies per class': part of the work"
+    - "precondition 'Outbound network calls blocked': part of the work"
+  - id: architecture-rules
+    because:
+    - "needed_when 'Code has been or will be put behind interfaces, or its layers are to be kept apart': true; fake-behind-an-interface is adopted and puts the payments and database calls behind interfaces"
+    - "possible_when 'The layers or interfaces the rules would protect exist': unknown; the code wasn't given, and the interfaces come from planned work make-it-run-on-its-own (fake-behind-an-interface)"
+    - "reject_or_defer_when 'Tiny repos': false; no file says so"
+    - "precondition 'Module count': part of the work"
+  - id: automatic-test-generation
+    because:
+    - "needed_when 'The code is a library or pure logic': unknown; it is a web service, and how much pure logic it holds wasn't given"
+    - "possible_when 'JDK version supported by the tool': unknown; the build targets Java 1.8, and the tool's supported versions weren't given"
+    - "reject_or_defer_when 'Framework-heavy code (Spring contexts)': true; the build file applies Spring Boot 2.3.12 with the web and data-jpa starters"
+    - "precondition 'JDK version': part of the work"
+    - "precondition 'Framework annotation density': part of the work"
+  - id: batch-file-in-file-out
+    because:
+    - "needed_when 'A batch job reads files or tables and writes files or tables': unknown; a nightly reminder job and an invoice exporter exist, but their inputs and outputs weren't given"
+    - "possible_when 'Output can be compared once timestamps, run numbers and row order are set aside': unknown; no batch output was given"
+    - "reject_or_defer_when 'Inputs can only come from production; get synthetic or masked data first': false; no file says so"
+    - "precondition 'The job can be started on its own, with input and output locations passed in': part of the work"
+    - "precondition 'Synthetic or masked input data is approved for use in tests': part of the work"
+  - id: business-rule-tests
+    because:
+    - "needed_when 'A high- or medium-criticality application whose key user journeys are named in the source list or by the Application Owner': true; business criticality is high and the source list names placing, changing and cancelling an order"
+    - "reject_or_defer_when 'No subject-matter expert (SME) is available and there is no specification': false; the source list has a current refund policy specification"
+    - "precondition 'An SME is named for the journeys': part of the work"
+  - id: characterisation-tests
+    because:
+    - "needed_when 'Code must change soon and nobody can say exactly what it does': unknown; no planned change was given"
+    - "needed_when 'Many tests run the code without checking results, or few planted bugs are caught': true; 14 tests have no real assertion and 23 of 100 planted bugs are caught"
+    - "reject_or_defer_when 'The code is being retired rather than changed': false; no file says so"
+    - "precondition 'The code builds and runs on its own (make-it-run-on-its-own done first)': part of make-it-run-on-its-own"
+    - "precondition 'A test point is chosen: a place where inputs can be fed in and outputs read without editing the logic': part of the work"
+  - id: contract-testing
+    because:
+    - "needed_when 'The repo calls, or is called by, a service another team in the organisation owns': true; the connection list has payments.example.com as another team's payments service"
+    - "reject_or_defer_when 'The provider is an external vendor's API': false; the provider is another team's service"
+    - "precondition 'Provider team agreement': not given"
+  - id: database-unit-tests
+    because:
+    - "needed_when 'Business rules live in stored procedures, functions or triggers': unknown; the database is Oracle but the code wasn't given"
+    - "possible_when 'The database engine can run in a container, or a disposable test schema is available': true; the orders database stand-in is decided as run-in-container"
+    - "reject_or_defer_when 'The procedures are being moved out of the database soon; characterise them from the application side instead': false; no file says so"
+    - "precondition 'The schema can be created from scripts or migrations in source control': part of the work"
+    - "precondition 'The database licence allows running the engine in a test container': not given"
+  - id: differential-testing
+    because:
+    - "needed_when 'Code migrations, refactors or platform moves (not database schema migrations) where the old version gives the expected results': unknown; no migration or platform move was given"
+    - "reject_or_defer_when 'Endpoints with side effects (writes) and no isolated sink': false; no file says so"
+    - "reject_or_defer_when 'No traffic mirroring': false; no file says so"
+    - "precondition 'Modernisation in scope': not given"
+    - "precondition 'Share of endpoints that are read-only': part of the work"
+  - id: embedded-jakarta-ee-tests
+    because:
+    - "needed_when 'J2EE, Java EE or Jakarta EE code depends on container services: EJBs, CDI, JMS, JNDI data sources': false; the build file has only Spring Boot dependencies and no Java EE or Jakarta EE ones"
+    - "needed_when 'Tests today need a deployed server, so nobody runs them': false; 212 tests run five times under Gradle without a deployed server"
+    - "reject_or_defer_when 'The app is about to move off the container; test the logic behind interfaces instead': false; no file says so"
+    - "precondition 'Which container services the code uses, found by scanning annotations and deployment descriptors': part of the work"
+  - id: fake-behind-an-interface
+    because:
+    - "needed_when 'Dependency has no image and no reachable non-prod (mainframe, licensed middleware, vendor SDK)': unknown; whether the payments service has a non-prod instance wasn't given"
+    - "needed_when 'A connection's stand-in needs a container or a real system, and the machines local tests run on can't provide one': true; the orders database stand-in runs in a container and developers' machines can't run containers"
+    - "precondition 'Count of hard-wired dependencies, found by static scan': part of the work"
+  - id: feature-flags
+    because:
+    - "needed_when 'A risky change to code on a key user journey': unknown; no planned change was given"
+    - "needed_when 'Old and new code should run side by side to be compared': unknown; no planned change was given"
+    - "needed_when 'A high-criticality application needs gradual release with a quick switch-off': unknown; business criticality is high but no release approach was given"
+    - "reject_or_defer_when 'The setting is long-lived configuration, not a temporary switch': false; no file says so"
+    - "reject_or_defer_when 'No one will own and remove the flag': false; no file says so"
+    - "precondition 'Each flag has an owner and a removal date': part of the work"
+    - "precondition 'Tests cover both states of the flag': part of the work"
+    - "evidence_for_maturity_levels [5] is above the target level 4"
+  - id: in-memory-databases
+    because:
+    - "needed_when 'The code reads or writes a relational database, and the machines local tests run on can't run containers': true; the code uses Spring Data JPA on Oracle and developers' machines can't run containers"
+    - "possible_when 'The code's SQL uses only features the in-memory database shares with the real one': unknown; the SQL wasn't given, and the build-failing SQL check in its preconditions would settle it"
+    - "possible_when 'Tests on the real database engine (testcontainers or a disposable test schema) are in place or planned': false; none today, but testcontainers is adopted (make-it-run-on-its-own)"
+    - "precondition 'The schema can be built from the migrations or scripts in source control': part of the work"
+    - "precondition 'A check that fails the build when the code's SQL uses features the in-memory database doesn't share with the real one': part of the work"
+  - id: junit-tags
+    because:
+    - "needed_when 'Tests reach a shared system (the reaches-shared-system anti-pattern)': true; 6 tests reach a shared system"
+    - "needed_when 'Broad or container tests are part of the test mix (tests.mix)': true; 29 broad tests in the mix"
+    - "needed_when 'A connection's stand-in runs in a container': true; the orders database stand-in is run-in-container"
+    - "precondition 'How long each test takes, from the measurement run': part of the work"
+  - id: machine-state-checks
+    because:
+    - "needed_when 'Install, deploy or configuration scripts set up servers or containers': unknown; no such scripts were given"
+    - "needed_when 'Failures show up only after deployment, as a missing file, wrong permission or closed port': unknown; no deployment failures were given"
+    - "reject_or_defer_when 'The platform's own tooling already checks this (for example, container image scanning and health checks)': false; no file says so"
+    - "precondition 'The script can run in a throwaway container or virtual machine': part of the work"
+  - id: mockito-well-used
+    because:
+    - "needed_when 'Tests mock everything, including the code's own classes and plain values (the mocks-everything anti-pattern)': false; the anti-pattern check lists no mocks-everything finding"
+    - "precondition 'Mocks per test, and mocks of the code's own classes, counted in the tests named by the anti-pattern check': part of the work"
+  - id: mutation-testing
+    because:
+    - "needed_when 'Business criticality is high': true; business criticality is high"
+    - "reject_or_defer_when 'Coverage of the target close to zero': false; line coverage is 61 and branch coverage 38"
+    - "reject_or_defer_when 'Flaky suite': true; 7 tests are flaky in 5 runs"
+    - "precondition 'Coverage and flaky-test count from the measurement run': part of the work"
+  - id: openapi-response-checks
+    because:
+    - "needed_when 'The repo serves an HTTP API that has a published OpenAPI document': unknown; the repo serves HTTP through Spring Web, but no OpenAPI document was given"
+    - "needed_when 'The repo calls an HTTP API that has a published OpenAPI document and no contract tests with its provider': unknown; it calls the payments API with no contract tests, but no OpenAPI document was given"
+    - "possible_when 'The OpenAPI document is kept current by the API's owner': unknown; no OpenAPI document was given"
+    - "precondition 'The OpenAPI document parses and its version is supported by the validator': part of the work"
+  - id: post-release-checks
+    because:
+    - "needed_when 'High business criticality': true; business criticality is high"
+    - "possible_when 'Deployed with a pipeline that can gate': unknown; CI builds the repo, but its deployment pipeline wasn't given"
+    - "reject_or_defer_when 'No staged rollout is possible': false; no file says so"
+    - "precondition 'Platform capability': part of the work"
+    - "evidence_for_maturity_levels [5] is above the target level 4"
+  - id: property-based-testing
+    because:
+    - "needed_when 'The code has calculations, parsers or serialisation round-trips': true; refunds are calculated and rounded to the penny (questions/refund-rounding)"
+    - "possible_when 'A domain expert can state an invariant (a rule that holds for every input)': unknown; no expert was named, and the technique's own check 'SME names an invariant' would settle it"
+    - "precondition 'SME names an invariant': part of the work"
+  - id: recorded-http-responses
+    because:
+    - "needed_when 'Dependency you do not own, over HTTP': true; payments.example.com is another team's service called over HTTPS"
+    - "possible_when 'A non-prod instance is reachable to record from': unknown; the connection list names only payments.example.com, and no non-prod instance was given"
+    - "precondition 'The airgap agent's report lists the HTTP hosts the code contacts': part of the work"
+    - "precondition 'Recordings are cleaned in the capture environment and pass the detector check': part of the work"
+    - "precondition 'First sample of cleaned recordings signed off': part of the work"
+  - id: refactoring-for-testability
+    because:
+    - "needed_when 'Many hard-wired dependencies (clock, singletons, infrastructure created with new)': unknown; the code wasn't given, though the database connection is made in OrderRepository.connect"
+    - "reject_or_defer_when 'Code to be retired': false; no file says so"
+    - "precondition 'Count of hard-wired dependencies, found by static scan': part of the work"
+  - id: repeatable-tests
+    because:
+    - "needed_when 'Tests pass in some runs and fail in others (tests.flaky above 0)': true; tests.flaky is 7"
+    - "needed_when 'Tests sleep for a fixed time, or depend on the order they run in (the sleeps or order-dependent anti-patterns)': false; the anti-pattern check lists neither"
+    - "precondition 'Five runs of the tests, recording which tests failed in which runs': part of the work"
+  - id: server-rendered-ui-tests
+    because:
+    - "needed_when 'Pages are built on the server (JSP, JSF, Struts, templates) and the logic behind them is hard to reach': false; the build file has no JSP, JSF, Struts or template engine dependency"
+    - "possible_when 'A few user journeys matter most and can be named by the Application Owner': true; the source list names placing, changing and cancelling an order"
+    - "reject_or_defer_when 'The logic can be tested below the page; prefer that, and keep browser tests to a few journeys': false; no file says so"
+    - "precondition 'The app starts locally or in a container with test data': part of the work"
+    - "precondition 'The journeys to cover are named and agreed': part of the work"
+  - id: spring-tests-in-slices
+    because:
+    - "needed_when 'The application is built on Spring Boot': true; the build file applies Spring Boot 2.3.12 with the web and data-jpa starters"
+    - "possible_when 'Spring Boot 1.4 or newer, where the slice annotations exist': true; Spring Boot 2.3.12"
+    - "reject_or_defer_when 'The application is about to move off Spring; test the logic behind interfaces instead': false; no file says so"
+    - "precondition 'The Spring Boot version and starters in the build file': part of the work"
+  - id: stand-in-commands
+    because:
+    - "needed_when 'Scripts, batch jobs or application code start other programs (curl, sqlplus, scp, sendmail, a vendor command-line tool) that are slow, need credentials or can reach production, or that tests must make report progress, retry or fail on demand': true; the connection list says orders-service starts sendmail"
+    - "reject_or_defer_when 'The script's logic is mostly in the program it calls; test that program instead': false; no file says so"
+    - "precondition 'Scripts call programs by name (found on PATH), not by fixed absolute path': part of the work"
+    - "precondition 'With AI help, list the programs each script calls, and what output and exit codes it relies on': part of the work"
+  - id: structured-output-comparison
+    because:
+    - "needed_when 'Structured output such as JSON, files or reports': true; the service answers over HTTP through Spring Web and InvoiceExporter writes invoice files"
+    - "possible_when 'Output is deterministic or can be normalised': unknown; no output was given, and the technique's own check 'Run twice and diff the outputs' would settle it"
+    - "reject_or_defer_when 'Output is dominated by timestamps or IDs that cannot be normalised': false; no file says so"
+    - "reject_or_defer_when 'The boundary is about to be replaced': false; no file says so"
+    - "precondition 'Run twice and diff the outputs': part of the work"
+  - id: testcontainers
+    because:
+    - "needed_when 'Infrastructure you own (database, broker, cache)': true; the orders database is this application's own, with a decided run-in-container stand-in"
+    - "possible_when 'A container runtime is available to tests (CI today; developer machines if WSL2 is enabled)': true; CI can run container tests"
+    - "reject_or_defer_when 'Licensed product with no image (for example certain mainframe middleware)': false; no file says so, and the orders database has a decided run-in-container stand-in"
+    - "precondition 'Runtime check in CI': part of the work"
+    - "precondition 'Image exists in the organisation's package repository': part of the work"
+  - id: tests-from-cases
+    because:
+    - "needed_when 'Tests are copied and pasted with only their values changed (the copy-pasted anti-pattern)': false; the anti-pattern check lists no copy-pasted finding"
+    - "needed_when 'The source list names manual test scripts or tables of examples to turn into tests': true; the source list has orders-release-pack, manual test scripts for refunds and partial shipments"
+    - "precondition 'Tests that differ only in their values, found by the copy-paste detector': part of the work"
+  - id: traffic-record-and-replay
+    because:
+    - "needed_when 'An HTTP service with outgoing calls that tests can't reach offline': true; 9 tests reach payments.example.com over HTTPS"
+    - "possible_when 'Keploy understands every one of the service's outgoing calls where it captures: HTTP or HTTPS, MySQL or MongoDB on every platform; PostgreSQL, Redis or Kafka except on Windows, where they are captured only as raw bytes, which usually don't replay': false; the service also calls Oracle over JDBC and sends mail, which Keploy doesn't capture"
+    - "possible_when 'The application can run in a test environment where its real dependencies answer': unknown; no such environment was given"
+    - "possible_when 'On Windows (x86-64) or macOS on Apple silicon, where Keploy runs as an ordinary user; or on Linux in CI where it may run as root for eBPF': unknown; the CI platform wasn't given"
+    - "possible_when 'The Keploy trial on a pilot application has passed': unknown; no trial was given"
+    - "reject_or_defer_when 'Keploy is found to need contact with its own servers on a closed network': false; no file says so"
+    - "reject_or_defer_when 'The recordings can't have personal data removed before they leave the capture environment': false; no file says so"
+    - "precondition 'Security and Platform Owner approves the Keploy binary and its closed components': not given"
+    - "precondition 'Capture in the chosen environment is approved': not given"
+    - "precondition 'Trial capture on a machine with no route out shows no contact with Keploy's servers': part of the work"
+    - "precondition 'Recordings pass the personal-data detector gate': part of the work"
+decisions:
+  safety/db-password:
+    state: decided
+    by: Security and Platform Owner
+    choice: rotated, being removed
+    reason: Rotated; history rewrite booked.
+  safety/reminder-job:
+    state: proposed
+    drafted_by: ai
+    choice: off in the test profile
+  anti-patterns/disabled:
+    state: proposed
+    drafted_by: ai
+    choice: Application Owner decides
+  level/target:
+    state: decided
+    by: Test Quality Lead
+    choice: '4'
+    reason: High business criticality.
+  questions/refund-rounding:
+    state: proposed
+    drafted_by: ai
+    question: Partial refunds round down to the penny today, but the policy says round
+      to nearest. Keep today's behaviour or fix it?
+  techniques/ai-written-tests:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Code has few tests, or tests that don't check its results', 14 tests check nothing and 23 of 100 planted bugs are caught. Waits for make-it-run-on-its-own."
+  techniques/architecture-rules:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Code has been or will be put behind interfaces, or its layers are to be kept apart', the adopted fake-behind-an-interface puts the payments and database calls behind interfaces. Waits for make-it-run-on-its-own."
+  techniques/automatic-test-generation:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: 'Framework-heavy code (Spring contexts)', the build file applies Spring Boot 2.3.12 with the web and data-jpa starters."
+  techniques/batch-file-in-file-out:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'A batch job reads files or tables and writes files or tables' is unknown; a nightly reminder job and an invoice exporter exist but their inputs and outputs weren't given. Check what the jobs read and write. Brought back when a batch job that reads and writes files or tables is confirmed."
+  techniques/business-rule-tests:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'A high- or medium-criticality application whose key user journeys are named in the source list or by the Application Owner', business criticality is high and the source list names placing, changing and cancelling an order."
+  techniques/characterisation-tests:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Many tests run the code without checking results, or few planted bugs are caught', 14 tests check nothing and 23 of 100 planted bugs are caught. Waits for make-it-run-on-its-own."
+  techniques/contract-testing:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: needs 'Provider team agreement', not given. Brought back when the payments team agrees to contract testing."
+  techniques/database-unit-tests:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: needs 'The database licence allows running the engine in a test container', not given. Brought back when the licence is confirmed to allow it, and 'Business rules live in stored procedures, functions or triggers' is shown true."
+  techniques/differential-testing:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: needs 'Modernisation in scope', not given. Brought back when modernisation is confirmed in scope and an old version gives the expected results."
+  techniques/embedded-jakarta-ee-tests:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: every needed_when is known false; the build has only Spring Boot dependencies and the tests run without a deployed server. Its fallback, fake-behind-an-interface, stands in for orders-service-to-payments-example-com."
+  techniques/fake-behind-an-interface:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'A connection's stand-in needs a container or a real system, and the machines local tests run on can't provide one', the orders database stand-in runs in a container and developers' machines can't run containers."
+  techniques/feature-flags:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: every level in evidence_for_maturity_levels (5) is above the target level 4. Brought back when the target level is raised to 5."
+  techniques/in-memory-databases:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'The code reads or writes a relational database, and the machines local tests run on can't run containers', it uses Spring Data JPA on Oracle and developers' machines can't run containers. Waits for make-it-run-on-its-own."
+  techniques/junit-tags:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Tests reach a shared system (the reaches-shared-system anti-pattern)', 6 tests reach a shared system; 'Broad or container tests are part of the test mix (tests.mix)', 29 broad tests; 'A connection's stand-in runs in a container', the orders database stand-in is run-in-container."
+  techniques/machine-state-checks:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Install, deploy or configuration scripts set up servers or containers' is unknown; no such scripts were given. Check whether install or deploy scripts exist and whether failures appear only after deployment. Brought back when either needed_when condition is shown true."
+  techniques/mockito-well-used:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: every needed_when is known false; the anti-pattern check lists no mocks-everything finding."
+  techniques/mutation-testing:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Flaky suite', 7 tests are flaky in 5 runs. Waits for fix-flaky-tests. Brought back when the flaky tests are fixed (tests.flaky is 0)."
+  techniques/openapi-response-checks:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'The repo serves an HTTP API that has a published OpenAPI document' is unknown; no OpenAPI document was given. Check whether the repo's API or the payments API has a published OpenAPI document that its owner keeps current. Brought back when such a document is found."
+  techniques/post-release-checks:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: every level in evidence_for_maturity_levels (5) is above the target level 4. Brought back when the target level is raised to 5."
+  techniques/property-based-testing:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'The code has calculations, parsers or serialisation round-trips', refunds are calculated and rounded to the penny."
+  techniques/recorded-http-responses:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'A non-prod instance is reachable to record from' is unknown; no non-prod payments instance was given. Check whether a non-prod payments instance can be reached to record from. Brought back when one is found reachable."
+  techniques/refactoring-for-testability:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: 'Many hard-wired dependencies (clock, singletons, infrastructure created with new)' is unknown; the code wasn't given. Check the count of hard-wired dependencies by static scan. Brought back when the scan shows many."
+  techniques/repeatable-tests:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Tests pass in some runs and fail in others (tests.flaky above 0)', 7 tests are flaky in 5 runs."
+  techniques/server-rendered-ui-tests:
+    state: proposed
+    drafted_by: ai
+    choice: reject
+    reason: "reject: every needed_when is known false; the build file has no JSP, JSF, Struts or template engine dependency."
+  techniques/spring-tests-in-slices:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'The application is built on Spring Boot', the build file applies Spring Boot 2.3.12 with the web and data-jpa starters."
+  techniques/stand-in-commands:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Scripts, batch jobs or application code start other programs (curl, sqlplus, scp, sendmail, a vendor command-line tool) that are slow, need credentials or can reach production, or that tests must make report progress, retry or fail on demand', the connection list says orders-service starts sendmail."
+  techniques/structured-output-comparison:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Structured output such as JSON, files or reports', the service answers over HTTP and InvoiceExporter writes invoice files."
+  techniques/testcontainers:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'Infrastructure you own (database, broker, cache)', the orders database is this application's own and its stand-in is decided as run-in-container."
+  techniques/tests-from-cases:
+    state: proposed
+    drafted_by: ai
+    choice: adopt
+    reason: "adopt: 'The source list names manual test scripts or tables of examples to turn into tests', the source list has orders-release-pack."
+  techniques/traffic-record-and-replay:
+    state: proposed
+    drafted_by: ai
+    choice: defer
+    reason: "defer: needs 'Security and Platform Owner approves the Keploy binary and its closed components', not given. Brought back when the Keploy binary and the capture environment are approved, Keploy captures every outgoing call (Oracle over JDBC and mail aren't captured), and the pilot trial has passed."
+notes: ''

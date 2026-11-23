@@ -1,0 +1,404 @@
+{
+  "$schema": "https://calm.finos.org/release/1.3/meta/calm.json",
+  "metadata": {
+    "under-test": {
+      "application": "orders",
+      "node": "orders-service",
+      "reports": [
+        "build/airgap/bootRun/calls.jsonl",
+        "build/airgap/test/calls.jsonl"
+      ],
+      "commit": "90cc5d1"
+    }
+  },
+  "nodes": [
+    {
+      "unique-id": "192-0-2-9",
+      "node-type": "system",
+      "name": "192.0.2.9",
+      "description": "A system reached from MetricsReporter, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "192-0-2-9-8125",
+          "port": 8125
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "192.0.2.9:8125"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "config-example-com",
+      "node-type": "service",
+      "name": "config.example.com",
+      "description": "An HTTP service reached from ConfigClient, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "config-example-com-8888",
+          "port": 8888
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "config.example.com:8888"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "db-orders-prod-example-com",
+      "node-type": "database",
+      "name": "db-orders.prod.example.com",
+      "description": "A database reached from OrderRepository, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "db-orders-prod-example-com-1521",
+          "port": 1521
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "db-orders.prod.example.com",
+            "db-orders.prod.example.com:1521"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "ldap-corp-example-com",
+      "node-type": "ldap",
+      "name": "ldap.corp.example.com",
+      "description": "A directory reached from UserDirectory, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "ldap-corp-example-com-389",
+          "port": 389
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "ldap://ldap.corp.example.com:389/ou=people"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service",
+      "node-type": "service",
+      "name": "orders-service",
+      "description": "The application in this repo.",
+      "metadata": {
+        "under-test": {
+          "programs-started": [
+            "sendmail"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "payments-example-com",
+      "node-type": "service",
+      "name": "payments.example.com",
+      "description": "An HTTP service reached from PaymentClient, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "payments-example-com-443",
+          "port": 443
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "https://payments.example.com/v1/charges"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "smtp-example-com",
+      "node-type": "system",
+      "name": "smtp.example.com",
+      "description": "A mail server reached from ConfirmationMailer, found by the airgap agent.",
+      "interfaces": [
+        {
+          "unique-id": "smtp-example-com-25",
+          "port": 25
+        }
+      ],
+      "metadata": {
+        "under-test": {
+          "addresses": [
+            "smtp.example.com:25"
+          ]
+        }
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "unique-id": "orders-service-to-192-0-2-9",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "192-0-2-9",
+            "interfaces": [
+              "192-0-2-9-8125"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent"
+          ],
+          "kinds": [
+            "udp"
+          ],
+          "runs": [
+            "application"
+          ],
+          "callers": [
+            "com.example.orders.MetricsReporter.send(MetricsReporter.java:22)"
+          ],
+          "tests": 0,
+          "stand-in": {
+            "approach": "not-chosen"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-config-example-com",
+      "protocol": "HTTP",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "config-example-com",
+            "interfaces": [
+              "config-example-com-8888"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent",
+            "settings"
+          ],
+          "kinds": [
+            "http"
+          ],
+          "runs": [
+            "application"
+          ],
+          "callers": [
+            "com.example.orders.ConfigClient.fetch(ConfigClient.java:30)"
+          ],
+          "setting": {
+            "name": "spring.cloud.config.uri",
+            "from": "bootstrap.yml:3"
+          },
+          "tests": 0,
+          "stand-in": {
+            "approach": "recorded-responses"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-db-orders-prod-example-com",
+      "protocol": "JDBC",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "db-orders-prod-example-com",
+            "interfaces": [
+              "db-orders-prod-example-com-1521"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent",
+            "settings"
+          ],
+          "kinds": [
+            "database",
+            "host-lookup"
+          ],
+          "runs": [
+            "application",
+            "test"
+          ],
+          "callers": [
+            "com.example.orders.OrderRepository.connect(OrderRepository.java:41)"
+          ],
+          "setting": {
+            "name": "spring.datasource.url",
+            "from": "application.yml:12"
+          },
+          "tests": 2,
+          "stand-in": {
+            "approach": "run-in-container"
+          },
+          "never-reach": [
+            "db-orders.prod.example.com"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-ldap-corp-example-com",
+      "protocol": "LDAP",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "ldap-corp-example-com",
+            "interfaces": [
+              "ldap-corp-example-com-389"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent"
+          ],
+          "kinds": [
+            "jndi"
+          ],
+          "runs": [
+            "test"
+          ],
+          "callers": [
+            "com.example.orders.UserDirectory.lookup(UserDirectory.java:12)"
+          ],
+          "tests": 1,
+          "stand-in": {
+            "approach": "run-in-container"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-payments-example-com",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "payments-example-com",
+            "interfaces": [
+              "payments-example-com-443"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent",
+            "settings"
+          ],
+          "kinds": [
+            "http"
+          ],
+          "runs": [
+            "test"
+          ],
+          "callers": [
+            "com.example.orders.PaymentClient.charge(PaymentClient.java:112)"
+          ],
+          "setting": {
+            "name": "payments.base-url",
+            "from": "application.yml:27"
+          },
+          "tests": 1,
+          "stand-in": {
+            "approach": "recorded-responses"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-smtp-example-com",
+      "protocol": "TCP",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "smtp-example-com",
+            "interfaces": [
+              "smtp-example-com-25"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "airgap-agent",
+            "settings"
+          ],
+          "kinds": [
+            "mail"
+          ],
+          "runs": [
+            "test"
+          ],
+          "callers": [
+            "com.example.orders.ConfirmationMailer.send(ConfirmationMailer.java:58)"
+          ],
+          "setting": {
+            "name": "spring.mail.host",
+            "from": "application.yml:40"
+          },
+          "tests": 1,
+          "stand-in": {
+            "approach": "run-in-container"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -43,7 +43,8 @@ the result the same every time.
 | All | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fills the report page from the repo's files, and applies people's changes back | [Half the tool calls and tokens, a sixth of the time; the same page for every repo](docs/skill-evaluations/render-the-assessment-report.md) |
 
 Each journey skill is also evaluated repeatably with `claude plugin eval`: [the latest results](docs/skill-evaluations/eval-results.md), and
-[each skill without it, at version 1 and at version 2](docs/skill-evaluations/skill-versions-compared.md).
+[each skill with and without it, round by round](docs/skill-evaluations/skill-versions-compared.md), and
+[what the skills produce](docs/skill-evaluations/what-the-skills-produce.md) for an example repo.
 
 ## Where to start
 

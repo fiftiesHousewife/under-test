@@ -1,0 +1,165 @@
+# yaml-language-server: $schema=../../../schema/assessment.schema.json
+schema: assessment/1
+repo:
+  name: orders-sample
+safety:
+  found_by: {tool: gitleaks, version: "unknown", commit: "c467c4a"}
+  findings:
+    - id: batch-job-runs-at-start-up-application
+      kind: self-starting-job
+      effect: neutralise
+      what: Spring Batch is set to run its jobs when the application starts
+      where: ["src/main/resources/application.properties:6"]
+    - id: credentials-in-jdbc-url-application
+      kind: production-credential
+      effect: blocks
+      what: A database address with the user name and password inside it
+      where: ["src/main/resources/application.conf:3"]
+    - id: database-dump-file-backup
+      kind: real-personal-data
+      effect: blocks
+      what: "A database dump or backup: check whether it holds real data"
+      where: ["backup.dump"]
+    - id: email-addresses-in-data-files-orders
+      kind: real-personal-data
+      effect: blocks
+      what: "Email addresses in a data file: check whether they belong to real people"
+      where: ["src/test/resources/orders.csv:2"]
+    - id: fixed-file-path-application
+      kind: fixed-path-or-file-share
+      effect: neutralise
+      what: A fixed path on a particular machine's disk
+      where: ["src/main/resources/application.properties:8"]
+    - id: fixed-file-path-orderreminderjob
+      kind: fixed-path-or-file-share
+      effect: neutralise
+      what: A fixed path on a particular machine's disk
+      where: ["src/main/java/com/example/OrderReminderJob.java:4"]
+    - id: keystore-file-old-client
+      kind: keystore-or-private-key
+      effect: blocks
+      what: A keystore or certificate store, which usually holds a private key
+      where: ["certs/old-client.jks, in commit 6415dbf"]
+    - id: keystore-file-payments-client
+      kind: keystore-or-private-key
+      effect: blocks
+      what: A keystore or certificate store, which usually holds a private key
+      where: ["src/main/resources/certs/payments-client.jks, in commit 44646c2"]
+    - id: migration-tool-application
+      kind: migration-at-start-up
+      effect: neutralise
+      what: Flyway or Liquibase, which change the configured database when the application starts
+      where: ["src/main/resources/application.properties:4"]
+    - id: native-library-file-libnative
+      kind: native-library
+      effect: neutralise
+      what: A native library file
+      where: ["lib/libnative.so"]
+    - id: native-library-loaded-orderreminderjob
+      kind: native-library
+      effect: neutralise
+      what: Code that loads a native library
+      where: ["src/main/java/com/example/OrderReminderJob.java:4"]
+    - id: password-in-settings-application
+      kind: production-credential
+      effect: blocks
+      what: A password or secret written directly into the application's own settings, not read from a placeholder
+      where: ["src/main/resources/application.properties:2"]
+    - id: private-key-file-release
+      kind: keystore-or-private-key
+      effect: blocks
+      what: A private key file
+      where: ["deploy/release.pem, in commit 6415dbf"]
+    - id: publishing-build-task-build
+      kind: publishing-build-task
+      effect: neutralise
+      what: "A build that can publish or deploy: check it can't run from an ordinary build"
+      where: ["build.gradle:1", "build.gradle:2"]
+    - id: scheduled-job-orderreminderjob
+      kind: self-starting-job
+      effect: neutralise
+      what: A job that starts by itself on a timer or at start-up
+      where: ["src/main/java/com/example/OrderReminderJob.java:3"]
+    - id: schema-changed-at-start-up-application
+      kind: migration-at-start-up
+      effect: neutralise
+      what: Hibernate is set to create or change the database schema when the application starts
+      where: ["src/main/resources/application.properties:5"]
+    - id: windows-file-share-application
+      kind: fixed-path-or-file-share
+      effect: neutralise
+      what: A Windows file share or network path
+      where: ["src/main/resources/application.properties:7"]
+    - id: windows-file-share-share
+      kind: fixed-path-or-file-share
+      effect: neutralise
+      what: A Windows file share or network path
+      where: ["src/main/java/com/example/Share.java:1"]
+decisions:
+  safety/batch-job-runs-at-start-up-application:
+    state: proposed
+    drafted_by: ai
+    choice: off in the test profile
+  safety/credentials-in-jdbc-url-application:
+    state: proposed
+    drafted_by: ai
+  safety/database-dump-file-backup:
+    state: proposed
+    drafted_by: ai
+    question: Do these files hold real people's details? If not, say how you know.
+  safety/email-addresses-in-data-files-orders:
+    state: proposed
+    drafted_by: ai
+    question: Do these files hold real people's details? If not, say how you know.
+  safety/fixed-file-path-application:
+    state: proposed
+    drafted_by: ai
+    choice: a temporary folder in the test profile
+  safety/fixed-file-path-orderreminderjob:
+    state: proposed
+    drafted_by: ai
+    choice: a temporary folder in the test profile
+  safety/keystore-file-old-client:
+    state: proposed
+    drafted_by: ai
+  safety/keystore-file-payments-client:
+    state: proposed
+    drafted_by: ai
+  safety/migration-tool-application:
+    state: proposed
+    drafted_by: ai
+    choice: off in the test profile
+  safety/native-library-file-libnative:
+    state: proposed
+    drafted_by: ai
+    choice: not loaded in tests
+  safety/native-library-loaded-orderreminderjob:
+    state: proposed
+    drafted_by: ai
+    choice: not loaded in tests
+  safety/password-in-settings-application:
+    state: proposed
+    drafted_by: ai
+  safety/private-key-file-release:
+    state: proposed
+    drafted_by: ai
+  safety/publishing-build-task-build:
+    state: proposed
+    drafted_by: ai
+    choice: unhooked from the ordinary build
+  safety/scheduled-job-orderreminderjob:
+    state: proposed
+    drafted_by: ai
+    choice: off in the test profile
+  safety/schema-changed-at-start-up-application:
+    state: proposed
+    drafted_by: ai
+    choice: off in the test profile
+  safety/windows-file-share-application:
+    state: proposed
+    drafted_by: ai
+    choice: a temporary folder in the test profile
+  safety/windows-file-share-share:
+    state: proposed
+    drafted_by: ai
+    choice: a temporary folder in the test profile

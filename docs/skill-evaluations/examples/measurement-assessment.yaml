@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=../../../schema/assessment.schema.json
+schema: assessment/1
+repo:
+  name: orders-sample
+  summary: Prices orders, numbers them and sends confirmations.
+level:
+  found_by: {tool: measure-a-repo, version: unreleased, commit: "a86bb8f"}
+  reached: 0
+  evidence:
+    - "Built and ran its tests five times on Gradle 6.9.4 and JDK 11, under the airgap agent"
+safety:
+  found_by: {tool: run-the-safety-inventory, version: unreleased, commit: "a7f3c21"}
+  findings:
+    - id: fixed-file-path-remindermarkertest
+      kind: fixed-path-or-file-share
+      effect: neutralise
+      what: A fixed file path
+      where: ["src/test/java/com/example/orders/ReminderMarkerTest.java:14"]
+tests:
+  found_by: {tool: measure-a-repo, version: unreleased, commit: "a86bb8f"}
+  framework: JUnit 4
+  count: 6
+  runs: 5
+  flaky: 1
+  failing: 1
+  disabled: 1
+  line_coverage: 64.7
+  branch_coverage: 62.5
+  planted_bugs:
+    planted: 14
+    caught: 5
+    sampled: false
+    targets: "com.example.orders.*"
+    left_out: [com.example.orders.MailerTest, com.example.orders.ReminderMarkerTest]
+  mix: {local: 100, container: 0, broad: 0}
+decisions:
+  safety/fixed-file-path-remindermarkertest:
+    state: decided
+    by: Forward Deployed Engineer
+    choice: accept
+    reason: "It is under build/, inside the repo."
