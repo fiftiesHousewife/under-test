@@ -16,4 +16,6 @@ python3 tools/backlog-import/import_to_github.py OWNER/REPO           # dry run
 python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply   # create or update issues
 ```
 
-Re-running updates issues by key rather than duplicating them.
+Re-running updates issues by key rather than duplicating them, and writes only the issues whose title, body, labels
+or links have changed, so a run with few changes is quick. A link that fails is named; `--relink` posts every link
+again.
