@@ -1707,7 +1707,9 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "The AI drafts each test's sort from reading it; a person confirms; it is recorded as the test's treatment"
+      - "The AI drafts each test's sort from reading it and the class it tests, with its reason and the signals it saw; a person confirms; it is recorded as the test's treatment"
+      - "Logic: a service or domain class under test, assertions on computed values. Both: the boundary itself under test (repository, DAO, client, gateway), assertions on its contract. Connection: assertions on what only the real system does (SQL specifics, transactions, the wire format, a mail as received)"
+      - "Where the signals conflict or are too few, the test is marked as needing a person, with the signals on each side, and gets no treatment until a person sorts it"
       - "Logic: switched to the connection's test double. Connection: tagged external. Both: a JUnit 5 or 6 test interface (JUnit 4 parameterised only where the repo must stay on JUnit 4)"
       - "Where there is no seam, the skill stops and records the work, until the seam decision is made"
       - "The plan names each connection's external tests, their schedule and owner"
