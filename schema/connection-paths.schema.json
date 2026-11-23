@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftiesHousewife/under-test/schema/connection-paths.schema.json",
+  "title": "Connections and the tests that may reach them",
+  "description": "What connection-paths found in a module's source: each place the code opens or uses a connection to something outside the program, each test that may reach one with a chain of calls showing how, and what it could not resolve or chose not to follow. Written by connection-paths and read by the connection-list skill; 'may' means measurement confirms or clears each test.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "tool_version", "summary", "connection_points", "tests", "not_resolved", "dispatch_points_not_followed", "classpath_notes"],
+  "$defs": {
+    "kind": {
+      "description": "The kind of connection, from connection-paths' rules. A url may be a file or jar as well as a remote server.",
+      "type": "string",
+      "enum": ["database", "http", "mail", "directory", "jndi", "queue", "socket", "url", "host-lookup", "process"]
+    },
+    "method": {
+      "description": "A method as type#name(parameter types), the types as simple names without generics; constructors are <init>, a type's field initialisers <fields>.",
+      "type": "string",
+      "pattern": "^[^#]+#[^(]+\\(.*\\)$"
+    },
+    "count": {"type": "integer", "minimum": 0}
+  },
+  "properties": {
+    "schema": {"const": "connection-paths/1"},
+    "tool_version": {"type": "string"},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["files", "files_not_parsed", "methods", "calls_resolved", "calls_not_resolved", "tests", "tests_reaching"],
+      "properties": {
+        "files": {"$ref": "#/$defs/count"},
+        "files_not_parsed": {"$ref": "#/$defs/count"},
+        "methods": {"$ref": "#/$defs/count"},
+        "calls_resolved": {"$ref": "#/$defs/count"},
+        "calls_not_resolved": {"$ref": "#/$defs/count"},
+        "tests": {"$ref": "#/$defs/count"},
+        "tests_reaching": {"$ref": "#/$defs/count"}
+      }
+    },
+    "connection_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "call", "method", "file", "line"],
+        "properties": {
+          "kind": {"$ref": "#/$defs/kind"},
+          "call": {"description": "The rule the call matched, as type#method.", "type": "string"},
+          "method": {"$ref": "#/$defs/method"},
+          "file": {"type": "string"},
+          "line": {"$ref": "#/$defs/count"}
+        }
+      }
+    },
+    "tests": {
+      "description": "Only the tests that may reach a connection; the key matches testing/tests.yaml's: the fully qualified class, a dot, the method.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["test", "file", "line", "reaches"],
+        "properties": {
+          "test": {"type": "string"},
+          "file": {"type": "string"},
+          "line": {"$ref": "#/$defs/count"},
+          "reaches": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "point", "through_set_up", "chain"],
+              "properties": {
+                "kind": {"$ref": "#/$defs/kind"},
+                "point": {"$ref": "#/$defs/method"},
+                "through_set_up": {"description": "True when the chain goes through the test's set-up methods or fields, not its own body.", "type": "boolean"},
+                "chain": {"description": "From the test to the connection point, one method a step.", "type": "array", "minItems": 1, "items": {"$ref": "#/$defs/method"}}
+              }
+            }
+          }
+        }
+      }
+    },
+    "not_resolved": {
+      "description": "Calls the symbol solver could not resolve, by reason, most common first; a missing library shows as its types' names.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reason", "count", "example"],
+        "properties": {
+          "reason": {"type": "string"},
+          "count": {"$ref": "#/$defs/count"},
+          "example": {"description": "The first place it was seen, as file:line and the message.", "type": "string"}
+        }
+      }
+    },
+    "dispatch_points_not_followed": {
+      "description": "Calls through an interface or superclass with more overriding methods than the limit, reported instead of followed.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["method", "implementations"],
+        "properties": {
+          "method": {"$ref": "#/$defs/method"},
+          "implementations": {"$ref": "#/$defs/count"}
+        }
+      }
+    },
+    "classpath_notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
