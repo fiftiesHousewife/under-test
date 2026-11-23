@@ -83,6 +83,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #65 | [Scan every repo for committed secrets before it is built or run, using an existing tool](https://github.com/fiftiesHousewife/under-test/issues/65) | deliverable | Security and Platform Owner | tool | – |
 | #193 | [Trial Keploy on a pilot application: record and replay on Windows, without admin rights or a route out](https://github.com/fiftiesHousewife/under-test/issues/193) | deliverable | Technical Architect | person | – |
 | #210 | [Each skill costs less per run without losing accuracy, judged by its eval results](https://github.com/fiftiesHousewife/under-test/issues/210) | deliverable | Toolkit Owner | ai | – |
+| #215 | [After the airgap agent's next release, use its init script as it is, without passing the agent's jar by path](https://github.com/fiftiesHousewife/under-test/issues/215) | deliverable | Toolkit Owner | ai | – |
 | #95 | [Skill: score each obstacle to testing from the measurements, with evidence](https://github.com/fiftiesHousewife/under-test/issues/95) | deliverable | Test Quality Lead | ai | – |
 | #167 | [Source list schema and an example, for the Knowledge Curator](https://github.com/fiftiesHousewife/under-test/issues/167) | deliverable | Test Quality Lead | tool | – |
 | #169 | [Expert session template and budget fields in the application testing plan](https://github.com/fiftiesHousewife/under-test/issues/169) | deliverable | Engagement Lead | ai | – |
