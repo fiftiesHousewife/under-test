@@ -37,6 +37,16 @@ in [results/round-2/](results/round-2/).
 * **find-test-anti-patterns:** no run gives the line where a problem shows any more, and the runs take a third fewer
   turns. One run gave a test's `@Test` line instead of the line with its name; the skill now says that too.
 
+## Round 4: find-test-anti-patterns again
+
+| Skill | Case | Without, round 4 | With, round 4 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.54 (0 of 5), $0.12, 6 turns | 0.98 (3 of 5), $0.15, 11 turns |
+
+Saying which line in more words doesn't settle it: two runs again gave the line where the problem shows (the first
+line of a copy-pasted block, and a call that depends on an earlier test). Over four rounds the skill misses this in
+one or two runs of every five, and nothing else.
+
 ## What the rounds show
 
 * **With the skills, the results hold.** In both rounds every case scores 0.98 or more, and 74 of the 80 runs with the

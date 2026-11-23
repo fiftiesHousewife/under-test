@@ -1,0 +1,163 @@
+{
+  "case": "counts-every-kind",
+  "skill": "find-test-anti-patterns",
+  "claude_code": "2.1.330",
+  "runs_per_arm": 5,
+  "arms": {
+    "with": [
+      {
+        "run": 1,
+        "score": 0.94,
+        "cost_usd": 0.14,
+        "turns": 7,
+        "seconds": 32,
+        "failed_checks": [
+          "examples-are-method-declarations"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 2,
+        "score": 1,
+        "cost_usd": 0.17,
+        "turns": 16,
+        "seconds": 36,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 3,
+        "score": 1,
+        "cost_usd": 0.16,
+        "turns": 9,
+        "seconds": 33,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 4,
+        "score": 0.94,
+        "cost_usd": 0.15,
+        "turns": 16,
+        "seconds": 32,
+        "failed_checks": [
+          "examples-are-method-declarations"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 5,
+        "score": 1,
+        "cost_usd": 0.13,
+        "turns": 6,
+        "seconds": 31,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      }
+    ],
+    "without": [
+      {
+        "run": 1,
+        "score": 0.56,
+        "cost_usd": 0.12,
+        "turns": 6,
+        "seconds": 22,
+        "failed_checks": [
+          "count-copy-pasted",
+          "count-disabled",
+          "count-mocks-everything",
+          "count-order-dependent",
+          "count-reaches-shared-system",
+          "count-sleeps",
+          "examples-are-path-and-line",
+          "found-by-the-skill"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 2,
+        "score": 0.56,
+        "cost_usd": 0.11,
+        "turns": 6,
+        "seconds": 22,
+        "failed_checks": [
+          "count-copy-pasted",
+          "count-disabled",
+          "count-mocks-everything",
+          "count-order-dependent",
+          "count-reaches-shared-system",
+          "count-sleeps",
+          "examples-are-path-and-line",
+          "found-by-the-skill"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 3,
+        "score": 0.5,
+        "cost_usd": 0.11,
+        "turns": 6,
+        "seconds": 22,
+        "failed_checks": [
+          "count-copy-pasted",
+          "count-disabled",
+          "count-mocks-everything",
+          "count-no-real-assertion",
+          "count-order-dependent",
+          "count-reaches-shared-system",
+          "count-sleeps",
+          "examples-are-path-and-line",
+          "found-by-the-skill"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 4,
+        "score": 0.5,
+        "cost_usd": 0.12,
+        "turns": 6,
+        "seconds": 19,
+        "failed_checks": [
+          "count-copy-pasted",
+          "count-disabled",
+          "count-mocks-everything",
+          "count-no-real-assertion",
+          "count-order-dependent",
+          "count-reaches-shared-system",
+          "count-sleeps",
+          "examples-are-path-and-line",
+          "found-by-the-skill"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 5,
+        "score": 0.56,
+        "cost_usd": 0.12,
+        "turns": 6,
+        "seconds": 23,
+        "failed_checks": [
+          "count-copy-pasted",
+          "count-disabled",
+          "count-mocks-everything",
+          "count-order-dependent",
+          "count-reaches-shared-system",
+          "count-sleeps",
+          "examples-are-path-and-line",
+          "found-by-the-skill"
+        ],
+        "schema_problems": 0,
+        "error": null
+      }
+    ]
+  }
+}
