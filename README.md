@@ -13,16 +13,10 @@ organisation, works inside locked-down corporate networks, and never lets an AI 
 
 ## The journey of one repo
 
-| Step | What happens | Leaves in the repo |
-|---|---|---|
-| **1. Safety inventory** | Before any code runs, find secrets, production credentials, real data and anything that could reach production. Some findings block the run; the first run happens only where production can't be reached. | Safety findings; a test profile |
-| **2. Discovery** | Record what the code talks to and a stand-in for each connection, the knowledge that counts, and what's wrong with the existing tests. | Connection list, source list |
-| **3. Capture current behaviour** | Record a first baseline of what the code does today at its edges, cleaned of personal data where it was captured; later work extends it. | Approval tests |
-| **4. Measurement** | Run its tests five times under the airgap agent; measure flaky tests, coverage, how many planted bugs the tests catch, and the test mix. | Measured results |
-| **5. Intended behaviour** | Draft cited rules from the sources; every difference from today's behaviour is a question for the Application Owner. | A specification |
-| **6. Testing plan** | Set the target level, choose the techniques, and generate the plan for the Application Owner to approve. | The testing plan |
-| **7. The work** | Workstreams in a fixed order; a person reviews every AI-written test. | The tests |
-| **8. Keep it there** | Re-measure regularly and report progress. | An up-to-date assessment file |
+[![The journey of one repo: eight steps from the safety inventory to keeping it there, each with the skills that do it, the question that can stop it and who answers that question](docs/design/repo-journey.svg)](docs/JOURNEY.md)
+
+The drawing's source is [repo-journey.excalidraw](docs/design/repo-journey.excalidraw); open it in Excalidraw to
+change it.
 
 Across an organisation, the journey repeats in batches, through five phases: set-up, finding out what repos there
 are, pilots, rolling out, and handing over.
