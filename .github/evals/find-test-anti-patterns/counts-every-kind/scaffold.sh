@@ -18,6 +18,13 @@ schema: assessment/1
 repo:
   name: orders-sample
 YAML
+# PMD, as an adopter would have it: installed from the package repository by the toolkit's pmd-install, with a JDK named
+# by its full path, since the run's own session can't look one up. It goes in .pmd/, which git ignores.
+jdk="${EVAL_JDK_HOME:-$(/usr/libexec/java_home -v 17+ 2>/dev/null || /usr/libexec/java_home 2>/dev/null || true)}"
+if [ -z "$jdk" ] || [ ! -x "$jdk/bin/java" ]; then echo "No JDK found for PMD: set EVAL_JDK_HOME" >&2; exit 1; fi
+install=("$toolkit/gradlew" -q --no-daemon -p "$toolkit/tools/test-anti-patterns/pmd-install" installPmd -Pinto="$PWD/.pmd" -Pjava="$jdk/bin/java")
+"${install[@]}" --offline 2>/dev/null || "${install[@]}"
+printf '.pmd/\n' > .gitignore
 git init -q
 git add .
 git -c user.name=eval -c user.email=eval@example.invalid commit -qm "The repo as it is now"

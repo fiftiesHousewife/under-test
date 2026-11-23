@@ -1762,4 +1762,16 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0065-tests-that-mock-everything-are-sorted-and-treated-with-the-tests-that-reach-external-systems.md"
+  - key: "decide-find-test-anti-patterns-runs-pmd"
+    status: "done"
+    type: "decision"
+    title: "find-test-anti-patterns runs PMD with the toolkit's rules, and searches only what PMD cannot read"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md"
 

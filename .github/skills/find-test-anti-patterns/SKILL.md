@@ -21,6 +21,7 @@ other.
 | It builds with Maven (a `pom.xml`, no Gradle build file) | [maven.md](maven.md) |
 | The test folders hold `.feature` files | [cucumber.md](cucumber.md) |
 | The build uses Spring Boot (`org.springframework.boot` in a build file) | [spring-boot.md](spring-boot.md) |
+| There is no `pmd` command (below) | [without-pmd.md](without-pmd.md) |
 | Test code loads Spring XML: `@ContextConfiguration` or `@ImportResource` naming XML, `getConfigLocations()`, or `new ...XmlApplicationContext(` | [spring-xml.md](spring-xml.md) |
 
 ```bash
@@ -60,12 +61,9 @@ kind:
 * every test in a folder the build doesn't name as a test source set;
 * with Maven, every test in a class the test runner doesn't pick up ([maven.md](maven.md)).
 
-Its line is the line with the method's name.
+Its line is the line with the method's name. PMD finds the cases in Java code (step 2); these find the rest:
 
 ```bash
-grep -rnE -A2 '^\s*@(Ignore|Disabled)\b' --include='*.java' <test folders>        # then check for a test annotation above
-grep -rnE '//\s*@(Test|ParameterizedTest|RepeatedTest|TestFactory)' --include='*.java' <test folders>
-grep -rnE -B2 'public void test[A-Za-z0-9_]*\(' --include='*.java' <test folders>
 find . -type d -path '*/src/*/java' -not -path '*/src/main/*'                         # compare with the build's source sets
 grep -nE 'sourceSets|exclude|include' build.gradle* */build.gradle*                       # Gradle: the test source sets and filters
 ```
@@ -75,7 +73,8 @@ grep -nE 'sourceSets|exclude|include' build.gradle* */build.gradle*             
 A test counts once under each kind it shows; a disabled test counts under `disabled` only, and one that never runs
 under `never-runs` only. The lists are closed.
 Look only at the test's own body and the `@Before`/`@BeforeEach` methods declared in its class: don't follow helper
-methods or superclasses, except that a call to an assertion helper (below) counts as an assertion. Each kind has a search; read only the tests and files it finds.
+methods or superclasses, except that a call to a helper in the test code that itself asserts counts as an assertion.
+PMD and the searches below find the candidates; read only the tests they find.
 
 | `kind` | A test counts when |
 |---|---|
@@ -90,36 +89,31 @@ methods or superclasses, except that a call to an assertion helper (below) count
 | `copy-pasted` | Ten or more consecutive non-blank lines between its method's braces are the same as another test's once every string, number and character literal is ignored: count every test in the group. Also every test in a test class that has a copy, the same or nearly the same, under another test folder or module. |
 | `other` | It can't catch a bug for a reason the list misses: an expected value bent to pass (`size() + 1`), a server on `localhost` nothing starts, a word in the test's name that an asserted expected value contradicts, set-up copied and never changed (only where not already `copy-pasted`). Only these four, one finding each, holding every test that shows it, with a fixed id: `other-bent-expected-value`, `other-server-nothing-starts`, `other-name-does-not-match-assertions`, `other-copied-setup-unchanged`. Anything else you notice goes in the report, not the file. |
 
-The searches, over test code and its resources; read only what they find:
+**PMD** finds the Java kinds, with the toolkit's rules
+([anti-patterns.pmd.xml](../../../tools/test-anti-patterns/anti-patterns.pmd.xml)). Use the `pmd` command on the
+path, or the one the toolkit's set-up installed at `.pmd/pmd`; to install one, see
+[pmd-install](../../../tools/test-anti-patterns/pmd-install/build.gradle). Run each once over the test folders:
 
 ```bash
-grep -rnE '@(Ignore|Disabled)\b' --include='*.java' <test folders>                      # disabled
-grep -rnE 'Thread\.sleep|TimeUnit\.[A-Z]+\.sleep' <test folders>                         # sleeps
-grep -rnE '@(FixMethodOrder|TestMethodOrder)' <test folders>                             # order-dependent
-grep -rcE '@Mock\b|@MockBean\b|[^A-Za-z.]mock\(|Mockito\.mock\(' --include='*.java' <test folders>   # mocks-everything: read files with 5 or more
+pmd check --no-progress --no-fail-on-violation -f csv -d <test folders> -R <toolkit>/tools/test-anti-patterns/anti-patterns.pmd.xml
+pmd cpd --no-fail-on-violation --format csv --language java --minimum-tokens 75 --ignore-literals -d <test folders>
+```
+
+Each hit's rule name starts with its kind (`no_real_assertion__...` is `no-real-assertion`). Give each hit to its test:
+the test whose method holds the hit's line, or, for a hit on a class's line, every test in the class. CPD's
+duplicates count as `copy-pasted` for every test whose method holds a copy. Then check two kinds of hit before
+counting them: a `never_runs__JUnit3NameWithoutTest` hit whose class has a superclass in the repo that extends
+`TestCase` or one of Spring's JUnit 3 base classes is a real test, so drop it; and read each `swallows_failures__` hit's
+try and catch against the rule above.
+
+PMD doesn't read anything but Java, so these stay searches:
+
+```bash
 grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>   # reaches-external-system: drop the never-a-host lines
 find <test folders> -name '*.java' | sed 's|.*/||' | sort | uniq -d                    # copy-pasted: classes under more than one folder; compare each pair with cmp or diff
-grep -rnE -A3 'catch *\((final )?[A-Za-z.]*(Exception|AssertionError|Error|Throwable)[ |A-Za-z.]* [A-Za-z_]+\) *\{' --include='*.java' <test folders>   # swallows-failures: read each try and catch
-grep -rnE 'assertNotNull|assertNull|assertTrue\(true\)|isNotNull\(\)|assertThat\([^,;.()]*(\([^,;.()]*\))?\) *;|verify\([A-Za-z0-9_]+\) *;|expected *= *(Exception|Throwable)\.class' --include='*.java' <test folders>
 ```
 
-For `no-real-assertion`, first list the assertion helpers: methods anywhere in the test code (shared base classes and
-test utilities included) that aren't tests but assert, such as `checkTotals(order, 1000)`. A test that calls one
-asserts. Then list the tests with no assertion at all, an empty body included, passing the helpers in. Run both of this
-skill's scripts; don't read them. Then read the tests the weak-assertion search above finds.
-
-```bash
-helpers=$(find <test folders> -name '*.java' | xargs awk -f <this skill's folder>/scripts/assertion-helpers.awk | sort -u | paste -sd'|' -)
-find <test folders> -name '*.java' | sort | xargs awk -v helpers="$helpers" -f <this skill's folder>/scripts/no-real-assertion.awk
-```
-
-A helper outside the test folders (a shared test kit's jar, say) isn't listed; one named `assert...` still counts,
-since the searches take any `assert...(` call as an assertion. Say in the report which helpers were found.
-
-For `copy-pasted`, run PMD's `cpd --minimum-tokens 75 --dir <test folders>` if PMD is installed; otherwise compare
-tests within each class, and the classes the search above finds under more than one folder, and say in the report
-that copying between other classes wasn't checked. `other` has no search:
-look for it only in the tests you read for the other kinds.
+`other` has no search: look for it only in the tests you read for the other kinds.
 
 The same problems go by other names in the research and in tools such as tsDetect and Sonar, worth knowing when
 comparing: `never-runs` is an unknown or commented-out test; `disabled` an ignored test; `no-real-assertion` an
@@ -128,12 +122,47 @@ assertion-free, empty or unchecked test; `swallows-failures` an exception-catchi
 excessive mocking; `copy-pasted` test clones. The five-mock threshold for `mocks-everything` has no published basis:
 the report gives each counted class's number of mocks, so the threshold can be judged against the repo.
 
-## 3. Write the section
+## 3. Write every test found to testing/tests.yaml
 
-* A finding for each kind with at least one test, keys in this order: `id` (the kind, or `other-...`), `kind`,
+Later steps work from this list instead of searching again: the stand-ins for each connection, the flaky-test fixes,
+and the Application Owner's decisions. It is shared: other skills record their own findings about the same tests
+([why](../../../docs/decisions/0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md)).
+In `testing/tests.yaml` ([schema](../../../schema/tests.schema.json)), this skill owns only `found_by.find-test-anti-patterns`
+and each entry's `anti_patterns`; never change anything else.
+
+* Each test counted under any kind has an entry, found by its `test`: `<fully qualified class>.<method>`, as JUnit's
+  reports name it, always in double quotes (a scenario's name holds a `:`). Add an entry if there is none; set its `at` to `"path:line"` from step 1, and its `anti_patterns`:
+  * `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...);
+  * `reaches`, for `reaches-external-system`: each host (no scheme, port or path; a JNDI name for a JNDI lookup),
+    its `kind` (`database`, `http`, `mail`, `directory`, `queue`, `file-share` or `other`), `through` (`code`,
+    `properties`, `yaml`, `spring-xml`, `spring-boot-config` or `airgap-report`), and `where`, the `path:line` naming it;
+  * `copy_of`, for `copy-pasted`: the `test` of one test it is a copy of.
+* From every other entry, remove `anti_patterns`; an entry left with only `test` and `at` goes.
+* Set `found_by.find-test-anti-patterns` to the toolkit `version` and the repo `commit`, as for the summary. Keep entries sorted by `test`.
+* No file yet: create it with `# yaml-language-server: $schema=<path>` (as for the assessment file, with
+  `schema/tests.schema.json`), `schema: tests/1`, then `found_by` and `tests`.
+
+```yaml
+# yaml-language-server: $schema=<path to the toolkit's schema/tests.schema.json>
+schema: tests/1
+found_by:
+  find-test-anti-patterns: {version: unreleased, commit: "1a2b3c4"}
+tests:
+  - test: "com.example.orders.OrderRepositoryIT.findsAnOrder"
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:13"
+    anti_patterns:
+      kinds: [reaches-external-system]
+      reaches:
+        - {host: orders-uat.internal, kind: database, through: code, where: "src/test/java/com/example/orders/OrderRepositoryIT.java:10"}
+```
+
+## 4. Summarise them in testing/assessment.yaml
+
+* Work the summary out from `testing/tests.yaml`, over every entry with `anti_patterns`. A finding for each kind with
+  at least one test, keys in this order: `id` (the kind, or `other-...`), `kind`,
   `tests` (the count), `examples`. Findings sorted by `id`.
 * `examples`: one line, the first three counted tests sorted by path (byte order) then by line as a number, as
-  quoted `"path:line"`, with the line found by the search in step 1, even when the problem shows on a later line.
+  quoted `"path:line"`: each test's `at`, never the line a hit was on.
 * `found_by`: `tool: find-test-anti-patterns`; `version`: the organisation profile's `toolkit.version` if you have it,
   else `unreleased`; `commit`: `git rev-parse --short HEAD` in the repo, in double quotes (no git repository:
   stop and say so).
@@ -156,41 +185,7 @@ where it is installed with the repo, otherwise
 `https://raw.githubusercontent.com/fiftiesHousewife/under-test/main/schema/assessment.schema.json`), `schema:
 assessment/1`, `repo: {name: <the repo's folder name>}`, then the section.
 
-## 3a. Write every test found to testing/tests.yaml
-
-Later steps work from this list instead of searching again: the stand-ins for each connection, the flaky-test fixes,
-and the Application Owner's decisions. It is shared: other skills record their own findings about the same tests
-([why](../../../docs/decisions/0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md)).
-In `testing/tests.yaml` ([schema](../../../schema/tests.schema.json)), this skill owns only `found_by.find-test-anti-patterns`
-and each entry's `anti_patterns`; never change anything else.
-
-* Each test counted under any kind has an entry, found by its `test`: `<fully qualified class>.<method>`, as JUnit's
-  reports name it, always in double quotes (a scenario's name holds a `:`). Add an entry if there is none; set its `at` to `"path:line"` from step 1, and its `anti_patterns`:
-  * `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...);
-  * `reaches`, for `reaches-external-system`: each host (no scheme, port or path; a JNDI name for a JNDI lookup),
-    its `kind` (`database`, `http`, `mail`, `directory`, `queue`, `file-share` or `other`), `through` (`code`,
-    `properties`, `yaml`, `spring-xml`, `spring-boot-config` or `airgap-report`), and `where`, the `path:line` naming it;
-  * `copy_of`, for `copy-pasted`: the `test` of one test it is a copy of.
-* From every other entry, remove `anti_patterns`; an entry left with only `test` and `at` goes.
-* Set `found_by.find-test-anti-patterns` to the same `version` and `commit` as the summary. Keep entries sorted by `test`.
-* No file yet: create it with `# yaml-language-server: $schema=<path>` (as for the assessment file, with
-  `schema/tests.schema.json`), `schema: tests/1`, then `found_by` and `tests`.
-
-```yaml
-# yaml-language-server: $schema=<path to the toolkit's schema/tests.schema.json>
-schema: tests/1
-found_by:
-  find-test-anti-patterns: {version: unreleased, commit: "1a2b3c4"}
-tests:
-  - test: "com.example.orders.OrderRepositoryIT.findsAnOrder"
-    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:13"
-    anti_patterns:
-      kinds: [reaches-external-system]
-      reaches:
-        - {host: orders-uat.internal, kind: database, through: code, where: "src/test/java/com/example/orders/OrderRepositoryIT.java:10"}
-```
-
-## 4. Propose decisions
+## 5. Propose decisions
 
 Under `decisions:` (added at the end of the file if missing), keyed `anti-patterns/<id>`:
 
@@ -221,7 +216,7 @@ decisions:
 | `sleeps`, `order-dependent` | `fixed in the fix-flaky-tests workstream` |
 | `no-real-assertion`, `swallows-failures`, `mocks-everything`, `copy-pasted`, `other` | `fixed in the strengthen-tests workstream` |
 
-## 5. Report
+## 6. Report
 
 Briefly: the total number of tests, and how many show at least one anti-pattern; each kind's count and examples; disabled tests, and tests that never run, need the Application Owner; tests
 reaching external systems need tagging before the tests run anywhere; read coverage and planted-bug results with these

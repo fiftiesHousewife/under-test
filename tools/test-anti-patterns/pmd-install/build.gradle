@@ -1,0 +1,26 @@
+// Puts PMD and a pmd command in a folder, from the organisation's package repository (or Maven Central), for the
+// find-test-anti-patterns skill: gradlew -p tools/test-anti-patterns/pmd-install installPmd -Pinto=<folder> [-Pjava=<java>]
+// Then run <folder>/pmd check -d <test folders> -R tools/test-anti-patterns/anti-patterns.pmd.xml -f csv. PMD reads
+// code only; it runs nothing.
+plugins { id 'base' }
+repositories { mavenCentral() }
+configurations { pmd }
+def pmdVersion = '7.29.0'
+dependencies {
+    pmd "net.sourceforge.pmd:pmd-cli:${pmdVersion}"
+    pmd "net.sourceforge.pmd:pmd-java:${pmdVersion}"
+}
+tasks.register('installPmd') {
+    def into = project.findProperty('into')
+    def java = project.findProperty('java') ?: 'java'
+    def jars = configurations.pmd
+    doLast {
+        if (!into) { throw new GradleException('Say where: -Pinto=<folder>') }
+        def lib = new File(into, 'lib')
+        lib.mkdirs()
+        jars.files.each { jar -> java.nio.file.Files.copy(jar.toPath(), new File(lib, jar.name).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING) }
+        def launcher = new File(into, 'pmd')
+        launcher.text = "#!/bin/sh\n# PMD ${pmdVersion}, put here by the toolkit's pmd-install.\nexec \"${java}\" -cp \"\$(dirname \"\$0\")/lib/*\" net.sourceforge.pmd.cli.PmdCli \"\$@\"\n"
+        launcher.setExecutable(true)
+    }
+}

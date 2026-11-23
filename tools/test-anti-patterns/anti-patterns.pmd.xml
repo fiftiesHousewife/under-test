@@ -16,6 +16,16 @@
   <rule ref="category/java/errorprone.xml/EmptyCatchBlock" name="swallows_failures__EmptyCatch"/>
 
   <!-- The toolkit's own rules -->
+  <rule name="disabled__Ignored" language="java" class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
+        message="A test, or its whole class, marked @Ignore or @Disabled">
+    <priority>3</priority>
+    <properties><property name="xpath"><value><![CDATA[
+//MethodDeclaration[ModifierList/Annotation[@SimpleName=('Ignore','Disabled')]]
+  [ModifierList/Annotation[@SimpleName=('Test','ParameterizedTest','RepeatedTest','TestFactory')]]
+| //ClassDeclaration[ModifierList/Annotation[@SimpleName=('Ignore','Disabled')]]
+]]></value></property></properties>
+  </rule>
+
   <rule name="never_runs__IgnoredWithoutTest" language="java" class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
         message="Marked @Ignore or @Disabled but has no test annotation: it never runs">
     <priority>3</priority>
