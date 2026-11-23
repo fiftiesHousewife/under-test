@@ -75,6 +75,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [find-test-anti-patterns needs PMD, and installs it when it is missing](0067-find-test-anti-patterns-needs-pmd-and-installs-it-when-it-is-missing.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Finding what the code connects to is one job, in the connection-list skill, done before any code runs](0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The safety inventory is a gate before the first run, and no skill ever copies a secret](0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

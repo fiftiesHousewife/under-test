@@ -1688,6 +1688,7 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
+      - "Runs in stages, each gating the next and each recorded: build only; one run (external tests left out, may-reach confirmed, start-up stand-ins found); four more runs in varied orders with coverage; planted bugs"
       - "Five runs in the original, reversed and three seeded shuffled orders; each failing test rerun about five times"
       - "External tests left out by filters (Gradle test filter, Surefire excludes file) until tagged; a run whose filter is missing stops"
       - "Connection errors sorted: off the machine external, localhost needs a local service; each recorded as a miss of discovery's searches"
@@ -1841,4 +1842,16 @@ items:
       - "Every journey skill says that a secret's value is never copied into a file or reply"
     blocked_by:
       - "decide-the-safety-inventory-is-a-gate-before-the-first-run"
+  - key: "decide-measurement-runs-in-stages"
+    status: "done"
+    type: "decision"
+    title: "Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md"
 
