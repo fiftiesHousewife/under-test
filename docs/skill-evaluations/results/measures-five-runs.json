@@ -1,0 +1,126 @@
+{
+  "case": "measures-five-runs",
+  "skill": "measure-a-repo",
+  "claude_code": "2.1.330 (Claude Code)",
+  "runs_per_arm": 5,
+  "arms": {
+    "with": [
+      {
+        "run": 1,
+        "score": 1,
+        "cost_usd": 0.16,
+        "turns": 11,
+        "seconds": 71,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 2,
+        "score": 1,
+        "cost_usd": 0.14,
+        "turns": 8,
+        "seconds": 62,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 3,
+        "score": 1,
+        "cost_usd": 0.15,
+        "turns": 10,
+        "seconds": 68,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 4,
+        "score": 1,
+        "cost_usd": 0.13,
+        "turns": 8,
+        "seconds": 66,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 5,
+        "score": 1,
+        "cost_usd": 0.15,
+        "turns": 9,
+        "seconds": 70,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      }
+    ],
+    "without": [
+      {
+        "run": 1,
+        "score": 0.95,
+        "cost_usd": 0.16,
+        "turns": 7,
+        "seconds": 71,
+        "failed_checks": [
+          "level-zero"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 2,
+        "score": 0.95,
+        "cost_usd": 0.18,
+        "turns": 10,
+        "seconds": 80,
+        "failed_checks": [
+          "level-zero"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 3,
+        "score": 0.89,
+        "cost_usd": 0.16,
+        "turns": 9,
+        "seconds": 69,
+        "failed_checks": [
+          "level-zero",
+          "reply-names-refused-address"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 4,
+        "score": 0.89,
+        "cost_usd": 0.19,
+        "turns": 10,
+        "seconds": 88,
+        "failed_checks": [
+          "all-local",
+          "level-zero"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 5,
+        "score": 0.84,
+        "cost_usd": 0.15,
+        "turns": 8,
+        "seconds": 70,
+        "failed_checks": [
+          "all-local",
+          "level-zero",
+          "reply-names-refused-address"
+        ],
+        "schema_problems": 0,
+        "error": null
+      }
+    ]
+  }
+}

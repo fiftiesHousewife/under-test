@@ -1,4 +1,4 @@
-vash# yaml-language-server: $schema=../../schema/technique.schema.json
+# yaml-language-server: $schema=../../schema/technique.schema.json
 id: ai-written-tests
 name: AI-written tests that record current behaviour, kept only if they pass the acceptance check
 workstream: record-current-behaviour

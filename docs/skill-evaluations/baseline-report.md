@@ -11,7 +11,7 @@ table of all cases is on [the results page](eval-results.md). Costs are what the
 Seven of the eight cases ran. With the skills, 33 of 35 runs scored 1, and the other two each missed one check;
 without them, no run scored 1. The eighth, measure-a-repo, can't run inside `claude plugin eval`: its Gradle build
 needs local ports, which the eval's sandbox doesn't allow, so it runs with
-[`run-outside-eval.sh`](../../maintainer-tools/skill-evals/run-outside-eval.sh) instead (action 14). Three cases
+[`run-outside-eval.sh`](../../maintainer-tools/skill-evals/run-outside-eval.sh) instead (action 14); there, all five runs with the skill score 1, and none of the five without it does. Three cases
 failed on their set-up in the first pass; they were fixed, and `check-cases.sh` now tries every set-up before a run.
 
 | Skill | Runs scoring 1, with / without | Mean cost per run, with / without | What the skill adds |
@@ -19,7 +19,7 @@ failed on their set-up in the first pass; they were fixed, and `check-cases.sh` 
 | choose-techniques | 4 / 0 of 5 | $0.52 / $0.61 | right choices, half the turns |
 | draft-the-connection-list | 5 / 0 of 5 | $0.19 / $0.19 | ids the plan and tracker can follow |
 | find-test-anti-patterns | 4 / 0 of 5 | $0.16 / $0.12 | ids that make runs comparable |
-| measure-a-repo | not yet run | | |
+| measure-a-repo | 5 / 0 of 5 | $0.15 / $0.17 | the starting level right, and the build kept on the machine |
 | render-the-assessment-report | 5 / 0 of 5 | $0.10 / $0.18 | the template, at half the cost and a quarter of the time |
 | run-the-safety-inventory | 5 / 0 of 5 | $0.15 / $0.14 | stable ids, and no secret repeated |
 | score-obstacles | 5 / 0 of 5 | $0.17 / $0.18 | the last few scores right, evidence in one form |
