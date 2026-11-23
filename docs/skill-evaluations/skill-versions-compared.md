@@ -56,6 +56,20 @@ one or two runs of every five, and nothing else.
 Taking each test's line from `grep -n` halves the turns (7, against 15 in round 2) at the same cost. One run still gave
 the line of a call that depends on an earlier test. The rule stays as it is: the miss is one check in one run of five.
 
+## Round 6: find-test-anti-patterns searches instead of reading every file
+
+A user couldn't run the skill on 35,000 lines of tests, so it now finds tests and anti-patterns by search and reads
+only what the searches find. It also counts Cucumber scenarios, follows the Spring XML a test loads, and never takes
+an XML namespace for a host; the example repo gained a case of each.
+
+| Skill | Case | Without, round 6 | With, round 6 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.52 (0 of 5), $0.14, 12 turns | 0.99 (4 of 5), $0.20, 12 turns |
+
+With the skill, every run found the host behind Spring XML, left the namespace-only XML alone and counted the ignored
+scenario; without it, no run found the Spring XML host. The extra searches, on a larger example repo, cost $0.04 and
+five turns more a run. The one miss is the same as before: one example's line.
+
 ## What the rounds show
 
 * **With the skills, the results hold.** In both rounds every case scores 0.98 or more, and 74 of the 80 runs with the
