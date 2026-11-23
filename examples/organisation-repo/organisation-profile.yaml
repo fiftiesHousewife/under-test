@@ -38,6 +38,7 @@ secrets_scanning: none yet
 production_hosts: DNS zones marked as production
 tools:
   connection_paths_jar: https://packages.example.com/tools/connection-paths/0.2.0/connection-paths.jar
+  under_test_tools_jar: https://packages.example.com/tools/under-test-tools/0.1.0/under-test-tools.jar
   maven: mvn
   gradle: gradle
 roles:

@@ -1991,8 +1991,9 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "Its output for the skill eval's example repo matches the eval's known answers in every run"
-      - "On Openfire 4.6.0's xmppserver it gives the same 434 tests and the reviewed hits"
+      - "Its output for the skill eval's example repo matches the eval's known answers in every run (done: under-test-tools' anti-patterns, built locally, gives every count it decides)"
+      - "On Openfire 4.6.0's xmppserver it gives the reviewed hits (it runs in two seconds over 415 tests; a person's review is still to do)"
+      - "The under-test-tools repo is created and its jar published, for organisations to mirror (the maintainer's step)"
       - "find-test-anti-patterns runs it and keeps only the other kinds, uncertain hits, proposed decisions and the report"
     blocked_by:
       - "decide-how-the-journeys-tools-are-packaged"

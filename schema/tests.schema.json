@@ -53,7 +53,7 @@
         "properties": {
           "test": {
             "type": "string",
-            "description": "Who the test is: the fully qualified class and method (com.example.orders.OrderRepositoryIT.findsAnOrder), or for a Cucumber scenario <feature file path>: <scenario title>, with ' (row <line>)' for an examples row. As JUnit's and Surefire's reports name it."
+            "description": "Who the test is: the fully qualified class and method (com.example.orders.OrderRepositoryIT.findsAnOrder), or for a Cucumber scenario <feature file path>: <scenario title>, with ' (row <line>)' for an examples row. As JUnit's and Surefire's reports name it. Where two test folders hold a class of the same name, the one whose folder comes later in byte order adds ' (<folder>)', so both have an entry."
           },
           "at": {
             "type": "string",

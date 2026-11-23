@@ -52,6 +52,28 @@ echo '.pmd/' >> .git/info/exclude
 
 If it still prints nothing, **stop and write nothing**: tell the person PMD is needed, and how to install it.
 
+## With under-test-tools: only what needs judgement
+
+If the organisation profile names `tools.under_test_tools_jar`, or `$UNDER_TEST_TOOLS_JAR` is set,
+[under-test-tools](https://github.com/fiftiesHousewife/under-test-tools) does steps 1 to 5 except two kinds, and PMD
+needn't be installed ([why](../../../docs/decisions/0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)):
+
+```bash
+java -jar "$UNDER_TEST_TOOLS_JAR" anti-patterns --repo . [--module <folder>]... \
+  --rules <this skill's folder>/../../../tools/test-anti-patterns/anti-patterns.pmd.xml --version <toolkit version>
+```
+
+It writes `testing/tests.yaml` and the `anti_patterns` section and decisions of `testing/assessment.yaml` exactly as
+the steps below say. Then do only what it leaves:
+
+1. `reaches-external-system`, by step 2's row (or from the connection list's `connections` in `testing/tests.yaml`,
+   where the connection-list skill has run), and the `other` kinds, for the tests you read: add each to its test's
+   `anti_patterns.kinds` in `testing/tests.yaml` (and `reaches` for the first), keeping what the tool wrote.
+2. Run it again with `--summary-only`, which reworks the summary and decisions from the list.
+3. Report, as step 6 says.
+
+Without the tool, follow steps 1 to 6.
+
 ## 1. List the tests
 
 Search; don't read every file. Test code is each module's `src/test/`, `src/integrationTest/` and any other test
