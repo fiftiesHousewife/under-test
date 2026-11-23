@@ -1,0 +1,18 @@
+// Writes each project's test compile classpath (its jars) to build/connection-paths-classpath.txt, for
+// connection-paths --classpath @<file>. It resolves dependencies only: nothing is compiled and no test runs.
+//   gradle -q --init-script print-classpath.gradle connectionPathsClasspath
+allprojects {
+    tasks.register('connectionPathsClasspath') {
+        doLast {
+            def sourceSets = project.extensions.findByName('sourceSets')
+            if (sourceSets == null || sourceSets.findByName('test') == null) {
+                return
+            }
+            def jars = sourceSets.test.compileClasspath.files.findAll { it.name.endsWith('.jar') }
+            def out = new File(project.layout.buildDirectory.get().asFile, 'connection-paths-classpath.txt')
+            out.parentFile.mkdirs()
+            out.text = jars.join(File.pathSeparator)
+            println out
+        }
+    }
+}

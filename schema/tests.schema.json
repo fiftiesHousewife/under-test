@@ -60,6 +60,64 @@
             "pattern": "^[^:]+:[0-9]+$",
             "description": "Where it is now: path:line, the path from the repo root and the line with the test's name. Each step that touches the entry refreshes it."
           },
+          "connections": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Owned by draft-the-connection-list: each system on the connection list the test may reach, and how that was found. 'May': measurement confirms or clears it.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "node",
+                "kind",
+                "found_by"
+              ],
+              "properties": {
+                "node": {
+                  "type": "string",
+                  "description": "The system's unique-id in testing/connections.calm.json."
+                },
+                "kind": {
+                  "enum": [
+                    "database",
+                    "http",
+                    "mail",
+                    "directory",
+                    "jndi",
+                    "queue",
+                    "socket",
+                    "url",
+                    "host-lookup",
+                    "process",
+                    "file-share",
+                    "other"
+                  ]
+                },
+                "found_by": {
+                  "enum": [
+                    "code-path",
+                    "test-code",
+                    "test-settings",
+                    "airgap-report"
+                  ],
+                  "description": "code-path: connection-paths found a chain of calls from the test to where the connection is opened; test-code: the test's own code names the host; test-settings: a file the test loads names it (properties, YAML, Spring XML, Spring Boot's settings); airgap-report: only the agent saw it."
+                },
+                "through_set_up": {
+                  "type": "boolean",
+                  "description": "For code-path: the chain starts in the test's set-up methods or fields, not its own body."
+                },
+                "via": {
+                  "type": "string",
+                  "description": "For code-path: the chain from the test to the connection point, as Class.method steps joined by ' > '."
+                },
+                "where": {
+                  "type": "string",
+                  "pattern": "^[^:]+:[0-9]+$",
+                  "description": "For test-code and test-settings: path:line of the line naming the host."
+                }
+              }
+            }
+          },
           "anti_patterns": {
             "type": "object",
             "additionalProperties": false,
