@@ -92,9 +92,12 @@ A test counts once under each kind it shows; a disabled test counts under `disab
 under `never-runs` only. The lists are closed.
 Look only at the test's own body and the `@Before`/`@BeforeEach` methods declared in its class: don't follow helper
 methods or superclasses, except that a call to a helper in the test code that itself asserts counts as an assertion.
-PMD and the searches below find the candidates; read only the tests they find, and of each only its method, from its
-line to its closing brace (`sed -n '<line>,<end>p' <file>`), plus the class's set-up methods when a rule needs them.
-Read a whole file only when a hit is on the class itself.
+PMD and the searches below find the candidates. **Never print a whole test file, or loop over test files printing
+them**: on a real repo that is thousands of lines read for nothing. Read only the tests a hit points at, and of each
+only its method: from its line in the step 1 listing to the line before the next test's
+(`sed -n '<line>,<next line - 1>p' <file>`). For a hit on a class's line, read only its fields and set-up methods
+(`grep -nE '@(Before|BeforeEach|Mock|MockBean)|private .*=' <file>`). Settings files, Spring XML and feature files
+can be read whole.
 
 | `kind` | A test counts when |
 |---|---|
