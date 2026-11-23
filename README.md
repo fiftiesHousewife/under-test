@@ -13,7 +13,7 @@ organisation, works inside locked-down corporate networks, and never lets an AI 
 
 ## The journey of one repo
 
-[![The journey of one repo: eight steps from the safety inventory to keeping it there, each with the skills that do it, the question that can stop it and who answers that question](docs/design/repo-journey.svg)](docs/JOURNEY.md)
+[![The journey of one repo: eight steps from discovery to keeping it there, each with the skills that do it, the question that can stop it and who answers that question](docs/design/repo-journey.svg)](docs/JOURNEY.md)
 
 The drawing's source is [repo-journey.excalidraw](docs/design/repo-journey.excalidraw); open it in Excalidraw to
 change it, then export it again with [drawing-export](maintainer-tools/drawing-export/README.md).
@@ -28,21 +28,31 @@ changes when AI assistants do the work.
 
 ## Skills
 
-Each step is done by an AI assistant skill that runs existing tools and writes to the repo's files; a person reviews
-what it writes. Every skill is tried against the same task done without it, and kept only if it saves effort or makes
+Each step is done by an AI assistant skill that runs tools and writes to the repo's files; a person reviews what it
+writes. Whatever a program can decide the same way every time is done by a tool, and the skill keeps the judgement
+([why](docs/decisions/0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)). Every skill is tried against the same task done without it, and kept only if it saves effort or makes
 the result the same every time.
 
 | Step | Skill | What it does | Tried with and without it |
 |---|---|---|---|
-| 1 | [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turns gitleaks' reports, and a list of keystores ever committed, into the assessment file's safety section | [About 40% fewer tool calls and tokens; ids the same every run; no secrets in the reply](docs/skill-evaluations/run-the-safety-inventory.md) |
-| 2 | [draft-the-connection-list](.github/skills/draft-the-connection-list/SKILL.md) | Drafts the connection list from the airgap agent's reports, with a stand-in for each connection | [A third fewer tool calls; production marked and stand-ins proposed, which the run without it missed](docs/skill-evaluations/draft-the-connection-list.md) |
-| 2 | [find-test-anti-patterns](.github/skills/find-test-anti-patterns/SKILL.md) | Counts anti-patterns in the existing tests, and notes what the list misses | [The same counts every time, and more problems found](docs/skill-evaluations/find-test-anti-patterns.md) |
+| 1 | [draft-the-connection-list](.github/skills/draft-the-connection-list/SKILL.md) | Runs [connection-paths](https://github.com/fiftiesHousewife/connection-paths) to find every connection the code opens and every test that may reach one, traces each address, and drafts the connection list with a stand-in for each; later merges in the airgap agent's reports | [From the airgap agent's reports: a third fewer tool calls; production marked and stand-ins proposed, which the run without it missed](docs/skill-evaluations/draft-the-connection-list.md). The pass from the code was tried by hand on Openfire; its eval case is in the backlog |
+| 1 | [find-test-anti-patterns](.github/skills/find-test-anti-patterns/SKILL.md) | Runs PMD with the toolkit's rules over the existing tests, records every test it finds in the list of tests, and counts the anti-patterns | [The same counts in four runs of five, and more problems found](docs/skill-evaluations/find-test-anti-patterns.md) |
+| 2 | [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turns gitleaks' reports, and a list of keystores ever committed, into the assessment file's safety section: the gate before the first run | [About 40% fewer tool calls and tokens; ids the same every run; no secrets in the reply](docs/skill-evaluations/run-the-safety-inventory.md) |
 | 3 | [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Runs the tests five times under the airgap agent, with coverage and planted bugs, through an init script that changes nothing in the build | [A third fewer tool calls and half the time; the same result shape on Gradle 6.9 and 9](docs/skill-evaluations/measure-a-repo.md) |
 | 3 | [score-obstacles](.github/skills/score-obstacles/SKILL.md) | Scores each obstacle to testing 0 to 3 by the named list, with the evidence for each | Not yet tried: its eval case runs with the baseline |
 | 6 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Proposes adopt, defer or reject for every technique, each traced to its rule | [Two runs agree on 22 of 23 techniques](docs/skill-evaluations/choose-techniques.md) |
 | 6 | [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generates the testing plan from the assessment file, every piece of work with a stable key for the tracker | [Two runs give the same 15 pieces of work, keys and order](docs/skill-evaluations/write-the-testing-plan.md) |
 | 6 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turns an approved testing plan into work items | Not yet: waits for the loader |
 | All | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fills the report page from the repo's files, and applies people's changes back | [Half the tool calls and tokens, a sixth of the time; the same page for every repo](docs/skill-evaluations/render-the-assessment-report.md) |
+
+The tools the skills run:
+
+| Tool | What it does |
+|---|---|
+| [connection-paths](https://github.com/fiftiesHousewife/connection-paths) | Reads a Java module's source and finds where it opens connections and which tests can reach them, with the chain of calls; its own repo, one jar |
+| [The toolkit's PMD rules](tools/test-anti-patterns/anti-patterns.pmd.xml) | Find the anti-patterns in tests that PMD can see: tests that never run, have no real assertion, swallow failures, sleep, run in a fixed order, or mock everything |
+| [gitleaks](https://github.com/gitleaks/gitleaks), with [the toolkit's rules](tools/safety-inventory/) | Finds secrets and production credentials, over the whole history |
+| [The airgap agent](https://github.com/fiftiesHousewife/under-test-airgap) | Refuses every call off the machine when old code first runs on a developer's machine, and reports it |
 
 Each journey skill is also evaluated repeatably with `claude plugin eval`: [the latest results](docs/skill-evaluations/eval-results.md), and
 [each skill with and without it, round by round](docs/skill-evaluations/skill-versions-compared.md), and
