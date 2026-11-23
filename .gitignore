@@ -62,3 +62,6 @@ __pycache__/
 
 # Eval fixtures hold build output on purpose (for example airgap reports under build/airgap/).
 !/.github/evals/*/*/fixture/build/
+
+# Packages installed for maintainer tools that run on Node.js.
+node_modules/

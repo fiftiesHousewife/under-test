@@ -16,7 +16,7 @@ organisation, works inside locked-down corporate networks, and never lets an AI 
 [![The journey of one repo: eight steps from the safety inventory to keeping it there, each with the skills that do it, the question that can stop it and who answers that question](docs/design/repo-journey.svg)](docs/JOURNEY.md)
 
 The drawing's source is [repo-journey.excalidraw](docs/design/repo-journey.excalidraw); open it in Excalidraw to
-change it.
+change it, then export it again with [drawing-export](maintainer-tools/drawing-export/README.md).
 
 Across an organisation, the journey repeats in batches, through five phases: set-up, finding out what repos there
 are, pilots, rolling out, and handing over.

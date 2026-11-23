@@ -1,0 +1,9 @@
+{
+  "name": "drawing-export",
+  "private": true,
+  "description": "Exports the toolkit's Excalidraw drawings to SVG with Excalidraw's own export code",
+  "type": "module",
+  "dependencies": {
+    "@excalidraw/utils": "0.1.8"
+  }
+}
