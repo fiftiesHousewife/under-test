@@ -73,7 +73,8 @@ kind:
 
 * a method marked `@Ignore` or `@Disabled` with no test annotation (one with a test annotation is `disabled`);
 * a method whose test annotation is commented out (`// @Test`);
-* a `public void test...()` method with no test annotation, in a class that doesn't extend `TestCase`;
+* a `public void test...()` method, or a public no-argument method in a class of tests, with no test annotation and
+  not a JUnit 3 test, **that nothing in its class calls** (one that a test calls is a helper, and runs);
 * in a JUnit 5 or 6 class (one importing `org.junit.jupiter`), a test method that is `private` or `static`, or returns
   a value (anything but `void`, except a `@TestFactory`): JUnit skips it without a word;
 * every test in a folder the build doesn't name as a test source set;
@@ -103,8 +104,8 @@ can be read whole.
 |---|---|
 | `never-runs` | It looks like a test but never runs (step 1). |
 | `disabled` | It or its class has `@Ignore` or `@Disabled`. |
-| `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertNull`, `assertTrue(true)`, `isNotNull()`, a bare `assertThat(x);` with nothing after it, a bare `verify(mock);`, or `expected = Exception.class` or `Throwable.class`. `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real. |
-| `swallows-failures` | Its body catches an exception around the code it tests and does nothing that fails: the catch block is empty, or only logs or prints. Or it catches `AssertionError`, `Error` or `Throwable`, which swallows its own failures. **Not** the expected-exception idiom: a `try` whose last statement is `fail(...)`, with a catch of the expected exception that is empty or checks it. |
+| `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertTrue(true)`, `isNotNull()`, a bare `assertThat(x);` with nothing after it, a bare `verify(mock);`, or `expected = Exception.class` or `Throwable.class`. `assertNull`, `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real, and so is a call to a method in the test's class that itself asserts; a helper in another class counts only by its name (`check...`, `verify...`, `assert...`). |
+| `swallows-failures` | Its body catches an exception around the code it tests and does nothing that fails: the catch block is empty, or only logs or prints. Or it catches `AssertionError`, `Error` or `Throwable` and neither records the exception, rethrows it nor fails, which swallows its own failures. **Not** the expected-exception idiom: a `try` whose last statement is `fail(...)`, with a catch of the expected exception that is empty or checks it. |
 | `sleeps` | Its body, or a `@Before`/`@BeforeEach` method of its class (then every test in the class), calls `Thread.sleep` or `TimeUnit.<unit>.sleep`. |
 | `order-dependent` | Its class has `@FixMethodOrder` or `@TestMethodOrder`, whatever its argument. |
 | `reaches-external-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context ([spring-xml.md](spring-xml.md)) and Spring Boot's settings ([spring-boot.md](spring-boot.md)); a test that starts a context reaches what the context's settings name. **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
@@ -124,8 +125,8 @@ pmd cpd --no-fail-on-violation --format csv --language java --minimum-tokens 75 
 Each hit's rule name starts with its kind (`no_real_assertion__...` is `no-real-assertion`). Give each hit to its test:
 the test whose method holds the hit's line, or, for a hit on a class's line, every test in the class. CPD's
 duplicates count as `copy-pasted` for every test whose method holds a copy. Then check two kinds of hit before
-counting them: a `never_runs__JUnit3NameWithoutTest` hit whose class has a superclass in the repo that extends
-`TestCase` or one of Spring's JUnit 3 base classes is a real test, so drop it; and read each `swallows_failures__` hit's
+counting them: a `never_runs__DetachedTest` hit whose class has a superclass in the repo that extends `TestCase` or
+one of Spring's JUnit 3 base classes is a real test, so drop it; and read each `swallows_failures__` hit's
 try and catch against the rule above.
 
 PMD doesn't read anything but Java, so these stay searches:
