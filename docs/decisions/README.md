@@ -31,8 +31,8 @@ Numbers follow reading order until a record is accepted; after that a number nev
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [The organisation repo refers to the toolkit by version through the organisation's package repository](0004-the-organisation-repo-refers-to-the-toolkit-by-version-through-the-organisations-package-repository.md) | proposed | Toolkit maintainers |
-| [The toolkit is installed into organisation and target repos as managed files, with a lock file](0005-the-toolkit-is-installed-into-organisation-and-target-repos-as-managed-files-with-a-lock-file.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [The organisation repo refers to the toolkit by version through the organisation's package repository](0004-the-organisation-repo-refers-to-the-toolkit-by-version-through-the-organisations-package-repository.md) | superseded | Toolkit maintainers |
+| [The toolkit is installed into organisation and target repos as managed files, with a lock file](0005-the-toolkit-is-installed-into-organisation-and-target-repos-as-managed-files-with-a-lock-file.md) | superseded | Toolkit maintainers |
 | [The toolkit applies itself: this repo is its own first adopter](0006-the-toolkit-applies-itself-this-repo-is-its-own-first-adopter.md) | proposed (agreed in discussion) | Toolkit maintainers |
 | [Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich](0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md) | proposed (agreed in discussion) | Toolkit maintainers |
 | [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md) | proposed | Toolkit maintainers |
@@ -44,7 +44,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Lessons are runnable, checked by the build, and illustrated with terminal videos generated from scripts](0016-lessons-are-runnable-checked-by-the-build-and-illustrated-with-terminal-videos-generated-from-scripts.md) | superseded | Toolkit maintainers |
 | [Lessons live in their own repo, with a copy of the build conventions](0017-lessons-live-in-their-own-repo-with-a-copy-of-the-build-conventions.md) | accepted | Toolkit maintainers |
 | [Lesson videos ship as editable layers, so organisations can rebrand, trim and revoice them](0018-lesson-videos-ship-as-editable-layers-so-organisations-can-rebrand-trim-and-revoice-them.md) | superseded | Toolkit maintainers |
-| [How AI assistant skills and instructions reach every repo](0019-how-ai-assistant-skills-and-instructions-reach-every-repo.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [How AI assistant skills and instructions reach every repo](0019-how-ai-assistant-skills-and-instructions-reach-every-repo.md) | superseded | Toolkit maintainers |
 | [Each lesson names the toolkit techniques it teaches, and only the lessons repo records which lessons exist](0030-each-lesson-names-the-toolkit-techniques-it-teaches-and-only-the-lessons-repo-records-which-lessons-exist.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Technique ids match the names of the lessons that teach them, where one lesson teaches one technique](0031-technique-ids-match-the-names-of-the-lessons-that-teach-them-where-one-lesson-teaches-one-technique.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Lesson work and lesson decisions are planned and recorded in the lessons repo](0032-lesson-work-and-lesson-decisions-are-planned-and-recorded-in-the-lessons-repo.md) | accepted (chosen in discussion) | Toolkit maintainers |
@@ -59,12 +59,15 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Each technique rule separates what calls for the technique from what makes it possible](0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A lesson that teaches a step of the journey names that step's skill, not a technique](0048-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill-not-a-technique.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A Maven repo is measured with the agents in JAVA_TOOL_OPTIONS, and JaCoCo and PIT run from the command line](0049-a-maven-repo-is-measured-with-the-agents-in-java-tool-options-and-jacoco-and-pit-run-from-the-command-line.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The toolkit reaches each repo through APM, pinned to a release tag, and nothing in it is copied](0051-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag-and-nothing-in-it-is-copied.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [An organisation adopts every decision guide in its toolkit version by default, and records only its departures](0052-an-organisation-adopts-every-decision-guide-in-its-toolkit-version-by-default-and-records-only-its-departures.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 
 | Decision | Status | Who decides |
 |---|---|---|
 | [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](0023-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md) | proposed | Toolkit maintainers |
+| [A repo with several applications keeps each application's testing files in their own folder under testing/](0053-a-repo-with-several-applications-keeps-each-applications-testing-files-in-their-own-folder-under-testing.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Understanding our repos
 

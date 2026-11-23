@@ -26,9 +26,10 @@ environment these steps assume, in detail, see [docs/CORPORATE-USE.md](docs/CORP
 | Organisation profile schema and example organisation repo | Yes | A validator |
 | Organisation-unit settings and the tool that combines the levels | Designed | Built |
 | Backlog import | GitHub importer (Python standard library, GitHub REST API; works with internal GitHub servers) | Jira adapter; a version that needs nothing but Java |
-| Skills bundle (`installSkills`) | Designed | Built and published |
+| The toolkit as one APM package, pinned to a release tag ([why](docs/decisions/0051-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag-and-nothing-in-it-is-copied.md)) | Decided | Its `apm.yml` installing the guides, schemas and technique rules with the skills |
 | Repo classifier | Designed, output format published | Built |
 | Maven and npm set-ups | Designed | Built |
+| Repos with several applications ([why](docs/decisions/0053-a-repo-with-several-applications-keeps-each-applications-testing-files-in-their-own-folder-under-testing.md)) | Decided: a folder per application under `testing/` | Every skill taking the application's folder |
 
 Until a part is published as an artifact, you would build it from your internal copy of this repo.
 
@@ -82,13 +83,11 @@ Steering Group. Application Owners join as their applications come into scope.
 
 Nothing is fetched from the internet at build time. Before anyone uses the toolkit:
 
-1. **Refer to the toolkit by version, through your package repository.** Each toolkit release is published to Maven
-   Central as versioned artifacts: the convention plugin, the skills bundle, and a content bundle holding the decision
-   guides, schemas and technique rules. Your package repository already mirrors Maven Central, so they arrive the same
-   way as any library, and nobody needs to reach a public code-hosting site. Your organisation repo names the version
-   (`toolkit.version` in the profile); your Toolkit Owner decides when to take a newer one.
-   *Optionally*, keep an internal mirror of this repository's source so people can browse it, and record its address
-   as `toolkit.source_mirror`.
+1. **Take the toolkit by version, with APM.** Keep an internal mirror of this repository. Each repo's `apm.yml` names
+   the toolkit at a release tag from your mirror, and `apm install` puts its skills where your AI assistant finds them,
+   with the decision guides, schemas and technique rules beside them. Nothing in it is copied or edited: you change
+   what it says only through your own decision records (step 6). Your organisation profile names the same tag
+   (`toolkit.version`); your Toolkit Owner decides when to take a newer one, a one-line change by pull request.
 2. **Mirror the dependencies.** Your package repository needs proxies (remote repositories) for Maven Central and the
    Gradle Plugin Portal, which most organisations already have. The full list of what the toolkit uses is in
    [`gradle/libs.versions.toml`](gradle/libs.versions.toml). Your security review approves those, as with any
@@ -172,12 +171,15 @@ and [Code-quality standards can be the toolkit's, the organisation's, or the org
 
 ## Step 6: Work through the decision guides
 
-The [decision guides](decision-guides/README.md) cover every choice the programme needs, smallest first. For each one,
-the deciding role reads it and either:
+The [decision guides](decision-guides/README.md) cover every choice the programme needs, smallest first. You don't
+write a record for each one
+([why](docs/decisions/0052-an-organisation-adopts-every-decision-guide-in-its-toolkit-version-by-default-and-records-only-its-departures.md)):
 
-- **adopts it as written**: record that in your organisation repo with a one-line decision record; or
-- **chooses between its options, or narrows it**: record the choice and the reason; or
-- **replaces it**: record your own decision and why.
+- **Your first record adopts them all**: every decision guide in your toolkit version, as written, except the ones
+  your other records depart from.
+- **Record only departures**, as they come up: choosing between a guide's options, narrowing it, or replacing it, each
+  naming the guide and giving the reason.
+- **On a newer toolkit version**, update the first record and review only the guides the release says changed.
 
 Use the [record-an-organisation-decision skill](.github/skills/record-an-organisation-decision/SKILL.md) with your AI
 assistant to draft these. It writes into your organisation repo only. Settle the production-safety decisions and the container

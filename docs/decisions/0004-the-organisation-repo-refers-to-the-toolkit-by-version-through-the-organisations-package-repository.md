@@ -1,12 +1,14 @@
 ---
-status: proposed
+status: superseded
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # The organisation repo refers to the toolkit by version through the organisation's package repository
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [The toolkit reaches each repo through APM, pinned to a release tag, and nothing in it is copied](0051-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag-and-nothing-in-it-is-copied.md).
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
