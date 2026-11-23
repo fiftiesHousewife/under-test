@@ -89,8 +89,10 @@ Tests that need a container go in the `integrationTest` source set, and skip the
 If the organisation profile sets `commit_messages.must_name_work_item`, every commit names its work item key. This repo itself has no such rule.
 
 ## Safety
-Never build or run code from another repo unless its secrets scan is clean, and only where production can't be reached
-(see [Old code runs first only where production cannot be reached](decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md)).
+Never run another repo's tests or application unless its secrets scan is clean, and only where production can't be
+reached (see [Old code runs first only where production cannot be reached](decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md)).
+Building it, or resolving its dependencies, without running tests is allowed before that
+(see [A repo may be built, without running its tests, before the safety gate](docs/decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)).
 
 ## Before you finish
 Run `./gradlew check`. It must pass. Push only with `maintainer-tools/sync/sync.sh "What changed"`, which syncs the issues and

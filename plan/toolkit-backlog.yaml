@@ -1889,8 +1889,20 @@ items:
     done_when:
       - "Reads a module's source and dependency jars; writes a facts file matching a schema in this toolkit"
       - "Reports unresolved calls by reason and the dispatch points it did not follow"
-      - "Reads Maven POMs to list dependency jars, without running Maven"
+      - "Takes the build's classpath (Maven dependency:build-classpath, a Gradle init script); reads the build files to list dependency jars only when the build fails"
       - "Passes an example repo with known chains, and a person's review of its findings on Openfire"
     blocked_by:
       - "decide-connections-are-found-by-connection-paths"
+  - key: "decide-a-repo-may-be-built-before-the-safety-gate"
+    status: "done"
+    type: "decision"
+    title: "A repo may be built, without running its tests, before the safety gate"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md"
 
