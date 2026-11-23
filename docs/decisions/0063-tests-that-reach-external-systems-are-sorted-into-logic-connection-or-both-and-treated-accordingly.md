@@ -13,7 +13,7 @@ group: Using the toolkit in an organisation
 ## Context and Problem Statement
 
 Tagging tests that reach external systems and leaving them out of normal runs
-([the guide](../../decision-guides/0041-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md))
+([the guide](../../decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md))
 keeps normal runs safe but stops testing the code they exercise. What a test is really checking decides what replaces
 it. Google, Fowler and Rainsberger describe running one set of tests against both a fake and the real implementation
 ("contract tests"), and JUnit documents test interfaces for it. No published procedure sorts an existing suite.

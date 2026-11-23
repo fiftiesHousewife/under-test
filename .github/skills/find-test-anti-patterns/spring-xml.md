@@ -6,7 +6,7 @@ Read this when a test class names an XML file in `@ContextConfiguration` or `@Im
   `<import resource=...>`, and each property placeholder's `location` (`<context:property-placeholder location=...>`
   or a `PropertySourcesPlaceholderConfigurer` bean's locations). Follow them all; a `classpath:` path is under the
   test or main resources.
-* A host named in any of them makes every test in the class count as `reaches-shared-system`, with `through:
+* A host named in any of them makes every test in the class count as `reaches-external-system`, with `through:
   spring-xml` and `where` at the line naming the host.
 * An XML namespace, schema location or DTD address is never a host, here as in any XML file.
 

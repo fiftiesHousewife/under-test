@@ -92,7 +92,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 | [An in-memory database of a different product never counts as evidence](0038-an-in-memory-database-of-a-different-product-never-counts-as-evidence.md) | proposed | Test Quality Lead, approved by the Steering Group |
 | [Recorded responses and fakes live in shared test kits, not in each repo](0039-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md) | proposed | Technical Architect |
 | [Who owns and maintains each shared test kit](0040-who-owns-and-maintains-each-shared-test-kit.md) | proposed | Steering Group |
-| [Tests that reach real shared systems are tagged and left out of normal runs](0041-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md) | proposed | Security and Platform Owner (can veto) |
+| [Tests that reach external systems are tagged and left out of normal runs](0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md) | proposed | Security and Platform Owner (can veto) |
 | [Whether a shared test environment can count as evidence for a limited time](0042-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time.md) | proposed (open) | Test Quality Lead, approved by the Steering Group |
 
 ## Test hygiene

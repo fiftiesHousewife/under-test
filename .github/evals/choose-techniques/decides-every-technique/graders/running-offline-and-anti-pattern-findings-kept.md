@@ -1,6 +1,6 @@
 ---
 type: regex
-pattern: '^[ \t]*- id:[ \t]*["'']?(?:orders-db|payments-api|smtp|no-real-assertion|disabled|reaches-shared-system)["'']?[ \t]*$'
+pattern: '^[ \t]*- id:[ \t]*["'']?(?:orders-db|payments-api|smtp|no-real-assertion|disabled|reaches-external-system)["'']?[ \t]*$'
 flags: m
 match: count:6
 target: {source: file, path: testing/assessment.yaml}

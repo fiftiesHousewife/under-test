@@ -165,7 +165,7 @@ with a key the issue tracker can follow ([whole file](examples/TESTING-PLAN.md))
 | Key | Work | Done when |
 |---|---|---|
 | `orders-service:make-it-run-on-its-own:choose-stand-in-payments-example-com` | Choose what tests use for payments.example.com | The Architecture Owner has decided the stand-in in the connection list |
-| `orders-service:make-it-run-on-its-own:tag-reaches-shared-system` | Tag the 6 tests that reach a shared system, and leave them out of normal runs | No test in a normal run reaches a shared system |
+| `orders-service:make-it-run-on-its-own:tag-reaches-external-system` | Tag the 6 tests that reach an external system, and leave them out of normal runs | No test in a normal run reaches an external system |
 | `orders-service:fix-flaky-tests:flaky-tests` | Fix the 7 flaky tests, groups that fail together first | Five runs in a row with no flaky test |
 
 **Without the skill:** no run gave the pieces of work keys a tracker could follow, and none listed the 15 pieces.

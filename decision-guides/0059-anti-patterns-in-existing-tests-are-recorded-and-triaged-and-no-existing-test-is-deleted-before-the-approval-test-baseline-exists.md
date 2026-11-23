@@ -13,7 +13,7 @@ group: Test hygiene
 ## Context and Problem Statement
 
 An old repo's tests often look better than they are: tests with no real assertions, tests switched off years ago,
-tests that wait with fixed sleeps, tests that only pass in a certain order, tests that reach shared systems, tests that
+tests that wait with fixed sleeps, tests that only pass in a certain order, tests that reach external systems, tests that
 mock everything they touch, copy-pasted tests and whole copied classes, and methods that look like tests but never run
 (an annotation missing or commented out, or a folder or class name the build doesn't pick up). Coverage figures count them all, so they overstate how far the tests
 can be trusted. Some of them still pin behaviour nothing else records.
@@ -32,7 +32,7 @@ can be trusted. Some of them still pin behaviour nothing else records.
 
 Proposed: record, triage and fix in order, the default the toolkit maintainers chose in discussion. The [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill records each anti-pattern in the assessment file.
 Disabled tests go to the Application Owner to re-enable or delete, and so do methods that look like tests but never
-run, to make into real tests or delete. Tests that reach shared systems are tagged and left
+run, to make into real tests or delete. Tests that reach external systems are tagged and left
 out of normal runs. The rest are fixed in the "strengthen tests" workstream. No existing test is deleted before the
 approval-test baseline exists, since it may be the only record of some behaviour.
 
@@ -44,6 +44,6 @@ approval-test baseline exists, since it may be the only record of some behaviour
 
 ## More Information
 
-* Builds on: [Tests that reach real shared systems are tagged and left out of normal runs](0041-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md), [Flaky tests can be quarantined only with an expiry date](0044-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md), [The named list of obstacles to testing and how each is scored](0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md)
+* Builds on: [Tests that reach external systems are tagged and left out of normal runs](0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md), [Flaky tests can be quarantined only with an expiry date](0044-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md), [The named list of obstacles to testing and how each is scored](0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md)
 * Later decisions that build on this: none yet
 * Background: [legacy-code](../docs/REFERENCES.md#legacy-code)

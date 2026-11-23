@@ -288,7 +288,7 @@ plenty") and has a failure "trigger a task" rather than break the build
 on the human to pay attention and check". A tagged set nobody runs protects nothing. So each connection's external
 tests have a schedule (daily by default), a place that can reach the system's test instance, and a named owner; a
 failure opens a work item and never breaks a normal build
-([Tests that reach real shared systems are tagged and left out of normal runs](../decision-guides/0041-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md)).
+([Tests that reach external systems are tagged and left out of normal runs](../decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md)).
 
 ## The limits of the evidence, and false confidence to avoid
 

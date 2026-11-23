@@ -5,4 +5,4 @@ flags: m
 match: contains
 target: {source: file, path: testing/assessment.yaml}
 ---
-The decision `techniques/junit-tags` proposes adopt. All three `needed_when` conditions are true: 6 tests reach a shared system, broad tests are 29 per cent of the mix, and the orders database's decided stand-in runs in a container. It has no `possible_when`.
+The decision `techniques/junit-tags` proposes adopt. All three `needed_when` conditions are true: 6 tests reach an external system, broad tests are 29 per cent of the mix, and the orders database's decided stand-in runs in a container. It has no `possible_when`.

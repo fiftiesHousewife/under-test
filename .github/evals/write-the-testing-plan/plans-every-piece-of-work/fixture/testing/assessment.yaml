@@ -140,8 +140,8 @@ anti_patterns:
     tests: 11
     examples:
     - src/test/java/com/example/orders/RefundTest.java
-  - id: reaches-shared-system
-    kind: reaches-shared-system
+  - id: reaches-external-system
+    kind: reaches-external-system
     tests: 6
     examples:
     - src/test/java/com/example/orders/OrderRepositoryIT.java

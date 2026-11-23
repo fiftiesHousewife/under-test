@@ -140,8 +140,8 @@ anti_patterns:
     tests: 11
     examples:
     - src/test/java/com/example/orders/RefundTest.java
-  - id: reaches-shared-system
-    kind: reaches-shared-system
+  - id: reaches-external-system
+    kind: reaches-external-system
     tests: 6
     examples:
     - src/test/java/com/example/orders/OrderRepositoryIT.java
@@ -169,9 +169,9 @@ obstacles:
     - id: talks-to-unplanned-systems
       score: 1
       evidence: ["testing/connections.calm.json: orders-service-to-payments-example-com"]
-    - id: tests-reach-shared-systems
+    - id: tests-reach-external-systems
       score: 2
-      evidence: ["testing/assessment.yaml: anti_patterns/reaches-shared-system, 6 tests"]
+      evidence: ["testing/assessment.yaml: anti_patterns/reaches-external-system, 6 tests"]
     - id: flaky-tests
       score: 2
       evidence: ["testing/assessment.yaml: tests.flaky 7 of 212"]

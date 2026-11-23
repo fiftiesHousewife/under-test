@@ -5,7 +5,7 @@ workstream: make-it-run-on-its-own
 evidence_for_maturity_levels: [1]
 tools: [junit5, junit4, gradle, maven-surefire]
 needed_when:
-  - "Tests reach a shared system (the reaches-shared-system anti-pattern)"
+  - "Tests reach an external system (the reaches-external-system anti-pattern)"
   - "Broad or container tests are part of the test mix (tests.mix)"
   - "A connection's stand-in runs in a container"
 reject_or_defer_when: []
@@ -15,5 +15,5 @@ fallback: "A separate source set for slow tests (for example integrationTest), r
 constraints:
   - "On JUnit 5, use @Tag with Gradle's includeTags and excludeTags or Maven Surefire's groups; on JUnit 4, use categories (@Category) with Gradle's includeCategories or Surefire's groups"
   - "Slow tests still run in CI on every pull request; a tag never drops a test"
-  - "Tagging a test that reaches a shared system only keeps it out of the quick run until it has a stand-in; it doesn't fix it"
+  - "Tagging a test that reaches an external system only keeps it out of the quick run until it has a stand-in; it doesn't fix it"
 references: [test-mix]

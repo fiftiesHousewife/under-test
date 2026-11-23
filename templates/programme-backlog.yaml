@@ -570,9 +570,9 @@ items:
     blocked_by:
       - "decide-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo"
     decision_record: "decision-guides/0040-who-owns-and-maintains-each-shared-test-kit.md"
-  - key: "decide-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs"
+  - key: "decide-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs"
     type: "decision"
-    title: "Tests that reach real shared systems are tagged and left out of normal runs"
+    title: "Tests that reach external systems are tagged and left out of normal runs"
     parent: "production-stays-safe-while-old-code-is-built-and-run"
     phase: "set-up"
     horizon: "next"
@@ -582,7 +582,7 @@ items:
       - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Security and Platform Owner (can veto)"
     blocked_by:
       - "decide-old-code-runs-first-only-where-production-cannot-be-reached"
-    decision_record: "decision-guides/0041-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs.md"
+    decision_record: "decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md"
   - key: "decide-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time"
     type: "decision"
     title: "Whether a shared test environment can count as evidence for a limited time"
@@ -595,7 +595,7 @@ items:
       - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Test Quality Lead, approved by the Steering Group"
     blocked_by:
       - "decide-what-counts-as-evidence-for-each-test-maturity-level"
-      - "decide-tests-that-reach-real-shared-systems-are-tagged-and-left-out-of-normal-runs"
+      - "decide-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs"
     decision_record: "decision-guides/0042-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time.md"
   - key: "decide-how-flaky-tests-are-found"
     type: "decision"

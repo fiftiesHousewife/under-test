@@ -4,7 +4,7 @@ decision-makers: Security and Platform Owner (can veto)
 group: Standing in for real systems
 ---
 
-# Tests that reach real shared systems are tagged and left out of normal runs
+# Tests that reach external systems are tagged and left out of normal runs
 
 **Decided by:** Security and Platform Owner (can veto) · **Status:** proposed
 
@@ -16,7 +16,7 @@ Tests that write to shared environments are a safety and data risk, not just a t
 
 ## Considered Options
 
-* **Tag them `@RealDependency`, leave them out of the normal CI run, log a risk until replaced**  
+* **Tag them `external` (`@Tag("external")` on JUnit 5 or 6, a JUnit 4 `@Category`), leave them out of the normal CI run, log a risk until replaced**  
   Contains the risk at once
 * **Leave them running**  
   Ongoing risk
@@ -28,7 +28,7 @@ Proposed: the first option.
 ### Consequences
 
 * The convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), leaves the tag out of normal runs by default. Until then, the
-  [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill flags these tests as `reaches-shared-system`, and
+  [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill flags these tests as `reaches-external-system`, and
   tagging them is a change made by hand.
 * Each connection's tagged tests have a schedule (daily by default), a place that can reach the system's test
   instance, and an owner, all named in the testing plan. A failure opens a work item for the owner; it never breaks a

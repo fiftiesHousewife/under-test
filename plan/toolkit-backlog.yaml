@@ -935,7 +935,7 @@ items:
     owner_role: "Test Quality Lead"
     done_by: "ai"
     done_when:
-      - "Finds tests with no real assertion, disabled tests, sleeps, order dependence, tests reaching shared systems and over-mocked tests"
+      - "Finds tests with no real assertion, disabled tests, sleeps, order dependence, tests reaching external systems and over-mocked tests"
       - "Writes each into the assessment file, with an example"
       - "Existing test-smell detectors were reviewed first"
     blocked_by:

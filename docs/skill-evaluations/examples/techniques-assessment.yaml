@@ -140,8 +140,8 @@ anti_patterns:
     tests: 11
     examples:
     - src/test/java/com/example/orders/RefundTest.java
-  - id: reaches-shared-system
-    kind: reaches-shared-system
+  - id: reaches-external-system
+    kind: reaches-external-system
     tests: 6
     examples:
     - src/test/java/com/example/orders/OrderRepositoryIT.java
@@ -237,7 +237,7 @@ techniques:
     - "precondition 'A check that fails the build when the code's SQL uses features the in-memory database doesn't share with the real one': part of the work"
   - id: junit-tags
     because:
-    - "needed_when 'Tests reach a shared system (the reaches-shared-system anti-pattern)': true; 6 tests reach a shared system"
+    - "needed_when 'Tests reach a shared system (the reaches-external-system anti-pattern)': true; 6 tests reach an external system"
     - "needed_when 'Broad or container tests are part of the test mix (tests.mix)': true; 29 broad tests in the mix"
     - "needed_when 'A connection's stand-in runs in a container': true; the orders database stand-in is run-in-container"
     - "precondition 'How long each test takes, from the measurement run': part of the work"
@@ -436,7 +436,7 @@ decisions:
     state: proposed
     drafted_by: ai
     choice: adopt
-    reason: "adopt: 'Tests reach a shared system (the reaches-shared-system anti-pattern)', 6 tests reach a shared system; 'Broad or container tests are part of the test mix (tests.mix)', 29 broad tests; 'A connection's stand-in runs in a container', the orders database stand-in is run-in-container."
+    reason: "adopt: 'Tests reach a shared system (the reaches-external-system anti-pattern)', 6 tests reach an external system; 'Broad or container tests are part of the test mix (tests.mix)', 29 broad tests; 'A connection's stand-in runs in a container', the orders database stand-in is run-in-container."
   techniques/machine-state-checks:
     state: proposed
     drafted_by: ai

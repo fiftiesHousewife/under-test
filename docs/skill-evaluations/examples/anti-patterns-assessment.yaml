@@ -33,8 +33,8 @@ anti_patterns:
       kind: other
       tests: 1
       examples: ["src/test/java/com/example/orders/PaymentClientTest.java:11"]
-    - id: reaches-shared-system
-      kind: reaches-shared-system
+    - id: reaches-external-system
+      kind: reaches-external-system
       tests: 2
       examples: ["src/test/java/com/example/orders/OrderRepositoryIT.java:13", "src/test/java/com/example/orders/OrderRepositoryIT.java:20"]
     - id: sleeps
@@ -70,7 +70,7 @@ decisions:
     state: proposed
     drafted_by: ai
     choice: fixed in the strengthen-tests workstream
-  anti-patterns/reaches-shared-system:
+  anti-patterns/reaches-external-system:
     state: proposed
     drafted_by: ai
     choice: tagged and left out of normal runs

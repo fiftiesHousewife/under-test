@@ -79,7 +79,7 @@ methods or superclasses. Each kind has a search; read only the tests and files i
 | `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertNull`, `assertTrue(true)`, `isNotNull()`. `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real. |
 | `sleeps` | Its body, or a `@Before`/`@BeforeEach` method of its class (then every test in the class), calls `Thread.sleep` or `TimeUnit.<unit>.sleep`. |
 | `order-dependent` | Its class has `@FixMethodOrder` or `@TestMethodOrder`, whatever its argument. |
-| `reaches-shared-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context ([spring-xml.md](spring-xml.md)). **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
+| `reaches-external-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context ([spring-xml.md](spring-xml.md)). **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
 | `mocks-everything` | Its class has five or more mocks in total: `@Mock` and `@MockBean` fields, and `mock(` and `Mockito.mock(` calls (a field set by `mock(` counts once; `@Spy` doesn't count). |
 | `copy-pasted` | Ten or more consecutive non-blank lines between its method's braces are the same as another test's once every string, number and character literal is ignored: count every test in the group. Also every test in a test class that has a copy, the same or nearly the same, under another test folder or module. |
 | `other` | It can't catch a bug for a reason the list misses: an expected value bent to pass (`size() + 1`), a server on `localhost` nothing starts, a word in the test's name that an asserted expected value contradicts, set-up copied and never changed (only where not already `copy-pasted`). Only these four, one finding each, holding every test that shows it, with a fixed id: `other-bent-expected-value`, `other-server-nothing-starts`, `other-name-does-not-match-assertions`, `other-copied-setup-unchanged`. Anything else you notice goes in the report, not the file. |
@@ -91,7 +91,7 @@ grep -rnE '@(Ignore|Disabled)\b' --include='*.java' <test folders>              
 grep -rnE 'Thread\.sleep|TimeUnit\.[A-Z]+\.sleep' <test folders>                         # sleeps
 grep -rnE '@(FixMethodOrder|TestMethodOrder)' <test folders>                             # order-dependent
 grep -rcE '@Mock\b|@MockBean\b|[^A-Za-z.]mock\(|Mockito\.mock\(' --include='*.java' <test folders>   # mocks-everything: read files with 5 or more
-grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>   # reaches-shared-system: drop the never-a-host lines
+grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>   # reaches-external-system: drop the never-a-host lines
 find <test folders> -name '*.java' | sed 's|.*/||' | sort | uniq -d                    # copy-pasted: classes under more than one folder; compare each pair with cmp or diff
 grep -rnE 'assertNotNull|assertNull|assertTrue\(true\)|isNotNull\(\)' --include='*.java' <test folders>
 ```
@@ -146,7 +146,7 @@ counted under any kind, sorted like the examples.
 
 * `at`: `"path:line"`, as in step 1. `name`: `<Class>.<method>`.
 * `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...).
-* `reaches`, for `reaches-shared-system`: each host (no scheme, port or path), `through` (`code`, `properties`,
+* `reaches`, for `reaches-external-system`: each host (no scheme, port or path), `through` (`code`, `properties`,
   `yaml`, `spring-xml` for a host in a Spring XML context or a file that context loads, or `airgap-report`), and
   `where`, the `path:line` naming it.
 * `copy_of`, for `copy-pasted`: the `path:line` of one test it is a copy of.
@@ -158,7 +158,7 @@ found_by: {tool: find-test-anti-patterns, version: unreleased, commit: "1a2b3c4"
 tests:
   - at: "src/test/java/com/example/orders/OrderRepositoryIT.java:13"
     name: OrderRepositoryIT.findsAnOrder
-    kinds: [reaches-shared-system]
+    kinds: [reaches-external-system]
     reaches:
       - {host: orders-uat.internal, through: code, where: "src/test/java/com/example/orders/OrderRepositoryIT.java:10"}
 ```
@@ -190,13 +190,13 @@ decisions:
 |---|---|
 | `disabled` | `"Application Owner decides: re-enable, or delete once the approval-test baseline exists"` |
 | `never-runs` | `"Application Owner decides: make it a real test, or delete once the approval-test baseline exists"` |
-| `reaches-shared-system` | `tagged and left out of normal runs` |
+| `reaches-external-system` | `tagged and left out of normal runs` |
 | `sleeps`, `order-dependent` | `fixed in the fix-flaky-tests workstream` |
 | `no-real-assertion`, `mocks-everything`, `copy-pasted`, `other` | `fixed in the strengthen-tests workstream` |
 
 ## 5. Report
 
 Briefly: the total number of tests, and how many show at least one anti-pattern; each kind's count and examples; disabled tests, and tests that never run, need the Application Owner; tests
-reaching shared systems need tagging before the tests run anywhere; read coverage and planted-bug results with these
+reaching external systems need tagging before the tests run anywhere; read coverage and planted-bug results with these
 in mind (a test with no real assertion adds coverage but catches nothing); and anything the searches couldn't settle, such
 as copy-pasting across classes without PMD.

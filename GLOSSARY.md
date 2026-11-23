@@ -45,6 +45,7 @@
 | **replaceable dependency** | Code that receives its database, clock, HTTP client etc. from outside, so a test can pass in a stand-in. | seam |
 | **obstacle** (named) | Something that makes a repo hard to test, e.g. "uses the system clock directly", "needs a real Oracle database". | blocker |
 | **expected-results source** | Where we get the right answer for a test: an expert, a spec, or the old system. | oracle |
+| **external system** | A database, service, mail server, directory, file share or queue a test reaches off the machine it runs on. A test that reaches one is tagged `external` and left out of normal runs. | shared system |
 | **high-risk files** | Files that change often *and* are complex: the top 10% by both. | hotspots |
 | **outbound network calls** | Connections a test makes to other systems. | egress |
 | **measurement run** | The automated run that builds a repo, runs its tests 5 times, and measures coverage and test strength. | probe, dynamic probe |

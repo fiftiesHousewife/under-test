@@ -73,7 +73,7 @@
                 "never-runs",
                 "sleeps",
                 "order-dependent",
-                "reaches-shared-system",
+                "reaches-external-system",
                 "mocks-everything",
                 "copy-pasted",
                 "other-bent-expected-value",
@@ -85,7 +85,7 @@
           },
           "reaches": {
             "type": "array",
-            "description": "For reaches-shared-system: each host the test reaches, and how.",
+            "description": "For reaches-external-system: each host the test reaches, and how.",
             "items": {
               "type": "object",
               "additionalProperties": false,

@@ -78,7 +78,7 @@ five turns more a run. The one miss is the same as before: one example's line.
 
 With the skill, every run found the empty test and the class copied between folders, and four of five counted the
 tests that never run exactly. The fifth took Maven's rule (`*IT` classes run only with Failsafe) for a Gradle build, so
-it counted OrderRepositoryIT as never running and left it out of the shared-system count; the skill now says that rule
+it counted OrderRepositoryIT as never running and left it out of the external-system count; the skill now says that rule
 is Maven's only. One run without the skill timed out while the network was down.
 
 ## What the rounds show
