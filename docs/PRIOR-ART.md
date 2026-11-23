@@ -58,7 +58,7 @@ that loads the context starts them.
 **In the toolkit.** [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) turns a secrets
 scan of the whole history, and searches for keystores, production credentials, real personal data, jobs that start
 themselves and build tasks that deploy, into findings, some of which block every run
-([Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](../decision-guides/0057-before-any-code-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)).
+([Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](../decision-guides/0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)).
 Neither this step nor discovery runs the repo's code
 ([A repo's code first runs in measurement, which comes before capturing current behaviour and again after it](decisions/0058-a-repos-code-first-runs-in-measurement-which-comes-before-capturing-current-behaviour-and-again-after-it.md)),
 and later runs happen only where production can't be reached

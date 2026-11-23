@@ -21,12 +21,12 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [No repo's code is built or run until its secrets scan is clean](0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md) | proposed | Security and Platform Owner (can veto) |
+| [No repo's tests or application run until its secrets scan is clean](0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md) | proposed | Security and Platform Owner (can veto) |
 | [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md) | proposed | Security and Platform Owner (can veto) |
 | [Tests stop at once if any configured address is a production address](0009-tests-stop-at-once-if-any-configured-address-is-a-production-address.md) | proposed | Security and Platform Owner (can veto) |
 | [A test profile with dummy secrets is the default, and production profiles only work in production](0010-a-test-profile-with-dummy-secrets-is-the-default-and-production-profiles-only-work-in-production.md) | proposed | Technical Architect |
 | [A production secret found in a repo is handled as a security incident](0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md) | proposed | Security and Platform Owner (can veto) |
-| [Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](0057-before-any-code-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md) | proposed | Security and Platform Owner (can veto) |
+| [Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md) | proposed | Security and Platform Owner (can veto) |
 
 ## What "well tested" means
 

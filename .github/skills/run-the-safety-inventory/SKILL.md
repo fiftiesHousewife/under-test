@@ -144,7 +144,7 @@ Then tell the person, briefly, in this order, each item's findings by id and fil
    then remove it from the history; a real production secret is a security incident
    ([A production secret found in a repo is handled as a security incident](../../../decision-guides/0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md)).
    A finding that isn't real goes in `.gitleaksignore` with a reason, in a pull request the Security and Platform
-   Owner approves ([No repo's code is built or run until its secrets scan is clean](../../../decision-guides/0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md)).
+   Owner approves ([No repo's tests or application run until its secrets scan is clean](../../../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)).
 2. **Needs a person's answer:** suspected personal data, which blocks until answered.
 3. **To neutralise:** the rest, with the proposed choices.
 4. Decisions marked stale or reopened.

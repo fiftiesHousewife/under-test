@@ -40,6 +40,6 @@ fails the check isn't kept.
 
 ## More Information
 
-* Builds on: [How personal data in captures is replaced: dropped, keyed substitutes or synthetic values, chosen per field](0063-how-personal-data-in-captures-is-replaced-dropped-keyed-substitutes-or-synthetic-values-chosen-per-field.md), [No repo's code is built or run until its secrets scan is clean](0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md)
+* Builds on: [How personal data in captures is replaced: dropped, keyed substitutes or synthetic values, chosen per field](0063-how-personal-data-in-captures-is-replaced-dropped-keyed-substitutes-or-synthetic-values-chosen-per-field.md), [No repo's tests or application run until its secrets scan is clean](0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
 * Later decisions that build on this: [Cleaned captures are treated as personal data unless the Data Protection Officer agrees they are anonymous](0065-cleaned-captures-are-treated-as-personal-data-unless-the-data-protection-officer-agrees-they-are-anonymous.md)
 * Background: [capturing and cleaning black-box data](../docs/research/capturing-and-cleaning-black-box-data.md)

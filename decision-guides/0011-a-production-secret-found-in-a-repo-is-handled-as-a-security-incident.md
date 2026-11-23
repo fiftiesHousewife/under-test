@@ -32,6 +32,6 @@ Proposed: the first option.
 
 ## More Information
 
-* Builds on: [No repo's code is built or run until its secrets scan is clean](0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md)
+* Builds on: [No repo's tests or application run until its secrets scan is clean](0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
 * Later decisions that build on this: none yet
 * Background: none

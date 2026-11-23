@@ -8,7 +8,7 @@ group: Using the toolkit in an organisation
 
 ## Context and Problem Statement
 
-[No repo's code is built or run until its secrets scan is clean](../../decision-guides/0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md)
+[No repo's code is built or run until its secrets scan is clean](../../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
 names gitleaks, a native Go program. Developer machines are Windows laptops with no administrator rights, where
 only approved tools can be installed, and the toolkit's core use needs nothing beyond Java and Git (see
 [Using the toolkit inside a corporate network](../CORPORATE-USE.md)). Engineers still want a check on their own
@@ -55,6 +55,6 @@ a secret reaches CI that a laptop check should have caught.
 
 ## More Information
 
-* Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [No repo's code is built or run until its secrets scan is clean](../../decision-guides/0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md)
+* Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [No repo's code is built or run until its secrets scan is clean](../../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
 * Later decisions that build on this: none yet
 * Background: [production-safety](../REFERENCES.md#production-safety); [gitleaks](https://github.com/gitleaks/gitleaks); [gitleaks Gradle plugin](https://plugins.gradle.org/plugin/io.dotinc.gitleaks); [gradle-trivy](https://github.com/mgerhardy/gradle-trivy); [Find Security Bugs](https://find-sec-bugs.github.io/)

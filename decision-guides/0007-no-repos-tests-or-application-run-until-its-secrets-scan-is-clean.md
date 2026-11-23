@@ -4,7 +4,7 @@ decision-makers: Security and Platform Owner (can veto)
 group: Keeping production safe
 ---
 
-# No repo's code is built or run until its secrets scan is clean
+# No repo's tests or application run until its secrets scan is clean
 
 **Decided by:** Security and Platform Owner (can veto) · **Status:** proposed
 
@@ -30,8 +30,10 @@ Many repos hold production secrets in their configuration. Building or running t
 
 ## Decision Outcome
 
-Proposed: every repo is scanned with gitleaks in CI, its whole history included, before any build, test run or app
-start anywhere, developer machines included, and again on every push.
+Proposed: every repo is scanned with gitleaks in CI, its whole history included, before any test run or app start
+anywhere, developer machines included, and again on every push. A build that only resolves dependencies or compiles,
+running no tests, may come first, so discovery can read the code with its classpath (the toolkit's own decision:
+[A repo may be built, without running its tests, before the safety gate](../docs/decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)).
 Where the code-hosting platform has its own secret scanning and push protection, switch it on too: it catches new
 secrets as they are pushed, but it doesn't replace the gitleaks scan. Findings are recorded in the assessment file and
 the repo is blocked from running until they are resolved. A finding that isn't a real secret (a test fixture, an
@@ -50,7 +52,7 @@ scanning as the default; an organisation may still narrow or replace this.)
   into code as the work goes on; it is an early warning, not the gate. See [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](../docs/decisions/0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md).
 * gitleaks is feature complete: it gets security fixes only. That suits a stable scanner, and it is rechecked at
   each release under [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](../docs/decisions/0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md).
-* The scan is the first part of the safety inventory, in [Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](0057-before-any-code-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md).
+* The scan is the first part of the safety inventory, in [Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md).
 
 ## More Information
 

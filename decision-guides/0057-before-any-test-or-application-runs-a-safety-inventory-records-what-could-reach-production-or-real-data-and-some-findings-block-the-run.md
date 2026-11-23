@@ -4,7 +4,7 @@ decision-makers: Security and Platform Owner (can veto)
 group: Keeping production safe
 ---
 
-# Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run
+# Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run
 
 **Decided by:** Security and Platform Owner (can veto) · **Status:** proposed
 
@@ -31,8 +31,10 @@ as long as someone has looked.
 
 ## Decision Outcome
 
-Proposed: the tiered inventory, the default the toolkit maintainers chose in discussion. The inventory runs straight
-after the secrets scan, before any build, test run or application start.
+Proposed: the tiered inventory, the default the toolkit maintainers chose in discussion. The inventory runs after the
+secrets scan, alongside discovery, and is settled before any test run or application start; a build that runs no tests
+may come before it (the toolkit's own decision:
+[The safety inventory is a gate before the first run, and no skill ever copies a secret](../docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
 
 **Blocks the run until resolved:** committed secrets (from the secrets scan), keystores and private keys, production
 credentials in configuration, and real personal data in fixtures or database dumps.
@@ -56,6 +58,6 @@ than fixed.
 
 ## More Information
 
-* Builds on: [No repo's code is built or run until its secrets scan is clean](0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md), [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md), [A production secret found in a repo is handled as a security incident](0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md)
+* Builds on: [No repo's tests or application run until its secrets scan is clean](0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md), [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md), [A production secret found in a repo is handled as a security incident](0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md)
 * Later decisions that build on this: [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md)
 * Background: [production-safety](../docs/REFERENCES.md#production-safety)

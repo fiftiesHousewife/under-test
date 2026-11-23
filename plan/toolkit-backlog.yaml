@@ -575,7 +575,7 @@ items:
       - "decide-we-reuse-existing-tools-before-building-new-ones"
       - "decide-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated"
     decision_record: "docs/decisions/0026-which-existing-tools-the-repo-classifier-combines.md"
-    notes: "Needs from the programme: No repo's code is built or run until its secrets scan is clean; Old code runs first only where production cannot be reached"
+    notes: "Needs from the programme: No repo's tests or application run until its secrets scan is clean; Old code runs first only where production cannot be reached"
   - key: "decide-the-lists-of-technology-stacks-and-application-types"
     type: "decision"
     title: "The lists of technology stacks and application types"
@@ -614,7 +614,7 @@ items:
     done_when:
       - "Every repo is scanned before any build, test run, app start or AI-assisted task"
       - "Findings recorded in the assessment file; the repo is blocked; an incident is opened"
-    notes: "Needs from the programme: No repo's code is built or run until its secrets scan is clean"
+    notes: "Needs from the programme: No repo's tests or application run until its secrets scan is clean"
   - key: "connection-list-template-and-check"
     status: "done"
     type: "deliverable"

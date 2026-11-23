@@ -131,7 +131,7 @@ items:
     decision_record: "decision-guides/0006-independent-ai-agents-working-unattended-are-a-future-direction-only.md"
   - key: "decide-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean"
     type: "decision"
-    title: "No repo's code is built or run until its secrets scan is clean"
+    title: "No repo's tests or application run until its secrets scan is clean"
     parent: "production-stays-safe-while-old-code-is-built-and-run"
     phase: "set-up"
     horizon: "now"
@@ -139,7 +139,7 @@ items:
     done_by: "person"
     done_when:
       - "The organisation records in its organisation repo whether it accepts, narrows or replaces this guide, approved by Security and Platform Owner (can veto)"
-    decision_record: "decision-guides/0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md"
+    decision_record: "decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md"
   - key: "decide-old-code-runs-first-only-where-production-cannot-be-reached"
     type: "decision"
     title: "Old code runs first only where production cannot be reached"

@@ -31,6 +31,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [People do the work with AI coding assistance, and review everything it produces](0005-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md), [No repo's code is built or run until its secrets scan is clean](0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md), [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md)
+* Builds on: [People do the work with AI coding assistance, and review everything it produces](0005-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md), [No repo's tests or application run until its secrets scan is clean](0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md), [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md)
 * Later decisions that build on this: none yet
 * Background: none

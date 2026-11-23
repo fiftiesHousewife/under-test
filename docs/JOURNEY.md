@@ -8,73 +8,96 @@ Excalidraw.
 ```mermaid
 %%{init: {"flowchart": {"wrappingWidth": 230, "nodeSpacing": 28, "rankSpacing": 36}}}%%
 flowchart LR
-    S["<b>1. Safety inventory</b><br/>secrets, real data, jobs that start themselves; no code runs"] --> D["<b>2. Discovery</b><br/>connection list · source list · existing tests and their anti-patterns"]
-    D --> M["<b>3. Measurement</b><br/>the first run: builds, runs alone, flaky tests, coverage, mutation"]
+    D["<b>1. Discovery</b><br/>connection list · existing tests and their anti-patterns · source list; only the build runs"] --> S["<b>2. Safety inventory</b><br/>the gate before the first run: secrets, real data, jobs that start themselves"]
+    S --> M["<b>3. Measurement</b><br/>the first run, in stages: build, one run, repeats, planted bugs"]
     M --> C["<b>4. Capture current behaviour</b><br/>capture, clean in place, check, approval tests, then measure again"]
     C --> B["<b>5. Intended behaviour</b><br/>specification from sources and experts"]
     B --> P["<b>6. Testing plan</b><br/>techniques, target level, approved"]
     P --> W["<b>7. The work</b><br/>workstreams, in order, reviewed"]
     W --> K["<b>8. Keep it there</b><br/>re-measured, progress reported"]
     classDef step fill:#eaf6ec,stroke:#3c9a52,color:#0f2e17
-    class S,D,C,M,B,P,W,K step
+    class D,S,C,M,B,P,W,K step
 ```
 
-## 1. Safety inventory
+## 1. Discovery
 
-Before any of the repo's code runs, find what could reach production or real data. Its whole history is scanned for
-secrets with gitleaks in CI; on laptops, FindSecBugs gives an early warning. The repo is also searched for keystores
-and private keys, production credentials in its settings, real personal data in fixtures and dumps, jobs that start
-by themselves, database migrations that run at start-up, build tasks that publish or deploy, fixed file paths and
-Windows file shares, and native libraries. Secrets,
-keys, production credentials and real personal data block every run until they're resolved, and a real production
-secret is handled as a security incident. The rest are made harmless in the test profile or the build, and recorded.
-This step runs none of the repo's code. When code does run, it is only where production can't be reached: in CI on
+Find out what the code talks to and what tests it already has, before any of it runs. Nothing of the repo's runs but
+its build, which may resolve dependencies and compile without running a test
+([why](decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)), and nothing found is
+copied anywhere if it is a secret ([why](decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
+
+The [draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) skill comes first. It runs
+[connection-paths](https://github.com/fiftiesHousewife/connection-paths), a tool that reads the code and finds every
+place it opens a connection (a database, an HTTP service, mail, a directory, a queue, a socket) and every test that may
+reach one, with the chain of calls that gets there. The skill traces each connection's address to the code or the
+settings, or records where it will come from, and drafts the connection list: one system each, with a proposed
+stand-in and the addresses tests must never reach, for the Architecture Owner to confirm. Each test's connections go
+into the repo's list of tests ([why](decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)).
+Then the [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill checks the repo's own
+tests with PMD and the toolkit's rules: tests that never run, are disabled, have no real assertion, swallow their own
+failures, sleep, depend on order, mock everything or are copies, and those that reach external systems. Each is
+recorded and triaged, and no existing test is deleted before current behaviour is recorded. The Knowledge Curator lists
+the sources that count: regression packs, wiki pages, tracker queries, other repos, and the test assets that live
+outside the repo, such as automation suites run against a shared test environment and manual test scripts. Those keep
+running where they are until repo tests cover the same journeys, and never count as evidence.
+
+What a program can decide the same way every time is done by a tool; the skills keep the judgement
+([why](decisions/0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)).
+[Discovery, step by step](design/discovery.md) shows which skill finds what and which files each writes.
+
+- **Who:** a Forward Deployed Engineer; the Architecture Owner, the Knowledge Curator and the Application Owner (for
+  disabled tests).
+- **Leaves in the repo:** `testing/connections.calm.json`, `testing/tests.yaml`, the application's source list, the
+  anti-pattern findings in the assessment file.
+- **Decided in:** [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](../decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [Each application's connections are recorded as a CALM connection list](../decision-guides/0030-each-applications-connections-are-recorded-as-a-calm-connection-list.md), [The connection list says what tests use for each connection, and which addresses tests must never reach](../decision-guides/0031-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md), [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](../decision-guides/0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md), [Each application also has a knowledge curator and an architecture owner](../decision-guides/0002-each-application-also-has-a-knowledge-curator-and-an-architecture-owner.md), [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](../decision-guides/0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md).
+
+## 2. Safety inventory: the gate before the first run
+
+Before any test or the application runs, find what could reach production or real data
+([why](decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)). It
+can run alongside discovery, and must be settled before measurement starts. Its whole history is scanned for secrets
+with gitleaks in CI; on laptops, FindSecBugs gives an early warning. The repo is also searched for keystores and
+private keys, production credentials in its settings, real personal data in fixtures and dumps, jobs that start by
+themselves, database migrations that run at start-up, build tasks that publish or deploy, fixed file paths and Windows
+file shares, and native libraries. Secrets, keys, production credentials and real personal data block every run until
+they're resolved, and a real production secret is handled as a security incident. The rest are made harmless in the
+test profile or the build, and recorded. When code does run, it is only where production can't be reached: in CI on
 runners with no route out, and, once the organisation has approved it, on an engineer's own machine under the
 [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), which refuses every call off the machine and
-reports it. The test profile, with dummy secrets, is added in this step, and the
-findings that don't block are made harmless in it; from then on the repo runs with it by default. A check that stops
-tests at once if any configured address belongs to production comes later, with the convention plugin. No code runs
-in this step or the next: the first run is measurement
-([why](decisions/0058-a-repos-code-first-runs-in-measurement-which-comes-before-capturing-current-behaviour-and-again-after-it.md)).
+reports it. The test profile, with dummy secrets, is added in this step, and the findings that don't block are made
+harmless in it; from then on the repo runs with it by default. A check that stops tests at once if any configured
+address belongs to production comes later, with the convention plugin.
 
 - **Who:** a Forward Deployed Engineer, with the [run-the-safety-inventory](../.github/skills/run-the-safety-inventory/SKILL.md) skill; the Security and Platform Owner approves anything accepted
   rather than fixed.
 - **Leaves in the repo:** the inventory's findings in the assessment file; a test profile; a `.gitleaksignore` with
   reasons.
-- **Decided in:** [Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](../decision-guides/0057-before-any-code-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md), [No repo's code is built or run until its secrets scan is clean](../decision-guides/0007-no-repos-code-is-built-or-run-until-its-secrets-scan-is-clean.md), [A production secret found in a repo is handled as a security incident](../decision-guides/0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md), [Old code runs first only where production cannot be reached](../decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md), [A test profile with dummy secrets is the default, and production profiles only work in production](../decision-guides/0010-a-test-profile-with-dummy-secrets-is-the-default-and-production-profiles-only-work-in-production.md), [Tests stop at once if any configured address is a production address](../decision-guides/0009-tests-stop-at-once-if-any-configured-address-is-a-production-address.md).
-
-## 2. Discovery
-
-Find out what the code talks to and what tests it already has, before changing anything. The [draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) skill
-drafts the connection list from the repo's settings files and what earlier steps found, running no code: every
-interface, database, queue and outside service the code reaches, with a proposed stand-in for each and which addresses tests must never
-reach; the Architecture Owner confirms it. The Knowledge Curator lists the sources that count: regression packs, wiki pages, tracker queries, other
-repos, and the test assets that live outside the repo, such as automation suites run against a shared test
-environment and manual test scripts. Those keep running where they are until repo tests cover the same journeys, and
-never count as evidence. The [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill checks the repo's own tests for anti-patterns: no real assertions, disabled tests,
-sleeps, order dependence, reaching external systems, mocking everything. Each is recorded and triaged, and no existing
-test is deleted before current behaviour is recorded.
-
-- **Who:** a Forward Deployed Engineer; the Architecture Owner, the Knowledge Curator and the Application Owner (for
-  disabled tests).
-- **Leaves in the repo:** `testing/connections.calm.json`, the application's source list, the anti-pattern findings
-  in the assessment file.
-- **Decided in:** [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](../decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [Each application's connections are recorded as a CALM connection list](../decision-guides/0030-each-applications-connections-are-recorded-as-a-calm-connection-list.md), [The connection list says what tests use for each connection, and which addresses tests must never reach](../decision-guides/0031-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md), [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](../decision-guides/0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md), [Each application also has a knowledge curator and an architecture owner](../decision-guides/0002-each-application-also-has-a-knowledge-curator-and-an-architecture-owner.md), [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](../decision-guides/0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md).
+- **Decided in:** [Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](../decision-guides/0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md), [No repo's tests or application run until its secrets scan is clean](../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md), [A production secret found in a repo is handled as a security incident](../decision-guides/0011-a-production-secret-found-in-a-repo-is-handled-as-a-security-incident.md), [Old code runs first only where production cannot be reached](../decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md), [A test profile with dummy secrets is the default, and production profiles only work in production](../decision-guides/0010-a-test-profile-with-dummy-secrets-is-the-default-and-production-profiles-only-work-in-production.md), [Tests stop at once if any configured address is a production address](../decision-guides/0009-tests-stop-at-once-if-any-configured-address-is-a-production-address.md).
 
 ## 3. Measurement
 
-The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill is the first time the repo's code runs, module by module, on a runner with no
-route out or under the airgap agent, through an init script that changes nothing in the build. It leaves out the tests
-discovery found reaching external systems, and runs the rest five times in varied orders, rerunning each failure to
-confirm it; a connection error is sorted by where it was going
-([why](decisions/0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md)). It finds flaky and failing tests, measures coverage
-with JaCoCo, and counts how many deliberately planted bugs the tests catch with PIT (mutation testing), leaving the
-flaky and failing tests out of that run; it also records the mix of test types. Scoring each obstacle to testing,
-with evidence, is a planned skill.
+The [measure-a-repo](../.github/skills/measure-a-repo/SKILL.md) skill is the first time the repo's tests run, module
+by module, on a runner with no route out or under the airgap agent, through an init script that changes nothing in the
+build. It goes in stages, each gating the next and each recorded, so a repo that stops after any stage still has a
+result ([why](decisions/0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md)):
+
+1. **Build:** compile the code and tests; if it fails, fix the build first.
+2. **One run:** every test once, leaving out the tests discovery found reaching external systems; each test that may
+   reach one is confirmed or cleared, a connection error is sorted by where it was going, and a shared start-up that
+   needs a stand-in is found
+   ([why](decisions/0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md)).
+3. **Repeats:** the tests that passed, four more times in varied orders, each failure rerun to confirm it, with
+   coverage from JaCoCo: flaky and failing tests are recorded by name.
+4. **Planted bugs:** PIT (mutation testing) on the tests that passed every time, per module, in key packages where it
+   is large.
+
+It also records the mix of test types. Scoring each obstacle to testing, with evidence, is the
+[score-obstacles](../.github/skills/score-obstacles/SKILL.md) skill.
 
 - **Who:** the measure-a-repo skill, run by a Forward Deployed Engineer.
-- **Leaves in the repo:** the tests and level sections of `testing/assessment.yaml`. Results stay in the assessment
-  file; a central store comes later, deployed through the platform's control layers.
+- **Leaves in the repo:** the tests and level sections of `testing/assessment.yaml`, and flaky and failing tests in
+  `testing/tests.yaml`. Results stay in the assessment file; a central store comes later, deployed through the
+  platform's control layers.
 - **Decided in:** [The assessment file: where it lives, who writes which fields, and its schema version](../decision-guides/0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md), [Where measured results are stored and how each repo sees its own](../decision-guides/0025-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md), [How flaky tests are found](../decision-guides/0043-how-flaky-tests-are-found.md), [The named list of obstacles to testing and how each is scored](../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md).
 
 ## 4. Capture current behaviour

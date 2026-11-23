@@ -8,7 +8,7 @@ group: Using the toolkit in an organisation
 
 ## Context and Problem Statement
 
-[Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](../../decision-guides/0057-before-any-code-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)
+[Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](../../decision-guides/0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)
 lists what to look for beyond secrets: keystores and private keys, production credentials in settings, real personal
 data in fixtures and dumps, jobs that start by themselves, migrations at start-up, build tasks that publish or deploy,
 fixed paths and Windows file shares, and native libraries. All of it must be found without running any of the repo's
