@@ -28,6 +28,8 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The toolkit calls a system a test cannot run without an external system](0062-the-toolkit-calls-a-system-a-test-cannot-run-without-an-external-system.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Every skill and tool is also checked against real public repos, by a person's review of a sample](0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The journey's mechanical steps are one command-line tool, with a sub-command per step, in its own repo](0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md) | proposed | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
@@ -80,6 +82,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Connections and the test paths to them are found by connection-paths, a JavaParser tool in its own repo](0072-connections-and-the-test-paths-to-them-are-found-by-connection-paths-a-javaparser-tool-in-its-own-repo.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [connection-paths does everything a program can decide, and the connection-list skill only what needs judgement](0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [A connection whose address isn't known is a system of its own per class that opens it](0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 
