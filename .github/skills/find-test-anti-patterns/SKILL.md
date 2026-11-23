@@ -42,7 +42,7 @@ If that prints nothing, install it into `.pmd/` with the toolkit's
 package repository, keep it out of git, and check again:
 
 ```bash
-<toolkit>/gradlew -q -p <toolkit>/tools/test-anti-patterns/pmd-install installPmd -Pinto="$PWD/.pmd"
+<this skill's folder>/../../../gradlew -q -p <this skill's folder>/../../../tools/test-anti-patterns/pmd-install installPmd -Pinto="$PWD/.pmd"
 echo '.pmd/' >> .git/info/exclude
 ```
 
@@ -62,7 +62,8 @@ unless its test task's `include` or `exclude` filters leave it out. Use `grep -r
 | A public `void test...()` in a class extending `TestCase`, directly or through a superclass, including Spring's JUnit 3 base classes ([spring-xml.md](spring-xml.md)) | The line with its name |
 
 ```bash
-grep -rnE -A3 '@(Test|ParameterizedTest|RepeatedTest|TestFactory)\b' --include='*.java' <test folders>
+grep -rnE -A3 '@(Test|ParameterizedTest|RepeatedTest|TestFactory)\b' --include='*.java' <test folders> \
+  | grep -E -- '-[0-9]+-[[:space:]]*(public |protected |private |static |final )*[A-Za-z0-9_<>]+ +[A-Za-z0-9_]+ *\('   # one line per test: path-line-method
 grep -rlE 'extends (junit\.framework\.)?TestCase' --include='*.java' <test folders>   # then, in each file found:
 grep -nE 'public void test[A-Za-z0-9_]*\(' <file>
 ```
@@ -91,7 +92,9 @@ A test counts once under each kind it shows; a disabled test counts under `disab
 under `never-runs` only. The lists are closed.
 Look only at the test's own body and the `@Before`/`@BeforeEach` methods declared in its class: don't follow helper
 methods or superclasses, except that a call to a helper in the test code that itself asserts counts as an assertion.
-PMD and the searches below find the candidates; read only the tests they find.
+PMD and the searches below find the candidates; read only the tests they find, and of each only its method, from its
+line to its closing brace (`sed -n '<line>,<end>p' <file>`), plus the class's set-up methods when a rule needs them.
+Read a whole file only when a hit is on the class itself.
 
 | `kind` | A test counts when |
 |---|---|
@@ -111,7 +114,7 @@ PMD and the searches below find the candidates; read only the tests they find.
 (`pmd`, or `.pmd/pmd`). Run each once over the test folders:
 
 ```bash
-pmd check --no-progress --no-fail-on-violation -f csv -d <test folders> -R <toolkit>/tools/test-anti-patterns/anti-patterns.pmd.xml
+pmd check --no-progress --no-fail-on-violation -f csv -d <test folders> -R <this skill's folder>/../../../tools/test-anti-patterns/anti-patterns.pmd.xml
 pmd cpd --no-fail-on-violation --format csv --language java --minimum-tokens 75 --ignore-literals -d <test folders>
 ```
 
@@ -140,18 +143,22 @@ the report gives each counted class's number of mocks, so the threshold can be j
 
 ## 3. Write every test found to testing/tests.yaml
 
-Later steps work from this list instead of searching again: the stand-ins for each connection, the flaky-test fixes,
+The examples below show every field; there's no need to read the schemas. Later steps work from this list instead
+of searching again: the stand-ins for each connection, the flaky-test fixes,
 and the Application Owner's decisions. It is shared: other skills record their own findings about the same tests
 ([why](../../../docs/decisions/0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md)).
 In `testing/tests.yaml` ([schema](../../../schema/tests.schema.json)), this skill owns only `found_by.find-test-anti-patterns`
 and each entry's `anti_patterns`; never change anything else.
 
 * Each test counted under any kind has an entry, found by its `test`: `<fully qualified class>.<method>`, as JUnit's
-  reports name it, always in double quotes (a scenario's name holds a `:`). Add an entry if there is none; set its `at` to `"path:line"` from step 1, and its `anti_patterns`:
+  reports name it, always in double quotes (a scenario's name holds a `:`). Add an entry if there is none; set its `at` to `"path:line"`
+  from the step 1 listing (the method's line: never an annotation's, and never a hit's), and its `anti_patterns`:
   * `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...);
   * `reaches`, for `reaches-external-system`: each host (no scheme, port or path; a JNDI name for a JNDI lookup),
-    its `kind` (`database`, `http`, `mail`, `directory`, `queue`, `file-share` or `other`), `through` (`code`,
-    `properties`, `yaml`, `spring-xml`, `spring-boot-config` or `airgap-report`), and `where`, the `path:line` naming it;
+    its `kind` (`database`, `http`, `mail`, `directory`, `queue`, `file-share` or `other`), `through`, the route by
+    which the test reaches it, not the file's type (`code`; `properties` or `yaml` for a file the test itself loads;
+    `spring-xml` for anything a Spring XML context loads, its property files included; `spring-boot-config`; or
+    `airgap-report`), and `where`, the `path:line` naming it;
   * `copy_of`, for `copy-pasted`: the `test` of one test it is a copy of.
 * From every other entry, remove `anti_patterns`; an entry left with only `test` and `at` goes.
 * Set `found_by.find-test-anti-patterns` to the toolkit `version` and the repo `commit`, as for the summary. Keep entries sorted by `test`.
