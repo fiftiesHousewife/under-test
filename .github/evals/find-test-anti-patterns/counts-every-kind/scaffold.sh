@@ -1,5 +1,5 @@
 #!/bin/bash
-# Sets up the case's workspace: the sample of 22 JUnit 4 tests from the skill's first trial, with a known number of
+# Sets up the case's workspace: the sample of 24 JUnit 4 tests and 5 Cucumber scenarios, with a known number of
 # each anti-pattern, an assessment file holding only its repo name, and the assessment schema (the run without the
 # toolkit has no other copy). Run by claude plugin eval --scaffold, in the workspace.
 set -euo pipefail

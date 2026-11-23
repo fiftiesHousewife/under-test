@@ -1,6 +1,6 @@
 ---
 name: find-test-anti-patterns
-description: Find anti-patterns in a repo's existing tests by reading the test code, and write the anti_patterns section of its testing/assessment.yaml. Use in discovery, or when asked how good a repo's existing tests are.
+description: Find anti-patterns in a repo's existing tests, by searching the test code and reading only what the searches find, and write the anti_patterns section of its testing/assessment.yaml. Use in discovery, or when asked how good a repo's existing tests are.
 ---
 
 # Finding anti-patterns in existing tests
@@ -11,29 +11,63 @@ Read code only: **never** build, test or run the repo, or change or delete a tes
 
 ## 1. List the tests
 
-Read every file in each module's `src/test/`, `src/integrationTest/` and any other test source set the build names. A **test** is a
-method marked `@Test`, `@ParameterizedTest`, `@RepeatedTest` or `@TestFactory`, or a public `void test...()` in a
-class extending `TestCase`. Its **path** is from the repo root. Its **line** is the line with its name, not its
-annotation: take it from a search, never by counting lines while reading. Run `grep -n` (or the Grep tool with line
-numbers) for each test file's test methods, such as `grep -nE 'void [A-Za-z0-9_]+\(' <file>`, and keep each test's
-number as found.
+Search; don't read every file. Test code is each module's `src/test/`, `src/integrationTest/` and any other test
+source set the build names, with its resources. Use `grep -rn` (or the Grep tool with line numbers): a test's
+**line** always comes from a search, never from counting lines while reading, and its **path** is from the repo root.
+
+| A test is | Its line |
+|---|---|
+| A method marked `@Test`, `@ParameterizedTest`, `@RepeatedTest` or `@TestFactory` | The line with its name, not its annotation: the first `void <name>(` line after the annotation |
+| A public `void test...()` in a class extending `TestCase` | The line with its name |
+| A Cucumber scenario in a `.feature` file | Its `Scenario:` (or `Example:`) line |
+| One row of a Scenario Outline's examples (each row is a test; the heading row isn't) | The row's line |
+
+```bash
+grep -rnE -A3 '@(Test|ParameterizedTest|RepeatedTest|TestFactory)\b' --include='*.java' <test folders>
+grep -rlE 'extends (junit\.framework\.)?TestCase' --include='*.java' <test folders>   # then, in each file found:
+grep -nE 'public void test[A-Za-z0-9_]*\(' <file>
+grep -rnE '^\s*(Scenario|Example):' --include='*.feature' <test folders>
+grep -rnE '^\s*Scenario (Outline|Template):|^\s*Examples:|^\s*\|' --include='*.feature' <test folders>
+```
+
+A Cucumber runner class (`@RunWith(Cucumber.class)` or `@Suite` with Cucumber options) holds no tests itself.
 
 ## 2. Count
 
 A test counts once under each kind it shows; a disabled test counts under `disabled` only. The lists are closed.
 Look only at the test's own body and the `@Before`/`@BeforeEach` methods declared in its class: don't follow helper
-methods or superclasses.
+methods or superclasses. Each kind has a search; read only the tests and files it finds. For a Cucumber scenario,
+`disabled` is the only kind counted.
 
 | `kind` | A test counts when |
 |---|---|
-| `disabled` | It or its class has `@Ignore` or `@Disabled`. |
+| `disabled` | It or its class has `@Ignore` or `@Disabled`; a scenario, or its feature, has the tag `@ignore` or `@disabled`, in any case. |
 | `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertNull`, `assertTrue(true)`, `isNotNull()`. `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real. |
 | `sleeps` | Its body, or a `@Before`/`@BeforeEach` method of its class (then every test in the class), calls `Thread.sleep` or `TimeUnit.<unit>.sleep`. |
 | `order-dependent` | Its class has `@FixMethodOrder` or `@TestMethodOrder`, whatever its argument. |
-| `reaches-shared-system` | Its class, or a resource file the class loads, names a host (any name or IP address after `//`, `@` or `=` in a string literal, or in a properties or YAML value) other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
+| `reaches-shared-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context named by `@ContextConfiguration` or `@ImportResource`, and the files that context loads in turn: `<import resource=...>` and a property placeholder's `location`. **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
 | `mocks-everything` | Its class has five or more mocks in total: `@Mock` and `@MockBean` fields, and `mock(` and `Mockito.mock(` calls (a field set by `mock(` counts once; `@Spy` doesn't count). |
-| `copy-pasted` | Ten or more consecutive non-blank lines between its method's braces are the same as another test's once every string, number and character literal is ignored: count every test in the group. PMD's `cpd --minimum-tokens 75 --dir <test folders>` may find candidates if PMD is installed. |
+| `copy-pasted` | Ten or more consecutive non-blank lines between its method's braces are the same as another test's once every string, number and character literal is ignored: count every test in the group. |
 | `other` | It can't catch a bug for a reason the list misses: an expected value bent to pass (`size() + 1`), a server on `localhost` nothing starts, a word in the test's name that an asserted expected value contradicts, set-up copied and never changed (only where not already `copy-pasted`). Only these four, one finding each, holding every test that shows it, with a fixed id: `other-bent-expected-value`, `other-server-nothing-starts`, `other-name-does-not-match-assertions`, `other-copied-setup-unchanged`. Anything else you notice goes in the report, not the file. |
+
+The searches, over test code and its resources; read only what they find:
+
+```bash
+grep -rnE '@(Ignore|Disabled)\b' --include='*.java' <test folders>                      # disabled
+grep -rniE '@(ignore|disabled)\b' --include='*.feature' <test folders>                   # disabled scenarios
+grep -rnE 'Thread\.sleep|TimeUnit\.[A-Z]+\.sleep' <test folders>                         # sleeps
+grep -rnE '@(FixMethodOrder|TestMethodOrder)' <test folders>                             # order-dependent
+grep -rcE '@Mock\b|@MockBean\b|[^A-Za-z.]mock\(|Mockito\.mock\(' --include='*.java' <test folders>   # mocks-everything: read files with 5 or more
+grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>   # reaches-shared-system: drop the never-a-host lines
+grep -rnE '@(ContextConfiguration|ImportResource)' --include='*.java' <test folders>     # the Spring XML each class loads; follow its imports and placeholders
+grep -rcE 'assert[A-Z]|assertThat|verify\(|fail\(|assertThrows|expected *=|ExpectedException' --include='*.java' <test folders>
+grep -rnE 'assertNotNull|assertNull|assertTrue\(true\)|isNotNull\(\)' --include='*.java' <test folders>
+```
+
+For `no-real-assertion`, read the tests in files whose count from the second-last search is lower than their number of
+tests, or that the last search finds. For `copy-pasted`, run PMD's `cpd --minimum-tokens 75 --dir <test folders>` if
+PMD is installed; otherwise compare only tests in the same class, and say so in the report. `other` has no search:
+look for it only in the tests you read for the other kinds.
 
 ## 3. Write the section
 
@@ -41,6 +75,7 @@ methods or superclasses.
   `tests` (the count), `examples`. Findings sorted by `id`.
 * `examples`: one line, the first three counted tests sorted by path (byte order) then by line as a number, as
   quoted `"path:line"`, with the line found by the search in step 1, even when the problem shows on a later line.
+  A scenario sorts by its feature file's path like any other test.
 * `found_by`: `tool: find-test-anti-patterns`; `version`: the organisation profile's `toolkit.version` if you have it,
   else `unreleased`; `commit`: `git rev-parse --short HEAD` in the repo, in double quotes (no git repository:
   stop and say so).
@@ -95,6 +130,7 @@ decisions:
 
 ## 5. Report
 
-Briefly: the total number of tests, and how many show at least one anti-pattern; each kind's count and examples; disabled tests need the Application Owner; tests
+Briefly: the total number of tests (Cucumber scenarios and example rows among them), and how many show at least one anti-pattern; each kind's count and examples; disabled tests need the Application Owner; tests
 reaching shared systems need tagging before the tests run anywhere; read coverage and planted-bug results with these
-in mind (a test with no real assertion adds coverage but catches nothing).
+in mind (a test with no real assertion adds coverage but catches nothing); and anything the searches couldn't settle, such
+as copy-pasting across classes without PMD.
