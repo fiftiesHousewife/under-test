@@ -107,3 +107,16 @@ With the skill, every run wrote `testing/tests.yaml` keyed by class and method, 
 own failures and left the try, fail, catch idiom alone, and found the JUnit 5 tests that silently never run. The one
 miss is one example's line again. The larger example repo and the extra checks cost $0.09 a run more than round 7.
 
+## Round 9: tests reaching external systems through Spring Boot and old Spring XML, and assertion helpers
+
+| Skill | Case | Without, round 9 | With, round 9 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.29 (0 of 5), $0.22, 9 turns | 0.89 (2 of 5), $0.35, 11 turns |
+
+Every run that wrote the list of tests found all six tests reaching external systems through Spring Boot's settings or
+old Spring XML, left the four local ones alone, and didn't take Spring's JUnit 3 tests for tests that never run. The
+misses were elsewhere: one run wrote only the summary, two wrote a scenario's name, which holds a colon, without
+quotes, and one ran past the case's time limit, set when the example repo was half the size. One check was wrong, not
+the run: a test whose profile points at a server on `localhost` that nothing starts is rightly listed as
+`other-server-nothing-starts`. The skill now says to write both files, every time, and to quote every test's name.
+
