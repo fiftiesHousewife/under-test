@@ -1700,7 +1700,7 @@ items:
       - "measure-a-maven-repo"
   - key: "treat-tests-that-reach-external-systems"
     type: "deliverable"
-    title: "Step 5: a skill that sorts each connection's external tests into logic, connection or both, and treats them, one connection at a time"
+    title: "Step 5: a skill that sorts and treats, one connection at a time, the tests that reach external systems and the tests that mock everything"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
     phase: "pilots"
     horizon: "now"
@@ -1711,9 +1711,12 @@ items:
       - "Logic: switched to the connection's test double. Connection: tagged external. Both: a JUnit 5 or 6 test interface (JUnit 4 parameterised only where the repo must stay on JUnit 4)"
       - "Where there is no seam, the skill stops and records the work, until the seam decision is made"
       - "The plan names each connection's external tests, their schedule and owner"
+      - "Each mock in a mocks-everything test is sorted: the real object for something cheap the team owns, the connection's fake for an external system or slow boundary, kept with what was sent checked where the call is the behaviour"
+      - "find-test-anti-patterns' proposed decision for mocks-everything, and the assessment report's choices, name this treatment"
       - "An eval case passes in every run"
     blocked_by:
       - "decide-how-tests-reaching-external-systems-are-sorted-and-treated"
+      - "decide-tests-that-mock-everything-are-treated-with-external-tests"
       - "the-connection-list-names-each-connections-tests"
   - key: "more-anti-patterns-from-the-research"
     type: "deliverable"
@@ -1745,4 +1748,16 @@ items:
       - "Skill evals are run again, against a plain assistant, whenever the approved model changes"
     blocked_by:
       - "the-journey-in-its-new-order"
+  - key: "decide-tests-that-mock-everything-are-treated-with-external-tests"
+    status: "done"
+    type: "decision"
+    title: "Tests that mock everything are sorted and treated with the tests that reach external systems"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0065-tests-that-mock-everything-are-sorted-and-treated-with-the-tests-that-reach-external-systems.md"
 

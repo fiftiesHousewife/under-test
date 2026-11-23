@@ -70,6 +70,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Planted bugs are counted per module, in key packages proposed from the change history](0061-planted-bugs-are-counted-per-module-in-key-packages-proposed-from-the-change-history.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [What the follow-up skill does where an external test has no seam](0064-what-the-follow-up-skill-does-where-an-external-test-has-no-seam.md) | proposed | Toolkit maintainers |
+| [Tests that mock everything are sorted and treated with the tests that reach external systems](0065-tests-that-mock-everything-are-sorted-and-treated-with-the-tests-that-reach-external-systems.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 
