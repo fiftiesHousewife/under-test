@@ -1,0 +1,142 @@
+{
+  "case": "decides-every-technique",
+  "skill": "choose-techniques",
+  "claude_code": "2.1.330",
+  "runs_per_arm": 5,
+  "arms": {
+    "with": [
+      {
+        "run": 1,
+        "score": 1,
+        "cost_usd": 0.51,
+        "turns": 12,
+        "seconds": 154,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 2,
+        "score": 1,
+        "cost_usd": 0.45,
+        "turns": 14,
+        "seconds": 141,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 3,
+        "score": 1,
+        "cost_usd": 0.47,
+        "turns": 12,
+        "seconds": 153,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 4,
+        "score": 0.97,
+        "cost_usd": 0.56,
+        "turns": 10,
+        "seconds": 188,
+        "failed_checks": [
+          "defer-batch-file-in-file-out"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 5,
+        "score": 1,
+        "cost_usd": 0.47,
+        "turns": 14,
+        "seconds": 144,
+        "failed_checks": [],
+        "schema_problems": 0,
+        "error": null
+      }
+    ],
+    "without": [
+      {
+        "run": 1,
+        "score": 0.85,
+        "cost_usd": 0.71,
+        "turns": 21,
+        "seconds": 228,
+        "failed_checks": [
+          "adopt-ai-written-tests",
+          "adopt-in-memory-databases",
+          "adopt-property-based-testing",
+          "adopt-structured-output-comparison",
+          "defer-batch-file-in-file-out",
+          "defer-machine-state-checks"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 2,
+        "score": 0.87,
+        "cost_usd": 0.52,
+        "turns": 19,
+        "seconds": 160,
+        "failed_checks": [
+          "adopt-ai-written-tests",
+          "adopt-in-memory-databases",
+          "adopt-property-based-testing",
+          "adopt-structured-output-comparison",
+          "defer-batch-file-in-file-out"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 3,
+        "score": 0.87,
+        "cost_usd": 0.66,
+        "turns": 20,
+        "seconds": 223,
+        "failed_checks": [
+          "adopt-in-memory-databases",
+          "adopt-property-based-testing",
+          "adopt-structured-output-comparison",
+          "defer-machine-state-checks",
+          "defer-refactoring-for-testability"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 4,
+        "score": 0.92,
+        "cost_usd": 0.65,
+        "turns": 20,
+        "seconds": 218,
+        "failed_checks": [
+          "adopt-ai-written-tests",
+          "adopt-in-memory-databases",
+          "adopt-property-based-testing"
+        ],
+        "schema_problems": 0,
+        "error": null
+      },
+      {
+        "run": 5,
+        "score": 0.9,
+        "cost_usd": 0.61,
+        "turns": 18,
+        "seconds": 199,
+        "failed_checks": [
+          "adopt-ai-written-tests",
+          "adopt-in-memory-databases",
+          "adopt-property-based-testing",
+          "defer-machine-state-checks"
+        ],
+        "schema_problems": 0,
+        "error": null
+      }
+    ]
+  }
+}
