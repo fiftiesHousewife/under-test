@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftiesHousewife/under-test/schema/anti-pattern-tests.schema.json",
+  "title": "Tests with anti-patterns",
+  "description": "Every test the find-test-anti-patterns skill found showing an anti-pattern, one entry each, so later steps work from this list instead of searching the code again. The assessment file's anti_patterns section summarises it. Kept as testing/anti-pattern-tests.yaml, next to the assessment file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "found_by", "tests"],
+  "properties": {
+    "schema": {"const": "anti-pattern-tests/1"},
+    "found_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "version", "commit"],
+      "properties": {
+        "tool": {"const": "find-test-anti-patterns"},
+        "version": {"type": "string"},
+        "commit": {"type": "string"}
+      }
+    },
+    "tests": {
+      "type": "array",
+      "description": "Sorted by path (byte order), then by line as a number.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["at", "name", "kinds"],
+        "properties": {
+          "at": {"type": "string", "pattern": "^[^:]+:[0-9]+$", "description": "path:line, the path from the repo root and the line with the test's name (a scenario's Scenario: line, or an examples row)."},
+          "name": {"type": "string", "description": "<Class>.<method>, or for a Cucumber scenario <feature file>: <scenario title>, with the row's line for an examples row."},
+          "kinds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"enum": ["no-real-assertion", "disabled", "never-runs", "sleeps", "order-dependent", "reaches-shared-system", "mocks-everything", "copy-pasted", "other-bent-expected-value", "other-server-nothing-starts", "other-name-does-not-match-assertions", "other-copied-setup-unchanged"]}
+          },
+          "reaches": {
+            "type": "array",
+            "description": "For reaches-shared-system: each host the test reaches, and how.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["host", "through", "where"],
+              "properties": {
+                "host": {"type": "string", "description": "The host name or IP address, without scheme, port or path."},
+                "through": {"enum": ["code", "properties", "yaml", "spring-xml", "airgap-report"], "description": "Where the host is named: in the test's code, in a properties or YAML file it loads, in a Spring XML context it loads (or a file that context loads), or only in the airgap agent's reports."},
+                "where": {"type": "string", "description": "path:line of the line naming the host."}
+              }
+            }
+          },
+          "copy_of": {"type": "string", "description": "For copy-pasted: path:line of one test it was copied from or to."}
+        }
+      }
+    }
+  }
+}
