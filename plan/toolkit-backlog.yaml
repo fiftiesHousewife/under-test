@@ -1918,4 +1918,32 @@ items:
       - "On Openfire 4.6.0's xmppserver, at least 99% of calls resolve, as with the build's classpath"
     blocked_by:
       - "connection-paths-first-version"
+  - key: "decide-what-connection-paths-does-and-what-the-skill-does"
+    status: "done"
+    type: "decision"
+    title: "connection-paths does everything a program can decide, and the connection-list skill only what needs judgement"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md"
+  - key: "connection-paths-classpath-addresses-and-systems"
+    type: "deliverable"
+    title: "connection-paths gets the classpath itself, traces each connection's address, marks local ones, and proposes systems"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "A classpath step uses the repo's wrapper, else the build tool the organisation profile names, compiling sibling modules without tests"
+      - "Each connection point has an address hint, a setting's value looked up in the repo's settings files, and placeholders flagged"
+      - "Local points are marked: file and in-memory databases, classpath resources, file and jar URLs, DNS through JNDI, methods nothing calls"
+      - "Systems are proposed by host, else setting, else opening class, with alternatives behind one interface marked"
+      - "On Openfire 4.6.0's xmppserver the tool alone gives the 14 systems and 162 tests the hand trial did"
+    blocked_by:
+      - "decide-what-connection-paths-does-and-what-the-skill-does"
 

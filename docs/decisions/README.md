@@ -79,6 +79,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Connections and the test paths to them are found by connection-paths, a JavaParser tool in its own repo](0072-connections-and-the-test-paths-to-them-are-found-by-connection-paths-a-javaparser-tool-in-its-own-repo.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [connection-paths does everything a program can decide, and the connection-list skill only what needs judgement](0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 
