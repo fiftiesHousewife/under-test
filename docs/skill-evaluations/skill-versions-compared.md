@@ -70,6 +70,17 @@ With the skill, every run found the host behind Spring XML, left the namespace-o
 scenario; without it, no run found the Spring XML host. The extra searches, on a larger example repo, cost $0.04 and
 five turns more a run. The one miss is the same as before: one example's line.
 
+## Round 7: tests that never run, empty bodies, and whole copied classes
+
+| Skill | Case | Without, round 7 | With, round 7 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.50 (0 of 5), $0.14, 9 turns | 0.97 (3 of 5), $0.22, 9 turns |
+
+With the skill, every run found the empty test and the class copied between folders, and four of five counted the
+tests that never run exactly. The fifth took Maven's rule (`*IT` classes run only with Failsafe) for a Gradle build, so
+it counted OrderRepositoryIT as never running and left it out of the shared-system count; the skill now says that rule
+is Maven's only. One run without the skill timed out while the network was down.
+
 ## What the rounds show
 
 * **With the skills, the results hold.** In both rounds every case scores 0.98 or more, and 74 of the 80 runs with the
