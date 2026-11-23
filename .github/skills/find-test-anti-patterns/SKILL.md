@@ -40,9 +40,11 @@ kind:
 * a method whose test annotation is commented out (`// @Test`);
 * a `public void test...()` method with no test annotation, in a class that doesn't extend `TestCase`;
 * every test in a folder the build doesn't name as a test source set;
-* with Maven, every test in a class the test runner doesn't pick up: unless the pom's Surefire `<includes>` say
-  otherwise, only classes named `Test*`, `*Test`, `*Tests` or `*TestCase` run, and `*IT` classes run only where the
-  pom configures the Failsafe plugin.
+* only when the repo builds with Maven (a `pom.xml`, no Gradle build file): every test in a class the test runner
+  doesn't pick up. Unless the pom's Surefire `<includes>` say otherwise, only classes named `Test*`, `*Test`, `*Tests`
+  or `*TestCase` run, and `*IT` classes run only where the pom configures the Failsafe plugin. With Gradle, every
+  class in a test source set runs, whatever its name, unless its test task's `include` or `exclude` filters leave it
+  out.
 
 Its line is the line with the method's name.
 
