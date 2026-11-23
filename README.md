@@ -50,6 +50,7 @@ The tools the skills run:
 | Tool | What it does |
 |---|---|
 | [connection-paths](https://github.com/fiftiesHousewife/connection-paths) | Reads a Java module's source and finds where it opens connections and which tests can reach them, with the chain of calls; its own repo, one jar |
+| [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools) | The mechanical steps of the journey's skills, one sub-command each; its first, `anti-patterns`, does find-test-anti-patterns' listing, PMD run, counting and writing. Built, not yet published |
 | [The toolkit's PMD rules](tools/test-anti-patterns/anti-patterns.pmd.xml) | Find the anti-patterns in tests that PMD can see: tests that never run, have no real assertion, swallow failures, sleep, run in a fixed order, or mock everything |
 | [gitleaks](https://github.com/gitleaks/gitleaks), with [the toolkit's rules](tools/safety-inventory/) | Finds secrets and production credentials, over the whole history |
 | [The airgap agent](https://github.com/fiftiesHousewife/under-test-airgap) | Refuses every call off the machine when old code first runs on a developer's machine, and reports it |

@@ -41,12 +41,12 @@ and adds flaky and failing tests to `tests.yaml`.
 
 ## Still being built
 
-* connection-paths tracing addresses, marking local connections and proposing systems
-  ([why](../decisions/0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md));
-  until then the connection-list skill does those steps by reading.
-* find-test-anti-patterns reading `reaches-external-system` from the connection list's record; it still finds
-  hosts itself.
-* A tool for find-test-anti-patterns' mechanical steps
-  ([proposed](../decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)).
+* [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools)' `anti-patterns`, which does
+  find-test-anti-patterns' mechanical steps and gives the eval's known answers, is built but not yet published; the
+  skill uses it when its jar is there
+  ([proposed packaging](../decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)).
+* find-test-anti-patterns reading `reaches-external-system` from the connection list's record by default; today it
+  may, and otherwise finds hosts itself.
+* An eval case for the connection list's pass from the code, from what Openfire showed.
 * What the skill for tests that reach external systems and tests that mock everything does with these lists, after
   discovery and measurement ([why](../decisions/0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md)).
