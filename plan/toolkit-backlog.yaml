@@ -1816,4 +1816,29 @@ items:
       - "Its eval case gains a DAO opening its own connection, a client building its own HTTP call, a test reaching them two classes deep, and a connection needed at start-up, and passes in every run"
     blocked_by:
       - "decide-finding-what-the-code-connects-to-is-one-job"
+  - key: "decide-the-safety-inventory-is-a-gate-before-the-first-run"
+    status: "done"
+    type: "decision"
+    title: "The safety inventory is a gate before the first run, and no skill ever copies a secret"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md"
+  - key: "discovery-first-safety-gate-before-measurement"
+    type: "deliverable"
+    title: "The journey page, its drawing and the README show discovery first and the safety inventory as the gate before measurement; every skill states the rule about secrets"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "docs/JOURNEY.md, the journey drawing and the README's skills table show the order: discovery, the safety gate, measurement, capture"
+      - "Every journey skill says that a secret's value is never copied into a file or reply"
+    blocked_by:
+      - "decide-the-safety-inventory-is-a-gate-before-the-first-run"
 
