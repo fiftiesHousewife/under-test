@@ -120,3 +120,14 @@ quotes, and one ran past the case's time limit, set when the example repo was ha
 the run: a test whose profile points at a server on `localhost` that nothing starts is rightly listed as
 `other-server-nothing-starts`. The skill now says to write both files, every time, and to quote every test's name.
 
+## Round 10: writing both files, quoting names
+
+| Skill | Case | Without, round 10 | With, round 10 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.30 (0 of 5), $0.22 | 0.88 (1 of 5), $0.43, 13 turns |
+
+No run wrote invalid YAML or ran out of time, and the Spring cases held. One run again wrote only the summary, so the
+list of tests is now written first and the summary worked out from it. One run took MockMvc's `andExpect` for no
+assertion, which PMD's rules recognise. One check was wrong again: a test whose profile points mail at a server on
+`localhost` that nothing starts is rightly listed as `other-server-nothing-starts`.
+
