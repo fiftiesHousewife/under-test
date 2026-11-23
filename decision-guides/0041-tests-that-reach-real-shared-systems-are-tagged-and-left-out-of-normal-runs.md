@@ -30,6 +30,9 @@ Proposed: the first option.
 * The convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)), leaves the tag out of normal runs by default. Until then, the
   [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill flags these tests as `reaches-shared-system`, and
   tagging them is a change made by hand.
+* Each connection's tagged tests have a schedule (daily by default), a place that can reach the system's test
+  instance, and an owner, all named in the testing plan. A failure opens a work item for the owner; it never breaks a
+  normal build ([why](../docs/PRIOR-ART.md#tests-that-reach-external-systems)).
 
 ## More Information
 

@@ -26,6 +26,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md) | proposed | Toolkit maintainers |
 | [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The toolkit calls a system a test cannot run without an external system](0062-the-toolkit-calls-a-system-a-test-cannot-run-without-an-external-system.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
@@ -63,6 +64,12 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [An organisation adopts every decision guide in its toolkit version by default, and records only its departures](0052-an-organisation-adopts-every-decision-guide-in-its-toolkit-version-by-default-and-records-only-its-departures.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A skill finds what to read by searching, and reads only what the searches find](0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A skill keeps each kind of repo in its own file, and reads only the ones that apply](0056-a-skill-keeps-each-kind-of-repo-in-its-own-file-and-reads-only-the-ones-that-apply.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [A repo's code first runs in measurement, which comes before capturing current behaviour and again after it](0058-a-repos-code-first-runs-in-measurement-which-comes-before-capturing-current-behaviour-and-again-after-it.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Measurement leaves out external tests, varies the test order, and sorts connection errors by where they were going](0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The journey works module by module](0060-the-journey-works-module-by-module.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Planted bugs are counted per module, in key packages proposed from the change history](0061-planted-bugs-are-counted-per-module-in-key-packages-proposed-from-the-change-history.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [What the follow-up skill does where an external test has no seam](0064-what-the-follow-up-skill-does-where-an-external-test-has-no-seam.md) | proposed | Toolkit maintainers |
 
 ## Recording results and owning plans
 
@@ -70,7 +77,8 @@ Numbers follow reading order until a record is accepted; after that a number nev
 |---|---|---|
 | [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](0023-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md) | proposed | Toolkit maintainers |
 | [A repo with several applications keeps each application's testing files in their own folder under testing/](0053-a-repo-with-several-applications-keeps-each-applications-testing-files-in-their-own-folder-under-testing.md) | accepted (chosen in discussion) | Toolkit maintainers |
-| [find-test-anti-patterns lists every test it finds, so later steps don't search again](0055-find-test-anti-patterns-lists-every-test-it-finds-so-later-steps-dont-search-again.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [find-test-anti-patterns lists every test it finds, so later steps don't search again](0055-find-test-anti-patterns-lists-every-test-it-finds-so-later-steps-dont-search-again.md) | superseded | Toolkit maintainers |
+| [The tests something is recorded about are kept in one list, each step adding its own fields](0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Understanding our repos
 
