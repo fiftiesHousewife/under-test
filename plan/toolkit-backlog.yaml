@@ -1810,6 +1810,7 @@ items:
     done_when:
       - "A PMD ruleset finds where main code opens connections: framework calls, and the public JDK calls that reach what the airgap agent intercepts"
       - "Each connection's address is traced to a literal, a setting (properties, YAML, Spring XML, Spring Boot, profiles) or a bean, or recorded as external with the address unknown; connections needed at start-up are marked"
+      - "Where a repo opens connections in one central class (as Openfire does with DbConnectionManager, called from about 50 classes), that class is found first and its callers followed, and the report says how many tests that marks as may reach"
       - "Each test's connections, named or may-reach with the chain of classes, are written to testing/tests.yaml in a field this skill owns"
       - "The Spring Boot and Spring XML rules and their eval checks move here from find-test-anti-patterns, which then counts reaches-external-system from this skill's record"
       - "Its eval case gains a DAO opening its own connection, a client building its own HTTP call, a test reaching them two classes deep, and a connection needed at start-up, and passes in every run"
