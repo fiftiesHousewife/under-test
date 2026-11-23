@@ -426,6 +426,7 @@ items:
       - "draft-the-connection-list-from-settings-files"
       - "the-toolkit-as-one-apm-package"
       - "check-the-safety-inventory-rules-with-gitleaks-in-ci"
+      - "the-connection-list-names-each-connections-tests"
   - key: "decide-keploy-is-trialled-on-a-pilot-application"
     status: "done"
     type: "decision"
@@ -1486,3 +1487,30 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md"
+  - key: "decide-find-test-anti-patterns-lists-every-test-it-finds"
+    status: "done"
+    type: "decision"
+    title: "find-test-anti-patterns lists every test it finds, so later steps don't search again"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0055-find-test-anti-patterns-lists-every-test-it-finds-so-later-steps-dont-search-again.md"
+  - key: "the-connection-list-names-each-connections-tests"
+    type: "deliverable"
+    title: "The connection list names the tests that use each connection, from the list of tests with anti-patterns and the airgap agent's reports"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "The connection list schema holds, for each connection, the tests that use it as path:line, instead of a count"
+      - "The draft-the-connection-list skill fills them from testing/anti-pattern-tests.yaml and the airgap agent's reports"
+      - "Its eval case checks the tests named for a connection reached only through Spring XML"
+    blocked_by:
+      - "decide-find-test-anti-patterns-lists-every-test-it-finds"
+

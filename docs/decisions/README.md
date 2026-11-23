@@ -69,6 +69,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 |---|---|---|
 | [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](0023-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md) | proposed | Toolkit maintainers |
 | [A repo with several applications keeps each application's testing files in their own folder under testing/](0053-a-repo-with-several-applications-keeps-each-applications-testing-files-in-their-own-folder-under-testing.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [find-test-anti-patterns lists every test it finds, so later steps don't search again](0055-find-test-anti-patterns-lists-every-test-it-finds-so-later-steps-dont-search-again.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Understanding our repos
 
