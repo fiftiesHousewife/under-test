@@ -1,6 +1,6 @@
 ---
 type: regex
-pattern: 'ShippingClientTest\.java:18["''](?:(?!\n[ \t]*- at:)[\s\S])*?host:[ \t]*["'']?shipping-uat\.internal["'']?(?:(?!\n[ \t]*- at:)[\s\S])*?through:[ \t]*["'']?spring-xml'
+pattern: 'ShippingClientTest\.java:18["'']{1}(?:(?!\n[ \t]*- at:)[\s\S])*?host:[ \t]*["'']?shipping-uat\.internal["'']?(?:(?!\n[ \t]*- at:)[\s\S])*?through:[ \t]*["'']?spring-xml'
 match: count:1
 target: {source: file, path: testing/anti-pattern-tests.yaml}
 ---

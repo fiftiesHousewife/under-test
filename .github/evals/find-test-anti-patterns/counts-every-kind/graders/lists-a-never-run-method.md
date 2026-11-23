@@ -1,6 +1,6 @@
 ---
 type: regex
-pattern: 'LegacyDiscountTest\.java:20["''](?:(?!\n[ \t]*- at:)[\s\S])*?never-runs'
+pattern: 'LegacyDiscountTest\.java:20["'']{1}(?:(?!\n[ \t]*- at:)[\s\S])*?never-runs'
 match: count:1
 target: {source: file, path: testing/anti-pattern-tests.yaml}
 ---

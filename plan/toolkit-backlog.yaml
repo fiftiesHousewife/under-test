@@ -1513,4 +1513,16 @@ items:
       - "Its eval case checks the tests named for a connection reached only through Spring XML"
     blocked_by:
       - "decide-find-test-anti-patterns-lists-every-test-it-finds"
+  - key: "find-test-anti-patterns-on-chosen-modules"
+    type: "deliverable"
+    title: "find-test-anti-patterns searches the modules the person chooses in a multi-module repo, and an eval case checks it"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "In a build with more than one module the skill asks which modules to search, and records them as modules in both files"
+      - "A later run on another module replaces only that module's entries, and the counts cover every module searched"
+      - "An eval case with a two-module repo, whose prompt names one module, passes in every run, touching only that module"
 

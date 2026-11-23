@@ -9,6 +9,14 @@ Write the `anti_patterns` section of `testing/assessment.yaml` ([schema](../../.
 Read code only: **never** build, test or run the repo, or change or delete a test
 ([why](../../../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
 
+## 0. Choose the modules
+
+If the build has more than one module (`include` in `settings.gradle` or `settings.gradle.kts`, or `<modules>` in a
+`pom.xml`), ask the person which to search: one module, several, or all, naming the modules. Don't ask when there is
+only one, or when the person has already said. Search only the chosen modules' folders from here on, and record them
+as `modules` (each module's folder from the repo root) in both files you write. A repo with one module has no
+`modules`.
+
 ## 1. List the tests
 
 Search; don't read every file. Test code is each module's `src/test/`, `src/integrationTest/` and any other test
@@ -108,6 +116,8 @@ look for it only in the tests you read for the other kinds.
 
 ## 3. Write the section
 
+* With `modules`: replace only the entries in `testing/anti-pattern-tests.yaml` whose path is in a chosen module,
+  keep the rest, and set `modules` to every module searched so far; count the findings over all the entries.
 * A finding for each kind with at least one test, keys in this order: `id` (the kind, or `other-...`), `kind`,
   `tests` (the count), `examples`. Findings sorted by `id`.
 * `examples`: one line, the first three counted tests sorted by path (byte order) then by line as a number, as

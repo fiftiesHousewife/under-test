@@ -1,6 +1,6 @@
 ---
 type: regex
-pattern: 'StockLevelTest\.java:9["''](?:(?!\n[ \t]*- at:)[\s\S])*?no-real-assertion'
+pattern: 'StockLevelTest\.java:9["'']{1}(?:(?!\n[ \t]*- at:)[\s\S])*?no-real-assertion'
 match: count:1
 target: {source: file, path: testing/anti-pattern-tests.yaml}
 ---

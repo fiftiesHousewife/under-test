@@ -167,6 +167,7 @@
       "description": "Anti-patterns in the existing tests. No existing test is deleted before the approval-test baseline exists.",
       "properties": {
         "found_by": {"$ref": "#/$defs/found_by"},
+        "modules": {"type": "array", "items": {"type": "string"}, "description": "In a repo with more than one module, the modules searched so far, each as its folder from the repo root. Absent when the repo has one module."},
         "findings": {
           "type": "array",
           "items": {
