@@ -144,3 +144,14 @@ file that Spring XML loads recorded as reached through `properties`, and `at` li
 now lists one line per test, reads only each hit's method, and says that `through` is the route and `at` the method's
 line.
 
+## Round 12: PMD, reading less
+
+| Skill | Case | Without, round 12 | With, round 12 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.30 (0 of 5), $0.23, 16 turns | 0.99 (4 of 5), $0.42, 14 turns |
+
+Four runs of five scored 1, the best round so far; the one miss was an example's line. One line per test, and giving
+the ruleset's path, brought runs back to 120 seconds from 190. The cost barely moved: runs still printed whole test
+files to check a few hits, so the skill now forbids it and says how to read only each hit's method. (A first attempt
+at this round lost four runs to a dropped connection and was run again.)
+
