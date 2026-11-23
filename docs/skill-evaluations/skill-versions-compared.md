@@ -155,3 +155,15 @@ the ruleset's path, brought runs back to 120 seconds from 190. The cost barely m
 files to check a few hits, so the skill now forbids it and says how to read only each hit's method. (A first attempt
 at this round lost four runs to a dropped connection and was run again.)
 
+## Round 13: never printing whole test files
+
+| Skill | Case | Without, round 13 | With, round 13 |
+|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.30 (0 of 5) | 0.99 (4 of 5), $0.42, 16 turns |
+
+Four runs in five printed no whole test file. The cost held at $0.42: on an example repo this small it comes from
+the skill's own text and PMD's report, not from reading files; reading less matters on real modules. The same day,
+the toolkit's PMD rules were run read-only over one module of Openfire 4.6.0 (426 tests, about a second): three rules
+misread real code (a helper method named `test...` that a test calls, `assertNull` as the check, and a `catch
+(Throwable)` that records the exception), and were fixed, with a case of each added to the example repo.
+
