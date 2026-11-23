@@ -13,8 +13,10 @@ Read code only: **never** build, test or run the repo, or change or delete a tes
 
 Read every file in each module's `src/test/`, `src/integrationTest/` and any other test source set the build names. A **test** is a
 method marked `@Test`, `@ParameterizedTest`, `@RepeatedTest` or `@TestFactory`, or a public `void test...()` in a
-class extending `TestCase`. Its **line** is the line with its name, not its annotation; its **path** is from the repo
-root.
+class extending `TestCase`. Its **path** is from the repo root. Its **line** is the line with its name, not its
+annotation: take it from a search, never by counting lines while reading. Run `grep -n` (or the Grep tool with line
+numbers) for each test file's test methods, such as `grep -nE 'void [A-Za-z0-9_]+\(' <file>`, and keep each test's
+number as found.
 
 ## 2. Count
 
@@ -38,8 +40,7 @@ methods or superclasses.
 * A finding for each kind with at least one test, keys in this order: `id` (the kind, or `other-...`), `kind`,
   `tests` (the count), `examples`. Findings sorted by `id`.
 * `examples`: one line, the first three counted tests sorted by path (byte order) then by line as a number, as
-  quoted `"path:line"`. The line is the test's own line, the one with its method name: not the `@Test` line above
-  it, and not a later line where the problem shows, such as a call that depends on an earlier test.
+  quoted `"path:line"`, with the line found by the search in step 1, even when the problem shows on a later line.
 * `found_by`: `tool: find-test-anti-patterns`; `version`: the organisation profile's `toolkit.version` if you have it,
   else `unreleased`; `commit`: `git rev-parse --short HEAD` in the repo, in double quotes (no git repository:
   stop and say so).
