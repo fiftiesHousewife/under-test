@@ -25,6 +25,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [A short README summarises the journey, and a journey page links every decision guide, which the build checks](0042-a-short-readme-summarises-the-journey-and-a-journey-page-links-every-decision-guide-which-the-build-checks.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md) | proposed | Toolkit maintainers |
+| [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md) | proposed | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
@@ -57,6 +58,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Each technique rule separates what calls for the technique from what makes it possible](0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A lesson that teaches a step of the journey names that step's skill, not a technique](0048-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill-not-a-technique.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [A Maven repo is measured with the agents in JAVA_TOOL_OPTIONS, and JaCoCo and PIT run from the command line](0049-a-maven-repo-is-measured-with-the-agents-in-java-tool-options-and-jacoco-and-pit-run-from-the-command-line.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 
