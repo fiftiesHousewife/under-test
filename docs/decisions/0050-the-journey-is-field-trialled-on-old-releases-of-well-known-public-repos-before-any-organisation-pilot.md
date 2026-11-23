@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The journey is field-trialled on old releases of well-known public repos before any organisation pilot
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -33,9 +33,9 @@ releases haven't.
 
 ## Decision Outcome
 
-Proposed: old releases of well-known public repos, pinned to a release tag. Two or three repos, at least one built with
+Chosen in discussion: old releases of well-known public repos, pinned to a release tag. Two or three repos, at least one built with
 Maven and at least one with an old Gradle, with JUnit 4, tests that reach outside the machine, and tests known to be
-flaky or disabled. A first shortlist: Apache OFBiz `release18.12` (Gradle), Openfire `v4.6.0` (Maven) and Jenkins core
+flaky or disabled. A first shortlist: Apache OFBiz (Gradle; a release whose Gradle is 5.6 or later, since `release18.12` uses a 5.0 pre-release), Openfire `v4.6.0` (Maven) and Jenkins core
 `2.346.x` (Maven, thousands of tests), with OpenMRS core as the fallback. A repo whose tests need containers is left
 out, because the machines the toolkit is for can't run them
 ([Container tests on developer machines that have no container runtime](../../decision-guides/0021-container-tests-on-developer-machines-that-have-no-container-runtime.md)).

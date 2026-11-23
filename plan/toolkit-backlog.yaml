@@ -381,6 +381,7 @@ items:
     blocked_by:
       - "decide-a-maven-repo-is-measured-with-the-agents-in-java-tool-options"
   - key: "decide-the-journey-is-field-trialled-on-old-releases-of-public-repos"
+    status: "done"
     type: "decision"
     title: "The journey is field-trialled on old releases of well-known public repos before any organisation pilot"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
@@ -389,7 +390,7 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "Toolkit maintainers accept or replace the proposed record"
+      - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md"
   - key: "draft-the-connection-list-from-settings-files"
     type: "deliverable"
@@ -409,10 +410,11 @@ items:
     title: "Field trial: run the whole journey on two or three messy public repos and turn each break into an eval case"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
     phase: "pilots"
-    horizon: "next"
+    horizon: "now"
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
+      - "A run sheet records, for each repo and skill: worked or broke, where a person stepped in, tool calls and time"
       - "Two or three public repos are chosen, at least one built with Maven, with JUnit 4, an old JDK, tests that reach outside the machine and known flaky or disabled tests"
       - "A person with an AI assistant runs every journey skill on each repo in order, the safety inventory first and the code only under the airgap agent"
       - "Every place a skill breaks, stops, or needs a person to step in is recorded, with tool calls and time for each step"
@@ -421,6 +423,9 @@ items:
     blocked_by:
       - "decide-the-journey-is-field-trialled-on-old-releases-of-public-repos"
       - "measure-a-maven-repo"
+      - "draft-the-connection-list-from-settings-files"
+      - "the-toolkit-as-one-apm-package"
+      - "check-the-safety-inventory-rules-with-gitleaks-in-ci"
   - key: "decide-keploy-is-trialled-on-a-pilot-application"
     status: "done"
     type: "decision"
