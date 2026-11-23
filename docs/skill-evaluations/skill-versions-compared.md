@@ -23,6 +23,20 @@ Each cell gives the mean score, how many runs scored 1, the mean cost per run an
 Between the rounds only choose-techniques changed; every other skill ran the same instructions twice, so the
 difference between its rounds is how much the results vary by chance.
 
+## Round 3: the two skills changed after round 2
+
+Only find-test-anti-patterns and score-obstacles changed, so only their cases ran again; round 2's results are kept
+in [results/round-2/](results/round-2/).
+
+| Skill | Case | Without, round 3 | With, round 1 | With, round 2 | With, round 3 |
+|---|---|---|---|---|---|
+| [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.50 (0 of 5), $0.12, 8 turns | 0.99 (4 of 5), $0.16, 13 turns | 0.98 (3 of 5), $0.16, 15 turns | 0.99 (4 of 5), $0.16, 10 turns |
+| [score-obstacles](../../.github/skills/score-obstacles/SKILL.md) | `scores-every-obstacle` | 0.93 (0 of 5), $0.17, 8 turns | 1 (5 of 5), $0.17, 8 turns | 0.99 (4 of 5), $0.16, 9 turns | 1 (5 of 5), $0.16, 9 turns |
+
+* **score-obstacles:** every run scores line coverage the right way round again.
+* **find-test-anti-patterns:** no run gives the line where a problem shows any more, and the runs take a third fewer
+  turns. One run gave a test's `@Test` line instead of the line with its name; the skill now says that too.
+
 ## What the rounds show
 
 * **With the skills, the results hold.** In both rounds every case scores 0.98 or more, and 74 of the 80 runs with the
