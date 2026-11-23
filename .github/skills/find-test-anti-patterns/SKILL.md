@@ -21,16 +21,32 @@ other.
 | It builds with Maven (a `pom.xml`, no Gradle build file) | [maven.md](maven.md) |
 | The test folders hold `.feature` files | [cucumber.md](cucumber.md) |
 | The build uses Spring Boot (`org.springframework.boot` in a build file) | [spring-boot.md](spring-boot.md) |
-| Neither `pmd` nor `.pmd/pmd` runs (the check below prints no PMD version) | [without-pmd.md](without-pmd.md) |
 | Test code loads Spring XML: `@ContextConfiguration` or `@ImportResource` naming XML, `getConfigLocations()`, or `new ...XmlApplicationContext(` | [spring-xml.md](spring-xml.md) |
 
 ```bash
 ls settings.gradle* build.gradle* pom.xml 2>/dev/null; grep -lE '^\s*include|<modules>' settings.gradle* pom.xml 2>/dev/null
-(pmd --version || .pmd/pmd --version) 2>/dev/null | head -1           # PMD: on the path, or installed by the toolkit's set-up in .pmd/
 find <test folders> -name '*.feature' | head -1
 grep -lE 'org\.springframework\.boot' build.gradle* pom.xml */build.gradle* */pom.xml 2>/dev/null
 grep -rlE '@(ContextConfiguration|ImportResource)\(.*\.xml|getConfig(Locations|Paths)|XmlApplicationContext\(' --include='*.java' <test folders>
 ```
+
+**PMD is required** ([why](../../../docs/decisions/0067-find-test-anti-patterns-needs-pmd-and-installs-it-when-it-is-missing.md)).
+Check for it on the path, or in `.pmd/`:
+
+```bash
+(pmd --version || .pmd/pmd --version) 2>/dev/null | grep -m1 '^PMD '
+```
+
+If that prints nothing, install it into `.pmd/` with the toolkit's
+[pmd-install](../../../tools/test-anti-patterns/pmd-install/build.gradle), which needs a JDK and the organisation's
+package repository, keep it out of git, and check again:
+
+```bash
+<toolkit>/gradlew -q -p <toolkit>/tools/test-anti-patterns/pmd-install installPmd -Pinto="$PWD/.pmd"
+echo '.pmd/' >> .git/info/exclude
+```
+
+If it still prints nothing, **stop and write nothing**: tell the person PMD is needed, and how to install it.
 
 ## 1. List the tests
 
@@ -91,9 +107,8 @@ PMD and the searches below find the candidates; read only the tests they find.
 | `other` | It can't catch a bug for a reason the list misses: an expected value bent to pass (`size() + 1`), a server on `localhost` nothing starts, a word in the test's name that an asserted expected value contradicts, set-up copied and never changed (only where not already `copy-pasted`). Only these four, one finding each, holding every test that shows it, with a fixed id: `other-bent-expected-value`, `other-server-nothing-starts`, `other-name-does-not-match-assertions`, `other-copied-setup-unchanged`. Anything else you notice goes in the report, not the file. |
 
 **PMD** finds the Java kinds, with the toolkit's rules
-([anti-patterns.pmd.xml](../../../tools/test-anti-patterns/anti-patterns.pmd.xml)). Use the `pmd` command on the
-path, or the one the toolkit's set-up installed at `.pmd/pmd`; to install one, see
-[pmd-install](../../../tools/test-anti-patterns/pmd-install/build.gradle). Run each once over the test folders:
+([anti-patterns.pmd.xml](../../../tools/test-anti-patterns/anti-patterns.pmd.xml)). Use the `pmd` command found in step 0
+(`pmd`, or `.pmd/pmd`). Run each once over the test folders:
 
 ```bash
 pmd check --no-progress --no-fail-on-violation -f csv -d <test folders> -R <toolkit>/tools/test-anti-patterns/anti-patterns.pmd.xml

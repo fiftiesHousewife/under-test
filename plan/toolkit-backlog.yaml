@@ -1774,4 +1774,16 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md"
+  - key: "decide-find-test-anti-patterns-needs-pmd"
+    status: "done"
+    type: "decision"
+    title: "find-test-anti-patterns needs PMD, and installs it when it is missing"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0067-find-test-anti-patterns-needs-pmd-and-installs-it-when-it-is-missing.md"
 

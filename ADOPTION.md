@@ -92,7 +92,10 @@ Nothing is fetched from the internet at build time. Before anyone uses the toolk
    Gradle Plugin Portal, which most organisations already have. The full list of what the toolkit uses is in
    [`gradle/libs.versions.toml`](gradle/libs.versions.toml). Your security review approves those, as with any
    library. The toolkit keeps that list short on purpose: it prefers tools you probably already have, and runs PMD's
-   copy-paste detector directly instead of adding another plugin.
+   copy-paste detector directly instead of adding another plugin. The find-test-anti-patterns skill needs PMD itself
+   (`net.sourceforge.pmd:pmd-cli` and `pmd-java`), which the toolkit's
+   [pmd-install](tools/test-anti-patterns/pmd-install/build.gradle) fetches from your package repository
+   ([why](docs/decisions/0067-find-test-anti-patterns-needs-pmd-and-installs-it-when-it-is-missing.md)).
 3. **Provide the Gradle distribution and the JDK.** Point the Gradle wrapper at your internal copy of the Gradle
    distribution (`distributionUrl` in `gradle/wrapper/gradle-wrapper.properties`). Install JDK 25 on build machines
    and developer machines through your usual software channel. Then switch off Gradle's automatic JDK download, as in

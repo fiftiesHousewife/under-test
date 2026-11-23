@@ -24,6 +24,7 @@ jdk="${EVAL_JDK_HOME:-$(/usr/libexec/java_home -v 17+ 2>/dev/null || /usr/libexe
 if [ -z "$jdk" ] || [ ! -x "$jdk/bin/java" ]; then echo "No JDK found for PMD: set EVAL_JDK_HOME" >&2; exit 1; fi
 install=("$toolkit/gradlew" -q --no-daemon -p "$toolkit/tools/test-anti-patterns/pmd-install" installPmd -Pinto="$PWD/.pmd" -Pjava="$jdk/bin/java")
 "${install[@]}" --offline 2>/dev/null || "${install[@]}"
+if ! .pmd/pmd --version 2>/dev/null | grep -q '^PMD '; then echo "PMD didn't install: .pmd/pmd doesn't answer" >&2; exit 1; fi
 printf '.pmd/\n' > .gitignore
 git init -q
 git add .

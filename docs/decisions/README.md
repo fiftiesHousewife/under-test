@@ -72,6 +72,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [What the follow-up skill does where an external test has no seam](0064-what-the-follow-up-skill-does-where-an-external-test-has-no-seam.md) | proposed | Toolkit maintainers |
 | [Tests that mock everything are sorted and treated with the tests that reach external systems](0065-tests-that-mock-everything-are-sorted-and-treated-with-the-tests-that-reach-external-systems.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [find-test-anti-patterns runs PMD with the toolkit's rules, and searches only what PMD cannot read](0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [find-test-anti-patterns needs PMD, and installs it when it is missing](0067-find-test-anti-patterns-needs-pmd-and-installs-it-when-it-is-missing.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 
