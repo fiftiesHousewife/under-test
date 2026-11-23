@@ -46,5 +46,5 @@ OpenRewrite lesson is planned), and `testcontainers`, taught by two lessons.
 ## More Information
 
 * Builds on: [Each lesson names the toolkit techniques it teaches, and only the lessons repo records which lessons exist](0030-each-lesson-names-the-toolkit-techniques-it-teaches-and-only-the-lessons-repo-records-which-lessons-exist.md), [We write in plain English using the agreed word list](0020-we-write-in-plain-english-using-the-agreed-word-list.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [A lesson that teaches a step of the journey names that step's skill, not a technique](0048-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill-not-a-technique.md)
 * Background: none

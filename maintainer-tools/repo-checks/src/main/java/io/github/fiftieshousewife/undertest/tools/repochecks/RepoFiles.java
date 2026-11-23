@@ -11,12 +11,14 @@ import java.util.stream.Stream;
 /**
  * The repository's own files that the checks look at, skipping build output, working notes and installed AI assistant
  * skills ({@code .claude/}: external skills installed by APM, and links to this repo's own skills, which are checked
- * where they live, in {@code .github/skills/}).
+ * where they live, in {@code .github/skills/}), and the skill evals' results ({@code .github/evals/results/}: each
+ * run's output, kept as it was written, not committed).
  */
 public record RepoFiles(Path root) {
 
     private static final Set<String> SKIPPED = Set.of("build", ".gradle", ".git", ".idea", "node_modules",
             "research_notes", "reports", "apm_modules", ".kotlin", ".claude");
+    private static final Path EVAL_RESULTS = Path.of(".github", "evals", "results");
 
     public List<Path> withExtension(final String... extensions) {
         try (Stream<Path> paths = Files.walk(root)) {
@@ -32,6 +34,9 @@ public record RepoFiles(Path root) {
 
     private boolean notSkipped(final Path path) {
         final Path relative = root.relativize(path);
+        if (relative.startsWith(EVAL_RESULTS)) {
+            return false;
+        }
         for (final Path part : relative) {
             if (SKIPPED.contains(part.toString())) {
                 return false;

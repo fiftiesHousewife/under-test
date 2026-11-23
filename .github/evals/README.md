@@ -50,6 +50,29 @@ On a Claude subscription the runs come out of the plan's usage, not money; the c
 
 Full results go to `.github/evals/results/`, which isn't committed.
 
+## Writing a case's set-up
+
+The eval's sessions can read only their own workspace: not this repo, the download cache or the home folder. So a
+case's set-up script copies or hard-links into the workspace every file its runs read, writes no path outside it into
+those files, and makes no symbolic links. It finds the toolkit by walking up to `AGENTS.md`, since the cases are in
+`evals/` in the copy the eval runs on, and names other cases' files relative to its own folder. Fixture files must be
+seen by git, or they are missing from that copy.
+
+A case whose runs need what the eval's sandbox can't give, such as binding local ports for a Gradle build, runs
+with `run-outside-eval.sh` instead. It does what the eval does with the case's own files (the toolkit copy, the
+set-up, the prompt with and without the skills, in fresh sessions without your own settings or plugins, the same checks and the schema check),
+and writes the eval's results format. Today that is `measures-five-runs`:
+
+```bash
+maintainer-tools/skill-evals/run-outside-eval.sh measures-five-runs
+```
+
+Check every case before spending usage on them (`run-baseline.sh` does this first):
+
+```bash
+maintainer-tools/skill-evals/check-cases.sh             # every case; 'choose-*' for some
+```
+
 ## Cases
 
 | Skill | Case | What it checks |

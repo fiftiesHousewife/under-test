@@ -56,6 +56,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md) | proposed | Toolkit maintainers |
 | [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Each technique rule separates what calls for the technique from what makes it possible](0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [A lesson that teaches a step of the journey names that step's skill, not a technique](0048-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill-not-a-technique.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

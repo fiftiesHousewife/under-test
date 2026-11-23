@@ -44,6 +44,8 @@ more options.
 | Knowledge | An internal wiki (for example Confluence), test-management tools and regression packs |
 | Secrets | A vault; production secrets should never be in repos, but sometimes are |
 | AI assistant | One approved assistant (for example GitHub Copilot), with organisation policies; no unattended agents |
+| AI models and tools | Only approved models, through the approved assistant. No AI tools, agents, plugins or models brought in from outside, and no calls to AI services the organisation hasn't approved |
+| Container images | Only images from the organisation's own registry. An outside image gets in only by passing the organisation's security scan (most likely for a small, minimal image) or by being rebuilt on the organisation's own base image; nothing is pulled straight from a public registry (for example Docker Hub) |
 
 ### Governance
 - **Change control** for production systems, and separation between production and non-production networks, which is
@@ -135,10 +137,20 @@ practice:
 - A person directs it and reviews everything it produces. Unattended agents stay off unless the organisation profile
   allows them.
 - AI-written tests must pass the acceptance check before they are kept.
+- Only models the organisation has approved are used, through its approved assistant. No AI tools, agents, plugins or
+  models are brought in from outside, and nothing calls an AI service the organisation hasn't approved. The toolkit's
+  skills are instructions for the approved assistant, delivered through the package repository like the rest of the
+  toolkit; they bring no model or AI tool of their own.
 
 ### Containers and production safety
 
 - Developer machines may have no container runtime, so container tests skip themselves locally and run in CI.
+- Container images come only from the organisation's own registry. An image a technique or shared test kit needs (a
+  database for Testcontainers, a stand-in service) gets there in one of two ways: it passes the organisation's
+  security scan, which a small, minimal image (an Alpine or distroless build) is most likely to; or it is rebuilt on
+  the organisation's own base image. Nothing is pulled straight from a public registry. Testcontainers is pointed at
+  the organisation's registry (its image name substitution setting), so tests name the usual images and get the
+  approved copies.
 - CI on Kubernetes has no Docker daemon. The organisation chooses how container tests run there (for example kubedock
   or rootless Podman) and records it in its organisation repo.
 - Old repos are scanned for secrets before anything builds or runs them, and their first runs happen only on runners

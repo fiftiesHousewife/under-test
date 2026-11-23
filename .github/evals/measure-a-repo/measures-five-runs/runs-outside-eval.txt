@@ -1,0 +1,8 @@
+This case runs with maintainer-tools/skill-evals/run-outside-eval.sh, not claude plugin eval: its Gradle build
+needs to bind local ports, which the eval's sandbox doesn't allow. run-baseline.sh reads this file.
+
+Gradle 6.9 also fails at start-up inside Claude Code's own sandbox ("Could not create service of type
+BuildLifecycleAwareVirtualFileSystem ... Operation not permitted"), so the line below runs this case's commands
+without it. Each run is a fresh temporary workspace with only the case's tools, and the tests run under the airgap
+agent, but the session's shell can read whatever the maintainer running it can.
+sandbox: off

@@ -15,5 +15,5 @@ precondition_checks:
   - {done_by: tool, check: Runtime check in CI}
   - {done_by: tool, check: Image exists in the organisation's package repository}
 fallback: fake-behind-an-interface
-constraints: [Container tests only (integrationTest source set); run in CI today, locally once WSL2 is available; see the decision guide on container tests on developer machines that have no container runtime]
+constraints: ["Images only from the organisation's own registry, through Testcontainers' image name substitution: an outside image gets there by passing the organisation's security scan (a small, minimal image is likeliest to) or by being rebuilt on its own base image; never pulled straight from a public registry such as Docker Hub", Container tests only (integrationTest source set); run in CI today, locally once WSL2 is available; see the decision guide on container tests on developer machines that have no container runtime]
 references: [test-doubles]

@@ -38,13 +38,17 @@ if [ ! -f "$dist" ]; then
 fi
 
 cp -R "$toolkit/tools/measurement/sample-repo/." .
+# The eval's sessions can read only their workspace, so the Gradle distribution goes inside it: a hard link where the
+# cache is on the same disk, a copy otherwise.
+mkdir -p .gradle-dist
+ln "$dist" .gradle-dist/gradle-6.9.4-bin.zip 2>/dev/null || cp "$dist" .gradle-dist/gradle-6.9.4-bin.zip
 cp "$toolkit/gradlew" .
 mkdir -p gradle/wrapper
 cp "$toolkit/gradle/wrapper/gradle-wrapper.jar" gradle/wrapper/
 cat > gradle/wrapper/gradle-wrapper.properties <<EOF
 distributionBase=GRADLE_USER_HOME
 distributionPath=wrapper/dists
-distributionUrl=file\://$dist
+distributionUrl=file\\://$PWD/.gradle-dist/gradle-6.9.4-bin.zip
 zipStoreBase=GRADLE_USER_HOME
 zipStorePath=wrapper/dists
 EOF
@@ -100,7 +104,7 @@ decisions:
     choice: accept
     reason: "It is under build/, inside the repo."
 YAML
-printf 'build/\n.gradle/\n' > .gitignore
+printf 'build/\n.gradle/\n.gradle-dist/\n' > .gitignore
 
 git init -q
 git add .

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../schema/technique.schema.json
+vash# yaml-language-server: $schema=../../schema/technique.schema.json
 id: ai-written-tests
 name: AI-written tests that record current behaviour, kept only if they pass the acceptance check
 workstream: record-current-behaviour
@@ -15,5 +15,5 @@ precondition_checks:
   - {done_by: tool, check: Count of hard-wired dependencies per class}
   - {done_by: tool, check: Outbound network calls blocked}
 fallback: Tests at the edges (API, messages, files) first
-constraints: ["Every draft test must pass the checks in the decision guide: the checks an AI-written test must pass before it is kept"]
+constraints: ["Only the organisation's approved assistant and models; no AI tool or model brought in from outside", "Every draft test must pass the checks in the decision guide: the checks an AI-written test must pass before it is kept"]
 references: [ai-written-tests]

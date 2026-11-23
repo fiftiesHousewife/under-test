@@ -10,7 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Entry point. {@code check <root>} fails on broken links, YAML files that don't match their schema, and out-of-date
- * decision indexes. {@code index <root>} rebuilds the decision indexes. {@code fix-links <root>} re-points links to
+ * decision indexes and technique rules. {@code index <root>} rebuilds the decision indexes and
+ * {@code techniques/rules.json}. {@code fix-links <root>} re-points links to
  * decision records at their current files, after renumbering or moving them. {@code validate-output <root> <report>
  * <workspace>...} checks the files skills wrote in each workspace against the schemas in {@code <root>}, and writes
  * one line per workspace to {@code <report>}: the workspace, its number of problems, and the first.
@@ -35,7 +36,7 @@ public final class RepoChecks {
         final Path root = Path.of(args[1]);
         switch (args[0]) {
             case "check" -> failOn(check(root));
-            case "index" -> decisionFolders(root).forEach(folder -> new DecisionIndex().write(folder));
+            case "index" -> index(root);
             case "fix-links" -> log.info("{} file(s) relinked", new DecisionLinkFixer().fix(new RepoFiles(root)));
             default -> throw new IllegalArgumentException("unknown command: " + args[0]);
         }
@@ -53,7 +54,18 @@ public final class RepoChecks {
                         "index is out of date; run ./gradlew buildDecisionIndexes"));
             }
         }
+        if (TechniqueRules.applies(root) && !new TechniqueRules().isCurrent(root)) {
+            problems.add(new Problem(root.resolve(TechniqueRules.FILE),
+                    "out of date with the technique files; run ./gradlew buildDecisionIndexes"));
+        }
         return problems;
+    }
+
+    static void index(final Path root) {
+        decisionFolders(root).forEach(folder -> new DecisionIndex().write(folder));
+        if (TechniqueRules.applies(root)) {
+            new TechniqueRules().write(root);
+        }
     }
 
     static void writeOutputReport(final Path root, final Path report, final List<String> workspaces) {

@@ -31,17 +31,8 @@ if [ "${WITHOUT:-yes}" = "no" ]; then options+=(--ablation none); fi
 model="${MODEL:-sonnet}"
 if [ "$model" != "default" ]; then options+=(--model "$model"); fi
 
-# The eval runs the plugin in place and lets its sessions read only the plugin's folder, so the plugin is a clean copy
-# of the whole toolkit (its tracked and new files, without build output): the skills' links to templates, schemas and
-# technique rules then work. The download cache is shared with the repo, so Gradle and the airgap agent are fetched once.
-copy="$(mktemp -d "${TMPDIR:-/tmp}/under-test-evals.XXXXXX")"
-(cd "$root" && git ls-files -co --exclude-standard | while IFS= read -r f; do [ -f "$f" ] && printf '%s\n' "$f"; done |
-  rsync -a --files-from=- . "$copy")
-# The eval takes no symbolic links, and the cases folder only by a plain name, so in the copy the cases move to
-# evals/, and the repo's download cache is named in .eval-cache instead of linked.
-mkdir -p "$root/.github/evals/results/cache"
-mv "$copy/.github/evals" "$copy/evals"
-printf '%s\n' "$root/.github/evals/results/cache" > "$copy/.eval-cache"
+# The eval runs on a clean copy of the toolkit, with the cases in evals/ (see copy-toolkit.sh).
+copy="$("$root/maintainer-tools/skill-evals/copy-toolkit.sh")" || exit 1
 
 echo "== Running the skill evals with ${model} on a copy of the toolkit in $copy; results go to $json"
 cd "$copy" || exit 1

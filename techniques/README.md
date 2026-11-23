@@ -4,7 +4,10 @@ One folder per testing technique, holding `technique.yaml`: when to adopt, defer
 run first, and what to use instead. These are rules, not teaching material: the
 [choose-techniques](../.github/skills/choose-techniques/SKILL.md) skill reads them to mark each technique adopt, defer
 or reject for a repo, and `./gradlew check` checks every file against
-[the technique schema](../schema/technique.schema.json).
+[the technique schema](../schema/technique.schema.json). The skill reads them all at once from
+[`rules.json`](rules.json): one technique per line, with only the fields it uses, generated from these files by
+`./gradlew buildDecisionIndexes` and checked to be current by `./gradlew check`. Edit the `technique.yaml` files,
+never `rules.json`.
 
 Each rule keeps apart three kinds of condition (see
 [Each technique rule separates what calls for the technique from what makes it possible](../docs/decisions/0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md)):

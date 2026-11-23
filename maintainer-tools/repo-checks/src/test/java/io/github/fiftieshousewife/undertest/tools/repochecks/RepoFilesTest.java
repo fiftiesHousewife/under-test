@@ -27,4 +27,14 @@ class RepoFilesTest {
 
         assertThat(new RepoFiles(root).withExtension(".md")).containsExactly(root.resolve("docs/kept.md"));
     }
+
+    @Test
+    void skipsTheSkillEvalsResultsButNotOtherResultsFolders() throws IOException {
+        Files.createDirectories(root.resolve(".github/evals/results/baseline/kept"));
+        Files.createDirectories(root.resolve("docs/results"));
+        Files.writeString(root.resolve(".github/evals/results/baseline/kept/PLAN.md"), "[a broken link](missing.md)");
+        Files.writeString(root.resolve("docs/results/report.md"), "x");
+
+        assertThat(new RepoFiles(root).withExtension(".md")).containsExactly(root.resolve("docs/results/report.md"));
+    }
 }

@@ -11,13 +11,16 @@ You propose; people decide. Don't build or run anything.
 
 The repo's `testing/assessment.yaml` ([its schema](../../../schema/assessment.schema.json)), or stop if it is missing;
 `testing/connections.calm.json` and `testing/sources.yaml` if they exist; its build files (JDK, build tool, test
-framework); the organisation's testing guide for its stack and application type, if given; every
-`techniques/*/technique.yaml` in [the toolkit's techniques](../../../techniques/README.md).
+framework); the organisation's testing guide for its stack and application type, if given; and every technique's
+rules, in one read of [`techniques/rules.json`](../../../techniques/rules.json) in the toolkit, whose root is three
+folders up from this skill's folder (not in the repo; generated from the `techniques/<id>/technique.yaml` files, one
+technique per line, with every field these rules use). Read nothing else: not the techniques README, nor any
+`technique.yaml`, even where the repo has copies.
 
 The **target level** is the `level/target` choice if its state is `decided`, else the target for
-`repo.business_criticality` from
-[Target test maturity level for each business criticality](../../../decision-guides/0015-target-test-maturity-level-for-each-business-criticality.md):
-high 4, medium 3, low 2. With neither, stop and say so.
+`repo.business_criticality` (high 4, medium 3, low 2, from
+[Target test maturity level for each business criticality](../../../decision-guides/0015-target-test-maturity-level-for-each-business-criticality.md),
+which you needn't read). With neither, stop and say so.
 
 ## 2. Decide each technique
 
@@ -27,7 +30,9 @@ Give each `needed_when`, `possible_when` and `reject_or_defer_when` condition a 
   it holds; **false** when they show it can't hold; **unknown** when it depends on code or facts you weren't given.
   Something missing from the files is unknown, not false, unless a file that would list it leaves it out: the build
   file for dependencies and frameworks, the measurement run for tests, the anti-pattern check for anti-patterns, the
-  connection list for connections and the programs the application starts.
+  connection list for connections and the programs the application starts. A condition about which framework the
+  code uses is known from the build file's dependencies (Spring Boot starters mean Spring contexts); a precondition
+  check that would measure it more closely doesn't make it unknown.
 * A `reject_or_defer_when` condition the files don't mention is false. One they mention but don't settle is unknown.
   A condition counts as mentioned only when a file speaks to every part of it.
 * A fact the person states in the request counts as known; say so in the fact ("stated in the request").
@@ -38,7 +43,9 @@ Give each `needed_when`, `possible_when` and `reject_or_defer_when` condition a 
   it.
 * A `possible_when` condition that is false or unknown now, but that planned work will make true, counts as planned
   work; its fact names the work. So does a `possible_when` condition that is unknown and that one of the technique's
-  own precondition checks would settle; its fact names the check. Never do either for a `needed_when` condition.
+  own precondition checks would settle; its fact names the check. Never do either for a `needed_when` or a
+  `reject_or_defer_when` condition: a `reject_or_defer_when` condition true now stays true even when planned work will
+  change it (a flaky suite that fix-flaky-tests will fix still defers), and the reason says `Waits for` that work.
 * A precondition check marked `outside_approval: true` that the files or the request don't show as given defers the
   technique. A decided stand-in in the connection list is not an `outside_approval`. Every other check is part of the
   work, and never defers it.
@@ -115,7 +122,7 @@ listed.
 Then `.`; then, as they apply, in this order:
 
 * `Waits for <workstream id>.` once for each workstream whose planned work the choice depends on: a `possible_when`
-  condition counted as planned work because of it, a precondition check that names it, or a true
+  condition counted as planned work because of it, a precondition check that names it, or, on a defer, a true
   `reject_or_defer_when` condition it will change. Write them in the order of the workstreams. Planned work that is the
   technique's own precondition check names no workstream.
 * `Brought back when <what would change>.` on every defer, naming every condition and check that deferred the

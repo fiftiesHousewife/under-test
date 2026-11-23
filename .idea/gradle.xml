@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -20,8 +21,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/build-logic" />
-            <option value="$PROJECT_DIR$/techniques" />
-            <option value="$PROJECT_DIR$/techniques/mutation-testing/example" />
+            <option value="$PROJECT_DIR$/maintainer-tools" />
+            <option value="$PROJECT_DIR$/maintainer-tools/repo-checks" />
           </set>
         </option>
       </GradleProjectSettings>

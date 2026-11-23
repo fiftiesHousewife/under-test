@@ -2,6 +2,9 @@
 
 Each step says who does it, what it leaves in the repo, and which decision guides settle how. The guides hold the detail; this page summarises them, and links every one, so the two stay in step. The [README](../README.md) has the short version.
 
+[The journey as a drawing](design/repo-journey.excalidraw), with each decision and the paths back: open it in
+Excalidraw.
+
 ```mermaid
 %%{init: {"flowchart": {"wrappingWidth": 230, "nodeSpacing": 28, "rankSpacing": 36}}}%%
 flowchart LR
