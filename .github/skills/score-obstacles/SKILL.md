@@ -29,8 +29,9 @@ Read only `testing/assessment.yaml` and `testing/connections.calm.json`; don't r
 
 ## 2. Score
 
-For each obstacle in the table, in the table's order, find the column its fact falls in. A score of 0 is still
-written. Each finding has `id`, `score`, then `evidence`: one line for every item the From column matches,
+For each obstacle in the table, in the table's order, find the column its fact falls in. The columns are scores 0, 1,
+2 and 3, left to right. For line coverage and the share of planted bugs caught, a higher value is a lower score: line
+coverage 61 falls in "60 to under 80", so it scores 1. A score of 0 is still written. Each finding has `id`, `score`, then `evidence`: one line for every item the From column matches,
 whatever the score, quoted, in this form, sorted by byte order; `none` only when nothing matches:
 
 | Fact | Evidence line |
