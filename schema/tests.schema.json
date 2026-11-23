@@ -98,13 +98,26 @@
                   "additionalProperties": false,
                   "required": [
                     "host",
+                    "kind",
                     "through",
                     "where"
                   ],
                   "properties": {
                     "host": {
                       "type": "string",
-                      "description": "The host name or IP address, without scheme, port or path."
+                      "description": "The host name or IP address, without scheme, port or path; for a JNDI lookup, its JNDI name."
+                    },
+                    "kind": {
+                      "enum": [
+                        "database",
+                        "http",
+                        "mail",
+                        "directory",
+                        "queue",
+                        "file-share",
+                        "other"
+                      ],
+                      "description": "The kind of system, which groups the tests that need the same stand-in."
                     },
                     "through": {
                       "enum": [
@@ -112,9 +125,10 @@
                         "properties",
                         "yaml",
                         "spring-xml",
+                        "spring-boot-config",
                         "airgap-report"
                       ],
-                      "description": "Where the host is named: in the test's code, in a properties or YAML file it loads, in a Spring XML context it loads (or a file that context loads), or only in the airgap agent's reports."
+                      "description": "Where the host is named: in the test's code, in a properties or YAML file it loads, in a Spring XML context it loads (or a file that context loads), in the Spring Boot settings the application it starts loads, or only in the airgap agent's reports."
                     },
                     "where": {
                       "type": "string",

@@ -8,8 +8,10 @@
   <description>Anti-patterns in existing tests, for the find-test-anti-patterns skill.</description>
 
   <!-- PMD's own rules -->
-  <rule ref="category/java/bestpractices.xml/UnitTestShouldIncludeAssert" name="no_real_assertion__NoAssertion"/>
-  <rule ref="category/java/bestpractices.xml/UnitTestShouldUseTestAnnotation" name="never_runs__NoTestAnnotation"/>
+  <rule ref="category/java/bestpractices.xml/UnitTestShouldIncludeAssert" name="no_real_assertion__NoAssertion">
+    <!-- Assertions that don't start with assert: MockMvc, WebTestClient, Mockito and BDD styles. -->
+    <properties><property name="extraAssertMethodNames" value="andExpect,expectStatus,expectBody,expectHeader,verifyComplete,verifyNoInteractions,verifyNoMoreInteractions,verifyZeroInteractions,should,shouldHaveNoInteractions,shouldHaveNoMoreInteractions"/></properties>
+  </rule>
   <rule ref="category/java/errorprone.xml/DetachedTestCase" name="never_runs__DetachedTestCase"/>
   <rule ref="category/java/errorprone.xml/EmptyCatchBlock" name="swallows_failures__EmptyCatch"/>
 
@@ -20,6 +22,23 @@
     <properties><property name="xpath"><value><![CDATA[
 //MethodDeclaration[ModifierList/Annotation[@SimpleName=('Ignore','Disabled')]]
   [not(ModifierList/Annotation[@SimpleName=('Test','ParameterizedTest','RepeatedTest','TestFactory')])]
+]]></value></property></properties>
+  </rule>
+
+  <rule name="never_runs__JUnit3NameWithoutTest" language="java" class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
+        message="A public void test...() method with no test annotation, in a class that isn't a JUnit 3 test: it never runs">
+    <!-- A class extending TestCase, or one of Spring's JUnit 3 base classes, runs test...() methods without @Test. A
+         superclass inside the repo can't be seen here: the skill checks each hit's superclasses before counting it. -->
+    <priority>3</priority>
+    <properties><property name="xpath"><value><![CDATA[
+//ClassDeclaration[not(ExtendsList/ClassType[@SimpleName=('TestCase','AbstractDependencyInjectionSpringContextTests',
+    'AbstractTransactionalSpringContextTests','AbstractTransactionalDataSourceSpringContextTests','AbstractSpringContextTests',
+    'AbstractJpaTests','AbstractJUnit38SpringContextTests','AbstractTransactionalJUnit38SpringContextTests','GroovyTestCase',
+    'MockObjectTestCase')])]
+  [.//MethodDeclaration/ModifierList/Annotation[@SimpleName=('Test','ParameterizedTest','RepeatedTest','TestFactory')]
+   or ends-with(@SimpleName,'Test') or ends-with(@SimpleName,'Tests') or ends-with(@SimpleName,'TestCase')]
+  /ClassBody/MethodDeclaration[starts-with(@Name,'test')][@Visibility='public'][@Void=true()][count(FormalParameters/*)=0]
+  [not(ModifierList/Annotation[@SimpleName=('Test','ParameterizedTest','RepeatedTest','TestFactory','Ignore','Disabled')])]
 ]]></value></property></properties>
   </rule>
 

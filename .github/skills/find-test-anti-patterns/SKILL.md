@@ -19,12 +19,14 @@ other.
 | The build has more than one module | [modules.md](modules.md), first |
 | It builds with Maven (a `pom.xml`, no Gradle build file) | [maven.md](maven.md) |
 | The test folders hold `.feature` files | [cucumber.md](cucumber.md) |
-| A test class names an XML file in `@ContextConfiguration` or `@ImportResource` | [spring-xml.md](spring-xml.md) |
+| The build uses Spring Boot (`org.springframework.boot` in a build file) | [spring-boot.md](spring-boot.md) |
+| Test code loads Spring XML: `@ContextConfiguration` or `@ImportResource` naming XML, `getConfigLocations()`, or `new ...XmlApplicationContext(` | [spring-xml.md](spring-xml.md) |
 
 ```bash
 ls settings.gradle* build.gradle* pom.xml 2>/dev/null; grep -lE '^\s*include|<modules>' settings.gradle* pom.xml 2>/dev/null
 find <test folders> -name '*.feature' | head -1
-grep -rlE '@(ContextConfiguration|ImportResource)\(.*\.xml' --include='*.java' <test folders>
+grep -lE 'org\.springframework\.boot' build.gradle* pom.xml */build.gradle* */pom.xml 2>/dev/null
+grep -rlE '@(ContextConfiguration|ImportResource)\(.*\.xml|getConfig(Locations|Paths)|XmlApplicationContext\(' --include='*.java' <test folders>
 ```
 
 ## 1. List the tests
@@ -38,7 +40,7 @@ unless its test task's `include` or `exclude` filters leave it out. Use `grep -r
 | A test is | Its line |
 |---|---|
 | A method marked `@Test`, `@ParameterizedTest`, `@RepeatedTest` or `@TestFactory` | The line with its name, not its annotation: the first method line after the annotation |
-| A public `void test...()` in a class extending `TestCase` | The line with its name |
+| A public `void test...()` in a class extending `TestCase`, directly or through a superclass, including Spring's JUnit 3 base classes ([spring-xml.md](spring-xml.md)) | The line with its name |
 
 ```bash
 grep -rnE -A3 '@(Test|ParameterizedTest|RepeatedTest|TestFactory)\b' --include='*.java' <test folders>
@@ -82,7 +84,7 @@ methods or superclasses, except that a call to an assertion helper (below) count
 | `swallows-failures` | Its body catches an exception around the code it tests and does nothing that fails: the catch block is empty, or only logs or prints. Or it catches `AssertionError`, `Error` or `Throwable`, which swallows its own failures. **Not** the expected-exception idiom: a `try` whose last statement is `fail(...)`, with a catch of the expected exception that is empty or checks it. |
 | `sleeps` | Its body, or a `@Before`/`@BeforeEach` method of its class (then every test in the class), calls `Thread.sleep` or `TimeUnit.<unit>.sleep`. |
 | `order-dependent` | Its class has `@FixMethodOrder` or `@TestMethodOrder`, whatever its argument. |
-| `reaches-external-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context ([spring-xml.md](spring-xml.md)). **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
+| `reaches-external-system` | Its class, or a file it loads, names a host other than `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` and their subdomains, or one ending `.example`, `.test`, `.invalid`, `.localhost`. A host is a name or IP address after `//`, `@` or `=` in a string literal, a properties or YAML value, or an XML attribute or element value. A file it loads includes a Spring XML context ([spring-xml.md](spring-xml.md)) and Spring Boot's settings ([spring-boot.md](spring-boot.md)); a test that starts a context reaches what the context's settings name. **Never a host:** an XML namespace (`xmlns`, `xmlns:*`), `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` values, and a DTD's `PUBLIC` or `SYSTEM` address. Also any test the airgap agent's reports (`build/airgap/*/calls.jsonl`) name as calling a host not excluded here. |
 | `mocks-everything` | Its class has five or more mocks in total: `@Mock` and `@MockBean` fields, and `mock(` and `Mockito.mock(` calls (a field set by `mock(` counts once; `@Spy` doesn't count). |
 | `copy-pasted` | Ten or more consecutive non-blank lines between its method's braces are the same as another test's once every string, number and character literal is ignored: count every test in the group. Also every test in a test class that has a copy, the same or nearly the same, under another test folder or module. |
 | `other` | It can't catch a bug for a reason the list misses: an expected value bent to pass (`size() + 1`), a server on `localhost` nothing starts, a word in the test's name that an asserted expected value contradicts, set-up copied and never changed (only where not already `copy-pasted`). Only these four, one finding each, holding every test that shows it, with a fixed id: `other-bent-expected-value`, `other-server-nothing-starts`, `other-name-does-not-match-assertions`, `other-copied-setup-unchanged`. Anything else you notice goes in the report, not the file. |
@@ -164,9 +166,9 @@ and each entry's `anti_patterns`; never change anything else.
 * Each test counted under any kind has an entry, found by its `test`: `<fully qualified class>.<method>`, as JUnit's
   reports name it. Add an entry if there is none; set its `at` to `"path:line"` from step 1, and its `anti_patterns`:
   * `kinds`: every kind it counts under, with each `other` as its fixed id (`other-bent-expected-value`, ...);
-  * `reaches`, for `reaches-external-system`: each host (no scheme, port or path), `through` (`code`, `properties`,
-    `yaml`, `spring-xml` for a host in a Spring XML context or a file that context loads, or `airgap-report`), and
-    `where`, the `path:line` naming it;
+  * `reaches`, for `reaches-external-system`: each host (no scheme, port or path; a JNDI name for a JNDI lookup),
+    its `kind` (`database`, `http`, `mail`, `directory`, `queue`, `file-share` or `other`), `through` (`code`,
+    `properties`, `yaml`, `spring-xml`, `spring-boot-config` or `airgap-report`), and `where`, the `path:line` naming it;
   * `copy_of`, for `copy-pasted`: the `test` of one test it is a copy of.
 * From every other entry, remove `anti_patterns`; an entry left with only `test` and `at` goes.
 * Set `found_by.find-test-anti-patterns` to the same `version` and `commit` as the summary. Keep entries sorted by `test`.
@@ -184,7 +186,7 @@ tests:
     anti_patterns:
       kinds: [reaches-external-system]
       reaches:
-        - {host: orders-uat.internal, through: code, where: "src/test/java/com/example/orders/OrderRepositoryIT.java:10"}
+        - {host: orders-uat.internal, kind: database, through: code, where: "src/test/java/com/example/orders/OrderRepositoryIT.java:10"}
 ```
 
 ## 4. Propose decisions
