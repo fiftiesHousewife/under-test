@@ -72,7 +72,7 @@ grep -nE 'sourceSets|exclude|include' build.gradle* */build.gradle*             
 A test counts once under each kind it shows; a disabled test counts under `disabled` only, and one that never runs
 under `never-runs` only. The lists are closed.
 Look only at the test's own body and the `@Before`/`@BeforeEach` methods declared in its class: don't follow helper
-methods or superclasses. Each kind has a search; read only the tests and files it finds.
+methods or superclasses, except that a call to an assertion helper (below) counts as an assertion. Each kind has a search; read only the tests and files it finds.
 
 | `kind` | A test counts when |
 |---|---|
@@ -100,13 +100,18 @@ grep -rnE -A3 'catch *\((final )?[A-Za-z.]*(Exception|AssertionError|Error|Throw
 grep -rnE 'assertNotNull|assertNull|assertTrue\(true\)|isNotNull\(\)|assertThat\([^,;.()]*(\([^,;.()]*\))?\) *;|verify\([A-Za-z0-9_]+\) *;|expected *= *(Exception|Throwable)\.class' --include='*.java' <test folders>
 ```
 
-For `no-real-assertion`, run this skill's [scripts/no-real-assertion.awk](scripts/no-real-assertion.awk) (run it; don't
-read it): it prints every test whose body, an empty one included, has no assertion at all. Then read the tests the
-last search above finds, for those whose only assertions are weak.
+For `no-real-assertion`, first list the assertion helpers: methods anywhere in the test code (shared base classes and
+test utilities included) that aren't tests but assert, such as `checkTotals(order, 1000)`. A test that calls one
+asserts. Then list the tests with no assertion at all, an empty body included, passing the helpers in. Run both of this
+skill's scripts; don't read them. Then read the tests the weak-assertion search above finds.
 
 ```bash
-find <test folders> -name '*.java' | sort | xargs awk -f <this skill's folder>/scripts/no-real-assertion.awk
+helpers=$(find <test folders> -name '*.java' | xargs awk -f <this skill's folder>/scripts/assertion-helpers.awk | sort -u | paste -sd'|' -)
+find <test folders> -name '*.java' | sort | xargs awk -v helpers="$helpers" -f <this skill's folder>/scripts/no-real-assertion.awk
 ```
+
+A helper outside the test folders (a shared test kit's jar, say) isn't listed; one named `assert...` still counts,
+since the searches take any `assert...(` call as an assertion. Say in the report which helpers were found.
 
 For `copy-pasted`, run PMD's `cpd --minimum-tokens 75 --dir <test folders>` if PMD is installed; otherwise compare
 tests within each class, and the classes the search above finds under more than one folder, and say in the report
