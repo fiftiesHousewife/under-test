@@ -17,6 +17,12 @@ Name a product only as an option or an example.
 - No dates in titles or text: source control records when things changed.
 - Every YAML file has a JSON Schema in [`schema/`](schema/), referenced from its first line.
 
+## README badges
+Every repo of ours starts its README with the same badges, in this order, each linked, labels in lower case:
+`build` (its GitHub Actions workflow), `maven central` (only if published), `runs on` (what running it needs, such as
+Java 17+), `licence` (to `LICENSE`), and `decisions` (to `docs/decisions/README.md`, if it has decision records).
+A repo's own badges come after these.
+
 ## Where things are
 | Path | What |
 |---|---|
