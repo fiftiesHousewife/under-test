@@ -605,16 +605,16 @@ items:
     notes: "Needs from the programme: Behaviour is captured in two tracks, current and intended, and every difference is an open question"
   - key: "secrets-scan-before-any-repo-is-built-or-run"
     type: "deliverable"
-    title: "Scan every repo for committed secrets before it is built or run, using an existing tool"
+    title: "Scan every repo for committed secrets before any of its tests or its application first runs, using an existing tool"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
     phase: "set-up"
     horizon: "now"
     owner_role: "Security and Platform Owner"
     done_by: "tool"
     done_when:
-      - "Every repo is scanned before any build, test run, app start or AI-assisted task"
+      - "Every repo is scanned before any of its tests or its application first runs; building it without running tests may come first"
       - "Findings recorded in the assessment file; the repo is blocked; an incident is opened"
-    notes: "Needs from the programme: No repo's tests or application run until its secrets scan is clean"
+    notes: "Needs from the programme: No repo's tests or application run until its secrets scan is clean. The gate is the safety inventory, before the first run (The safety inventory is a gate before the first run, and no skill ever copies a secret); a build without tests may come before it (A repo may be built, without running its tests, before the safety gate)."
   - key: "connection-list-template-and-check"
     status: "done"
     type: "deliverable"
@@ -1503,6 +1503,7 @@ items:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0055-find-test-anti-patterns-lists-every-test-it-finds-so-later-steps-dont-search-again.md"
   - key: "the-connection-list-names-each-connections-tests"
+    status: "done"
     type: "deliverable"
     title: "The connection list names the tests that use each connection, from the list of tests with anti-patterns and the airgap agent's reports"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
@@ -1514,6 +1515,7 @@ items:
       - "The connection list schema holds, for each connection, the tests that use it as path:line, instead of a count"
       - "The draft-the-connection-list skill fills them from testing/tests.yaml and the airgap agent's reports"
       - "Its eval case checks the tests named for a connection reached only through Spring XML"
+    notes: "Replaced: each test's connections are recorded in testing/tests.yaml's connections field, not as a list in the connection list; the Spring XML eval check moves to draft-the-connection-list-keeps-only-judgement."
     blocked_by:
       - "decide-find-test-anti-patterns-lists-every-test-it-finds"
       - "one-list-of-tests-and-the-word-external"
@@ -1526,8 +1528,8 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "In a build with more than one module the skill asks which modules to search, and records them as modules in both files"
-      - "A later run on another module replaces only that module's entries, and the counts cover every module searched"
+      - "In a build with more than one module the skill asks which modules to search, and records them as modules in both files (done: modules.md)"
+      - "A later run on another module replaces only that module's entries, and the counts cover every module searched (done: modules.md)"
       - "An eval case with a two-module repo, whose prompt names one module, passes in every run, touching only that module"
   - key: "decide-a-skill-keeps-each-kind-of-repo-in-its-own-file"
     status: "done"
@@ -1658,9 +1660,9 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "schema/tests.schema.json replaces anti-pattern-tests.schema.json; find-test-anti-patterns writes testing/tests.yaml keyed by class and name, replacing only its own fields"
-      - "reaches-external-system, the external tag and the word external replace shared system in the glossary, guides, skills, schemas and eval checks"
-      - "find-test-anti-patterns passes its eval in every run"
+      - "schema/tests.schema.json replaces anti-pattern-tests.schema.json; find-test-anti-patterns writes testing/tests.yaml keyed by class and name, replacing only its own fields (done)"
+      - "reaches-external-system, the external tag and the word external replace shared system in the glossary, guides, skills, schemas and eval checks (done; 'widely shared systems' elsewhere means systems used across the organisation, and stays)"
+      - "find-test-anti-patterns passes its eval in every run (round 13: 4 of 5; the miss was the copy-pasted count, which under-test-tools' anti-patterns now gives)"
     blocked_by:
       - "decide-one-list-of-tests-each-step-adds-to"
       - "decide-the-word-external-system"
@@ -1731,9 +1733,9 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "A new kind, swallows-failures: an empty or log-only catch around the code under test, or any catch of AssertionError, Error or Throwable; not the try, fail, catch idiom for expected exceptions"
-      - "One-search checks: JUnit 5 private, static or value-returning test methods; bare assertThat(x) and verify(mock); TestNG enabled = false; assumptions; over-broad expected = Exception.class; control flow in test bodies"
-      - "Each kind gives its names in the literature (also known as); the mocks-everything count is reported, with the threshold calibrated across repos or dropped"
+      - "A new kind, swallows-failures: an empty or log-only catch around the code under test, or any catch of AssertionError, Error or Throwable; not the try, fail, catch idiom for expected exceptions (done)"
+      - "One-search checks: JUnit 5 private, static or value-returning test methods; bare assertThat(x) and verify(mock); over-broad expected = Exception.class (done); TestNG enabled = false; assumptions; control flow in test bodies (still to do)"
+      - "Each kind gives its names in the literature (also known as); the mocks-everything count is reported, with the threshold calibrated across repos or dropped (done: names given, each class's mock count reported; calibrating the threshold waits for more repos)"
       - "The example repo gains a case of each, and the eval passes in every run"
     blocked_by:
       - "one-list-of-tests-and-the-word-external"
@@ -1809,11 +1811,11 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "The skill runs connection-paths on each chosen module, with the classpath from the build's dependency resolution, and reads its facts file without printing it"
-      - "Each connection's address is traced to a literal, a setting (properties, YAML, Spring XML, Spring Boot, profiles) or a bean, or recorded as external with the address unknown; connections needed at start-up are marked"
-      - "A connection whose address can't be traced is a node per opening class, with where its address comes from; the report names the dispatch points connection-paths didn't follow"
-      - "Each test's connections, named or may-reach with the chain of classes, are written to testing/tests.yaml in a field this skill owns (connections)"
-      - "The Spring Boot and Spring XML rules and their eval checks move here from find-test-anti-patterns, which then counts reaches-external-system from this skill's record"
+      - "The skill runs connection-paths on each chosen module, with the classpath from the build's dependency resolution, and reads its facts file without printing it (done)"
+      - "Each connection's address is traced to a literal, a setting (properties, YAML, Spring XML, Spring Boot, profiles) or a bean, or recorded as external with the address unknown (done: connection-paths traces it, the skill settles the rest); connections needed at start-up are marked (still to do)"
+      - "A connection whose address can't be traced is a node per opening class, with where its address comes from; the report names the dispatch points connection-paths didn't follow (done)"
+      - "Each test's connections, named or may-reach with the chain of classes, are written to testing/tests.yaml in a field this skill owns (connections) (done)"
+      - "The Spring Boot and Spring XML rules and their eval checks move here from find-test-anti-patterns, which then counts reaches-external-system from this skill's record (copied, not moved: find-test-anti-patterns may read the record, and otherwise still finds hosts itself)"
       - "Its eval case gains a DAO opening its own connection, a client building its own HTTP call, a test reaching them two classes deep, and a connection needed at start-up, and passes in every run"
     blocked_by:
       - "decide-finding-what-the-code-connects-to-is-one-job"
@@ -1888,10 +1890,10 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "Reads a module's source and dependency jars; writes a facts file matching a schema in this toolkit"
-      - "Reports unresolved calls by reason and the dispatch points it did not follow"
-      - "Takes the build's classpath (Maven dependency:build-classpath, a Gradle init script)"
-      - "Passes an example repo with known chains, and a person's review of its findings on Openfire"
+      - "Reads a module's source and dependency jars; writes a facts file matching a schema in this toolkit (done)"
+      - "Reports unresolved calls by reason and the dispatch points it did not follow (done)"
+      - "Takes the build's classpath (Maven dependency:build-classpath, a Gradle init script) (done)"
+      - "Passes an example repo with known chains (done: its tests), and a person's review of its findings on Openfire (still to do)"
     blocked_by:
       - "decide-connections-are-found-by-connection-paths"
   - key: "decide-a-repo-may-be-built-before-the-safety-gate"
@@ -1940,10 +1942,10 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "A classpath step uses the repo's wrapper, else the build tool the organisation profile names, compiling sibling modules without tests (the skill does this step; connection-paths reads sibling modules' source)"
-      - "Each connection point has an address hint, a setting's value looked up in the repo's settings files, and placeholders flagged"
-      - "Local points are marked: file and in-memory databases, classpath resources, file and jar URLs, DNS through JNDI, methods nothing calls"
-      - "Systems are proposed by host, else setting, else opening class, with alternatives behind one interface marked"
+      - "A classpath step uses the repo's wrapper, else the build tool the organisation profile names, compiling sibling modules without tests (the skill does this step; connection-paths reads sibling modules' source) (done)"
+      - "Each connection point has an address hint, a setting's value looked up in the repo's settings files, and placeholders flagged (done)"
+      - "Local points are marked: file and in-memory databases, classpath resources, file and jar URLs, DNS through JNDI, methods nothing calls (done)"
+      - "Systems are proposed by host, else setting, else opening class, with alternatives behind one interface marked (done: facts version 2, on connection-paths' branch addresses-systems-and-pipeline until merged)"
       - "On Openfire 4.6.0's xmppserver the tool alone gives the systems and tests the hand trial did (it now gives 24 systems and 230 tests, following static initialisers and tear-down the hand trial didn't; a person's review of the difference is still to do)"
     blocked_by:
       - "decide-what-connection-paths-does-and-what-the-skill-does"
@@ -2070,7 +2072,7 @@ items:
     done_by: "person"
     done_when:
       - "The skill asks which modules, settles the addresses the tool couldn't, asks about alternatives and placeholders, writes the connection list and testing/tests.yaml, and reports (written for connection-paths' facts version 2)"
-      - "Its eval case for the discovery pass, built from what Openfire showed, passes in every run"
+      - "Its eval case for the discovery pass, built from what Openfire showed, passes in every run, and checks the tests named for a connection reached only through Spring XML"
       - "On Openfire 4.6.0 it gives the 14 systems and 162 tests the hand trial did"
     blocked_by:
       - "connection-paths-classpath-addresses-and-systems"
