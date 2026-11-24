@@ -3,41 +3,39 @@
 Read this when the code or the tests load a Spring XML context in any of the ways below. Old repos do it in several,
 often more than one at once.
 
-## How a test loads XML
+## What under-test-external-calls already does
 
-| Way | Example |
+It reaches an XML file's beans from a test whose class, or a superclass in the repo's test source, has
+`@ContextConfiguration`, `@SpringJUnitConfig` or `@ImportResource` naming the file, and from code that does
+`new ClassPathXmlApplicationContext("…xml")` (or the `FileSystem` or `Generic` variant). A chain through the file has a
+step `org.springframework.context.ApplicationContext#<xml file name>()`. A bean whose class matches a connection rule
+is a point, and the first of its `url`, `jdbcUrl`, `URL`, `serverURL`, `brokerURL`, `providerUrl`, `uri`, `baseUrl`,
+`serviceUrl`, `connectionString`, `host` or `serverName` properties is its address. A `${name}` in it becomes the
+setting `name`, looked up in all the repo's settings files, the test's own first. Take all of that from the facts file.
+
+## What you settle by hand
+
+Only these; for each, find the context files with the searches below.
+
+| Case | What to do |
 |---|---|
-| `@ContextConfiguration` or `@ImportResource` naming XML, on the class, a superclass in the repo, or an annotation of the repo's own | `@ContextConfiguration(locations = "classpath:base-test-context.xml")` on an abstract base class |
-| Spring's JUnit 3 base classes, listing the XML in a method | `extends AbstractDependencyInjectionSpringContextTests` (or `AbstractTransactionalSpringContextTests`, `AbstractJpaTests`, ...) with `getConfigLocations()` or `getConfigPaths()`. These classes' `test...()` methods run, with no `@Test` |
-| The test builds the context itself, in the test or a set-up method | `new ClassPathXmlApplicationContext("archive-context.xml")`, `FileSystemXmlApplicationContext`, `GenericXmlApplicationContext` |
+| The XML is named by an annotation of the repo's own that carries `@ContextConfiguration` | Treat the classes using that annotation as loading the file |
+| Spring's JUnit 3 base classes: `extends AbstractDependencyInjectionSpringContextTests` (or `AbstractTransactionalSpringContextTests`, `AbstractJpaTests`, ...) with `getConfigLocations()` or `getConfigPaths()` | These classes' `test...()` methods run, with no `@Test`: treat them as loading the files the method lists |
+| A location with `*`, every `classpath*:` one included | Every matching file, under test or main resources |
+| Two files with the same name in different folders | The tool can't tell them apart: say which one the test loads |
+| `<import resource=...>` | Follow every one, to any depth; the imported beans count as the importing file's |
+| A placeholder `${name:default}` no settings file sets | Its value is the default after `:`. A placeholder that neither a file nor a default sets is unknown: say so in the report |
+| A placeholder set in a specific file (`<context:property-placeholder location=...>`, a `PropertyPlaceholderConfigurer` or `PropertySourcesPlaceholderConfigurer` bean's `location` or `locations`, `<util:properties location=...>`) | Its value comes from that file, a later file overriding an earlier one, where it differs from what the tool found |
+| `<beans profile="...">` | Its beans count only for an active profile: `@ActiveProfiles` on the class or a superclass, or `spring.profiles.active` in a property file. Blocks outside any profile always count. Drop a point the tool took from an inactive block |
+| `<jee:jndi-lookup jndi-name=...>` or a `JndiObjectFactoryBean` | Needs a real container's resource: its node gets `address-from: "JNDI name <name>"`, the `kind` from the name (`jdbc/...` a database, `mail/...` mail, `jms/...` a queue), and a test that loads it an `external_systems` entry with `where` at its line |
 
-A `classpath:` path is under test or main resources; `classpath*:` with a pattern means every matching file.
-
-## What the XML loads in turn
-
-Follow every one, to any depth: `<import resource=...>`; property files from `<context:property-placeholder
-location=...>`, a `PropertyPlaceholderConfigurer` or `PropertySourcesPlaceholderConfigurer` bean's `location` or
-`locations`, and `<util:properties location=...>`. A later property file overrides an earlier one.
-
-## Which values count
-
-* A placeholder `${name}` takes its value from the property files; with none, from its default after `:`, as in
-  `${reports.url:https://reports.corp/api}`. A placeholder neither sets is unknown: say so in the report.
-* `<beans profile="...">` blocks count only for an active profile: `@ActiveProfiles` on the class or a superclass, or
-  `spring.profiles.active` in a property file. Blocks outside any profile always count.
-* A host in a value the test's context loads gives every test in the class an `external_systems` entry for that system,
-  `found_by: test-settings`, the `kind` of system (`jdbc:` a database, `http`/`https` a service, `ldap`/`ldaps` a
-  directory, `smtp` or a mail sender a mail server, `tcp`, `amqp` or a broker a queue, `\\` or `smb` a file share), and
-  `where` at the line naming it. The same host in the application's own contexts, in main resources, is the address of
-  the connection the code opens with that bean.
-* `<jee:jndi-lookup jndi-name=...>` (or a `JndiObjectFactoryBean`) needs a real container's resource: its address is
-  unknown before the code runs, so its node gets `address-from: "JNDI name <name>"`, the `kind` from the name
-  (`jdbc/...` a database, `mail/...` mail, `jms/...` a queue), and a test that loads it an `external_systems` entry with
-  `where` at its line.
-* An XML namespace, schema location or DTD address is never a host.
+A host you find this way gives every test in the class an `external_systems` entry for that system,
+`found_by: test-settings`, the `kind` of system (`jdbc:` a database, `http`/`https` a service, `ldap`/`ldaps` a
+directory, `smtp` or a mail sender a mail server, `tcp`, `amqp` or a broker a queue, `\\` or `smb` a file share), and
+`where` at the line naming it. An XML namespace, schema location or DTD address is never a host.
 
 ```bash
-grep -rnE '@(ContextConfiguration|ImportResource)|getConfig(Locations|Paths)|(ClassPath|FileSystem|Generic)XmlApplicationContext' --include='*.java' <test folders>
+grep -rnE 'getConfig(Locations|Paths)|classpath\*:|@interface' --include='*.java' <test folders>
 grep -nE '<import |property-placeholder|PlaceholderConfigurer|util:properties|location|<beans profile|jndi-lookup|JndiObjectFactoryBean' <each context file found>
-grep -nE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})|\$\{[^}]*:' <each context and property file found>
+grep -nE '\$\{[^}]*:' <each context and property file found>
 ```
