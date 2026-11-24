@@ -1946,7 +1946,7 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0072-connections-and-the-test-paths-to-them-are-found-by-connection-paths-a-javaparser-tool-in-its-own-repo.md"
-  - key: "under-test-external-calls-first-version"
+  - key: "connection-paths-first-version"
     type: "deliverable"
     title: "under-test-external-calls: a command-line jar that finds where code opens connections and which tests reach them, from source"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
@@ -1973,7 +1973,7 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md"
-  - key: "under-test-external-calls-reads-maven-poms-when-the-build-cannot-resolve"
+  - key: "connection-paths-reads-maven-poms-when-the-build-cannot-resolve"
     type: "deliverable"
     title: "under-test-external-calls lists a Maven module's dependency jars from its POMs when the build can't resolve them"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
@@ -1985,7 +1985,7 @@ items:
       - "With Apache Maven Resolver, without running Maven: parents, properties, dependency management, imported BOMs, nearest version wins"
       - "On Openfire 4.6.0's xmppserver, at least 99% of calls resolve, as with the build's classpath"
     blocked_by:
-      - "under-test-external-calls-first-version"
+      - "connection-paths-first-version"
   - key: "decide-what-connection-paths-does-and-what-the-skill-does"
     status: "done"
     type: "decision"
@@ -1998,7 +1998,7 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md"
-  - key: "under-test-external-calls-classpath-addresses-and-systems"
+  - key: "connection-paths-classpath-addresses-and-systems"
     type: "deliverable"
     title: "under-test-external-calls gets the classpath itself, traces each connection's address, marks local ones, and proposes systems"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
@@ -2129,7 +2129,7 @@ items:
     done_when:
       - "OutputValidator maps testing/external-calls.json to schema/external-calls.schema.json (a one-line change a person makes: it was blocked for the AI assistant as a change to a check)"
     blocked_by:
-      - "under-test-external-calls-first-version"
+      - "connection-paths-first-version"
   - key: "draft-the-connection-list-keeps-only-judgement"
     type: "deliverable"
     title: "The connection-list skill runs under-test-external-calls and keeps only its judgement steps, once the tool traces addresses, marks local points and proposes systems"
@@ -2143,7 +2143,7 @@ items:
       - "Its eval case for the discovery pass, built from what Openfire showed, passes in every run, and checks the tests named for a connection reached only through Spring XML"
       - "On Openfire 4.6.0 it gives the 14 systems and 162 tests the hand trial did"
     blocked_by:
-      - "under-test-external-calls-classpath-addresses-and-systems"
+      - "connection-paths-classpath-addresses-and-systems"
   - key: "decide-repair-is-a-step-of-its-own"
     status: "done"
     type: "decision"
