@@ -31,7 +31,9 @@ class files; the tests it runs get the agent, with their own report in `build/ai
 
 | Setting | What it does |
 |---|---|
-| `-Dmeasure.run=<n>` | Keeps this run's results in `build/under-test/runs/<n>/<test task>/` |
+| `-Dmeasure.run=<n>` | Keeps this run's results, and the airgap agent's report of the calls it refused, in `build/under-test/runs/<n>/<test task>/` |
+| `-Dmeasure.leaveOut=<file>` | Leaves out the tests the file names, one `Class.method` a line; the run stops if the file is missing |
+| `-Dmeasure.order.seed=<n>` | Runs JUnit 5 or 6 classes and methods in a random order from this seed; JUnit 4 tests keep their order |
 | `-Dmeasure.targets=<globs>` | The classes to plant bugs in (default: the project's group, then `.*`) |
 | `-Dmeasure.excludedTests=<globs>` | Test classes PIT leaves out |
 | `-Dmeasure.java=<path>` | The `java` that runs PIT, which needs JDK 11 or later, when the build runs on JDK 8 |

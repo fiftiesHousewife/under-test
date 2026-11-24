@@ -1706,12 +1706,12 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "Runs in stages, each gating the next and each recorded: build only; one run (external tests left out, may-reach confirmed, start-up stand-ins found); four more runs in varied orders with coverage; planted bugs"
-      - "Five runs in the original, reversed and three seeded shuffled orders; each failing test rerun about five times"
+      - "Runs in stages, each gating the next and each recorded: build only; one run (external tests left out, may-reach confirmed, start-up stand-ins found); four more runs in varied orders with coverage; planted bugs (done for Gradle in the skill and init script; not yet run end to end)"
+      - "Five runs in the original, reversed and three seeded shuffled orders; each failing test rerun about five times (done for Gradle, with run 2 seeded rather than reversed: neither JUnit 5's built-in orderers nor JUnit 4 can reverse the order without a class added to the repo; JUnit 4 tests keep their order)"
       - "It runs again after repair, on the same settings, and the assessment file shows what changed"
-      - "External tests left out by filters (Gradle test filter, Surefire excludes file) until tagged; a run whose filter is missing stops"
+      - "External tests left out by filters (Gradle test filter, Surefire excludes file) until tagged; a run whose filter is missing stops (done for Gradle: -Dmeasure.leaveOut)"
       - "Connection errors sorted: off the machine external, localhost needs a local service; each recorded as a miss of discovery's searches"
-      - "Flaky, failing and left-out tests written to testing/tests.yaml; key packages proposed from a change-history ranking"
+      - "Flaky, failing and left-out tests written to testing/tests.yaml (done: each test's measurement); key packages proposed from a change-history ranking (still to do)"
       - "Its Gradle and Maven routes pass an eval case with an external test, a localhost test and an order-dependent pair in every run"
     blocked_by:
       - "decide-how-measurement-handles-external-tests-order-and-connection-errors"

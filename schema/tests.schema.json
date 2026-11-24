@@ -168,6 +168,59 @@
               ]
             },
             "description": "Owned by find-meaningless-and-unreliable-tests: why the test may give a different answer on another run: it sleeps for a fixed time, or depends on the order tests run in. Measurement's repeats in varied orders confirm or clear it."
+          },
+          "measurement": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "outcome"
+            ],
+            "description": "Owned by measure-a-repo: what the test did when measurement ran it.",
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "passed",
+                  "failed-every-run",
+                  "flaky",
+                  "order-dependent",
+                  "disabled",
+                  "left-out"
+                ],
+                "description": "left-out: not run, because it reaches an external system; failed-every-run: failed in its run and in every rerun alone; flaky: passed and failed with nothing changed; order-dependent: failed in some orders and passed in every rerun alone."
+              },
+              "runs": {
+                "type": "string",
+                "pattern": "^[PFS-]+$",
+                "description": "Each run in order: P passed, F failed, S skipped (disabled), - not run."
+              },
+              "reruns": {
+                "type": "string",
+                "pattern": "^[PF]+$",
+                "description": "A failed test's reruns alone, in order."
+              },
+              "left_out_because": {
+                "type": "string",
+                "description": "For left-out: the external system and the grade that left it out."
+              },
+              "called": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Each target the airgap agent refused for this test, as its report names it, sorted."
+              },
+              "needs_local_service": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Each localhost address it couldn't reach: set-up work, not an external system."
+              },
+              "missed_by_discovery": {
+                "const": true,
+                "description": "It called something off the machine that none of its external_systems entries names: discovery's searches missed it."
+              }
+            }
           }
         }
       }

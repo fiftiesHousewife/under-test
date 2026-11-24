@@ -8,7 +8,12 @@
 //       --init-script airgap.init.gradle --init-script measure.init.gradle
 //
 // Settings, all optional:
-//   -Dmeasure.run=<n>             keep this run's test results in build/under-test/runs/<n>/<test task>/
+//   -Dmeasure.run=<n>             keep this run's test results, and the airgap agent's report of its refused calls, in
+//                                 build/under-test/runs/<n>/<test task>/
+//   -Dmeasure.leaveOut=<file>     leave out the tests the file names, one Class.method (or Class) a line; the run stops
+//                                 if the file is missing, so a test meant to be left out never runs by mistake
+//   -Dmeasure.order.seed=<n>      run JUnit 5 or 6 test classes and methods in a random order with this seed (JUnit 4
+//                                 tests keep their order; the task logs that it couldn't vary it)
 //   -Dmeasure.targets=<globs>     the classes to plant bugs in, comma-separated (default: <project group>.*)
 //   -Dmeasure.excludedTests=<globs>  test classes PIT leaves out, comma-separated: the flaky ones
 //   -Dmeasure.java=<path>         the java that runs PIT, when the build runs on a JDK older than 11
@@ -23,6 +28,8 @@ def jacocoVersion = System.getProperty("measure.jacoco.version", "0.8.16")
 def pitVersion = System.getProperty("measure.pit.version", "1.30.2")
 def pitJunit5Version = System.getProperty("measure.pit.junit5.version", "1.2.3")
 def run = System.getProperty("measure.run")
+def leaveOutFile = System.getProperty("measure.leaveOut")
+def orderSeed = System.getProperty("measure.order.seed")
 def networkBlockedByRunner = System.getProperty("measure.network") == "blocked-by-runner"
 
 def airgapArgs = { Iterable<String> args -> args.findAll { it.startsWith("-javaagent:") && it.contains("airgap") } }
@@ -56,11 +63,40 @@ allprojects { Project p ->
             test.ignoreFailures = true
             test.outputs.upToDateWhen { false }
             test.doFirst { requireAirgap(test, test.allJvmArgs) }
+            def airgapReport = new File(p.layout.buildDirectory.get().asFile, "airgap/${test.name}/calls.jsonl")
+            if (leaveOutFile) {
+                def file = p.rootProject.file(leaveOutFile)
+                if (!file.isFile()) {
+                    throw new GradleException("-Dmeasure.leaveOut names ${file}, which isn't there: no test runs "
+                            + "until the tests to leave out are listed")
+                }
+                test.filter.failOnNoMatchingTests = false
+                file.readLines().collect { it.trim() }.findAll { it && !it.startsWith("#") }.each {
+                    test.filter.excludeTestsMatching(it)
+                }
+            }
+            if (orderSeed) {
+                test.doFirst {
+                    if (test.options.class.simpleName.startsWith("JUnitPlatformOptions")) {
+                        test.systemProperty("junit.jupiter.testmethod.order.default",
+                                'org.junit.jupiter.api.MethodOrderer$Random')
+                        test.systemProperty("junit.jupiter.testclass.order.default",
+                                'org.junit.jupiter.api.ClassOrderer$Random')
+                        test.systemProperty("junit.jupiter.execution.order.random.seed", orderSeed)
+                    } else {
+                        test.logger.warn("${test.path}: the order of JUnit 4 tests can't be varied; seed ${orderSeed} not used")
+                    }
+                }
+            }
             if (run) {
+                test.doFirst { p.delete(airgapReport) }
                 test.doLast {
                     def runDir = new File(p.layout.buildDirectory.get().asFile, "under-test/runs/${run}/${test.name}")
                     p.delete(runDir)
                     p.copy { from junitXmlDir(test); into runDir; include "*.xml" }
+                    if (airgapReport.isFile()) {
+                        p.copy { from airgapReport; into runDir }
+                    }
                 }
             }
         }

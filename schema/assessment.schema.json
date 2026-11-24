@@ -328,6 +328,15 @@
         "found_by": {
           "$ref": "#/$defs/found_by"
         },
+        "stage": {
+          "enum": [
+            "build",
+            "one-run",
+            "repeats",
+            "planted-bugs"
+          ],
+          "description": "The last stage of measurement finished: each gates the next, and each writes what it learned before the next starts."
+        },
         "framework": {
           "type": "string",
           "description": "e.g. JUnit 4 on the Vintage engine."
@@ -354,6 +363,18 @@
         "disabled": {
           "type": "integer",
           "minimum": 0
+        },
+        "left_out": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Tests left out of the runs because the list of tests grades them as reaching an external system."
+        },
+        "order_seeds": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "The seeds of the runs in random order (JUnit 5 and 6 only); empty when the order couldn't be varied."
         },
         "line_coverage": {
           "type": "number",

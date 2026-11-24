@@ -79,7 +79,7 @@ echo "systemProp.airgap.agent=$PWD/.airgap/airgap-agent.jar" >> gradle.propertie
 
 mkdir -p .toolkit/tools/measurement .toolkit/schema .airgap
 cp "$toolkit/tools/measurement/measure.init.gradle" "$toolkit/tools/measurement/README.md" .toolkit/tools/measurement/
-cp "$toolkit/schema/assessment.schema.json" .toolkit/schema/
+cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/tests.schema.json" .toolkit/schema/
 curl -sSfL -o .airgap/airgap.init.gradle "$airgap_init"
 
 mkdir -p testing
@@ -103,6 +103,15 @@ decisions:
     by: Forward Deployed Engineer
     choice: accept
     reason: "It is under build/, inside the repo."
+YAML
+# Discovery has run and found no test that reaches an external system, so nothing is left out: the mail test's call is
+# one discovery missed, for measurement to find.
+cat > testing/tests.yaml <<'YAML'
+# yaml-language-server: $schema=../.toolkit/schema/tests.schema.json
+schema: tests/1
+found_by:
+  draft-the-external-systems-list: {version: unreleased, commit: "a7f3c21"}
+tests: []
 YAML
 printf 'build/\n.gradle/\n.gradle-dist/\n' > .gitignore
 
