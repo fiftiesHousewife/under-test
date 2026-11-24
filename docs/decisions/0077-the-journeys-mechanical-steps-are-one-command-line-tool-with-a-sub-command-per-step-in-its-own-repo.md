@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The journey's mechanical steps are one command-line tool, with a sub-command per step, in its own repo
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -28,14 +28,14 @@ the same schemas.
 
 ## Decision Outcome
 
-Proposed: one tool. Its sub-commands read and write the toolkit's files through one model generated from the
+Chosen in discussion: one tool. Its sub-commands read and write the toolkit's files through one model generated from the
 toolkit's schemas, so a schema change is one change. It is published like connection-paths (a jar beside a version
 tag, so an organisation mirrors one file), and each sub-command has its own example repo of known answers. Programs
 with uses beyond the toolkit, such as connection-paths, stay in their own repos.
 
-The first sub-command takes find-meaningless-and-unreliable-tests' mechanical steps: list the tests, map PMD's and its copy-paste
-detector's hits to them, write their `anti_patterns` in `testing/tests.yaml`, and summarise them in the assessment
-file. The skill then runs it, judges what it flags as uncertain, adds the `other` kinds it finds by reading, proposes
+The first sub-command, `meaningless-and-unreliable`, takes find-meaningless-and-unreliable-tests' mechanical steps:
+list the tests, map PMD's hits to them, write their `meaningless` and `unreliable` fields in `testing/tests.yaml`, and
+summarise them in the assessment file's `meaningless_tests` and `unreliable_tests`. The skill then runs it, judges what it flags as uncertain, adds the `other` kinds it finds by reading, proposes
 decisions and reports.
 
 ### Consequences
@@ -46,5 +46,5 @@ decisions and reports.
 ## More Information
 
 * Builds on: [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Which of repair's changes OpenRewrite recipes make, and which the AI makes](0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)
 * Background: none

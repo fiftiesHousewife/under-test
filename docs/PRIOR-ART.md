@@ -433,8 +433,9 @@ Do not cite it. Figures that sources back only with slides, search snippets or s
   ([Spadini et al.](https://repository.tudelft.nl/record/uuid:a0b02521-ad00-4f96-9d96-17a85dc23f99)). The toolkit's
   five mocks should be calibrated from an organisation's repos, or replaced by a count with no cut-off.
 * **Which other steps become tools.** Most skills have mechanical steps (turning reports into the assessment file,
-  applying the techniques' rules, generating the plan); whether they become one tool with a step each is
-  [proposed](decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md).
+  applying the techniques' rules, generating the plan); each becomes a sub-command of one tool
+  ([why](decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)),
+  one at a time, in the order the journey runs.
 * **Smaller additions still to come:**
   * Unstable output removed from approval tests; keeping them (Feathers) or retiring them after the change (Carlo).
   * A written policy that new code comes with tests, and checks on new tests at commit time.

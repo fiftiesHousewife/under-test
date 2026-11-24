@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Each test is graded reaches, may reach or cannot reach, from the address its own settings give
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -34,10 +34,12 @@ the tests that reach external systems, and repair twins them, so the grade decid
 
 ## Decision Outcome
 
-Proposed: three grades, from the facts, recorded with each test's external systems in `testing/tests.yaml`, with the
+Chosen in discussion: three grades, from the facts, recorded with each test's external systems in `testing/tests.yaml`, with the
 reason for each. Measurement leaves out the tests that reach and runs the rest; under the airgap agent, a test that
 may reach is confirmed or cleared by its one run, and a test graded cannot reach that does call out is a miss of
-discovery, added to the list. Repair twins only the tests confirmed to reach.
+discovery, added to the list. Repair twins the tests graded reaches and those measurement found calling out, as
+[Every test that reaches an external system becomes a pair: one run injects a stand-in, the other is tagged external](0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md)
+says.
 
 ### Consequences
 
@@ -49,5 +51,5 @@ discovery, added to the list. Repair twins only the tests confirmed to reach.
 ## More Information
 
 * Builds on: [Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md), [connection-paths does everything a program can decide, and the external systems list skill only what needs judgement](0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md), [Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Every test that reaches an external system becomes a pair: one run injects a stand-in, the other is tagged external](0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md)
 * Background: [test-doubles](../REFERENCES.md#test-doubles)
