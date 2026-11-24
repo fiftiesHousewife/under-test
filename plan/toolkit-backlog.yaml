@@ -2297,4 +2297,30 @@ items:
       - "AGENTS.md's code standards in each repo name the plugin and its rules"
     blocked_by:
       - "java-conventions-plugin"
+  - key: "decide-how-each-test-is-graded-for-external-systems"
+    type: "decision"
+    title: "Each test is graded reaches, may reach or cannot reach, from the address its own settings give"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Toolkit maintainers accept, narrow or replace the proposed outcome"
+    decision_record: "docs/decisions/0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md"
+  - key: "external-systems-list-grades-each-test"
+    type: "deliverable"
+    title: "The external systems list's skill grades each test from connection-paths' facts version 4, and measurement acts on the grade"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Each test's external systems in testing/tests.yaml carry the grade and its reason (a host, run time, through a mock, no address for tests, local, an embedded server), with a schema change"
+      - "Measurement leaves out the tests that reach, runs the rest, and records each may-reach confirmed or cleared and each cannot-reach that called out as a miss"
+      - "The eval case has a test of each grade; on Openfire 4.6.0's server module all 230 chains come out cannot reach"
+    blocked_by:
+      - "decide-how-each-test-is-graded-for-external-systems"
+      - "draft-the-connection-list-keeps-only-judgement"
 

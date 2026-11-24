@@ -90,6 +90,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Repairing the existing tests is a step of its own, after measurement, changing only test code](0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [How repair fixes each kind of problem, and which changes OpenRewrite recipes make](0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md) | proposed | Toolkit maintainers |
 | [Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Each test is graded reaches, may reach or cannot reach, from the address its own settings give](0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md) | proposed | Toolkit maintainers |
 
 ## Recording results and owning plans
 
