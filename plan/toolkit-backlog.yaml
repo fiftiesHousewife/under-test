@@ -1803,6 +1803,18 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md"
+  - key: "decide-only-other-machines-reach-out"
+    status: "done"
+    type: "decision"
+    title: "Only a system on another machine reaches out, and a test needing a service on its own machine is found by failing"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0090-only-a-system-on-another-machine-reaches-out-and-a-test-needing-a-service-on-its-own-machine-is-found-by-failing.md"
   - key: "discovery-check-on-the-field-trial-repos"
     type: "deliverable"
     title: "Discovery is checked against a run under the airgap agent on Openfire, spring-petclinic and jsoup, at each under-test-external-calls change"

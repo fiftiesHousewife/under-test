@@ -95,6 +95,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Each test is graded reaches, may reach or cannot reach, from the address its own settings give](0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Every test that reaches an external system becomes a pair: one run injects a stand-in, the other is tagged external](0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Tests that mock everything are fixed in the testing plan's work, each mock sorted by what it stands for](0087-tests-that-mock-everything-are-fixed-in-the-testing-plans-work-each-mock-sorted-by-what-it-stands-for.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Only a system on another machine reaches out, and a test needing a service on its own machine is found by failing](0090-only-a-system-on-another-machine-reaches-out-and-a-test-needing-a-service-on-its-own-machine-is-found-by-failing.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 
