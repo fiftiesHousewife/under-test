@@ -2278,7 +2278,7 @@ items:
     done_by: "person"
     done_when:
       - "The repo is created by a maintainer and seeded from connection-paths' conventions once its restructure is done"
-      - "It enforces the decision's rules, the tighter ones included, with the rule files inside its jar; each rule has a case it fails"
+      - "It enforces the decision's rules, the tighter ones included, with the rule files inside its jar; each rule has a case it fails; for-each loops are reported, never failing the build"
       - "Published to Maven Central, signed, with its plugin marker; a repo applies it with a pinned version and mavenCentral() in pluginManagement"
     blocked_by:
       - "decide-all-our-java-follows-one-quality-plugin"
