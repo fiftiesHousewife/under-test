@@ -1,8 +1,11 @@
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
-        gradlePluginPortal()
+        gradlePluginPortal() // the plugin's own Gradle plugins (SpotBugs', PIT's, the versions report's) are only here
         mavenCentral()
+    }
+    plugins {
+        // Our code-quality standards (decision 0100): https://github.com/fiftiesHousewife/under-test-java-conventions
+        id("io.github.fiftieshousewife.java-conventions") version "0.1.0"
     }
 }
 

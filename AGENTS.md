@@ -34,7 +34,6 @@ Name a product only as an option or an example.
 | [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo. |
 | [`plan/toolkit-backlog.yaml`](plan/toolkit-backlog.yaml) | Work to build the toolkit, imported into this repo's issues. |
 | [`templates/programme-backlog.yaml`](templates/programme-backlog.yaml) | An organisation's starting backlog, imported into its own tracker. |
-| `build-logic/`, `config/quality/` | Gradle conventions and the quality-check rules. |
 
 ## Skills
 | Skill | Use it to |
@@ -65,24 +64,26 @@ Prompts, for short, repeatable jobs where a skill would add more than it saves:
 External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with `apm install` (APM, the Agent Package Manager). Run it once after cloning.
 
 ## Code standards (enforced by `./gradlew check`)
+Our Java applies the [java-conventions plugin](https://github.com/fiftiesHousewife/under-test-java-conventions#readme),
+pinned in `settings.gradle.kts` ([why](docs/decisions/0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md)).
+Its README is the one list of the standards and their settings (`underTest.*`). In short:
+
+* Methods of 20 lines or fewer, files of 150 or fewer; low complexity; no more than three parameters, and no record of
+  more than three components (use a Lombok `@Builder`).
+* Exactly one assertion statement per test: one `assert...`/`assertThat` chain, or one `assertAll(...)`.
+* No comment on a field or an enum entry; Javadoc only on public API.
+* No copy-pasted code (50 tokens or more); no package of more than 20 classes.
+* SpotBugs with FindSecBugs; forbidden APIs, with logging through Lombok `@Slf4j` and time from an injected `Clock`.
+* Line coverage at least 80% (`underTest.minLineCoverage`); main code with no tests fails it.
+* Advice, never failing the build: a stream or `forEach` rather than a for-each loop (`pmdAdvice`).
+
+This repo adds:
+
 | Standard | Enforced by |
 |---|---|
-| Line coverage at least 80% per project (raise it with `quality.minLineCoverage`) | JaCoCo coverage verification |
-| No more than **three parameters** for any method or constructor. Use a Lombok `@Builder` instead | Checkstyle `ParameterNumber`, PMD `ExcessiveParameterList` |
-| No record with more than three components. Use a Lombok `@Builder` class instead of a large record | Checkstyle `RecordComponentNumber` |
-| A test makes one assertion statement: one `assert...` or `assertThat` chain, or one `assertAll(...)` | PMD rule `MultipleAssertionsMustUseAssertAll` |
-| Logging through Lombok `@Slf4j` (SLF4J API, Log4j 2 at run time). No `System.out`, no `java.util.logging` | forbidden-APIs check |
-| Time comes from an injected `java.time.Clock`, never `now()` or `currentTimeMillis()` | forbidden-APIs check |
-| No unsafe, deprecated, internal or non-portable JDK APIs, and no reflection tricks | forbidden-APIs bundled signatures |
-| Methods short and simple: 20 lines or fewer (blank lines not counted), cyclomatic complexity 5 or less, cognitive complexity 6 or less, NPath complexity under 50, boolean expressions of 3 operators or fewer; files of 150 lines or fewer | Checkstyle and PMD |
-| No comment on a field (name it, or say it on the class or method); Javadoc only on public API, other comments as `//` | Checkstyle |
-| Advice, never failing the build: a stream or `forEach` rather than a for-each loop | PMD, in `pmdAdvice` ([why](docs/decisions/0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md)) |
-| No copy-pasted code (75 tokens or more) | PMD's copy-paste detector (`cpdCheck`) |
-| No bug patterns or security bugs | SpotBugs with FindSecBugs |
 | No dependency with a known vulnerability | OSV check in `maintainer-tools/repo-checks` (planned; a one-off check found none) |
-| Dependencies kept current (pre-releases ignored) | Ben Manes versions plugin: `./gradlew dependencyUpdates`; checked in CI, failing if `quality.failOnStaleDependencies=true` |
-| Local variables `final` where not reassigned; braces always; no star imports | Checkstyle |
-| Versions only in [`gradle/libs.versions.toml`](gradle/libs.versions.toml) | Review |
+| Dependencies kept current (pre-releases ignored) | `./gradlew dependencyUpdates`; checked in CI, failing if `quality.failOnStaleDependencies=true` |
+| This repo's own libraries' versions only in [`gradle/libs.versions.toml`](gradle/libs.versions.toml) | Review |
 | Ids use the `io.github.fiftieshousewife` namespace | Review |
 
 Tests that need a container go in the `integrationTest` source set, and skip themselves where there's no container runtime.

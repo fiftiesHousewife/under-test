@@ -89,9 +89,10 @@ Nothing is fetched from the internet at build time. Before anyone uses the toolk
    what it says only through your own decision records (step 6). Your organisation profile names the same tag
    (`toolkit.version`); your Toolkit Owner decides when to take a newer one, a one-line change by pull request.
 2. **Mirror the dependencies.** Your package repository needs proxies (remote repositories) for Maven Central and the
-   Gradle Plugin Portal, which most organisations already have. The full list of what the toolkit uses is in
-   [`gradle/libs.versions.toml`](gradle/libs.versions.toml). Your security review approves those, as with any
-   library. The toolkit keeps that list short on purpose: it prefers tools you probably already have, and runs PMD's
+   Gradle Plugin Portal, which most organisations already have. What the toolkit's own tools use is in
+   [`gradle/libs.versions.toml`](gradle/libs.versions.toml), and the code-quality tools' versions are in the
+   [java-conventions plugin](https://github.com/fiftiesHousewife/under-test-java-conventions)'s own catalogue. Your
+   security review approves those, as with any library. The toolkit keeps that list short on purpose: it prefers tools you probably already have, and runs PMD's
    copy-paste detector directly instead of adding another plugin. The find-meaningless-and-unreliable-tests skill needs PMD itself
    (`net.sourceforge.pmd:pmd-cli` and `pmd-java`), which the toolkit's
    [pmd-install](tools/meaningless-and-unreliable-tests/pmd-install/build.gradle) fetches from your package repository

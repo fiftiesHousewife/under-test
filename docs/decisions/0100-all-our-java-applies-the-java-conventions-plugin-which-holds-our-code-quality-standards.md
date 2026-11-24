@@ -30,7 +30,7 @@ Plugin Portal allowed for the plugin's own Gradle plugins. This record states th
 ## Decision Outcome
 
 Chosen in discussion: one plugin, `io.github.fiftieshousewife.java-conventions`, from the
-[java-conventions](https://github.com/fiftiesHousewife/java-conventions) repo.
+[java-conventions](https://github.com/fiftiesHousewife/under-test-java-conventions) repo.
 
 * **It applies to all our Java:** the toolkit's own tools, under-test-external-calls, under-test-tools, the airgap
   agent, the lessons repo's examples, and every repo of ours to come. Each applies a pinned version and deletes its
@@ -44,8 +44,8 @@ Chosen in discussion: one plugin, `io.github.fiftieshousewife.java-conventions`,
 * **It is published to Maven Central**, signed, with its Gradle plugin marker. Its own Gradle plugins (SpotBugs', the
   versions report's and PIT's) come from the Gradle Plugin Portal, so a repo applying it lists `gradlePluginPortal()`
   and `mavenCentral()` in `pluginManagement`. Organisations already proxy both.
-* **A repo's own exceptions stay in the repo:** SpotBugs exclusions in `config/quality/spotbugs/exclude.xml`, or a
-  suppression at the site with its reason.
+* **A repo's own exceptions stay in the repo:** a SpotBugs filter file it names with `underTest.spotbugsExcludeFilter`,
+  or a suppression at the site with its reason.
 * An organisation may apply it to new code of its own, one of the choices in
   [Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin](0013-code-quality-standards-can-be-the-toolkits-the-organisations-or-the-organisations-own-plugin.md).
   The convention plugin for the old target repos the journey works on (JDK 8, old Gradle) stays separate and comes
