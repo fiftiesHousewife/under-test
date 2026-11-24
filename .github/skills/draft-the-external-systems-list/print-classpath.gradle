@@ -1,8 +1,9 @@
-// Writes each project's test compile classpath (its jars) to build/connection-paths-classpath.txt, for
-// connection-paths --classpath @<file>. It resolves dependencies only: nothing is compiled and no test runs.
+// Compiles each project's code and tests, then writes the jars that compile used to
+// build/connection-paths-classpath.txt, for connection-paths --classpath @<file>. No test runs.
 //   gradle -q --init-script print-classpath.gradle connectionPathsClasspath
 allprojects {
     tasks.register('connectionPathsClasspath') {
+        dependsOn tasks.matching { it.name == 'testClasses' }
         doLast {
             def sourceSets = project.extensions.findByName('sourceSets')
             if (sourceSets == null || sourceSets.findByName('test') == null) {

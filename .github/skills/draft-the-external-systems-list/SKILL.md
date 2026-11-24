@@ -10,7 +10,7 @@ Every system outside the program that the code connects to becomes a node in `te
 with a relationship from the application holding a proposed stand-in, for the Architecture Owner to confirm. Each test
 that may reach one gets an `external_systems` entry in `testing/tests.yaml` ([schema](../../../schema/tests.schema.json)).
 
-Run nothing of the repo's but its build's dependency resolution: **never** compile it, run its tests or start it
+Run nothing of the repo's but its build's compile of the code and its tests: **never** run its tests or start it
 ([why](../../../docs/decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)). Never
 copy a secret's value into a file or the reply; point at its file and line.
 
@@ -43,15 +43,17 @@ It needs Java 17 or later and its jar: the organisation profile's `tools.connect
 `$CONNECTION_PATHS_JAR`. With neither, stop and say so, unless the person says the facts file below is already there
 and current: then use it, and skip to reading it.
 
-The classpath comes from the build, which may compile but runs no test. Use the repo's wrapper (`sh mvnw`, `./gradlew`)
-if it has one, else the organisation profile's `tools.maven` or `tools.gradle`, else `mvn` or `gradle`:
+connection-paths needs the jars the tests compile against, to know which library method each call goes to. Take
+them from the build's own test compile: one command compiles the code and its tests and writes the classpath it
+compiled with, so there is no separate step to forget. Use the repo's wrapper (`sh mvnw`, `./gradlew`) if it has one,
+else the organisation profile's `tools.maven` or `tools.gradle`, else `mvn` or `gradle`:
 
 ```bash
-mvn -q -pl <module> -am -DskipTests compile dependency:build-classpath -Dmdep.outputFile=build/connection-paths-classpath.txt   # Maven; drop -pl/-am for the root
-gradle -q --init-script <this skill's folder>/print-classpath.gradle connectionPathsClasspath                                 # Gradle: prints each module's file
+mvn -q -pl <module> -am test-compile dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=build/connection-paths-classpath.txt   # Maven; drop -pl/-am for the root
+gradle -q --init-script <this skill's folder>/print-classpath.gradle connectionPathsClasspath                                                   # Gradle: compiles the tests, prints each module's file
 ```
 
-If the build can't resolve them (a dependency in a repository that has gone or refuses it), say which artifact and
+If the compile fails, say why, and fix nothing in the repo. If the build can't resolve them (a dependency in a repository that has gone or refuses it), say which artifact and
 repository, and run without `--classpath`. Then, for each module (the repo root if there is one):
 
 ```bash
