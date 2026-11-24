@@ -1,6 +1,6 @@
 ---
 name: score-obstacles
-description: Score each obstacle to testing a repo has, from 0 to 3, by the named list in the decision guide, using only facts already in its testing/assessment.yaml and testing/external-systems.calm.json, and write the obstacles section with the evidence for each score. Use after measuring a repo, before choosing techniques, or when asked what makes a repo hard to test.
+description: Score each obstacle to testing a repo has, from 0 to 3, by the named list in the decision guide, using only facts already in its testing/assessment.yaml, testing/external-systems.calm.json and testing/tests.yaml.json, and write the obstacles section with the evidence for each score. Use after measuring a repo, before choosing techniques, or when asked what makes a repo hard to test.
 ---
 
 # Scoring obstacles
@@ -9,7 +9,8 @@ Apply the table in
 [The named list of obstacles to testing and how each is scored](../../../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md)
 exactly, and write the `obstacles` section of `testing/assessment.yaml` ([schema](../../../schema/assessment.schema.json)).
 If the organisation repo's own version of that guide has a different table, the person will say so: use theirs.
-Read only `testing/assessment.yaml` and `testing/external-systems.calm.json`; don't read or run the repo's code.
+Read only `testing/assessment.yaml`, `testing/external-systems.calm.json` and `testing/tests.yaml`; don't read or run
+the repo's code.
 
 Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
 your reply: point at its file and line instead
@@ -22,14 +23,17 @@ your reply: point at its file and line instead
   port 5672, 9092 or 61616.
 * A connection's stand-in is **decided** when its `metadata.under-test.state` is `decided`. A safety finding is
   **decided** when the decision `safety/<finding id>` has `state: decided`.
-* An anti-pattern's count is the sum of `tests` over the findings whose `kind` is the one named, one evidence line
-  each. A connection **with `never-reach`** has a non-empty `never-reach`. With `planted` 0,
+* A meaningless or unreliable kind's count is the sum of `tests` over the `meaningless_tests` or `unreliable_tests`
+  findings whose `kind` is the one named, one evidence line each. The tests that **reach external systems** are the
+  entries of `testing/tests.yaml` with at least one `external_systems` entry graded `reaches` or `may-reach`, one
+  evidence line for their count. A connection **with `never-reach`** has a non-empty `never-reach`. With `planted` 0,
   `tests-catch-few-planted-bugs` isn't scored.
 * A **share** is the count ÷ `tests.count` × 100. With `tests.count` 0 or missing, no share-based obstacle is scored.
 * An obstacle whose "From" fact isn't in the files isn't scored: no external systems list means no connection obstacles;
   no `tests` section, or no such field in it (such as `tests.failing`), means no obstacle from it; no `safety` section
-  means no safety obstacles. A missing anti-pattern
-  finding, with an `anti_patterns` section present, counts as 0 tests.
+  means no safety obstacles. A missing
+  finding, with its section present, counts as 0 tests; no `testing/tests.yaml` means `tests-reach-external-systems`
+  isn't scored.
 
 ## 2. Score
 
@@ -41,9 +45,10 @@ whatever the score, quoted, in this form, sorted by byte order; `none` only when
 | Fact | Evidence line |
 |---|---|
 | a count of connections | `"testing/external-systems.calm.json: <relationship unique-id>"`, one line per connection counted; or `"testing/external-systems.calm.json: none"` |
-| a count of findings | `"testing/assessment.yaml: safety/<finding id>"` or `"testing/assessment.yaml: anti_patterns/<finding id>, <tests> tests"`; or `"testing/assessment.yaml: none"` |
+| a count of findings | `"testing/assessment.yaml: safety/<finding id>"` or `"testing/assessment.yaml: meaningless_tests/<finding id>, <tests> tests"`; or `"testing/assessment.yaml: none"` |
+| tests that reach external systems | `"testing/tests.yaml: <count> tests reach or may reach an external system"` |
 | a share of a `tests` field | `"testing/assessment.yaml: tests.<field> <value> of <tests.count>"` |
-| a share of an anti-pattern | `"testing/assessment.yaml: anti_patterns/<finding id>, <tests> tests of <tests.count>"` |
+| a share of a meaningless kind | `"testing/assessment.yaml: meaningless_tests/<finding id>, <tests> tests of <tests.count>"` |
 | coverage | `"testing/assessment.yaml: tests.line_coverage <value>"` |
 | planted bugs | `"testing/assessment.yaml: tests.planted_bugs <caught> of <planted>"` |
 

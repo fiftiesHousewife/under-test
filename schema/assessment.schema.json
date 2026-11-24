@@ -5,85 +5,226 @@
   "description": "One repo's record of what tools found and what people decided, kept in the repo as testing/assessment.yaml. Tools rewrite their own sections in full on every run; each finding has an id that stays the same between runs. People's answers live only in decisions, keyed by section and finding id, which tools never write. The AI assistant may add decisions only as proposed. The external systems list (testing/external-systems.calm.json) and the source list (testing/sources.yaml) are separate files; this file doesn't repeat them.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema", "repo"],
+  "required": [
+    "schema",
+    "repo"
+  ],
   "$defs": {
-    "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Lower-case words joined by hyphens. Stays the same between runs, so decisions keep pointing at the same finding."},
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Lower-case words joined by hyphens. Stays the same between runs, so decisions keep pointing at the same finding."
+    },
     "found_by": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["tool", "version", "commit"],
+      "required": [
+        "tool",
+        "version",
+        "commit"
+      ],
       "description": "Which tool wrote this section, and at which commit of the repo.",
       "properties": {
-        "tool": {"type": "string"},
-        "version": {"type": "string"},
-        "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"}
+        "tool": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,40}$"
+        }
       }
     },
-    "where": {"type": "array", "items": {"type": "string"}, "description": "Where it was found: a path, with a line number after a colon where there is one, and \", in commit <first 7 characters>\" when it was found in the history."},
+    "where": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Where it was found: a path, with a line number after a colon where there is one, and \", in commit <first 7 characters>\" when it was found in the history."
+    },
     "decision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["state"],
+      "required": [
+        "state"
+      ],
       "properties": {
-        "state": {"enum": ["proposed", "decided", "stale"], "description": "proposed: drafted, waiting for a person. decided: a person has confirmed it. stale: its finding has gone from the latest run, so it's kept for the record but no longer applies."},
-        "drafted_by": {"enum": ["ai", "person"], "description": "Who wrote the first draft."},
-        "by": {"type": "string", "description": "The role that decided it, e.g. Security and Platform Owner. Required once decided."},
-        "question": {"type": "string", "description": "For open questions: the question being asked."},
-        "choice": {"type": "string", "description": "What was decided: a status, an action, adopt, defer or reject, or the answer to a question."},
-        "reason": {"type": "string"}
+        "state": {
+          "enum": [
+            "proposed",
+            "decided",
+            "stale"
+          ],
+          "description": "proposed: drafted, waiting for a person. decided: a person has confirmed it. stale: its finding has gone from the latest run, so it's kept for the record but no longer applies."
+        },
+        "drafted_by": {
+          "enum": [
+            "ai",
+            "person"
+          ],
+          "description": "Who wrote the first draft."
+        },
+        "by": {
+          "type": "string",
+          "description": "The role that decided it, e.g. Security and Platform Owner. Required once decided."
+        },
+        "question": {
+          "type": "string",
+          "description": "For open questions: the question being asked."
+        },
+        "choice": {
+          "type": "string",
+          "description": "What was decided: a status, an action, adopt, defer or reject, or the answer to a question."
+        },
+        "reason": {
+          "type": "string"
+        }
       },
-      "if": {"properties": {"state": {"const": "decided"}}},
-      "then": {"required": ["state", "by", "choice"]}
+      "if": {
+        "properties": {
+          "state": {
+            "const": "decided"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "state",
+          "by",
+          "choice"
+        ]
+      }
     }
   },
   "properties": {
-    "schema": {"const": "assessment/1"},
+    "schema": {
+      "const": "assessment/1"
+    },
     "repo": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "description": "What the repo is. Written by the repo classifier and the programme; people correct it through decisions.",
       "properties": {
-        "name": {"type": "string"},
-        "application": {"type": "string", "description": "The application this repo belongs to."},
-        "summary": {"type": "string", "description": "One sentence: what the code does."},
-        "technology_stacks": {"type": "array", "items": {"$ref": "#/$defs/id"}},
-        "application_types": {"type": "array", "items": {"$ref": "#/$defs/id"}},
-        "business_criticality": {"type": "string"},
-        "application_owner": {"type": "string", "description": "The team or person in the Application Owner role."},
-        "batch": {"type": "string"}
+        "name": {
+          "type": "string"
+        },
+        "application": {
+          "type": "string",
+          "description": "The application this repo belongs to."
+        },
+        "summary": {
+          "type": "string",
+          "description": "One sentence: what the code does."
+        },
+        "technology_stacks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "application_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "business_criticality": {
+          "type": "string"
+        },
+        "application_owner": {
+          "type": "string",
+          "description": "The team or person in the Application Owner role."
+        },
+        "batch": {
+          "type": "string"
+        }
       }
     },
     "level": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["found_by", "reached"],
+      "required": [
+        "found_by",
+        "reached"
+      ],
       "description": "The test maturity level the evidence shows. The target is a decision (level/target).",
       "properties": {
-        "found_by": {"$ref": "#/$defs/found_by"},
-        "reached": {"type": "integer", "minimum": 0, "maximum": 5},
-        "evidence": {"type": "array", "items": {"type": "string"}}
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
+        "reached": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "safety": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["found_by", "findings"],
+      "required": [
+        "found_by",
+        "findings"
+      ],
       "description": "The safety inventory, found before any of the repo's code ran.",
       "properties": {
-        "found_by": {"$ref": "#/$defs/found_by"},
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
         "findings": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "kind", "effect", "where"],
+            "required": [
+              "id",
+              "kind",
+              "effect",
+              "where"
+            ],
             "properties": {
-              "id": {"$ref": "#/$defs/id"},
-              "kind": {"enum": ["committed-secret", "keystore-or-private-key", "production-credential", "real-personal-data", "self-starting-job", "migration-at-start-up", "publishing-build-task", "fixed-path-or-file-share", "native-library", "other"]},
-              "effect": {"enum": ["blocks", "neutralise", "none"], "description": "blocks: no run until resolved. neutralise: made harmless in the test profile or build, and recorded. none: checked and nothing to do."},
-              "what": {"type": "string"},
-              "where": {"$ref": "#/$defs/where"}
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "kind": {
+                "enum": [
+                  "committed-secret",
+                  "keystore-or-private-key",
+                  "production-credential",
+                  "real-personal-data",
+                  "self-starting-job",
+                  "migration-at-start-up",
+                  "publishing-build-task",
+                  "fixed-path-or-file-share",
+                  "native-library",
+                  "other"
+                ]
+              },
+              "effect": {
+                "enum": [
+                  "blocks",
+                  "neutralise",
+                  "none"
+                ],
+                "description": "blocks: no run until resolved. neutralise: made harmless in the test profile or build, and recorded. none: checked and nothing to do."
+              },
+              "what": {
+                "type": "string"
+              },
+              "where": {
+                "$ref": "#/$defs/where"
+              }
             }
           }
         }
@@ -92,25 +233,85 @@
     "running_offline": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["found_by", "reports", "findings"],
+      "required": [
+        "found_by",
+        "reports",
+        "findings"
+      ],
       "description": "What the code tried to reach under the airgap agent, summarised from its reports. Each finding is a draft entry for the external systems list.",
       "properties": {
-        "found_by": {"$ref": "#/$defs/found_by"},
-        "reports": {"type": "array", "items": {"type": "string"}, "description": "The airgap reports read, e.g. build/airgap/test/calls.jsonl."},
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
+        "reports": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The airgap reports read, e.g. build/airgap/test/calls.jsonl."
+        },
         "findings": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "target", "kind", "callers"],
+            "required": [
+              "id",
+              "target",
+              "kind",
+              "callers"
+            ],
             "properties": {
-              "id": {"$ref": "#/$defs/id"},
-              "target": {"type": "string", "description": "Host, host:port, or program name."},
-              "kind": {"enum": ["host-lookup", "tcp", "udp", "database", "http", "jndi", "mail", "process", "native-library", "exit", "file-write"], "description": "As in the airgap agent's report."},
-              "callers": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "The lines of the repo's own code that made the call."},
-              "setting": {"type": "string", "description": "The setting that supplied the address, and the file and line it came from, when known."},
-              "runs": {"type": "array", "items": {"enum": ["test", "application", "build"]}},
-              "tests": {"type": "integer", "minimum": 0, "description": "How many tests made the call."}
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "target": {
+                "type": "string",
+                "description": "Host, host:port, or program name."
+              },
+              "kind": {
+                "enum": [
+                  "host-lookup",
+                  "tcp",
+                  "udp",
+                  "database",
+                  "http",
+                  "jndi",
+                  "mail",
+                  "process",
+                  "native-library",
+                  "exit",
+                  "file-write"
+                ],
+                "description": "As in the airgap agent's report."
+              },
+              "callers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                },
+                "description": "The lines of the repo's own code that made the call."
+              },
+              "setting": {
+                "type": "string",
+                "description": "The setting that supplied the address, and the file and line it came from, when known."
+              },
+              "runs": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "test",
+                    "application",
+                    "build"
+                  ]
+                }
+              },
+              "tests": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "How many tests made the call."
+              }
             }
           }
         }
@@ -119,31 +320,81 @@
     "tests": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["found_by"],
+      "required": [
+        "found_by"
+      ],
       "description": "The measurement run's results.",
       "properties": {
-        "found_by": {"$ref": "#/$defs/found_by"},
-        "framework": {"type": "string", "description": "e.g. JUnit 4 on the Vintage engine."},
-        "count": {"type": "integer", "minimum": 0},
-        "runs": {"type": "integer", "minimum": 1, "description": "How many times the tests were run to find flaky ones."},
-        "flaky": {"type": "integer", "minimum": 0, "description": "Tests that passed in some runs and failed in others."},
-        "failing": {"type": "integer", "minimum": 0, "description": "Tests that failed in every run, often because the airgap agent refused a call they made."},
-        "disabled": {"type": "integer", "minimum": 0},
-        "line_coverage": {"type": "number", "minimum": 0, "maximum": 100},
-        "branch_coverage": {"type": "number", "minimum": 0, "maximum": 100},
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
+        "framework": {
+          "type": "string",
+          "description": "e.g. JUnit 4 on the Vintage engine."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runs": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many times the tests were run to find flaky ones."
+        },
+        "flaky": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Tests that passed in some runs and failed in others."
+        },
+        "failing": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Tests that failed in every run, often because the airgap agent refused a call they made."
+        },
+        "disabled": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "line_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "branch_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
         "planted_bugs": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["planted", "caught"],
+          "required": [
+            "planted",
+            "caught"
+          ],
           "description": "Mutation testing: bugs planted on purpose, and how many the tests caught.",
           "properties": {
-            "planted": {"type": "integer", "minimum": 0},
-            "caught": {"type": "integer", "minimum": 0},
-            "sampled": {"type": "boolean", "description": "Bugs were planted in some of the code only, named in targets."},
-            "targets": {"type": "string", "description": "The classes bugs were planted in, as given to PIT."},
+            "planted": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "caught": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "sampled": {
+              "type": "boolean",
+              "description": "Bugs were planted in some of the code only, named in targets."
+            },
+            "targets": {
+              "type": "string",
+              "description": "The classes bugs were planted in, as given to PIT."
+            },
             "left_out": {
               "type": "array",
-              "items": {"type": "string"},
+              "items": {
+                "type": "string"
+              },
               "description": "Test classes left out because they are flaky or failing: a planted bug only they would catch isn't counted."
             }
           }
@@ -153,32 +404,126 @@
           "additionalProperties": false,
           "description": "Share of tests of each kind, in per cent.",
           "properties": {
-            "local": {"type": "number", "minimum": 0, "maximum": 100},
-            "container": {"type": "number", "minimum": 0, "maximum": 100},
-            "broad": {"type": "number", "minimum": 0, "maximum": 100}
+            "local": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "container": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "broad": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
           }
         }
       }
     },
-    "anti_patterns": {
+    "meaningless_tests": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["found_by", "findings"],
-      "description": "Anti-patterns in the existing tests. No existing test is deleted before the approval-test baseline exists.",
+      "required": [
+        "found_by",
+        "findings"
+      ],
+      "description": "Meaningless tests: tests that pass whatever the code does. No existing test is deleted before the approval-test baseline exists.",
       "properties": {
-        "found_by": {"$ref": "#/$defs/found_by"},
-        "modules": {"type": "array", "items": {"type": "string"}, "description": "In a repo with more than one module, the modules searched so far, each as its folder from the repo root. Absent when the repo has one module."},
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "In a repo with more than one module, the modules searched so far, each as its folder from the repo root. Absent when the repo has one module."
+        },
         "findings": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "kind", "tests"],
+            "required": [
+              "id",
+              "kind",
+              "tests"
+            ],
             "properties": {
-              "id": {"$ref": "#/$defs/id"},
-              "kind": {"enum": ["no-real-assertion", "disabled", "never-runs", "swallows-failures", "sleeps", "order-dependent", "reaches-external-system", "mocks-everything", "copy-pasted", "other"]},
-              "tests": {"type": "integer", "minimum": 1},
-              "examples": {"$ref": "#/$defs/where"}
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "kind": {
+                "enum": [
+                  "disabled",
+                  "never-runs",
+                  "no-real-assertion",
+                  "swallows-failures",
+                  "mocks-everything",
+                  "other"
+                ]
+              },
+              "tests": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "examples": {
+                "$ref": "#/$defs/where"
+              }
+            }
+          }
+        }
+      }
+    },
+    "unreliable_tests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "found_by",
+        "findings"
+      ],
+      "description": "Unreliable tests: tests that may give a different answer on another run.",
+      "properties": {
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "In a repo with more than one module, the modules searched so far, each as its folder from the repo root. Absent when the repo has one module."
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "kind",
+              "tests"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "kind": {
+                "enum": [
+                  "sleeps",
+                  "order-dependent"
+                ]
+              },
+              "tests": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "examples": {
+                "$ref": "#/$defs/where"
+              }
             }
           }
         }
@@ -187,20 +532,36 @@
     "obstacles": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["found_by", "findings"],
+      "required": [
+        "found_by",
+        "findings"
+      ],
       "description": "Obstacles to testing, each scored with evidence, from the named list of obstacles.",
       "properties": {
-        "found_by": {"$ref": "#/$defs/found_by"},
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
         "findings": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "score", "evidence"],
+            "required": [
+              "id",
+              "score",
+              "evidence"
+            ],
             "properties": {
-              "id": {"$ref": "#/$defs/id"},
-              "score": {"type": "number", "minimum": 0},
-              "evidence": {"$ref": "#/$defs/where"}
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0
+              },
+              "evidence": {
+                "$ref": "#/$defs/where"
+              }
             }
           }
         }
@@ -209,19 +570,37 @@
     "techniques": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["found_by", "candidates"],
+      "required": [
+        "found_by",
+        "candidates"
+      ],
       "description": "Every technique in the toolkit's techniques folder, one candidate each, with the result of each of its rules for this repo. Whether to adopt, defer or reject each is a decision (techniques/<technique id>).",
       "properties": {
-        "found_by": {"$ref": "#/$defs/found_by"},
+        "found_by": {
+          "$ref": "#/$defs/found_by"
+        },
         "candidates": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "because"],
+            "required": [
+              "id",
+              "because"
+            ],
             "properties": {
-              "id": {"$ref": "#/$defs/id", "description": "A technique id from the toolkit's techniques folder."},
-              "because": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "One line per needed_when, possible_when and reject_or_defer_when condition, in the technique rule's order, each with its result (true, false or unknown) and the fact behind it; then one line per precondition check; then the evidence line, only when it decides the choice."}
+              "id": {
+                "$ref": "#/$defs/id",
+                "description": "A technique id from the toolkit's techniques folder."
+              },
+              "because": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                },
+                "description": "One line per needed_when, possible_when and reject_or_defer_when condition, in the technique rule's order, each with its result (true, false or unknown) and the fact behind it; then one line per precondition check; then the evidence line, only when it decides the choice."
+              }
             }
           }
         }
@@ -229,10 +608,17 @@
     },
     "decisions": {
       "type": "object",
-      "description": "What people decided, keyed by section and id: safety/<finding>, running-offline/<finding>, anti-patterns/<finding>, techniques/<technique>, level/target, repo/<field>, questions/<question>. Tools never write here. The AI assistant writes only proposed entries, and marks an entry stale when its finding has gone, or proposed again when it comes back.",
-      "propertyNames": {"pattern": "^(repo|level|safety|running-offline|tests|anti-patterns|obstacles|techniques|questions)/[a-z0-9]+(-[a-z0-9]+)*$"},
-      "additionalProperties": {"$ref": "#/$defs/decision"}
+      "description": "What people decided, keyed by section and id: safety/<finding>, running-offline/<finding>, meaningless/<finding>, unreliable/<finding>, techniques/<technique>, level/target, repo/<field>, questions/<question>. Tools never write here. The AI assistant writes only proposed entries, and marks an entry stale when its finding has gone, or proposed again when it comes back.",
+      "propertyNames": {
+        "pattern": "^(repo|level|safety|running-offline|tests|meaningless|unreliable|obstacles|techniques|questions)/[a-z0-9]+(-[a-z0-9]+)*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/decision"
+      }
     },
-    "notes": {"type": "string", "description": "Anything the testing plan should take into account."}
+    "notes": {
+      "type": "string",
+      "description": "Anything the testing plan should take into account."
+    }
   }
 }

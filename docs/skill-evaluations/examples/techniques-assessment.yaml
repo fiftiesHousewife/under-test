@@ -124,9 +124,9 @@ tests:
     local: 71
     container: 0
     broad: 29
-anti_patterns:
+meaningless_tests:
   found_by:
-    tool: test-anti-pattern-check
+    tool: find-meaningless-and-unreliable-tests
     version: 0.1.0
     commit: 1a2b3c4
   findings:
@@ -140,11 +140,12 @@ anti_patterns:
     tests: 11
     examples:
     - src/test/java/com/example/orders/RefundTest.java
-  - id: reaches-external-system
-    kind: reaches-external-system
-    tests: 6
-    examples:
-    - src/test/java/com/example/orders/OrderRepositoryIT.java
+unreliable_tests:
+  found_by:
+    tool: find-meaningless-and-unreliable-tests
+    version: 0.1.0
+    commit: 1a2b3c4
+  findings: []
 techniques:
   found_by: {tool: choose-techniques, version: unreleased, commit: "90f684b"}
   candidates:
@@ -353,7 +354,7 @@ decisions:
     state: proposed
     drafted_by: ai
     choice: off in the test profile
-  anti-patterns/disabled:
+  meaningless/disabled:
     state: proposed
     drafted_by: ai
     choice: Application Owner decides

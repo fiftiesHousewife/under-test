@@ -2237,8 +2237,8 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "Renamed for what it finds; writes the meaningless tests (never run, can't fail, check only their mocks) and the unreliable tests (sleep, depend on order) from one PMD pass by under-test-tools"
-      - "reaches-external-system and copy-pasted are no longer kinds; its host search and its Spring settings references go; the schemas for the list of tests and the assessment file change with it"
+      - "Renamed for what it finds; writes the meaningless tests (never run, can't fail, check only their mocks) and the unreliable tests (sleep, depend on order) from one PMD pass by under-test-tools (done in the skill: find-meaningless-and-unreliable-tests; under-test-tools still to follow)"
+      - "reaches-external-system and copy-pasted are no longer kinds; its host search and its Spring settings references go; the schemas for the list of tests and the assessment file change with it (done: each test's meaningless and unreliable, the assessment file's meaningless_tests and unreliable_tests, decisions meaningless/ and unreliable/; the testing plan, obstacle scoring, technique rules, report and their evals follow)"
       - "Measurement reports which suspects its planted bugs and repeats confirm"
       - "Its eval case and under-test-tools' anti-patterns follow, and the eval passes in every run"
     blocked_by:
@@ -2325,4 +2325,17 @@ items:
     blocked_by:
       - "decide-how-each-test-is-graded-for-external-systems"
       - "draft-the-connection-list-keeps-only-judgement"
+  - key: "external-systems-list-eval-covers-hosts-in-settings"
+    type: "deliverable"
+    title: "The external systems list's eval case checks the hosts the old anti-patterns case did: in test code, Spring XML, Spring Boot settings, JNDI, and never XML namespaces or localhost profiles"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "The cases the find-meaningless-and-unreliable-tests eval dropped (a host in code, a placeholder default, an inherited Spring Boot test, a JPA test on the real database, legacy and Spring XML hosts, a JNDI lookup, namespaces, localhost profiles) are checked in an external systems list eval case, on the same sample repo"
+      - "It passes in every run"
+    blocked_by:
+      - "decide-discovery-keeps-three-lists-of-tests-apart"
 

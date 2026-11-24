@@ -5,4 +5,4 @@ flags: m
 match: contains
 target: {source: file, path: testing/assessment.yaml}
 ---
-The decision `techniques/tests-from-cases` proposes adopt. `needed_when` 'The source list names manual test scripts or tables of examples to turn into tests' is true: the orders release pack is manual test scripts, mined for examples. The anti-pattern check found no copy-pasted tests, so that need is false, but one true need is enough.
+The decision `techniques/tests-from-cases` proposes adopt. `needed_when` 'The source list names manual test scripts or tables of examples to turn into tests' is true: the orders release pack is manual test scripts, mined for examples.

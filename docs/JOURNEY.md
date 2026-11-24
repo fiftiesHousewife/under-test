@@ -38,7 +38,7 @@ socket), and every test that may reach one, with the chain of calls that gets th
 the code or the settings, or records where it will come from, and drafts the external systems list, with a proposed
 stand-in for each and the addresses tests must never reach, for the Architecture Owner to confirm. Each test's
 external systems go into the repo's list of tests ([why](decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)).
-Then the [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill, to be renamed for what it
+Then the [find-meaningless-and-unreliable-tests](../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) skill, to be renamed for what it
 now finds, checks the repo's own tests with PMD and the toolkit's rules, in one pass, for the other two lists:
 **meaningless tests**, that never run (disabled, or never picked up), can't fail (no real assertion, or a swallowed
 failure) or check only their mocks; and **unreliable tests**, that sleep or depend on the order they run in. Each is
@@ -54,7 +54,7 @@ What a program can decide the same way every time is done by a tool; the skills 
 - **Who:** a Forward Deployed Engineer; the Architecture Owner, the Knowledge Curator and the Application Owner (for
   disabled tests).
 - **Leaves in the repo:** `testing/external-systems.calm.json`, `testing/tests.yaml`, the application's source list, the
-  anti-pattern findings in the assessment file.
+  meaningless and unreliable tests in the assessment file.
 - **Decided in:** [Every repo starts with discovery: a draft external systems list, a source list and a check of its existing tests, and a first approval-test baseline follows](../decision-guides/0032-every-repo-starts-with-discovery-a-draft-external-systems-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [Each application's external systems are recorded as a CALM list](../decision-guides/0030-each-applications-external-systems-are-recorded-as-a-calm-list.md), [The external systems list says what tests use for each system, and which addresses tests must never reach](../decision-guides/0031-the-external-systems-list-says-what-tests-use-for-each-system-and-which-addresses-tests-must-never-reach.md), [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](../decision-guides/0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md), [Each application also has a knowledge curator and an architecture owner](../decision-guides/0002-each-application-also-has-a-knowledge-curator-and-an-architecture-owner.md), [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](../decision-guides/0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md).
 
 ## 2. Safety inventory: the gate before the first run

@@ -50,12 +50,11 @@ that node's `name`, and its `stand-in.approach`, `stand-in.kit`, `state`, `never
 | 1 | each connection | approach is `run-in-container`, `recorded-responses`, `contract` or `fake-behind-an-interface` | `make-it-run-on-its-own` | `stand-in-<destination node id>` | Give tests a stand-in for <destination name>: <approach, in words>, with <technique name> | Tests that reach <destination name> use the stand-in and pass with outbound calls blocked. |
 | 2 | each connection | approach is `not-chosen` | `make-it-run-on-its-own` | `choose-stand-in-<destination node id>` | Choose what tests use for <destination name> | The Architecture Owner has decided the stand-in in the external systems list |
 | 3 | `tests.failing` | more than 0 | `make-it-run-on-its-own` | `tests-failing-every-run` | Make the <n> tests that fail in every run pass with outbound calls blocked | No test fails in every run |
-| 4 | each anti-pattern finding of kind `reaches-external-system` | always | `make-it-run-on-its-own` | `tag-<finding id>` | Tag the <n> tests that reach an external system, and leave them out of normal runs | No test in a normal run reaches an external system |
-| 5 | `tests.flaky` | more than 0 | `fix-flaky-tests` | `flaky-tests` | Fix the <n> flaky tests, groups that fail together first | Five runs in a row with no flaky test |
-| 6 | each anti-pattern finding of kind `sleeps` or `order-dependent` | always | `fix-flaky-tests` | `<finding id>` | Fix the <n> tests that <sleep / depend on the order they run in> | <No test sleeps / Every test passes when run alone> |
-| 7 | each adopted technique | it is no row 1's technique | its `workstream` | `<technique id>` | <technique name> | Gives evidence for level <the lowest of its evidence_for_maturity_levels> |
-| 8 | each anti-pattern finding of kind `disabled` or `never-runs` | always | `strengthen-tests` | `<disabled-tests / never-run-tests>` (with `-<finding id>` added if that kind has more than one finding) | <Re-enable or delete the <n> disabled tests / Make the <n> tests that never run run, or delete them>, as the Application Owner decides, once current behaviour is recorded | <No disabled test / No test that never runs> is left undecided |
-| 9 | each anti-pattern finding of kind `no-real-assertion`, `swallows-failures`, `mocks-everything`, `copy-pasted` or `other` | always | `strengthen-tests` | `<finding id>` | Fix the <n> tests that <have no real assertion / swallow their own failures / mock everything / are copy-pasted / its id with hyphens as spaces, dropping a leading `other-`> | Each of those tests asserts what the code does, and catches a planted bug |
+| 4 | `tests.flaky` | more than 0 | `fix-flaky-tests` | `flaky-tests` | Fix the <n> flaky tests, groups that fail together first | Five runs in a row with no flaky test |
+| 5 | each `unreliable_tests` finding (kind `sleeps` or `order-dependent`) | always | `fix-flaky-tests` | `<finding id>` | Fix the <n> tests that <sleep / depend on the order they run in> | <No test sleeps / Every test passes when run alone> |
+| 6 | each adopted technique | it is no row 1's technique | its `workstream` | `<technique id>` | <technique name> | Gives evidence for level <the lowest of its evidence_for_maturity_levels> |
+| 7 | each `meaningless_tests` finding of kind `disabled` or `never-runs` | always | `strengthen-tests` | `<disabled-tests / never-run-tests>` (with `-<finding id>` added if that kind has more than one finding) | <Re-enable or delete the <n> disabled tests / Make the <n> tests that never run run, or delete them>, as the Application Owner decides, once current behaviour is recorded | <No disabled test / No test that never runs> is left undecided |
+| 8 | each `meaningless_tests` finding of kind `no-real-assertion`, `swallows-failures`, `mocks-everything` or `other` | always | `strengthen-tests` | `<finding id>` | Fix the <n> tests that <have no real assertion / swallow their own failures / mock everything / its id with hyphens as spaces, dropping a leading `other-`> | Each of those tests asserts what the code does, and catches a planted bug |
 
 * `<a / b>` picks by kind, in the order the kinds are listed.
 * **Approach in words:** `run-in-container` "run in a container", `recorded-responses` "recorded responses",
@@ -65,14 +64,15 @@ that node's `name`, and its `stand-in.approach`, `stand-in.kit`, `state`, `never
 * **Row 1 extras:** append to Work ", using the shared test kit <kit>" if the stand-in has a `kit`, then
   " (proposed: the Architecture Owner confirms it)" if the connection's state is `proposed`; to Done when,
   " No test can reach <never-reach hosts, in file order, joined by ", ">." if it has any.
-* **Anti-pattern rows** (4, 6, 8, 9) are made whatever the `anti-patterns/<finding id>` decision, unless it is decided
-  with a choice of exactly `leave as is`. A finding with no `tests` makes no row.
-* **`<n>`** is the From value for rows 3 and 5 (`tests.failing`, `tests.flaky`), and the finding's `tests` for rows
-  4, 6, 8 and 9.
+* **Finding rows** (5, 7, 8) are made whatever the `unreliable/<finding id>` or `meaningless/<finding id>` decision,
+  unless it is decided with a choice of exactly `leave as is`. A finding with no `tests` makes no row. Tests that reach
+  external systems make no row: repair twins them before the plan is written, and rows 1 and 2 give their stand-ins.
+* **`<n>`** is the From value for rows 3 and 4 (`tests.failing`, `tests.flaky`), and the finding's `tests` for rows
+  5, 7 and 8.
 * **Order:** within a workstream by rule number; within a rule, connection rows by most tests then by key, other rows
   by key.
-* **Labels**, plain, joined by ", ", in this order: `workstream:<id>`; `technique:<id>` for row 7 and for row 1 with a
-  technique; `level:<lowest evidence level>` for row 7; `application:<repo.application>` if set
+* **Labels**, plain, joined by ", ", in this order: `workstream:<id>`; `technique:<id>` for row 6 and for row 1 with a
+  technique; `level:<lowest evidence level>` for row 6; `application:<repo.application>` if set
   ([Repo work is tracked in the organisation's issue tracker with standard labels](../../../decision-guides/0027-repo-work-is-tracked-in-the-organisations-issue-tracker-with-standard-labels.md)).
 * **Tracker item:** the key's, from the existing plan's "Work, in order" or "Work no longer in the plan" tables;
   empty for a new key. A key that comes back keeps its tracker item; the loader reopens it. Under "Work no

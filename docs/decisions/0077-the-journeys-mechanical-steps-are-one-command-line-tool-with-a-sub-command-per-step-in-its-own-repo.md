@@ -33,7 +33,7 @@ toolkit's schemas, so a schema change is one change. It is published like connec
 tag, so an organisation mirrors one file), and each sub-command has its own example repo of known answers. Programs
 with uses beyond the toolkit, such as connection-paths, stay in their own repos.
 
-The first sub-command takes find-test-anti-patterns' mechanical steps: list the tests, map PMD's and its copy-paste
+The first sub-command takes find-meaningless-and-unreliable-tests' mechanical steps: list the tests, map PMD's and its copy-paste
 detector's hits to them, write their `anti_patterns` in `testing/tests.yaml`, and summarise them in the assessment
 file. The skill then runs it, judges what it flags as uncertain, adds the `other` kinds it finds by reading, proposes
 decisions and reports.

@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../../../../../schema/tests.schema.json
+schema: tests/1
+found_by:
+  draft-the-external-systems-list: {version: "0.1.0", commit: "1a2b3c4"}
+tests:
+  - test: "com.example.orders.OrderRepositoryIT.findsAnOrder"
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:12"
+    external_systems:
+      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+  - test: "com.example.orders.OrderRepositoryIT.savesAnOrder"
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:18"
+    external_systems:
+      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+  - test: "com.example.orders.OrderRepositoryIT.listsOrders"
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:24"
+    external_systems:
+      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+  - test: "com.example.orders.OrderRepositoryIT.cancelsAnOrder"
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:30"
+    external_systems:
+      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+  - test: "com.example.orders.OrderRepositoryIT.refundsAnOrder"
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:36"
+    external_systems:
+      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+  - test: "com.example.orders.OrderRepositoryIT.archivesAnOrder"
+    at: "src/test/java/com/example/orders/OrderRepositoryIT.java:42"
+    external_systems:
+      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}

@@ -30,7 +30,7 @@ inventory already works the same way: a rule file the toolkit ships, run by an e
 ## Decision Outcome
 
 Chosen in discussion: PMD with a toolkit ruleset,
-[`tools/test-anti-patterns/anti-patterns.pmd.xml`](../../tools/test-anti-patterns/anti-patterns.pmd.xml), and CPD,
+[`tools/meaningless-and-unreliable-tests/rules.pmd.xml`](../../tools/meaningless-and-unreliable-tests/rules.pmd.xml), and CPD,
 PMD's copy-paste detector, ignoring literals. Each rule's name starts with the kind of anti-pattern it finds. PMD
 reads code only and runs nothing. Searches and the assistant cover what PMD cannot read: hosts in settings files,
 Spring XML and Spring Boot's settings, Cucumber feature files, test folders and classes the build never runs, and the
@@ -38,7 +38,7 @@ four `other` cases. Where no `pmd` command is available, the skill falls back to
 
 ### Consequences
 
-* PMD is one more artifact an organisation mirrors; [pmd-install](../../tools/test-anti-patterns/pmd-install/build.gradle)
+* PMD is one more artifact an organisation mirrors; [pmd-install](../../tools/meaningless-and-unreliable-tests/pmd-install/build.gradle)
   puts it and a `pmd` command in a folder from the package repository.
 * The skill's two scripts are removed; its eval case installs PMD into each run's workspace.
 * On the example repo the ruleset gives every expected answer, including a test that asserts through a shared helper,

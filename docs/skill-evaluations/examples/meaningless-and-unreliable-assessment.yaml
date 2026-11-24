@@ -2,13 +2,9 @@
 schema: assessment/1
 repo:
   name: orders-sample
-anti_patterns:
-  found_by: {tool: find-test-anti-patterns, version: unreleased, commit: "98bae5d"}
+meaningless_tests:
+  found_by: {tool: find-meaningless-and-unreliable-tests, version: unreleased, commit: "98bae5d"}
   findings:
-    - id: copy-pasted
-      kind: copy-pasted
-      tests: 2
-      examples: ["src/test/java/com/example/orders/InvoiceTest.java:9", "src/test/java/com/example/orders/InvoiceTest.java:23"]
     - id: disabled
       kind: disabled
       tests: 4
@@ -21,10 +17,6 @@ anti_patterns:
       kind: no-real-assertion
       tests: 2
       examples: ["src/test/java/com/example/orders/OrderServiceTest.java:13", "src/test/java/com/example/orders/OrderServiceTest.java:19"]
-    - id: order-dependent
-      kind: order-dependent
-      tests: 3
-      examples: ["src/test/java/com/example/orders/CheckoutFlowTest.java:14", "src/test/java/com/example/orders/CheckoutFlowTest.java:20", "src/test/java/com/example/orders/CheckoutFlowTest.java:25"]
     - id: other-bent-expected-value
       kind: other
       tests: 2
@@ -33,48 +25,43 @@ anti_patterns:
       kind: other
       tests: 1
       examples: ["src/test/java/com/example/orders/PaymentClientTest.java:11"]
-    - id: reaches-external-system
-      kind: reaches-external-system
-      tests: 2
-      examples: ["src/test/java/com/example/orders/OrderRepositoryIT.java:13", "src/test/java/com/example/orders/OrderRepositoryIT.java:20"]
+unreliable_tests:
+  found_by: {tool: find-meaningless-and-unreliable-tests, version: unreleased, commit: "98bae5d"}
+  findings:
+    - id: order-dependent
+      kind: order-dependent
+      tests: 3
+      examples: ["src/test/java/com/example/orders/CheckoutFlowTest.java:14", "src/test/java/com/example/orders/CheckoutFlowTest.java:20", "src/test/java/com/example/orders/CheckoutFlowTest.java:25"]
     - id: sleeps
       kind: sleeps
       tests: 2
       examples: ["src/test/java/com/example/orders/ReminderJobTest.java:11", "src/test/java/com/example/orders/ReminderJobTest.java:18"]
 decisions:
-  anti-patterns/copy-pasted:
-    state: proposed
-    drafted_by: ai
-    choice: fixed in the strengthen-tests workstream
-  anti-patterns/disabled:
+  meaningless/disabled:
     state: proposed
     drafted_by: ai
     choice: "Application Owner decides: re-enable, or delete once the approval-test baseline exists"
-  anti-patterns/mocks-everything:
+  meaningless/mocks-everything:
     state: proposed
     drafted_by: ai
     choice: fixed in the strengthen-tests workstream
-  anti-patterns/no-real-assertion:
+  meaningless/no-real-assertion:
     state: proposed
     drafted_by: ai
     choice: fixed in the strengthen-tests workstream
-  anti-patterns/order-dependent:
+  unreliable/order-dependent:
     state: proposed
     drafted_by: ai
     choice: fixed in the fix-flaky-tests workstream
-  anti-patterns/other-bent-expected-value:
+  meaningless/other-bent-expected-value:
     state: proposed
     drafted_by: ai
     choice: fixed in the strengthen-tests workstream
-  anti-patterns/other-server-nothing-starts:
+  meaningless/other-server-nothing-starts:
     state: proposed
     drafted_by: ai
     choice: fixed in the strengthen-tests workstream
-  anti-patterns/reaches-external-system:
-    state: proposed
-    drafted_by: ai
-    choice: tagged and left out of normal runs
-  anti-patterns/sleeps:
+  unreliable/sleeps:
     state: proposed
     drafted_by: ai
     choice: fixed in the fix-flaky-tests workstream

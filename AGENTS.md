@@ -41,7 +41,7 @@ Name a product only as an option or an example.
 | [work-on-an-item](.github/skills/work-on-an-item/SKILL.md) | Pick up a work item from the issue tracker and finish it |
 | [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turn a repo's gitleaks reports, and a list of keystores ever committed, into the safety section of its assessment file, the gate before any of its tests or its application first run |
 | [draft-the-external-systems-list](.github/skills/draft-the-external-systems-list/SKILL.md) | Draft a repo's external systems list from its code with connection-paths and from its settings, record which tests may reach each connection, and later merge in the airgap agent's reports |
-| [find-test-anti-patterns](.github/skills/find-test-anti-patterns/SKILL.md) | Count the anti-patterns in a repo's existing tests the same way every time, and note what the list misses |
+| [find-meaningless-and-unreliable-tests](.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) | Find a repo's meaningless tests (never run, can't fail, check only their mocks) and unreliable ones (sleep, depend on order), the same way every time |
 | [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Measure a Gradle repo under the airgap agent: five runs for flaky tests, coverage, planted bugs, test mix |
 | [score-obstacles](.github/skills/score-obstacles/SKILL.md) | Score a repo's obstacles to testing from what is already recorded, by the named list in the decision guide |
 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Propose adopt, defer or reject for every technique, each traced to the rule that decided it |

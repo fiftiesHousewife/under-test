@@ -20,7 +20,7 @@ can be trusted. Some of them still pin behaviour nothing else records.
 
 ## Considered Options
 
-* **Record each anti-pattern with the find-test-anti-patterns skill, triage it, and fix it in order; delete nothing
+* **Record each anti-pattern with the find-meaningless-and-unreliable-tests skill, triage it, and fix it in order; delete nothing
   before the approval-test baseline exists**  
   Measurement sees the tests as they really are, and no behaviour is lost before it's pinned elsewhere
 * **Delete weak tests early**  
@@ -30,7 +30,7 @@ can be trusted. Some of them still pin behaviour nothing else records.
 
 ## Decision Outcome
 
-Proposed: record, triage and fix in order, the default the toolkit maintainers chose in discussion. The [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill records each anti-pattern in the assessment file.
+Proposed: record, triage and fix in order, the default the toolkit maintainers chose in discussion. The [find-meaningless-and-unreliable-tests](../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) skill records each anti-pattern in the assessment file.
 Disabled tests go to the Application Owner to re-enable or delete, and so do methods that look like tests but never
 run, to make into real tests or delete. Tests that reach external systems are tagged and left
 out of normal runs. The rest are fixed in the "strengthen tests" workstream. No existing test is deleted before the
@@ -38,7 +38,7 @@ approval-test baseline exists, since it may be the only record of some behaviour
 
 ### Consequences
 
-* The find-test-anti-patterns skill, writing into the assessment file.
+* The find-meaningless-and-unreliable-tests skill, writing into the assessment file.
 * The obstacles to testing gain the anti-patterns as named obstacles, scored with the rest.
 * Coverage and mutation results are reported with and without the tests marked as anti-patterns.
 

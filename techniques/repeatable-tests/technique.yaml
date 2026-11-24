@@ -6,7 +6,7 @@ evidence_for_maturity_levels: [0, 1]
 tools: [junit5, junit4, awaitility]
 needed_when:
   - "Tests pass in some runs and fail in others (tests.flaky above 0)"
-  - "Tests sleep for a fixed time, or depend on the order they run in (the sleeps or order-dependent anti-patterns)"
+  - "Tests sleep for a fixed time, or depend on the order they run in (sleeps or order-dependent, the kinds of unreliable test)"
 reject_or_defer_when: []
 precondition_checks:
   - {done_by: tool, check: "Five runs of the tests, recording which tests failed in which runs"}

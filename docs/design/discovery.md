@@ -15,7 +15,7 @@ done by a tool, and the skill keeps the judgement
 | Order | Skill | Runs | Finds | Writes, and owns |
 |---|---|---|---|---|
 | 1 | [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) | the build's dependency resolution; [connection-paths](https://github.com/fiftiesHousewife/connection-paths) | Every place the code opens or uses a connection, each connection's address (or where it will come from), the systems they make, and every test that may reach one, with the chain of calls ([why](../decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)) | `external-systems.calm.json`; `connection-paths.json`; in `tests.yaml`, each test's `connections` |
-| 2 | [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | PMD with the toolkit's rules, and its copy-paste detector | Every test with a problem, by kind; `reaches-external-system` from step 1's record ([why](../decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md)) | In `tests.yaml`, each test's `anti_patterns`; `assessment.yaml`: `anti_patterns` |
+| 2 | [find-meaningless-and-unreliable-tests](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) | PMD with the toolkit's rules | Meaningless tests (never run, can't fail, check only their mocks) and unreliable ones (sleep, depend on order) ([why](../decisions/0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)) | In `tests.yaml`, each test's `meaningless` and `unreliable`; `assessment.yaml`: `meaningless_tests`, `unreliable_tests` |
 | | (no skill) | — | The sources that count for intended behaviour | `sources.yaml` |
 
 Alongside, and settled before any test runs: [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md)
@@ -41,13 +41,11 @@ and adds flaky and failing tests to `tests.yaml`.
 
 ## Still being built
 
-* [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools)' `anti-patterns`, which does
-  find-test-anti-patterns' mechanical steps and gives the eval's known answers, is built but not yet published; the
-  skill uses it when its jar is there
+* [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools)' `meaningless-and-unreliable`, which does
+  find-meaningless-and-unreliable-tests' mechanical steps and gives the eval's known answers, is built but not yet
+  published; the skill uses it when its jar is there
   ([proposed packaging](../decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)).
-* find-test-anti-patterns reading `reaches-external-system` from the external systems list's record by default; today it
-  may, and otherwise finds hosts itself.
 * An eval case for the external systems list's pass from the code, from what Openfire showed.
-* The repair step, which reads these lists after measurement: the tests that reach external systems are sorted and
-  treated, and the other anti-patterns fixed in the test code
+* The repair step, which reads these lists after measurement: each test that reaches an external system becomes a
+  pair, one injecting a stand-in and one tagged external
   ([why](../decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)).

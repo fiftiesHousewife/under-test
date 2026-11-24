@@ -34,11 +34,11 @@ code reaches and a proposed stand-in for each connection
 **Without the skill:** every run left out the systems the plan and the tracker need as nodes, and none marked which
 connection must never be reached.
 
-## 1. Discovery: anti-patterns in the existing tests, [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md)
+## 1. Discovery: anti-patterns in the existing tests, [find-meaningless-and-unreliable-tests](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md)
 
 **Given:** the repo's test code, read only.
 **Writes:** the `anti_patterns` section: a count for each kind, and the first three tests of each as `path:line`
-([whole file](examples/anti-patterns-assessment.yaml)).
+([whole file](examples/meaningless-and-unreliable-assessment.yaml)).
 
 ```yaml
 anti_patterns:

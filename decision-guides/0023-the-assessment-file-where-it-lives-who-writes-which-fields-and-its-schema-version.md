@@ -17,7 +17,7 @@ Each repo needs one machine-readable record of what was measured and what people
 ## Considered Options
 
 * **`testing/assessment.yaml` in each repo: skills, and the tools they run, rewrite their own sections; people's answers kept apart in `decisions`**  
-  Each tool section (the safety inventory, running offline, tests, anti-patterns, obstacles, techniques, the level
+  Each tool section (the safety inventory, running offline, tests, meaningless tests, unreliable tests, obstacles, techniques, the level
   reached) says which tool wrote it and at which commit, and is rewritten in full on every run. Every finding has an
   id that stays the same between runs. People's answers live only in `decisions`, keyed by section and finding id
   (`safety/db-password`, `techniques/recorded-http-responses`, `level/target`), which tools never write, so a re-run

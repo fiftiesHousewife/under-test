@@ -1,11 +1,11 @@
 # Evaluation: find-test-anti-patterns
 
-Does the [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) skill save an AI assistant
+Does the [find-test-anti-patterns](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) skill save an AI assistant
 effort and give the same result each time? It was tried against the same task done without it.
 
 ## How it was tried
 
-The repo was [a sample of 22 JUnit 4 tests](find-test-anti-patterns/sample-repo) with a known number of each
+The repo was [a sample of 22 JUnit 4 tests](find-meaningless-and-unreliable-tests/sample-repo) with a known number of each
 anti-pattern: 4 disabled, 2 with no real assertion, 2 that sleep, 3 that depend on run order, 2 that reach a shared
 database, 2 in a class with six mocks, and 2 copy-pasted. It also has tests that must not count: one that expects an
 exception, and one that calls `localhost`. Each agent got the same task and the toolkit; the agent without the skill

@@ -131,7 +131,7 @@ In `testing/tests.yaml`, replace `external_systems` in every entry and add an en
 `file:line`, made relative to the repo root, without a leading `./`) for a test that has none; never touch another
 skill's keys. An entry left with only `test` and `at` goes. Set `found_by.draft-the-external-systems-list` (`version`, the
 organisation profile's `toolkit.version` or `unreleased`; `commit`, `git rev-parse --short HEAD`). Entries sorted by
-`test`; every string double-quoted. No file yet: start it as find-test-anti-patterns' step 3 says.
+`test`; every string double-quoted. No file yet: start it as find-meaningless-and-unreliable-tests' step 3 says.
 
 ## 5. Check, then report
 

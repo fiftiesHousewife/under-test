@@ -12,7 +12,7 @@ group: Using the toolkit in an organisation
 
 ## Context and Problem Statement
 
-[find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) counts nine kinds of problem in a
+[find-test-anti-patterns](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) counts nine kinds of problem in a
 repo's existing tests, from tests that reach external systems to copied tests. The journey needs only a few of
 them, for different reasons and at different steps: which tests reach a real external system (measurement leaves them
 out, repair twins them), which tests mean nothing (they pass whatever the code does), and which can't be trusted to

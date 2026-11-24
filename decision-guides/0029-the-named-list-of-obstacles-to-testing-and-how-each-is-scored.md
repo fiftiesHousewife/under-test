@@ -37,10 +37,10 @@ are added when a skill records them.
 | `needs-real-infrastructure` | connections to a `database`, `ldap` or queue node whose stand-in isn't decided | none | 1 | 2 | 3 or more |
 | `depends-on-other-services` | connections to a `service` node | none | 1 | 2 or 3 | 4 or more |
 | `talks-to-unplanned-systems` | connections whose stand-in approach is `not-chosen` | none | 1 | 2 | 3 or more |
-| `tests-reach-external-systems` | the `reaches-external-system` anti-pattern's `tests` | 0 | 1 to 5 | 6 to 20 | more than 20 |
+| `tests-reach-external-systems` | tests in `testing/tests.yaml` with an external system graded `reaches` or `may-reach` | 0 | 1 to 5 | 6 to 20 | more than 20 |
 | `flaky-tests` | `tests.flaky` as a share of `tests.count` | 0 | under 2% | 2% to under 5% | 5% or more |
 | `tests-fail-every-run` | `tests.failing` as a share of `tests.count` | 0 | under 2% | 2% to under 5% | 5% or more |
-| `tests-check-nothing` | the `no-real-assertion` anti-pattern's `tests` as a share of `tests.count` | 0 | under 5% | 5% to under 15% | 15% or more |
+| `tests-check-nothing` | the `no-real-assertion` meaningless tests' `tests` as a share of `tests.count` | 0 | under 5% | 5% to under 15% | 15% or more |
 | `disabled-tests` | `tests.disabled` as a share of `tests.count` | 0 | under 2% | 2% to under 5% | 5% or more |
 | `little-code-run-by-tests` | `tests.line_coverage` | 80 or more | 60 to under 80 | 30 to under 60 | under 30 |
 | `tests-catch-few-planted-bugs` | `tests.planted_bugs`: caught ÷ planted | 0.8 or more | 0.5 to under 0.8 | 0.2 to under 0.5 | under 0.2 |

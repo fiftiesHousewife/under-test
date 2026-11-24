@@ -5,7 +5,7 @@ workstream: make-it-run-on-its-own
 evidence_for_maturity_levels: [1]
 tools: [junit5, junit4, gradle, maven-surefire]
 needed_when:
-  - "Tests reach an external system (the reaches-external-system anti-pattern)"
+  - "Tests reach an external system (the external systems list names tests for one)"
   - "Broad or container tests are part of the test mix (tests.mix)"
   - "A connection's stand-in runs in a container"
 reject_or_defer_when: []

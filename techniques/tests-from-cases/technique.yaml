@@ -5,7 +5,6 @@ workstream: strengthen-tests
 evidence_for_maturity_levels: [2, 3]
 tools: [junit5, junit4, junitparams]
 needed_when:
-  - "Tests are copied and pasted with only their values changed (the copy-pasted anti-pattern)"
   - "The source list names manual test scripts or tables of examples to turn into tests"
 reject_or_defer_when: []
 precondition_checks:

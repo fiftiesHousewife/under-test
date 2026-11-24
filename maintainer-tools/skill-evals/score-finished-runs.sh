@@ -3,7 +3,7 @@
 # checks (grade.py): claude plugin eval only scores once every run is done.
 #
 #   maintainer-tools/skill-evals/score-finished-runs.sh <case folder> [<since, as HH:MM, local time>]
-#   e.g. maintainer-tools/skill-evals/score-finished-runs.sh .github/evals/find-test-anti-patterns/counts-every-kind 19:27
+#   e.g. maintainer-tools/skill-evals/score-finished-runs.sh .github/evals/find-meaningless-and-unreliable-tests/counts-every-kind 19:27
 #
 # Each finished run's workspace is kept in /tmp/e-*/ and sealed (mode 000); like run-all.sh, this opens it with chmod
 # 700 to read it. Nothing in it is run. A run that loaded the skill is "with", otherwise "without".

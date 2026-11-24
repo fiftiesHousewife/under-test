@@ -27,9 +27,10 @@ Setting coverage targets before anyone knows what a repo connects to, what its t
 
 Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
 
-Discovery follows the safety inventory, once its blocking findings are resolved. The draft external systems list starts
-from the airgap agent's report of every call the repo's first run tried to make. Discovery also takes stock of the
-tests the repo already has and the test assets outside it, with their anti-patterns. The first approval-test baseline is
+Discovery comes first, before any of the repo's tests run; only its build may. The draft external systems list starts
+from the code, read by connection-paths, and the airgap agent's reports add what it missed once tests run. Discovery
+also takes stock of the tests the repo already has, which are meaningless and which unreliable, and of the test assets
+outside it. The first approval-test baseline is
 recorded in the step after discovery, at the code's edges and before the testing plan, as a safety net. It is built
 from captured and cleaned behaviour, as the capture guides set out, and the "record current behaviour" workstream
 later extends it across the code as the plan sets out. See

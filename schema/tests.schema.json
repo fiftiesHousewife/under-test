@@ -138,88 +138,36 @@
               }
             }
           },
-          "anti_patterns": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "kinds"
-            ],
-            "description": "Owned by find-test-anti-patterns.",
-            "properties": {
-              "kinds": {
-                "type": "array",
-                "minItems": 1,
-                "uniqueItems": true,
-                "items": {
-                  "enum": [
-                    "no-real-assertion",
-                    "disabled",
-                    "never-runs",
-                    "swallows-failures",
-                    "sleeps",
-                    "order-dependent",
-                    "reaches-external-system",
-                    "mocks-everything",
-                    "copy-pasted",
-                    "other-bent-expected-value",
-                    "other-server-nothing-starts",
-                    "other-name-does-not-match-assertions",
-                    "other-copied-setup-unchanged"
-                  ]
-                }
-              },
-              "reaches": {
-                "type": "array",
-                "description": "For reaches-external-system: each host the test reaches, and how.",
-                "items": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "host",
-                    "kind",
-                    "through",
-                    "where"
-                  ],
-                  "properties": {
-                    "host": {
-                      "type": "string",
-                      "description": "The host name or IP address, without scheme, port or path; for a JNDI lookup, its JNDI name."
-                    },
-                    "kind": {
-                      "enum": [
-                        "database",
-                        "http",
-                        "mail",
-                        "directory",
-                        "queue",
-                        "file-share",
-                        "other"
-                      ],
-                      "description": "The kind of system, which groups the tests that need the same stand-in."
-                    },
-                    "through": {
-                      "enum": [
-                        "code",
-                        "properties",
-                        "yaml",
-                        "spring-xml",
-                        "spring-boot-config",
-                        "airgap-report"
-                      ],
-                      "description": "Where the host is named: in the test's code, in a properties or YAML file it loads, in a Spring XML context it loads (or a file that context loads), in the Spring Boot settings the application it starts loads, or only in the airgap agent's reports."
-                    },
-                    "where": {
-                      "type": "string",
-                      "description": "path:line of the line naming the host."
-                    }
-                  }
-                }
-              },
-              "copy_of": {
-                "type": "string",
-                "description": "For copy-pasted: the test it was copied from or to, as its test name."
-              }
-            }
+          "meaningless": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "disabled",
+                "never-runs",
+                "no-real-assertion",
+                "swallows-failures",
+                "mocks-everything",
+                "other-bent-expected-value",
+                "other-server-nothing-starts",
+                "other-name-does-not-match-assertions",
+                "other-copied-setup-unchanged"
+              ]
+            },
+            "description": "Owned by find-meaningless-and-unreliable-tests: why the test passes whatever the code does: it never runs (disabled, never-runs), can't fail (no-real-assertion, swallows-failures), or checks only its mocks (mocks-everything); the other-... kinds are ones the skill finds by reading. Measurement's planted bugs confirm or clear it."
+          },
+          "unreliable": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "sleeps",
+                "order-dependent"
+              ]
+            },
+            "description": "Owned by find-meaningless-and-unreliable-tests: why the test may give a different answer on another run: it sleeps for a fixed time, or depends on the order tests run in. Measurement's repeats in varied orders confirm or clear it."
           }
         }
       }

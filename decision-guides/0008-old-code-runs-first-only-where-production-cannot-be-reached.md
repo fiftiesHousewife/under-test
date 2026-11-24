@@ -39,7 +39,7 @@ runners only; nothing else in the journey waits for it. Because the agent works 
 against accidental calls, not separation; the runners stay the separation.
 
 Only the steps that build or run a repo's code need either. Reading code, scan reports and recorded facts (the safety
-inventory, counting anti-patterns, scoring obstacles, choosing techniques, writing the plan) runs no code and can start
+inventory, finding meaningless and unreliable tests, scoring obstacles, choosing techniques, writing the plan) runs no code and can start
 at once.
 
 ### Consequences

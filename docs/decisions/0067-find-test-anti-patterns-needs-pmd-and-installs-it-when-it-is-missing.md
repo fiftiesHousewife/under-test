@@ -27,7 +27,7 @@ real ones.
 ## Decision Outcome
 
 Chosen in discussion: PMD is required. The skill checks for `pmd` on the path or in `.pmd/`; when neither answers, it
-installs PMD into `.pmd/` with [pmd-install](../../tools/test-anti-patterns/pmd-install/build.gradle), keeps that
+installs PMD into `.pmd/` with [pmd-install](../../tools/meaningless-and-unreliable-tests/pmd-install/build.gradle), keeps that
 folder out of git, and checks again; when PMD still doesn't answer, it stops, writes nothing, and tells the person how
 to get it. This replaces the fallback in the decision above; the rest of it stands.
 

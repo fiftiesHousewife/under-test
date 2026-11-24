@@ -9,8 +9,11 @@ toolkit="$here"
 # copy run-all.sh makes).
 while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$toolkit" = "/" ] && exit 1; done
 cp -R "$here/../../write-the-testing-plan/plans-every-piece-of-work/fixture/." .
+# Its own list of tests: six graded as reaching the orders database, for tests-reach-external-systems.
+cp -R "$here/fixture/." .
 mkdir -p schema decision-guides
-cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/external-systems-list.schema.json" schema/
+cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/external-systems-list.schema.json" \
+   "$toolkit/schema/tests.schema.json" schema/
 cp "$toolkit"/decision-guides/0029-*.md decision-guides/
 for f in $(grep -rl 'yaml-language-server: \$schema=\(\.\./\)*schema/' --include='*.yaml' testing 2>/dev/null); do
   sed 's#\$schema=\(\.\./\)*schema/#$schema=../schema/#' "$f" > "$f.tmp" && mv "$f.tmp" "$f"

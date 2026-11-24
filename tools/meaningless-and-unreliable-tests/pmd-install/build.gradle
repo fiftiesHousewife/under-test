@@ -1,6 +1,6 @@
 // Puts PMD and a pmd command in a folder, from the organisation's package repository (or Maven Central), for the
-// find-test-anti-patterns skill: gradlew -p tools/test-anti-patterns/pmd-install installPmd -Pinto=<folder> [-Pjava=<java>]
-// Then run <folder>/pmd check -d <test folders> -R tools/test-anti-patterns/anti-patterns.pmd.xml -f csv. PMD reads
+// find-meaningless-and-unreliable-tests skill: gradlew -p tools/meaningless-and-unreliable-tests/pmd-install installPmd -Pinto=<folder> [-Pjava=<java>]
+// Then run <folder>/pmd check -d <test folders> -R tools/meaningless-and-unreliable-tests/rules.pmd.xml -f csv. PMD reads
 // code only; it runs nothing.
 plugins { id 'base' }
 repositories { mavenCentral() }

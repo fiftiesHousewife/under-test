@@ -72,7 +72,7 @@ What people paste has up to two parts, each headed by a comment naming its file.
   `drafted_by` as it is.
 
 A decision key with no entry yet is added at the end of `decisions` when what it decides is in the files: a finding
-(`safety/`, `running-offline/`, `anti-patterns/`), a technique (`techniques/`), `level/target`, a `repo/` field, or a
+(`safety/`, `running-offline/`, `meaningless/`, `unreliable/`), a technique (`techniques/`), `level/target`, a `repo/` field, or a
 question. Any other key, and any relationship not in the external systems list, is refused: say so.
 
 The `by` on each entry is the role the person chose on the page. The role that decides each kind is:
@@ -81,7 +81,7 @@ The `by` on each entry is the role the person chose on the page. The role that d
 |---|---|
 | `safety/` | Security and Platform Owner |
 | a connection's stand-in, `running-offline/` | Architecture Owner |
-| `anti-patterns/`, `questions/`, `repo/` | Application Owner |
+| `meaningless/`, `unreliable/`, `questions/`, `repo/` | Application Owner |
 | `techniques/`, `level/target` | Test Quality Lead |
 
 If an entry's `by` isn't the role that decides it, or the person pasting has said they're in another role, apply it

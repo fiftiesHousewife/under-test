@@ -1,6 +1,6 @@
 ---
 type: regex
-pattern: '^[ \t]*found_by:[\s\S]{0,80}tool: ["'']?find-test-anti-patterns["'']?'
+pattern: '^[ \t]*found_by:[\s\S]{0,80}tool: ["'']?find-meaningless-and-unreliable-tests["'']?'
 flags: m
 match: contains
 target: {source: file, path: testing/assessment.yaml}

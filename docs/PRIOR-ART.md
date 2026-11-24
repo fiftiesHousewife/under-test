@@ -18,7 +18,7 @@ test them hardest.
 
 | Step | Nearest prior art | Support |
 |---|---|---|
-| Discovery: anti-patterns in tests | Test-smell catalogues; Sonar and PMD rules | Supported; run through PMD with the toolkit's rules |
+| Discovery: meaningless and unreliable tests | Test-smell catalogues; Sonar and PMD rules | Supported; run through PMD with the toolkit's rules |
 | Discovery: what the code connects to, and which tests reach it | Static call graphs; one paid tool (Moderne Prethink); open tools that each do one part | Partial; the toolkit's own tool combines them |
 | Safety inventory, the gate before the first run | Forum advice: a start-up check that refuses production | None; the toolkit's own |
 | Measurement | Test Certified's first level; flaky-test and mutation research | Strong |
@@ -34,7 +34,7 @@ things follow.
 
 * **Tools do what a program can decide; the assistant does what needs judgement**
   ([A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](decisions/0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)).
-  The toolkit's own trials showed why. Reading a module's tests to find anti-patterns, an assistant printed whole files
+  The toolkit's own trials showed why. Reading a module's tests to find meaningless ones, an assistant printed whole files
   and its answers varied between runs; PMD with the toolkit's rules read the 61 test files of Openfire's server module in about a second, the
   same way every time. Following the external systems list steps by hand on Openfire, nearly every step was one a program
   does better, so they moved into a tool, [connection-paths](https://github.com/fiftiesHousewife/connection-paths).
@@ -58,7 +58,7 @@ things follow.
 * **Results vary from run to run,** even for identical requests ([Ouyang et al.](https://arxiv.org/html/2308.02828v2)),
   so each evaluation runs five times each way, and the mechanical steps that varied most became tools.
 
-## Discovery: anti-patterns in existing tests
+## Discovery: meaningless and unreliable tests
 
 **Prior art.** Developers mostly discount smells about readability: one study found 87.5% rated low severity
 ([Campos et al.](https://arxiv.org/pdf/2107.13902)). Problems that make results vary matter more. In 51 Apache
@@ -66,7 +66,8 @@ projects, asynchronous waits, concurrency and test order caused 77% of fixed fla
 `Thread.sleep(2000)` waiting for a server
 ([Luo et al.](https://huang.isis.vanderbilt.edu/cs8395/paper/flakytest.pdf)). Disabled tests stay disabled: 41% are
 never resolved ([Kim et al.](https://petertsehsun.github.io/papers/fse2021_disabled_test.pdf)). The toolkit's
-anti-patterns are about whether a test can be trusted, and each has names in the
+kinds are about whether a test can be trusted: meaningless tests pass whatever the code does, and unreliable ones may
+give a different answer on another run. Each kind has names in the
 [Open Catalog of Test Smells](https://test-smell-catalog.readthedocs.io/en/latest/), and checks in Sonar and PMD:
 
 | Toolkit's kind | Names in the literature and the tools |
@@ -76,16 +77,14 @@ anti-patterns are about whether a test can be trusted, and each has names in the
 | `swallows-failures` | Exception Catching Throwing, in tsDetect's catalogue; a test that catches `AssertionError` or `Throwable` and does nothing with it cannot fail |
 | `sleeps` | Sleepy Test |
 | `order-dependent` | Order Dependent Tests, Test Run War |
-| `reaches-external-system` | Mystery Guest, Resource Optimism |
 | `mocks-everything` | Excessive Mocking |
-| `copy-pasted` | Test Code Duplication |
 
 A search finds a test with no assertion but cannot prove one weak. Methods whose bodies can be removed without any
 test failing turn up everywhere ([Vera-Pérez et al.](https://ar5iv.arxiv.org/html/1807.05030)), and only planted bugs
 find them, so discovery's searches and measurement's planted bugs are both needed.
 
-**In the toolkit.** [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) runs PMD with the
-toolkit's rules and its copy-paste detector, then reads only the methods PMD flags
+**In the toolkit.** [find-meaningless-and-unreliable-tests](../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) runs PMD with the
+toolkit's rules, then reads only the methods PMD flags
 ([find-test-anti-patterns runs PMD with the toolkit's rules and searches only what PMD cannot read](decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md)),
 and records each kind
 ([Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
