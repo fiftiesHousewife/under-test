@@ -232,8 +232,29 @@ and [When the organisation requires it, every commit names its work item](decisi
 
 Skills arrive with the rest of the toolkit, as in step 2: each repo's `apm.yml` names the toolkit at a release tag
 on your internal mirror, and `apm install` (APM, the Agent Package Manager) puts the skills where your approved AI
-assistant reads them. Nothing is copied into the repo. People direct the AI and review everything it produces;
-unattended AI agents stay off unless your profile allows them.
+assistant reads them. People direct the AI and review everything it produces; unattended AI agents stay off unless
+your profile allows them.
+
+```yaml
+# apm.yml in each repo
+name: <the repo's name>
+targets: [claude]            # or copilot: your approved assistant
+dependencies:
+  apm:
+    - git: https://<your git host>/<mirror path>/under-test.git
+      ref: v0.1.0            # the tag your organisation profile's toolkit.version names
+```
+
+`apm install` then:
+
+* copies the toolkit's journey skills into the assistant's skills folder (for Claude Code, `.claude/skills/`);
+* puts the whole toolkit, with its decision guides, schemas, technique rules, templates and tools, in `apm_modules/`,
+  which the skills' links point at;
+* records exact versions in `apm.lock.yaml`.
+
+Commit `apm.yml` and `apm.lock.yaml`. Keep `apm_modules/` and the installed skills out of git: they are rebuilt from
+the lock file, with `apm install --frozen` in CI. The skills for maintaining the toolkit itself are not part of the
+package.
 
 *Background:* [The toolkit reaches each repo through APM, pinned to a release tag, and nothing in it is copied](docs/decisions/0051-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag-and-nothing-in-it-is-copied.md).
 
