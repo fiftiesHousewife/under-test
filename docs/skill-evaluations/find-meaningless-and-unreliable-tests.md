@@ -8,7 +8,7 @@ marked below.
 
 ## How it was tried
 
-The repo was [a sample of 22 JUnit 4 tests](find-meaningless-and-unreliable-tests/sample-repo) with a known number of each
+The repo was [a sample of 22 JUnit 4 tests](../../.github/evals/find-meaningless-and-unreliable-tests/counts-every-kind/fixture) with a known number of each
 anti-pattern: 4 disabled, 2 with no real assertion, 2 that sleep, 3 that depend on run order, 2 that reach a shared
 database (a kind from the earlier version: tests that reach external systems are now graded by the external systems
 list's skill), 2 in a class with six mocks, and 2 copy-pasted (a kind from the earlier version, since dropped). It also has tests that must not count: one that expects an

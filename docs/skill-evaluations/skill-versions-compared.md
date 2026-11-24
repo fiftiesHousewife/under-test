@@ -5,8 +5,8 @@ draft-the-connection-list, now draft-the-external-systems-list), so they use the
 
 Each skill's eval case, run with Sonnet in rounds. In each round a case runs five times without the toolkit's skills and
 five times with them. A run's score is the share of its checks passed. Costs are what the runs would cost at API
-prices. Each round's results are kept in [results/](results/): round 1 in [results/round-1/](results/round-1/), the
-latest round in `results/` itself. [The results page](eval-results.md) has the latest round in full, and
+prices. Rounds 1 and 2 keep their results in [results/round-1/](results/round-1/) and [results/round-2/](results/round-2/), and
+the latest round's are in `results/` itself; later rounds are summarised here only. [The results page](eval-results.md) has the latest round in full, and
 [the baseline report](baseline-report.md) explains round 1. [What the skills produce](what-the-skills-produce.md)
 shows the files they write for each case's example repo.
 

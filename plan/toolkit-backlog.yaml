@@ -2595,6 +2595,7 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
+      - "Once published, draft-the-external-systems-list and find-meaningless-and-unreliable-tests fetch their jars by Maven coordinates through the organisation's package repository when the profile names no path, as measure-a-repo fetches the airgap agent"
       - "Each repo has a release tag, and its jar, signed, is published to Maven Central with its bill of materials, for organisations to mirror"
       - "java-conventions is published the same way, and both repos apply it at a pinned version"
       - "The skills and the discovery check name the released versions"

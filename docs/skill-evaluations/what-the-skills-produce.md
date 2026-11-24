@@ -19,7 +19,7 @@ under-test-external-calls, has its own eval case, `grades-every-test`, which gra
 cannot reach for each external system; it has no results yet.)
 **Writes:** `testing/external-systems.calm.json`, a [CALM](https://calm.finos.org/) file with a node for each system the
 code reaches and a proposed stand-in for each external system
-([whole file](examples/external-systems.calm.json)).
+([a whole list](../../examples/external-systems-list/external-systems.calm.json)).
 
 ```json
 {"under-test": {

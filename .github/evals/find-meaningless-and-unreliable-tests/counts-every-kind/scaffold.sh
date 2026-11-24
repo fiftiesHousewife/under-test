@@ -9,7 +9,7 @@ toolkit="$here"
 # copy run-all.sh makes).
 while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$toolkit" = "/" ] && exit 1; done
 echo "scaffold ran in $PWD" >&2
-cp -R "$toolkit/docs/skill-evaluations/find-meaningless-and-unreliable-tests/sample-repo/." .
+cp -R "$here/fixture/." .
 mkdir -p schema testing
 cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/tests.schema.json" schema/
 cat > testing/assessment.yaml <<'YAML'
