@@ -2278,7 +2278,7 @@ items:
     done_by: "person"
     done_when:
       - "The repo is created by a maintainer (done: https://github.com/fiftiesHousewife/java-conventions) and seeded from connection-paths' conventions once its restructure is done"
-      - "Everything it pulls in resolves from Maven Central alone: the SpotBugs, forbidden-APIs, versions and PIT Gradle plugins it applies are checked, and any found only on the Gradle Plugin Portal is dropped or replaced"
+      - "Everything it pulls in resolves from Maven Central and the Gradle Plugin Portal (SpotBugs', the versions report's and PIT's Gradle plugins are on the Portal only), and a repo applying it lists both in pluginManagement"
       - "Tool versions and rule files ship inside its jar; nothing reads the applying repo's version catalogue or config/quality, except an organisation's own rule files when it chooses them"
       - "It enforces the decision's rules, the tighter ones included, with the rule files inside its jar; each rule has a case it fails; for-each loops are reported, never failing the build"
       - "Published to Maven Central, signed, with its plugin marker; a repo applies it with a pinned version and mavenCentral() in pluginManagement"
