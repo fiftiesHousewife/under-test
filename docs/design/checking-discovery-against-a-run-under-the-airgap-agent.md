@@ -69,10 +69,17 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 
 ## Results so far
 
-With under-test-external-calls 8663813. "Flagged" is graded reaches or may reach.
+With under-test-external-calls 990003c. "Flagged" is graded reaches or may reach.
 
 | Repo | Tests run | Tests that called out | Missed (no chain) | Flagged but made no outside call | What still causes them |
 |---|---|---|---|---|---|
 | Openfire 4.6.0, `xmppserver` (Maven, JUnit 4) | 461: 448 passed, 13 skipped | 0 | none to miss | 1 of 230 with a chain | A call through `XMPPServer.getInstance()`, which is null in tests |
-| spring-petclinic (Gradle, Spring Boot) | 81: 77 passed, 4 skipped (no Docker) | 0 | none to miss | 4 of 22 with a chain | HTTP to the application under test on localhost, by a relative path |
-| jsoup 1.15.3 (Maven, JUnit 5), disabled tests run | 1,165: 1,124 passed, 41 failed | 40, to 20 hosts | 0 | 67 of 107 flagged | jsoup's own test web server on localhost, made in a helper's static field, not seen as a stand-in; none graded reaches, as addresses written in the test aren't followed into the request builder |
+| spring-petclinic (Gradle, Spring Boot) | 81: 77 passed, 4 skipped (no Docker) | 0 | none to miss | 0 of 22 with a chain | — |
+| jsoup 1.15.3 (Maven, JUnit 5), disabled tests run | 1,165: 1,124 passed, 41 failed | 40, to 20 hosts | 0 | 13 of 53 flagged | 4 go through a proxy on localhost, so reach the outside only through another program the agent can't see: reaches is right for them. 1 throws before connecting; 8 are graded may reach and clear in a run |
+
+On jsoup, 39 of the 44 graded reaches called out. One test that called out is graded may reach, not reaches: its host is
+an internationalised name (`räksmörgås.josefsson.org`).
+
+A test that reaches the outside only through a proxy on the same machine makes no call the agent can see: the proxy,
+another program, makes it. Such a test is graded reaches, and the check counts it as a false alarm; read those by
+hand.
