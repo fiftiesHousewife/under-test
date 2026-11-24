@@ -1,6 +1,6 @@
 # under-test
 
-[![build](https://github.com/fiftiesHousewife/under-test/actions/workflows/build.yml/badge.svg)](https://github.com/fiftiesHousewife/under-test/actions/workflows/build.yml)
+[![build](https://img.shields.io/github/actions/workflow/status/fiftiesHousewife/under-test/build.yml?branch=main&label=build)](https://github.com/fiftiesHousewife/under-test/actions/workflows/build.yml)
 [![licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](LICENSE)
 [![decisions: MADR](https://img.shields.io/badge/decisions-MADR-informational)](docs/decisions/README.md)
 [![decision guides: MADR](https://img.shields.io/badge/decision%20guides-MADR-informational)](decision-guides/README.md)
