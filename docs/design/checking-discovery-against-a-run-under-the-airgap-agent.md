@@ -68,16 +68,16 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 
 ## Results
 
-With under-test-external-calls a19b7fe. "Flagged" is graded reaches or may reach.
+With under-test-external-calls 6bdcc65. "Flagged" is graded reaches or may reach.
 
 | Repo | Tests run | Tests that called out | Missed (no chain) | Flagged but made no outside call | What still causes them |
 |---|---|---|---|---|---|
 | Openfire 4.6.0, `xmppserver` (Maven, JUnit 4) | 461: 448 passed, 13 skipped | 0 | none to miss | 1 of 230 with a chain | A call through `XMPPServer.getInstance()`, which is null in tests |
 | spring-petclinic (Gradle, Spring Boot) | 81: 77 passed, 4 skipped (no Docker) | 0 | none to miss | 0 of 22 with a chain | — |
-| jsoup 1.15.3 (Maven, JUnit 5), disabled tests run | 1,165: 1,124 passed, 41 failed | 40, to 20 hosts | 0 | 12 of 52 flagged | 4 go through a proxy on localhost, so reach the outside only through another program the agent can't see: reaches is right for them. The rest throw before connecting, or are graded may reach and clear in a run |
-| Apache Commons Net 3.6 (Maven, JUnit 3 and 4), tests its build leaves out run | 356: 266 passed, 71 failed, 19 skipped | 18, to 7 hosts (FTP, Telnet, HTTP) | 0 | 1 of 19 flagged | 15 that called out are graded may reach, not reaches: hosts given through JUnit 3's `suite()` and a constructor, or a connect in `setUp()` |
+| jsoup 1.15.3 (Maven, JUnit 5), disabled tests run | 1,165: 1,124 passed, 41 failed | 40, to 20 hosts | 0 | 9 of 49 flagged | 4 go through a proxy on localhost, so reach the outside only through another program the agent can't see: reaches is right for them; 1 throws before connecting. Still to fix: 2 requests never given a URL, a form submitted to an address relative to the fetched page, and one URL taken from a list |
+| Apache Commons Net 3.6 (Maven, JUnit 3 and 4), tests its build leaves out run | 356: 266 passed, 71 failed, 19 skipped | 18, to 7 hosts (FTP, Telnet, HTTP) | 0 | 0 of 18 flagged | 14 that called out are graded may reach, not reaches: hosts given through JUnit 3's `suite()` and a constructor |
 
-On jsoup every test that called out is graded reaches (40 of 40); on Commons Net 3 of 18 are, and the other 15 are
+On jsoup every test that called out is graded reaches (40 of 40); on Commons Net 4 of 18 are, and the other 14 are
 graded may reach, so measurement runs them under the agent rather than leaving them out. No test that called out is
 graded cannot reach on any of the four repos.
 
