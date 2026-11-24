@@ -20,7 +20,7 @@ cd "$module"
     -javaagent:"$AIRGAP_AGENT"="mode=refuse;report=$out/calls.jsonl;project=$packages;root=$module" \
     -Djdk.attach.allowAttachSelf=true -Djava.awt.headless=true \
     -cp "$cp" org.junit.platform.console.ConsoleLauncher --scan-classpath "$module/target/test-classes" \
-    --include-classname '^(.*\.)?(Test[^.]*|[^.]*Tests?|[^.]*TestCase|[^.]*IT)$' "${extra[@]}" \
+    --include-classname '^(.*\.)?(Test[^.]*|[^.]*Tests?|[^.]*TestCase|[^.]*IT)$' ${extra[@]+"${extra[@]}"} \
     --details=summary --disable-banner --reports-dir "$out/junit" > "$out/console.txt" 2>&1
 status=$?
 grep -E 'tests (found|successful|failed|skipped)|containers failed' "$out/console.txt"
