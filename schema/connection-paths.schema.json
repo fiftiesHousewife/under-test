@@ -243,7 +243,7 @@
       }
     },
     "tests": {
-      "description": "Only the tests that may reach a connection; the key matches testing/tests.yaml's: the fully qualified class, a dot, the method.",
+      "description": "Only the tests that may reach a connection; the key matches testing/tests.yaml's: the fully qualified class, a dot, the method. A test a class inherits is listed under each concrete class that runs it, as a test report names it, with that class's set-up; its file and line are the declaring method's.",
       "type": "array",
       "items": {
         "type": "object",
@@ -288,7 +288,7 @@
                   "type": "boolean"
                 },
                 "chain": {
-                  "description": "From the test to the connection point, one method a step.",
+                  "description": "From the test to the connection point, one method a step. The first step is the method that declares the test, which for an inherited test is in the superclass: take the class that runs it from test, not from here.",
                   "type": "array",
                   "minItems": 1,
                   "items": {
