@@ -113,12 +113,12 @@ Repair makes the tests that reach external systems safe to run and still worth r
 Each such test becomes a pair from one set of test bodies: one run injects the external system's stand-in and joins
 the normal runs, the other is tagged `external` and runs against the real system on a schedule, where its test
 instance can be reached
-([why](decisions/0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md)).
+([why](decisions/0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md)).
 With JUnit 5 or 6 the pair is a test interface and two classes; with JUnit 4, where the repo must stay on it, a
 parameterised class. connection-paths' record says where the stand-in goes: the first method each test calls,
 whether it gets there through set-up, and the calls every test reaching a system shares. The mechanical changes are
 made by OpenRewrite recipes, the rest by the AI, and a person reviews each, one external system at a time
-([proposed](decisions/0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md)).
+([proposed](decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)).
 
 What needs production code changed (a dependency a test can't replace, an address written in the code that a
 stand-in needs in a setting) waits: it is recorded against its test, and the testing plan turns it into work. The

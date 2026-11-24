@@ -43,7 +43,7 @@ Repair works one connection, then one kind of problem, at a time, each change a 
   there is one.
 * **Flaky and failing tests, sleeps and order-dependent tests, tests that never run, tests that swallow their own
   failures, tests with no real assertion, tests that mock everything and copied tests** are fixed in the test code,
-  as [How repair fixes each kind of problem, and which changes OpenRewrite recipes make](0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md)
+  as [Which of repair's changes OpenRewrite recipes make, and which the AI makes](0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)
   says.
 * **Left as work for later**, recorded against the test in `testing/tests.yaml` with the reason: anything that needs
   production code changed (a dependency a test can't replace, an address written in the code that a stand-in
@@ -75,5 +75,5 @@ is work for later), and the tests that start a framework (their stand-in goes in
 ## More Information
 
 * Builds on: [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md), [Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md), [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)
-* Later decisions that build on this: [How repair fixes each kind of problem, and which changes OpenRewrite recipes make](0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md)
+* Later decisions that build on this: [Which of repair's changes OpenRewrite recipes make, and which the AI makes](0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)
 * Background: [legacy-code](../REFERENCES.md#legacy-code), [test-doubles](../REFERENCES.md#test-doubles), [flaky-tests](../REFERENCES.md#flaky-tests)

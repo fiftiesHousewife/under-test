@@ -358,18 +358,15 @@ towards doubles because its machines cannot run containers or reach the systems,
 [order of preference](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md) puts a container
 first where one can run. Among doubles, the prior art favours a fake over a mock.
 
-**Three kinds, sorted.** What a test really checks decides what replaces it
-([Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](decisions/0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md)):
-
-| Kind | Name in the literature | Treatment |
-|---|---|---|
-| Logic that happens to touch a system | J. B. Rainsberger's collaboration test | The double chosen for that connection |
-| The connection itself (SQL, HTTP mapping, mail format) | Martin Fowler's [narrow integration test](https://martinfowler.com/bliki/IntegrationTest.html) | Kept real, tagged `external` |
-| Both | Contract test | One set of test bodies, run against the double normally and the real system under the tag |
-
-Google separates size (what a test reaches) from scope (how much code it checks): a test that opens a database but
-checks only logic is the first kind. **No published procedure sorts an existing suite;** this is the toolkit's own.
-The assistant drafts the sort, one connection at a time, and a person confirms it. "External" matches the tag of
+**Every external test a pair.** Each test that reaches an external system becomes two runs of one set of test
+bodies: one against the stand-in in normal runs, one against the real system under the `external` tag
+([Every test that reaches an external system becomes a pair: one run injects a stand-in, the other is tagged external](decisions/0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md)).
+The literature names three kinds of such test: J. B. Rainsberger's collaboration test (logic that happens to touch a
+system), Martin Fowler's [narrow integration test](https://martinfowler.com/bliki/IntegrationTest.html) (the
+connection itself: SQL, HTTP mapping, mail format), and the contract test (both). Google separates size (what a test
+reaches) from scope (how much code it checks). **No published procedure sorts an existing suite into these kinds,**
+and sorting needs a judgement per test; pairing every test needs none, keeps every test's real run, and costs a
+larger external suite, run on a schedule. "External" matches the tag of
 Google's build tool, Bazel
 ([The toolkit calls a system a test cannot run without an external system](decisions/0062-the-toolkit-calls-a-system-a-test-cannot-run-without-an-external-system.md)).
 
