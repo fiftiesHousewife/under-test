@@ -5,7 +5,7 @@ description: Score each obstacle to testing a repo has, from 0 to 3, by the name
 
 # Scoring obstacles
 
-**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/score-obstacles/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/score-obstacles/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+**Where the toolkit's files are:** this skill's links work wherever it is: in the toolkit's own repo they are relative to it, and when APM installs the toolkit in a repo it rewrites them to the toolkit's folder under `apm_modules/`. Where a command names `<toolkit>`, that is the toolkit's root: the repo root in the toolkit itself, otherwise `"$(dirname "$(find apm_modules -path '*/.github/skills/score-obstacles/SKILL.md' | head -1)")/../../.."`.
 
 Apply the table in
 [The named list of obstacles to testing and how each is scored](../../../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md)

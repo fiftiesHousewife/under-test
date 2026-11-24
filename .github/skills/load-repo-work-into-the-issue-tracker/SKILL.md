@@ -5,7 +5,7 @@ description: Load a repo's approved testing/TESTING-PLAN.md into the organisatio
 
 # Loading a repo's work into the issue tracker
 
-**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/load-repo-work-into-the-issue-tracker/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+**Where the toolkit's files are:** this skill's links work wherever it is: in the toolkit's own repo they are relative to it, and when APM installs the toolkit in a repo it rewrites them to the toolkit's folder under `apm_modules/`. Where a command names `<toolkit>`, that is the toolkit's root: the repo root in the toolkit itself, otherwise `"$(dirname "$(find apm_modules -path '*/.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md' | head -1)")/../../.."`.
 
 > **The loader isn't built yet**
 > (see [Each repo's work is loaded into the issue tracker by one tool, with an adapter per tracker](../../../docs/decisions/0023-each-repos-work-is-loaded-into-the-issue-tracker-by-one-tool-with-an-adapter-per-tracker.md)).

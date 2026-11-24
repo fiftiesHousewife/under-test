@@ -5,7 +5,7 @@ description: Measure a Gradle repo's tests under the airgap agent, in stages tha
 
 # Measuring a repo
 
-**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/measure-a-repo/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/measure-a-repo/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+**Where the toolkit's files are:** this skill's links work wherever it is: in the toolkit's own repo they are relative to it, and when APM installs the toolkit in a repo it rewrites them to the toolkit's folder under `apm_modules/`. Where a command names `<toolkit>`, that is the toolkit's root: the repo root in the toolkit itself, otherwise `"$(dirname "$(find apm_modules -path '*/.github/skills/measure-a-repo/SKILL.md' | head -1)")/../../.."`.
 
 Run [`measure.init.gradle`](../../../tools/measurement/measure.init.gradle)
 ([why](../../../docs/decisions/0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md))

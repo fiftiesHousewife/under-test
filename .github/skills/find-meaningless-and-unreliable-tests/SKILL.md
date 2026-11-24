@@ -5,7 +5,7 @@ description: Find a repo's meaningless tests (they never run, can't fail, or che
 
 # Finding meaningless and unreliable tests
 
-**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/find-meaningless-and-unreliable-tests/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/find-meaningless-and-unreliable-tests/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+**Where the toolkit's files are:** this skill's links work wherever it is: in the toolkit's own repo they are relative to it, and when APM installs the toolkit in a repo it rewrites them to the toolkit's folder under `apm_modules/`. Where a command names `<toolkit>`, that is the toolkit's root: the repo root in the toolkit itself, otherwise `"$(dirname "$(find apm_modules -path '*/.github/skills/find-meaningless-and-unreliable-tests/SKILL.md' | head -1)")/../../.."`.
 
 Discovery keeps three lists of tests apart, each with one owner
 ([why](../../../docs/decisions/0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)).

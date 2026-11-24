@@ -5,7 +5,7 @@ description: Generate a repo's testing/TESTING-PLAN.md from its testing/assessme
 
 # Writing the testing plan
 
-**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/write-the-testing-plan/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/write-the-testing-plan/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+**Where the toolkit's files are:** this skill's links work wherever it is: in the toolkit's own repo they are relative to it, and when APM installs the toolkit in a repo it rewrites them to the toolkit's folder under `apm_modules/`. Where a command names `<toolkit>`, that is the toolkit's root: the repo root in the toolkit itself, otherwise `"$(dirname "$(find apm_modules -path '*/.github/skills/write-the-testing-plan/SKILL.md' | head -1)")/../../.."`.
 
 The plan is generated, never edited by hand
 ([Testing plans are generated from the assessment file, and the issue tracker follows the work](../../../decision-guides/0024-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md)),

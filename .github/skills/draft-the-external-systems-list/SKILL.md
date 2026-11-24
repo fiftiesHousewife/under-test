@@ -5,7 +5,7 @@ description: Draft or update a repo's external systems list (testing/external-sy
 
 # Drafting the external systems list
 
-**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/draft-the-external-systems-list/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/draft-the-external-systems-list/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+**Where the toolkit's files are:** this skill's links work wherever it is: in the toolkit's own repo they are relative to it, and when APM installs the toolkit in a repo it rewrites them to the toolkit's folder under `apm_modules/`. Where a command names `<toolkit>`, that is the toolkit's root: the repo root in the toolkit itself, otherwise `"$(dirname "$(find apm_modules -path '*/.github/skills/draft-the-external-systems-list/SKILL.md' | head -1)")/../../.."`.
 
 Every system outside the program that the code connects to becomes a node in `testing/external-systems.calm.json`
 ([schema](../../../schema/external-systems-list.schema.json), [example](../../../examples/external-systems-list/external-systems.calm.json)),
