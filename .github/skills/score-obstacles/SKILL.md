@@ -5,6 +5,8 @@ description: Score each obstacle to testing a repo has, from 0 to 3, by the name
 
 # Scoring obstacles
 
+**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/score-obstacles/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/score-obstacles/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+
 Apply the table in
 [The named list of obstacles to testing and how each is scored](../../../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md)
 exactly, and write the `obstacles` section of `testing/assessment.yaml` ([schema](../../../schema/assessment.schema.json)).

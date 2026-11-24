@@ -5,6 +5,8 @@ description: Generate a repo's testing/TESTING-PLAN.md from its testing/assessme
 
 # Writing the testing plan
 
+**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/write-the-testing-plan/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/write-the-testing-plan/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+
 The plan is generated, never edited by hand
 ([Testing plans are generated from the assessment file, and the issue tracker follows the work](../../../decision-guides/0024-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md)),
 and [load-repo-work-into-the-issue-tracker](../load-repo-work-into-the-issue-tracker/SKILL.md) matches it to tracker
@@ -93,8 +95,8 @@ that node's `name`, and its `stand-in.approach`, `stand-in.kit`, `state`, `never
 
 ## 3. Write `testing/TESTING-PLAN.md`
 
-Fill [the plan template](../../../templates/testing-plan.md): the toolkit's root is three folders up from this
-skill's folder (`<skill folder>/../../..`), and the template is `templates/testing-plan.md` there. If you can't read the template, stop and say so; don't
+Fill [the plan template](../../../templates/testing-plan.md): the toolkit's root is found as
+"Where the toolkit's files are" says, and the template is `templates/testing-plan.md` there. If you can't read the template, stop and say so; don't
 write the plan from memory. Replace each `{...}` as below; keep every other
 character, the generated-file comment included. Remove the "Template note" comment and each line that is only a
 braced instruction ending in `:}`, each with the blank line after it. A list placeholder becomes one line per item; a

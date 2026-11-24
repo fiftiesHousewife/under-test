@@ -5,6 +5,8 @@ description: Make a repo's assessment report, one self-contained HTML page from 
 
 # Rendering the assessment report
 
+**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/render-the-assessment-report/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/render-the-assessment-report/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+
 The report is [a fixed template](../../../templates/repo-assessment-report.html) whose script draws the page from one
 JSON data block. Fill that block and change nothing else: don't write the page by hand, edit the template's script or
 styles, or put anything in the data that isn't in the files. The files follow
@@ -18,8 +20,8 @@ your reply: point at its file and line instead
 
 ## 1. Make the report
 
-Run this from the repo's root, with `TEMPLATE` set to the template's path: the toolkit's root is three folders up
-from this skill's folder (`<skill folder>/../../..`), and the template is `templates/repo-assessment-report.html` there:
+Run this from the repo's root, with `TEMPLATE` set to the template's path: the toolkit's root is found as
+"Where the toolkit's files are" says, and the template is `templates/repo-assessment-report.html` there:
 
 ```bash
 ruby -ryaml -rjson -e '

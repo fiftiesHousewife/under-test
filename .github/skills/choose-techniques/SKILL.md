@@ -5,6 +5,8 @@ description: Propose adopt, defer or reject for every technique in techniques/ a
 
 # Choosing techniques
 
+**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/choose-techniques/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/choose-techniques/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+
 You propose; people decide. Don't build or run anything.
 
 Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or

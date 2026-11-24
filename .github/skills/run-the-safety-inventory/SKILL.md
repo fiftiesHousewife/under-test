@@ -5,6 +5,8 @@ description: Turn a repo's gitleaks reports into the safety section of its testi
 
 # Running the safety inventory
 
+**Where the toolkit's files are:** this skill's links are relative to its folder in the toolkit, `.github/skills/run-the-safety-inventory/`. In the toolkit's own repo, follow them as they are. In a repo that installed the toolkit with APM, this skill is a copy, so read each link from the toolkit's package folder instead: `TOOLKIT="$(dirname "$(find apm_modules -path '*/.github/skills/run-the-safety-inventory/SKILL.md' | head -1)")/../../.."`, then `$TOOLKIT/<the link without its ../../../>`.
+
 Turn two gitleaks reports and a keystore list into the `safety` section of `testing/assessment.yaml`
 ([its schema](../../../schema/assessment.schema.json)), then say what blocks the repo. Why:
 [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](../../../docs/decisions/0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)
