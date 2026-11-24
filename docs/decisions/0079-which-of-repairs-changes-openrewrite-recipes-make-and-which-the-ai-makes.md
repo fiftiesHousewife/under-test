@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Which of repair's changes OpenRewrite recipes make, and which the AI makes
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -41,7 +41,7 @@ tests. Its `cleanup.BestPractices` bundle includes the first.
 
 ## Decision Outcome
 
-Proposed: recipes for the mechanical changes, the AI and a person for the rest, one external system at a time, each
+Chosen in discussion: recipes for the mechanical changes, the AI and a person for the rest, one external system at a time, each
 change a pull request a person reviews.
 
 | Change | By |

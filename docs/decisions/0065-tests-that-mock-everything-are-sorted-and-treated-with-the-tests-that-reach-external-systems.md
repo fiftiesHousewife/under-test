@@ -1,12 +1,14 @@
 ---
-status: accepted
+status: superseded
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Tests that mock everything are sorted and treated with the tests that reach external systems
 
-**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [Tests that mock everything are fixed in the testing plan's work, each mock sorted by what it stands for](0087-tests-that-mock-everything-are-fixed-in-the-testing-plans-work-each-mock-sorted-by-what-it-stands-for.md).
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 

@@ -54,7 +54,7 @@ The tools the skills run:
 | [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools) | The mechanical steps of the journey's skills, one sub-command each; its first, `meaningless-and-unreliable`, does find-meaningless-and-unreliable-tests' listing, PMD run, counting and writing. Built, not yet published |
 | [The toolkit's PMD rules](tools/meaningless-and-unreliable-tests/rules.pmd.xml) | Find the meaningless and unreliable tests PMD can see: tests that never run, have no real assertion, swallow failures, mock everything, sleep or run in a fixed order
 | [gitleaks](https://github.com/gitleaks/gitleaks), with [the toolkit's rules](tools/safety-inventory/) | Finds secrets and production credentials, over the whole history |
-| [OpenRewrite](https://docs.openrewrite.org/) | Changes Java source by recipes that understand types; repair runs the toolkit's own recipes for its mechanical changes ([proposed](docs/decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)) |
+| [OpenRewrite](https://docs.openrewrite.org/) | Changes Java source by recipes that understand types; repair runs the toolkit's own recipes for its mechanical changes ([why](docs/decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)) |
 | [The airgap agent](https://github.com/fiftiesHousewife/under-test-airgap) | Refuses every call off the machine when old code first runs on a developer's machine, and reports it |
 
 Each journey skill is also evaluated repeatably with `claude plugin eval`: [the latest results](docs/skill-evaluations/eval-results.md), and

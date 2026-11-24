@@ -118,7 +118,7 @@ With JUnit 5 or 6 the pair is a test interface and two classes; with JUnit 4, wh
 parameterised class. connection-paths' record says where the stand-in goes: the first method each test calls,
 whether it gets there through set-up, and the calls every test reaching a system shares. The mechanical changes are
 made by OpenRewrite recipes, the rest by the AI, and a person reviews each, one external system at a time
-([proposed](decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)).
+([why](decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)).
 
 What needs production code changed (a dependency a test can't replace, an address written in the code that a
 stand-in needs in a setting) waits: it is recorded against its test, and the testing plan turns it into work. The
