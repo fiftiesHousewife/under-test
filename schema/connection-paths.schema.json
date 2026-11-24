@@ -158,7 +158,7 @@
             "$ref": "#/$defs/kind"
           },
           "call": {
-            "description": "The rule the call matched, as type#method.",
+            "description": "The rule the call matched, as type#method, or @ and an annotation's full name for a client that is only an annotated interface (Feign, Retrofit, Spring @HttpExchange, MicroProfile @RegisterRestClient), whose address is the annotation's url or base URI.",
             "type": "string"
           },
           "method": {
