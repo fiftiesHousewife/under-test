@@ -13,7 +13,7 @@ organisation, works inside locked-down corporate networks, and never lets an AI 
 
 ## The journey of one repo
 
-[![The journey of one repo: nine steps from discovery to keeping it there, each with the skills that do it, the question that can stop it and who answers that question](docs/design/repo-journey.svg)](docs/JOURNEY.md)
+[![The journey of one repo in two tracks that join at the testing plan: the syntactic track finds and fixes what stops the tests running or being trusted, the semantic track captures what the code does and what it should do; the safety inventory gates both, and each box names the skill that does it](docs/design/repo-journey.svg)](docs/JOURNEY.md)
 
 The drawing's source is [repo-journey.excalidraw](docs/design/repo-journey.excalidraw); open it in Excalidraw to
 change it, then export it again with [drawing-export](maintainer-tools/drawing-export/README.md).
