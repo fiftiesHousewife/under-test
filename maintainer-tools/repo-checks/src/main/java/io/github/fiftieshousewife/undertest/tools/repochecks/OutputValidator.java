@@ -26,7 +26,7 @@ public final class OutputValidator {
             "testing/assessment.yaml", "schema/assessment.schema.json",
             "testing/sources.yaml", "schema/source-list.schema.json",
             "testing/external-systems.calm.json", "schema/external-systems-list.schema.json",
-            "testing/connection-paths.json", "schema/connection-paths.schema.json",
+            "testing/external-calls.json", "schema/external-calls.schema.json",
             "testing/tests.yaml", "schema/tests.schema.json");
 
     private final Path toolkit;

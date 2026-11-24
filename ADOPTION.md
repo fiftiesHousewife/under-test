@@ -96,9 +96,9 @@ Nothing is fetched from the internet at build time. Before anyone uses the toolk
    (`net.sourceforge.pmd:pmd-cli` and `pmd-java`), which the toolkit's
    [pmd-install](tools/meaningless-and-unreliable-tests/pmd-install/build.gradle) fetches from your package repository
    ([why](docs/decisions/0067-find-test-anti-patterns-needs-pmd-and-installs-it-when-it-is-missing.md)). The
-   draft-the-external-systems-list skill needs [connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls), one
+   draft-the-external-systems-list skill needs [under-test-external-calls](https://github.com/fiftiesHousewife/under-test-external-calls), one
    jar published beside each of its version tags: mirror it, and name its path in your organisation profile
-   (`tools.connection_paths_jar`). It reads each module with the classpath its build resolves, so the build must reach
+   (`tools.external_calls_jar`). It reads each module with the classpath its build resolves, so the build must reach
    your package repository; building without running tests is allowed in discovery
    ([why](docs/decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)).
 3. **Provide the Gradle distribution and the JDK.** Point the Gradle wrapper at your internal copy of the Gradle

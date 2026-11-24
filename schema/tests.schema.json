@@ -100,7 +100,7 @@
                     "test-settings",
                     "airgap-report"
                   ],
-                  "description": "code-path: connection-paths found a chain of calls from the test to where the connection is opened; test-code: the test's own code names the host; test-settings: a file the test loads names it (properties, YAML, Spring XML, Spring Boot's settings); airgap-report: only the agent saw it."
+                  "description": "code-path: under-test-external-calls found a chain of calls from the test to where the connection is opened; test-code: the test's own code names the host; test-settings: a file the test loads names it (properties, YAML, Spring XML, Spring Boot's settings); airgap-report: only the agent saw it."
                 },
                 "grade": {
                   "enum": [

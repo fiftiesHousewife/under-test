@@ -96,7 +96,7 @@ flowchart LR
 | Lessons with runnable examples | The lessons repo ([under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons)), through the internal source mirror | Code hosting |
 | Organisation profile and decisions | Files in the organisation repo | Internal code hosting |
 | Third-party tools the checks use (Checkstyle, PMD, SpotBugs, FindSecBugs, JaCoCo, PIT, forbidden APIs) | Ordinary Maven artifacts | Package repository |
-| connection-paths, which the external systems list skill runs | One runnable jar, beside each version tag (and its library on Maven Central) | Package repository |
+| under-test-external-calls, which the external systems list skill runs | One runnable jar, beside each version tag (and its library on Maven Central) | Package repository |
 
 ### Keeping the approval cost low
 

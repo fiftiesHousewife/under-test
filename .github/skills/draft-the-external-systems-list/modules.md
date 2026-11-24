@@ -5,8 +5,8 @@ Read this when the build has more than one module: `include` in `settings.gradle
 
 * Before running anything, ask the person which modules to cover: one, several, or all, naming them. Don't ask when
   the person has already said.
-* Run connection-paths once per chosen module, with that module's classpath file, each writing
-  `testing/connection-paths/<module folder, / as ->.json`. A module's tests reach only what that module and the modules
+* Run under-test-external-calls once per chosen module, with that module's classpath file, each writing
+  `testing/external-calls/<module folder, / as ->.json`. A module's tests reach only what that module and the modules
   it depends on open; give a module's dependencies on other modules of the repo as more `--main` folders.
 * Record the modules covered so far, each module's folder from the repo root, in
   `found_by.draft-the-external-systems-list.modules` in `testing/tests.yaml`. Replace `external_systems` only in entries whose `at`

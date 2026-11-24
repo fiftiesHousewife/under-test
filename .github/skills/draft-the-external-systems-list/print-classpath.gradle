@@ -1,8 +1,8 @@
 // Compiles each project's code and tests, then writes the jars that compile used to
-// build/connection-paths-classpath.txt, for connection-paths --classpath @<file>. No test runs.
-//   gradle -q --init-script print-classpath.gradle connectionPathsClasspath
+// build/under-test-external-calls-classpath.txt, for under-test-external-calls --classpath @<file>. No test runs.
+//   gradle -q --init-script print-classpath.gradle underTestExternalCallsClasspath
 allprojects {
-    tasks.register('connectionPathsClasspath') {
+    tasks.register('underTestExternalCallsClasspath') {
         dependsOn tasks.matching { it.name == 'testClasses' }
         doLast {
             def sourceSets = project.extensions.findByName('sourceSets')
@@ -10,7 +10,7 @@ allprojects {
                 return
             }
             def jars = sourceSets.test.compileClasspath.files.findAll { it.name.endsWith('.jar') }
-            def out = new File(project.layout.buildDirectory.get().asFile, 'connection-paths-classpath.txt')
+            def out = new File(project.layout.buildDirectory.get().asFile, 'under-test-external-calls-classpath.txt')
             out.parentFile.mkdirs()
             out.text = jars.join(File.pathSeparator)
             println out

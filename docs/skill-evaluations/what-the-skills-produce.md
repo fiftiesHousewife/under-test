@@ -12,7 +12,7 @@ carry from one section to the next.
 ## 1. Discovery: the external systems list, [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md)
 
 **Given:** the airgap agent's reports of every call the tests and the application tried to make off the machine. (This
-case is the skill's later pass, merging in measurement's reports; its first pass, from the code with connection-paths,
+case is the skill's later pass, merging in measurement's reports; its first pass, from the code with under-test-external-calls,
 has no eval case yet.)
 **Writes:** `testing/external-systems.calm.json`, a [CALM](https://calm.finos.org/) file with a node for each system the
 code reaches and a proposed stand-in for each connection

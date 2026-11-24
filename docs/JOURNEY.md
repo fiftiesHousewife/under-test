@@ -32,7 +32,7 @@ Discovery keeps three lists of tests apart, each with one owner
 **Tests that reach external systems** come first, from the
 [draft-the-external-systems-list](../.github/skills/draft-the-external-systems-list/SKILL.md) skill, to be renamed for the
 external systems list ([why](decisions/0081-external-system-replaces-the-word-connection.md)). It runs
-[connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls), a tool that reads the code and finds every
+[under-test-external-calls](https://github.com/fiftiesHousewife/under-test-external-calls), a tool that reads the code and finds every
 reach point, where it opens or uses an external system (a database, an HTTP service, mail, a directory, a queue, a
 socket), and every test that may reach one, with the chain of calls that gets there. The skill traces each address to
 the code or the settings, or records where it will come from, and drafts the external systems list, with a proposed
@@ -115,7 +115,7 @@ the normal runs, the other is tagged `external` and runs against the real system
 instance can be reached
 ([why](decisions/0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md)).
 With JUnit 5 or 6 the pair is a test interface and two classes; with JUnit 4, where the repo must stay on it, a
-parameterised class. connection-paths' record says where the stand-in goes: the first method each test calls,
+parameterised class. under-test-external-calls' record says where the stand-in goes: the first method each test calls,
 whether it gets there through set-up, and the calls every test reaching a system shares. The mechanical changes are
 made by OpenRewrite recipes, the rest by the AI, and a person reviews each, one external system at a time
 ([why](decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)).

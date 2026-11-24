@@ -1,6 +1,6 @@
-"""Compares connection-paths' facts for a repo with what its tests tried to reach under the airgap agent.
+"""Compares under-test-external-calls' facts for a repo with what its tests tried to reach under the airgap agent.
 
-    python3 -I compare.py <connection-paths facts file> <airgap calls.jsonl, or a missing file for none>
+    python3 -I compare.py <under-test-external-calls facts file> <airgap calls.jsonl, or a missing file for none>
 
 Prints the calls by kind and target, then recall (tests that called out and have a chain), precision (tests with a
 chain that called out) and the grades, with each missed test and each wrong grade named. A test's grade is worked out

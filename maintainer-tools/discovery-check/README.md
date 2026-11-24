@@ -2,7 +2,7 @@
 
 Scripts for [checking discovery against a run under the airgap agent](../../docs/design/checking-discovery-against-a-run-under-the-airgap-agent.md):
 run every test of a field-trial repo under the airgap agent, refusing every call to another machine, and compare what
-each test tried to reach with connection-paths' facts.
+each test tried to reach with under-test-external-calls' facts.
 
 | Script | What it does |
 |---|---|

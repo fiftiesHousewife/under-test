@@ -1,6 +1,6 @@
 ---
 name: draft-the-external-systems-list
-description: Draft or update a repo's external systems list (testing/external-systems.calm.json, CALM 1.3), with a proposed test stand-in for each connection, and record in testing/tests.yaml which tests may reach each one. In discovery it finds connections from the code with connection-paths and from the repo's settings; after a run under the airgap agent it merges in the agent's reports. Use in discovery, after a run under the airgap agent, or when asked what a repo talks to.
+description: Draft or update a repo's external systems list (testing/external-systems.calm.json, CALM 1.3), with a proposed test stand-in for each connection, and record in testing/tests.yaml which tests may reach each one. In discovery it finds connections from the code with under-test-external-calls and from the repo's settings; after a run under the airgap agent it merges in the agent's reports. Use in discovery, after a run under the airgap agent, or when asked what a repo talks to.
 ---
 
 # Drafting the external systems list
@@ -33,35 +33,35 @@ grep -lE 'org\.springframework\.boot' build.gradle* pom.xml */build.gradle* */po
 grep -rlE '<beans|@ImportResource|@ContextConfiguration\(.*\.xml|XmlApplicationContext\(' --include='*.xml' --include='*.java' src */src 2>/dev/null | head -3
 ```
 
-## 1. Run connection-paths
+## 1. Run under-test-external-calls
 
-[connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls) finds, from source, every place the code opens
+[under-test-external-calls](https://github.com/fiftiesHousewife/under-test-external-calls) finds, from source, every place the code opens
 or uses a connection, where each address comes from, which points stay on the machine, the systems they make, and every
 test that may reach each one with the chain of calls
 ([why](../../../docs/decisions/0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md)).
-It needs Java 17 or later and its jar: the organisation profile's `tools.connection_paths_jar`, else
-`$CONNECTION_PATHS_JAR`. With neither, stop and say so, unless the person says the facts file below is already there
+It needs Java 17 or later and its jar: the organisation profile's `tools.external_calls_jar`, else
+`$EXTERNAL_CALLS_JAR`. With neither, stop and say so, unless the person says the facts file below is already there
 and current: then use it, and skip to reading it.
 
-connection-paths needs the jars the tests compile against, to know which library method each call goes to. Take
+under-test-external-calls needs the jars the tests compile against, to know which library method each call goes to. Take
 them from the build's own test compile: one command compiles the code and its tests and writes the classpath it
 compiled with, so there is no separate step to forget. Use the repo's wrapper (`sh mvnw`, `./gradlew`) if it has one,
 else the organisation profile's `tools.maven` or `tools.gradle`, else `mvn` or `gradle`:
 
 ```bash
-mvn -q -pl <module> -am test-compile dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=build/connection-paths-classpath.txt   # Maven; drop -pl/-am for the root
-gradle -q --init-script <this skill's folder>/print-classpath.gradle connectionPathsClasspath                                                   # Gradle: compiles the tests, prints each module's file
+mvn -q -pl <module> -am test-compile dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=build/under-test-external-calls-classpath.txt   # Maven; drop -pl/-am for the root
+gradle -q --init-script <this skill's folder>/print-classpath.gradle underTestExternalCallsClasspath                                                   # Gradle: compiles the tests, prints each module's file
 ```
 
 If the compile fails, say why, and fix nothing in the repo. If the build can't resolve them (a dependency in a repository that has gone or refuses it), say which artifact and
 repository, and run without `--classpath`. Then, for each module (the repo root if there is one):
 
 ```bash
-java -jar "$CONNECTION_PATHS_JAR" --module <module folder> --classpath @<its classpath file> \
+java -jar "$EXTERNAL_CALLS_JAR" --module <module folder> --classpath @<its classpath file> \
   --settings <any other folder of settings files> --out <facts file>
 ```
 
-The facts file is `testing/connection-paths.json`, or `testing/connection-paths/<module folder, / as ->.json` for a
+The facts file is `testing/external-calls.json`, or `testing/external-calls/<module folder, / as ->.json` for a
 module. Read only its `summary`, `systems`, `not_resolved` (the first five), and per test its `systems` and `reaches`:
 with `python3 -c` or `jq`, never by printing the file. If more than 5% of calls are not resolved, say which types are
 missing, from `not_resolved`.
@@ -89,7 +89,7 @@ The **kind** of a system is the first of its `kinds` in this order: `database`, 
 | `unique-id` | `named_by: host`: the host as from-airgap-reports.md step 2 makes it; a setting, variable or JNDI name: `<kind>-<name>`; `class`: `<kind>-via-<the class's simple name>`; lower-cased, every character but `a-z` and `0-9` turned to `-`, runs collapsed, ends trimmed |
 | `node-type` | `database` for a database; `ldap` for a directory; `service` for `http`; else `system` |
 | `name` | the host; else `<A database / A directory / An HTTP service / A mail server / A queue / A system>, address from <setting / environment variable / system property / JNDI name> <name>`, or `..., address unknown, opened by <the class's simple name>` |
-| `description` | `<Thing> opened by <the opening classes' simple names, sorted, joined by ", ">, found in the code by connection-paths.` |
+| `description` | `<Thing> opened by <the opening classes' simple names, sorted, joined by ", ">, found in the code by under-test-external-calls.` |
 | `metadata.under-test` | `addresses`: the literal, or a setting's value that isn't a placeholder, as written; else `address-from`: `setting <name>, which has no value in the repo`, `setting <name>, whose value in <file>:<line> is a placeholder`, `environment variable <name>`, `system property <name>`, `JNDI name <name>`, or `built at run time in <value>`; and `opened-by`, the system's `points` |
 
 The relationship is as from-airgap-reports.md step 3 makes it, except: `found-by` `["code"]`, plus `"settings"` when
@@ -117,7 +117,7 @@ reach is the one whose `point` is among the system's `points`):
   | `address_for_tests` is `none` | `cannot-reach` | `no-address-for-tests` |
   | `address_for_tests` is `local` | `cannot-reach` | `local` |
   | `address_for_tests` is `host` | `reaches` | `host` |
-  | Otherwise (`run-time`, or a facts file before `connection-paths/4`: say to run a newer connection-paths) | `may-reach` | `run-time` |
+  | Otherwise (`run-time`, or a facts file labelled `connection-paths/1` to `/3`: say to run a newer under-test-external-calls) | `may-reach` | `run-time` |
 
 * `through_set_up`: the reach's `through_set_up`;
 * `via`: the reach's `chain` as `<Class>.<method>` steps (simple class names, no parameters), joined by ` > `.
@@ -145,7 +145,7 @@ Check the files against their schemas if a validator is at hand. Then tell the p
    there covers them all.
 2. What the Architecture Owner must confirm: every `proposed` connection, every address not known, every placeholder,
    every set of alternatives, and, without an organisation profile, every host not marked `never-reach`.
-3. How much connection-paths resolved, and the dispatch points it didn't follow that a person should look at: the
+3. How much under-test-external-calls resolved, and the dispatch points it didn't follow that a person should look at: the
    three with most implementations.
 4. For the safety inventory: the `process` and `host-lookup` points, by method.
 5. How many tests are graded each way, and each test graded `reaches`, with its system.

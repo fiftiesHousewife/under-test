@@ -107,7 +107,7 @@
     "count" : 1,
     "example" : "./src/test/java/com/example/orders/OrderServiceTest.java:26 Unsolved symbol : org.mockito.Mockito"
   } ],
-  "schema" : "connection-paths/4",
+  "schema" : "external-calls/1",
   "summary" : {
     "calls_not_resolved" : 10,
     "calls_resolved" : 47,

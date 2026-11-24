@@ -234,7 +234,7 @@
       "additionalProperties": false,
       "description": "Where the tools the skills run are kept inside the organisation, when not on each machine's path.",
       "properties": {
-        "connection_paths_jar": {"type": "string", "description": "Path or URL of the mirrored connection-paths jar, which the draft-the-external-systems-list skill runs."},
+        "external_calls_jar": {"type": "string", "description": "Path or URL of the mirrored under-test-external-calls jar, which the draft-the-external-systems-list skill runs."},
         "under_test_tools_jar": {"type": "string", "description": "Path or URL of the mirrored under-test-tools jar, which runs the mechanical steps of skills such as find-meaningless-and-unreliable-tests."},
         "maven": {"type": "string", "description": "The Maven command to use where a repo has no Maven wrapper, such as mvn or a path to it."},
         "gradle": {"type": "string", "description": "The Gradle command to use where a repo has no Gradle wrapper; old builds may need an old Gradle."}

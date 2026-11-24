@@ -35,7 +35,7 @@
               "additionalProperties": false,
               "properties": {
                 "addresses": {"type": "array", "items": {"type": "string"}, "description": "Host names, host:port or URLs this node is, or was reached at; left out while the address isn't known."},
-                "opened-by": {"type": "array", "items": {"type": "string"}, "description": "Methods in the code that open or use this connection, as connection-paths names them (type#method(parameter types)), sorted."},
+                "opened-by": {"type": "array", "items": {"type": "string"}, "description": "Methods in the code that open or use this connection, as under-test-external-calls names them (type#method(parameter types)), sorted."},
                 "address-from": {"type": "string", "description": "Where the address comes from when it isn't known before the code runs: an environment variable, a system property, a JNDI name, a setting with no value, or built at run time; for instance 'JNDI name java:comp/env/jdbc/orders'."},
                 "programs-started": {"type": "array", "items": {"type": "string"}, "description": "For the application itself: other programs it starts."}
               }
@@ -76,7 +76,7 @@
               "properties": {
                 "state": true, "drafted_by": true, "by": true,
                 "found-by": {"type": "array", "minItems": 1, "items": {"enum": ["airgap-agent", "settings", "code", "person"]}, "description": "How the connection was found: the airgap agent's reports, the repo's settings, reading its code, or a person."},
-                "kinds": {"type": "array", "items": {"enum": ["database", "http", "mail", "directory", "jndi", "queue", "socket", "url", "host-lookup", "process", "tcp", "udp"]}, "description": "The kinds of connection found: by connection-paths in the code, or by the airgap agent in a run."},
+                "kinds": {"type": "array", "items": {"enum": ["database", "http", "mail", "directory", "jndi", "queue", "socket", "url", "host-lookup", "process", "tcp", "udp"]}, "description": "The kinds of connection found: by under-test-external-calls in the code, or by the airgap agent in a run."},
                 "callers": {"type": "array", "items": {"type": "string"}, "description": "Where in the application's own code the connection is made, as class.method(File.java:line): from the airgap agent, the line of the call; from the code, the method's first line."},
                 "setting": {"type": "object", "required": ["name"], "additionalProperties": false, "properties": {"name": {"type": "string"}, "from": {"type": "string"}}, "description": "The setting that supplied the address, and where it was read."},
                 "tests": {"type": "integer", "minimum": 0, "description": "How many tests made the call (airgap agent) or may make it (code), as testing/tests.yaml records them."},

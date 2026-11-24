@@ -15,7 +15,7 @@ Never run any other repo's tests this way.
 
 | Measure | Meaning |
 |---|---|
-| Recall | Of the tests that tried to reach another machine, how many have a chain from connection-paths. A miss is a test that called out with no chain |
+| Recall | Of the tests that tried to reach another machine, how many have a chain from under-test-external-calls. A miss is a test that called out with no chain |
 | Precision | Of the tests with a chain, how many tried to reach another machine. The rest are false alarms |
 | Grades | Whether the tests that called out are graded reaches or may reach, and none cannot reach; and how many graded reaches really called out |
 
@@ -28,7 +28,7 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 * The jars its tests compile against, from the same compile
   ([the external systems list skill](../../.github/skills/draft-the-external-systems-list/SKILL.md) has the command
   for Maven and for Gradle).
-* connection-paths' jar, built from the commit being checked.
+* under-test-external-calls' jar, built from the commit being checked.
 * The airgap agent's jar and its JUnit listener (`airgap-agent-<version>.jar`, `airgap-junit-<version>.jar`).
 * For a repo built with Maven: `junit-platform-console-standalone` 1.10 or later, which includes the engine that runs
   JUnit 4 tests.
@@ -36,7 +36,7 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 
 ## Steps
 
-1. **Run connection-paths** on the module with that classpath, as the external systems list skill does, writing the
+1. **Run under-test-external-calls** on the module with that classpath, as the external systems list skill does, writing the
    facts file outside the repo.
 2. **Run every test under the agent**, with `mode=refuse` and the listener on the test classpath, so each call names
    its test:
@@ -53,9 +53,9 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 5. **Read what it names:** each missed test's call and the code that made it (the report's `caller` and `stack`);
    each wrong grade's chain in the facts file; and each group of false alarms, by the point and the chain's first
    steps they share. Say why for each: a rule that's missing, an address not followed, a stand-in not recognised.
-6. **Record and send:** write the counts and causes in the repo's notes, and send each cause to connection-paths as a
+6. **Record and send:** write the counts and causes in the repo's notes, and send each cause to under-test-external-calls as a
    fault, with the repo, the file and line, and the tests it affects. Run the check again on the same repos when
-   connection-paths changes.
+   under-test-external-calls changes.
 
 ## When a run goes wrong
 
@@ -69,7 +69,7 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 
 ## Results so far
 
-With connection-paths 8663813. "Flagged" is graded reaches or may reach.
+With under-test-external-calls 8663813. "Flagged" is graded reaches or may reach.
 
 | Repo | Tests run | Tests that called out | Missed (no chain) | Flagged but made no outside call | What still causes them |
 |---|---|---|---|---|---|
