@@ -132,7 +132,8 @@ Then the tests whose own code or the settings they load name a host (spring-boot
 `grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>`). A host is never
 `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` or their subdomains, one ending `.example`, `.test`,
 `.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. Each test gets an entry with
-`found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, and `where`, the `path:line` naming it.
+`found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, `where`, the `path:line` naming it, and
+`kind`: the node's kind when the host already has a node, else from the address's scheme as spring-xml.md says.
 
 A host with no node yet gets one, keys as in step 3's table: `unique-id` and `name` from the host, as from-airgap-reports.md
 step 2 makes them; `node-type` by the entry's kind; `description` `<Thing> named by the tests at <the first where,

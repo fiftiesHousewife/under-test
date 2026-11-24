@@ -1,6 +1,6 @@
 #!/bin/bash
-# Sets up the case's workspace: a repo holding only two airgap agent reports (one from its tests, one from starting
-# the application) and an assessment file that already has a safety section and a decision, plus the schemas of the
+# Sets up the case's workspace: a repo holding two airgap agent reports (one from its tests, one from starting
+# the application), the test classes the reports name, and an assessment file that already has a safety section and a decision, plus the schemas of the
 # files the skill writes (the external systems list, the assessment file and testing/tests.yaml) and the two decision
 # guides the task needs. Run by claude plugin eval --scaffold, in the workspace.
 set -euo pipefail

@@ -6,24 +6,24 @@ tests:
   - test: "com.example.orders.OrderRepositoryIT.findsAnOrder"
     at: "src/test/java/com/example/orders/OrderRepositoryIT.java:12"
     external_systems:
-      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+      - {node: "db-orders-prod-example-com", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
   - test: "com.example.orders.OrderRepositoryIT.savesAnOrder"
     at: "src/test/java/com/example/orders/OrderRepositoryIT.java:18"
     external_systems:
-      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+      - {node: "db-orders-prod-example-com", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
   - test: "com.example.orders.OrderRepositoryIT.listsOrders"
     at: "src/test/java/com/example/orders/OrderRepositoryIT.java:24"
     external_systems:
-      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+      - {node: "db-orders-prod-example-com", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
   - test: "com.example.orders.OrderRepositoryIT.cancelsAnOrder"
     at: "src/test/java/com/example/orders/OrderRepositoryIT.java:30"
     external_systems:
-      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+      - {node: "db-orders-prod-example-com", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
   - test: "com.example.orders.OrderRepositoryIT.refundsAnOrder"
     at: "src/test/java/com/example/orders/OrderRepositoryIT.java:36"
     external_systems:
-      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+      - {node: "db-orders-prod-example-com", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
   - test: "com.example.orders.OrderRepositoryIT.archivesAnOrder"
     at: "src/test/java/com/example/orders/OrderRepositoryIT.java:42"
     external_systems:
-      - {node: "orders-db", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}
+      - {node: "db-orders-prod-example-com", kind: "database", found_by: "code-path", grade: "reaches", reason: "host"}

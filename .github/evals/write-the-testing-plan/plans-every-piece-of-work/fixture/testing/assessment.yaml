@@ -306,7 +306,7 @@ decisions:
     state: proposed
     drafted_by: ai
     choice: adopt
-    reason: "adopt: 'the tests only run the code without checking results', 14 tests with no real assertion (anti-pattern no-real-assertion) and only 23 of 100 planted bugs caught. Waits for make-it-run-on-its-own. Known bugs, such as refund rounding, stay recorded and go to the Application Owner as open questions. Mockito 3.12 needs mockito-inline to replace static or final methods."
+    reason: "adopt: 'the tests only run the code without checking results', 14 tests with no real assertion (meaningless tests finding no-real-assertion) and only 23 of 100 planted bugs caught. Waits for make-it-run-on-its-own. Known bugs, such as refund rounding, stay recorded and go to the Application Owner as open questions. Mockito 3.12 needs mockito-inline to replace static or final methods."
   techniques/contract-testing:
     state: proposed
     drafted_by: ai

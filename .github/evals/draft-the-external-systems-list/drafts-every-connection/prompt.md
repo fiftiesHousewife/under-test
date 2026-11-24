@@ -11,5 +11,6 @@ object per line. From them, draft the repo's external systems list in `testing/e
 (`decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md`) and the addresses tests must never reach
 (`decision-guides/0031-the-external-systems-list-says-what-tests-use-for-each-system-and-which-addresses-tests-must-never-reach.md`).
 Also record what the code tried to reach in the `running_offline` section of `testing/assessment.yaml`, which must
-match `schema/assessment.schema.json`. Don't build or run anything, and leave the rest of the repo alone. Then tell
+match `schema/assessment.schema.json`, and in `testing/tests.yaml` (`schema/tests.schema.json`) which tests reached
+each system. Don't build or run anything, and leave the rest of the repo alone. Then tell
 me briefly what the code tried to reach and what needs confirming.

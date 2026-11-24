@@ -43,7 +43,8 @@ if ! "$here/check-cases.sh"; then
   exit 1
 fi
 
-cases="$(find "$root/.github/evals" -mindepth 3 -maxdepth 3 -name case.yaml ! -path '*/results/*' | sort)"
+cases="$(find "$root/.github/evals" -mindepth 3 -maxdepth 3 -name case.yaml ! -path '*/results/*' | sort |
+  while read -r f; do [ -f "$(dirname "$f")/DISABLED.md" ] || echo "$f"; done)"
 echo "== $(date -u '+%H:%M') UTC: baseline of $(echo "$cases" | wc -l | tr -d ' ') cases, with ${MODEL:-sonnet}"
 
 for case_file in $cases; do

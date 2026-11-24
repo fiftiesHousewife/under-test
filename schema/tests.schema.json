@@ -216,6 +216,40 @@
                 "description": "It called something off the machine that none of its external_systems entries names: discovery's searches missed it."
               }
             }
+          },
+          "repair": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "state"
+            ],
+            "description": "Owned by the repair skill: what repair did with this test (decisions 0086, 0095, 0096). A test that reaches an external system and has no repair field is still to pair; the testing plan keeps a piece of work for its system until each such test has one.",
+            "properties": {
+              "state": {
+                "enum": [
+                  "paired",
+                  "waiting"
+                ],
+                "description": "paired: the test is now a pair, one run injecting the stand-in and one tagged external; waiting: it can't be paired yet, for the reason in waits_for."
+              },
+              "pair": {
+                "type": "string",
+                "description": "For paired: the classes that make the pair, as \"<test interface or parameterised class>, <stand-in class>, <external class>\"."
+              },
+              "waits_for": {
+                "enum": [
+                  "stand-in-not-chosen",
+                  "address-in-code",
+                  "no-place-to-inject",
+                  "turned-down"
+                ],
+                "description": "For waiting: why; the testing plan turns it into work."
+              },
+              "pull_request": {
+                "type": "string",
+                "description": "The pull request that made the change, or that a person turned down."
+              }
+            }
           }
         }
       }

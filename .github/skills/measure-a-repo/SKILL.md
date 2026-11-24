@@ -121,8 +121,8 @@ Write `stage: repeats`, `runs: 5`, `flaky` (flaky and order-dependent tests), `f
 * `<targets>`: `<group>.*` for each project's `group`, comma-separated, if the main code has 200 classes or fewer
   (`.class` files without `$`). Otherwise, or with no `group`, ask which packages hold the key code. `sampled` is
   `true` only when the targets leave some main code out.
-* `<left out>`: each test class with a test that didn't pass every run, or was left out, fully qualified, sorted,
-  comma-separated; no flag if none.
+* `<left out>`: each test class with a test that failed in any run (flaky, order-dependent or failing every run), or
+  was left out, fully qualified, sorted, comma-separated; no flag if none. A disabled test doesn't put its class here.
 
 `planted` is every `mutation` in `build/under-test/planted-bugs/mutations.xml`; `caught`, those with status `KILLED`,
 `TIMED_OUT` or `MEMORY_ERROR` (not `RUN_ERROR`). Write `stage: planted-bugs` and `planted_bugs`.

@@ -1,7 +1,7 @@
 #!/bin/bash
-# Sets up the case's workspace: a small Gradle repo whose seven tests each reach a system in a different way (through a
-# mock, with an embedded server, with no address in their settings, staying local, to a host, to an address known only
-# at run time, and to a host named in the test itself), with under-test-external-calls' facts for it, plus the schemas and the
+# Sets up the case's workspace: a small Gradle repo whose six tests each reach a system in a different way (through a
+# mock, with an embedded server, with no address in their settings, to a host, to an address known only at run time,
+# and to a host named in the test itself), and one that uses an in-memory database, which is no system, with under-test-external-calls' facts for it, plus the schemas and the
 # decision guide the task needs. Run by claude plugin eval --scaffold, in the workspace.
 set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"

@@ -50,6 +50,12 @@ On a Claude subscription the runs come out of the plan's usage, not money; the c
 
 Full results go to `.github/evals/results/`, which isn't committed.
 
+To leave a case out of every run while it isn't ready, put a `DISABLED.md` in its folder whose first line says why;
+the scripts skip it and say so. Delete the file to run the case again.
+
+Where the sandbox or a machine can't find a JDK by itself, name them: `EVAL_JDK_HOME` (17 or later, for PMD) and
+`EVAL_JDK11_HOME` (for the measurement case's Gradle 6.9).
+
 ## Writing a case's set-up
 
 The eval's sessions can read only their own workspace: not this repo, the download cache or the home folder. So a
