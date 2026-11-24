@@ -25,9 +25,8 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 ## What you need
 
 * The repo, built: its classes and test classes compiled (the build may compile; nothing runs yet).
-* The jars its tests compile against, from the same compile
-  ([the external systems list skill](../../.github/skills/draft-the-external-systems-list/SKILL.md) has the command
-  for Maven and for Gradle).
+* The jars its tests compile against, from the same compile, got as
+  [under-test-external-calls' own instructions](https://github.com/fiftiesHousewife/under-test-external-calls#running-it) say.
 * under-test-external-calls' jar, built from the commit being checked.
 * The airgap agent's jar and its JUnit listener (`airgap-agent-<version>.jar`, `airgap-junit-<version>.jar`).
 * For a repo built with Maven: `junit-platform-console-standalone` 1.10 or later, which includes the engine that runs

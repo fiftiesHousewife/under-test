@@ -43,15 +43,10 @@ It needs Java 17 or later and its jar: the organisation profile's `tools.externa
 `$EXTERNAL_CALLS_JAR`. With neither, stop and say so, unless the person says the facts file below is already there
 and current: then use it, and skip to reading it.
 
-under-test-external-calls needs the jars the tests compile against, to know which library method each call goes to. Take
-them from the build's own test compile: one command compiles the code and its tests and writes the classpath it
-compiled with, so there is no separate step to forget. Use the repo's wrapper (`sh mvnw`, `./gradlew`) if it has one,
-else the organisation profile's `tools.maven` or `tools.gradle`, else `mvn` or `gradle`:
-
-```bash
-mvn -q -pl <module> -am test-compile dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=build/under-test-external-calls-classpath.txt   # Maven; drop -pl/-am for the root
-gradle -q --init-script <this skill's folder>/print-classpath.gradle underTestExternalCallsClasspath                                                   # Gradle: compiles the tests, prints each module's file
-```
+under-test-external-calls needs the jars the tests compile against, to know which library method each call goes to.
+Get them for each module as [its own instructions](https://github.com/fiftiesHousewife/under-test-external-calls#running-it) say: they compile the code and its tests, run none, and write
+the classpath that compile used. Use the repo's wrapper (`sh mvnw`, `./gradlew`) if it has one, else the organisation
+profile's `tools.maven` or `tools.gradle`, else `mvn` or `gradle`.
 
 If the compile fails, say why, and fix nothing in the repo. If the build can't resolve them (a dependency in a repository that has gone or refuses it), say which artifact and
 repository, and run without `--classpath`. Then, for each module (the repo root if there is one):

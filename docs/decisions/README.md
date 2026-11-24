@@ -36,6 +36,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [The quality plugin may pull Gradle plugins from the Gradle Plugin Portal](0084-the-quality-plugin-may-pull-gradle-plugins-from-the-gradle-plugin-portal.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The external systems list is checked on real repos against a run of every test under the airgap agent](0088-the-external-systems-list-is-checked-on-real-repos-against-a-run-of-every-test-under-the-airgap-agent.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The field trial's public repos run their tests under the airgap agent without a safety inventory first](0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Getting the classpath is under-test-external-calls' job, and the toolkit carries no copy of its steps](0091-getting-the-classpath-is-under-test-external-calls-job-and-the-toolkit-carries-no-copy-of-its-steps.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 

@@ -1815,6 +1815,18 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0090-only-a-system-on-another-machine-reaches-out-and-a-test-needing-a-service-on-its-own-machine-is-found-by-failing.md"
+  - key: "decide-the-classpath-step-is-the-tools"
+    status: "done"
+    type: "decision"
+    title: "Getting the classpath is under-test-external-calls' job, and the toolkit carries no copy of its steps"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0091-getting-the-classpath-is-under-test-external-calls-job-and-the-toolkit-carries-no-copy-of-its-steps.md"
   - key: "discovery-check-on-the-field-trial-repos"
     type: "deliverable"
     title: "Discovery is checked against a run under the airgap agent on Openfire, spring-petclinic and jsoup, at each under-test-external-calls change"
@@ -2019,7 +2031,7 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "A classpath step uses the repo's wrapper, else the build tool the organisation profile names, compiling sibling modules without tests (the skill does this step; under-test-external-calls reads sibling modules' source) (done)"
+      - "A classpath step uses the repo's wrapper, else the build tool the organisation profile names, compiling sibling modules without tests (done: under-test-external-calls' repo documents it and ships its Gradle init script; the toolkit carries no copy; it reads sibling modules' source)"
       - "Each connection point has an address hint, a setting's value looked up in the repo's settings files, and placeholders flagged (done)"
       - "Local points are marked: file and in-memory databases, classpath resources, file and jar URLs, DNS through JNDI, methods nothing calls (done)"
       - "Systems are proposed by host, else setting, else opening class, with alternatives behind one interface marked (done: facts version 2, on under-test-external-calls' branch addresses-systems-and-pipeline until merged)"
