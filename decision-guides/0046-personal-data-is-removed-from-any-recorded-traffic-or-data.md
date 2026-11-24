@@ -38,5 +38,5 @@ Proposed: the first option. Seed data for shared test kits is synthetic.
 ## More Information
 
 * Builds on: nothing (a foundation decision)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Captured data is cleaned inside the environment it was captured in, before it is copied anywhere](0062-captured-data-is-cleaned-inside-the-environment-it-was-captured-in-before-it-is-copied-anywhere.md)
 * Background: [capturing and cleaning black-box data](../docs/research/capturing-and-cleaning-black-box-data.md)

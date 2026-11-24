@@ -1,5 +1,8 @@
 # Skill eval baseline: report and actions
 
+These runs come from before the skills' renames (find-test-anti-patterns, now find-meaningless-and-unreliable-tests;
+draft-the-connection-list, now draft-the-external-systems-list), so they use the earlier names and words.
+
 The first full run of every skill's eval case with
 [`run-baseline.sh`](../../maintainer-tools/skill-evals/run-baseline.sh), with Sonnet: five runs with the toolkit's
 skills and five without, each in a fresh session. Each case's results are kept in

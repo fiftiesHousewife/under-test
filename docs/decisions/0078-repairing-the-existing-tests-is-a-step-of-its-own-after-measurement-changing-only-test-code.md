@@ -1,12 +1,14 @@
 ---
-status: accepted
+status: superseded
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Repairing the existing tests is a step of its own, after measurement, changing only test code
 
-**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [Repair pairs each test that reaches an external system, after measurement, changing only test code](0096-repair-pairs-each-test-that-reaches-an-external-system-after-measurement-changing-only-test-code.md).
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -48,7 +50,7 @@ Repair works one connection, then one kind of problem, at a time, each change a 
 * **Left as work for later**, recorded against the test in `testing/tests.yaml` with the reason: anything that needs
   production code changed (a dependency a test can't replace, an address written in the code that a stand-in
   needs in a setting), deleting a test (never before the approval-test baseline, by
-  [the guide on anti-patterns in existing tests](../../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)),
+  [the guide on anti-patterns in existing tests](../../decision-guides/0059-meaningless-and-unreliable-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)),
   disabled tests (the Application Owner decides), and any fix a person turns down. The testing plan turns each into a
   piece of work.
 
@@ -75,5 +77,5 @@ is work for later), and the tests that start a framework (their stand-in goes in
 ## More Information
 
 * Builds on: [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md), [Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md), [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)
-* Later decisions that build on this: [Which of repair's changes OpenRewrite recipes make, and which the AI makes](0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)
+* Later decisions that build on this: [Which of repair's changes OpenRewrite recipes make, and which the AI makes](0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md), [Every test that reaches an external system becomes a pair: one run injects a stand-in, the other is tagged external](0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md), [The journey runs two tracks, syntactic and semantic, that join at the testing plan](0092-the-journey-runs-two-tracks-syntactic-and-semantic-that-join-at-the-testing-plan.md)
 * Background: [legacy-code](../REFERENCES.md#legacy-code), [test-doubles](../REFERENCES.md#test-doubles), [flaky-tests](../REFERENCES.md#flaky-tests)

@@ -33,5 +33,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [No repo's tests or application run until its secrets scan is clean](0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)
 * Background: none

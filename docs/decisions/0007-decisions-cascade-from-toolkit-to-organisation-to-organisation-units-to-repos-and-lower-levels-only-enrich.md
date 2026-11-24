@@ -36,5 +36,5 @@ Chosen in discussion: the first option.
 ## More Information
 
 * Builds on: [Organisation-specific facts and decisions live in a private organisation repo](0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md)
-* Later decisions that build on this: [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md)
+* Later decisions that build on this: [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md), [An organisation adopts every decision guide in its toolkit version by default, and records only its departures](0052-an-organisation-adopts-every-decision-guide-in-its-toolkit-version-by-default-and-records-only-its-departures.md)
 * Background: none

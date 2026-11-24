@@ -21,6 +21,10 @@ folders up from this skill's folder (not in the repo; generated from the `techni
 technique per line, with every field these rules use). Read nothing else: not the techniques README, nor any
 `technique.yaml`, even where the repo has copies.
 
+No `testing/sources.yaml` means no source list yet: carry on without it. A condition about the sources of intended
+behaviour (a specification, a subject-matter expert, documents) is then unknown, unless the request or another file
+settles it.
+
 The **target level** is the `level/target` choice if its state is `decided`, else the target for
 `repo.business_criticality` (high 4, medium 3, low 2, from
 [Target test maturity level for each business criticality](../../../decision-guides/0015-target-test-maturity-level-for-each-business-criticality.md),

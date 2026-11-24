@@ -31,7 +31,9 @@ Proposed: the first option; decide on Moderne after measuring run time on the fi
 
 ### Consequences
 
-* `tools/repo-classifier/` holds the combined recipe, our Semgrep rules and the scoring table.
+* The repo classifier is a sub-command of under-test-tools, as
+  [The journey's mechanical steps are one command-line tool, with a sub-command per step, in its own repo](0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)
+  says, holding the combined recipe, our Semgrep rules and the scoring table.
 
 ## More Information
 

@@ -1,12 +1,14 @@
 ---
-status: accepted
+status: superseded
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The toolkit calls a system a test cannot run without an external system
 
-**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [An external system is one on another machine that a test cannot run without](0098-an-external-system-is-one-on-another-machine-that-a-test-cannot-run-without.md).
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -34,5 +36,5 @@ Chosen in discussion: "external system" everywhere. The anti-pattern kind become
 ## More Information
 
 * Builds on: [We write in plain English using the agreed word list](0020-we-write-in-plain-english-using-the-agreed-word-list.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md), [Only a system on another machine reaches out, and a test needing a service on its own machine is found by failing](0090-only-a-system-on-another-machine-reaches-out-and-a-test-needing-a-service-on-its-own-machine-is-found-by-failing.md)
 * Background: none

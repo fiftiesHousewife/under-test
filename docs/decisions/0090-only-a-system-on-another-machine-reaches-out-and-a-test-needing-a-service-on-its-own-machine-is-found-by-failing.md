@@ -45,5 +45,5 @@ with outbound calls blocked. Repair pairs only the tests that reach other machin
 ## More Information
 
 * Builds on: [Each test is graded reaches, may reach or cannot reach, from the address its own settings give](0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md), [The toolkit calls a system a test cannot run without an external system](0062-the-toolkit-calls-a-system-a-test-cannot-run-without-an-external-system.md), [Every test that reaches an external system becomes a pair: one run injects a stand-in, the other is tagged external](0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [An external system is one on another machine that a test cannot run without](0098-an-external-system-is-one-on-another-machine-that-a-test-cannot-run-without.md)
 * Background: none

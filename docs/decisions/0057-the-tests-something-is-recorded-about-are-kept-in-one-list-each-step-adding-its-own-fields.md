@@ -8,6 +8,8 @@ group: Recording results and owning plans
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [Finding what the code connects to is one job, in the connection-list skill, done before any code runs](0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md), [Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md), [External system replaces the word connection](0081-external-system-replaces-the-word-connection.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -46,5 +48,5 @@ which named a file for that skill alone.
 ## More Information
 
 * Builds on: [A skill finds what to read by searching, and reads only what the searches find](0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Measurement leaves out external tests, varies the test order, and sorts connection errors by where they were going](0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md), [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md), [Finding what the code connects to is one job, in the connection-list skill, done before any code runs](0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md), [Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)
 * Background: [the research on prior art](../PRIOR-ART.md)

@@ -25,7 +25,7 @@ Subject-matter experts are the scarcest resource. Asking them to review long dra
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option, in the style of Example Mapping (rules, examples and open questions).
+Agreed in discussion, waiting for approval by pull request: the first option, in the style of Example Mapping (rules, examples and open questions).
 
 ### Consequences
 
@@ -34,6 +34,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [Behaviour is captured in two tracks, current and intended, and every difference is an open question](0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md)
+* Builds on: [Current and intended behaviour are recorded side by side, and every difference is an open question](0033-current-and-intended-behaviour-are-recorded-side-by-side-and-every-difference-is-an-open-question.md)
 * Later decisions that build on this: none yet
 * Background: [legacy-code](../docs/REFERENCES.md#legacy-code)

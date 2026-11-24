@@ -21,13 +21,13 @@ copy a secret's value into a file or the reply; point at its file and line.
 
 | When | Read |
 |---|---|
-| There are airgap agent reports (`build/airgap/*/calls.jsonl`) or the person gives you some | [from-airgap-reports.md](from-airgap-reports.md), and do what it says after this file's steps, or alone if the person asks only for that |
+| There are airgap agent reports (`build/under-test/runs/1/*/calls.jsonl` after measurement, `build/airgap/*/calls.jsonl`) or the person gives you some | [from-airgap-reports.md](from-airgap-reports.md), and do what it says after this file's steps, or alone if the person asks only for that |
 | The build has more than one module | [modules.md](modules.md), first |
 | The build uses Spring Boot (`org.springframework.boot` in a build file) | [spring-boot.md](spring-boot.md) |
 | The code or tests load Spring XML (`<beans` in a resource, `@ImportResource`, `@ContextConfiguration` naming XML, `XmlApplicationContext(`) | [spring-xml.md](spring-xml.md) |
 
 ```bash
-ls settings.gradle* build.gradle* pom.xml build/airgap/*/calls.jsonl 2>/dev/null
+ls settings.gradle* build.gradle* pom.xml build/under-test/runs/1/*/calls.jsonl build/airgap/*/calls.jsonl 2>/dev/null
 grep -lE '^\s*include|<modules>' settings.gradle* pom.xml 2>/dev/null
 grep -lE 'org\.springframework\.boot' build.gradle* pom.xml */build.gradle* */pom.xml 2>/dev/null
 grep -rlE '<beans|@ImportResource|@ContextConfiguration\(.*\.xml|XmlApplicationContext\(' --include='*.xml' --include='*.java' src */src 2>/dev/null | head -3
@@ -53,12 +53,15 @@ repository, and run without `--classpath`. Then, for each module (the repo root 
 
 ```bash
 java -jar "$EXTERNAL_CALLS_JAR" --module <module folder> --classpath @<its classpath file> \
+  [--main <dependency module>/src/main/java]... \
   --settings <any other folder of settings files> --out <facts file>
 ```
 
 The facts file is `testing/external-calls.json`, or `testing/external-calls/<module folder, / as ->.json` for a
-module. Read only its `summary`, `systems`, `not_resolved` (the first five), and per test its `systems` and `reaches`:
-with `python3 -c` or `jq`, never by printing the file. If more than 5% of calls are not resolved, say which types are
+module. Read only its `summary`, `systems`, `connection_points` (each point's `method`, `file` and `line`, for
+`callers`), `not_resolved` (the first five), `dispatch_points_not_followed` (the three with most `implementations`),
+`tests_starting_a_framework` (when spring-boot.md applies), and per test its `test`, `file`, `line`, `stand_ins`,
+`systems` and `reaches`: with `python3 -c` or `jq`, never by printing the file. If more than 5% of calls are not resolved, say which types are
 missing, from `not_resolved`.
 
 ## 2. Settle what the tool can't
@@ -76,8 +79,13 @@ in no system: list them in the reply, the last two for the safety inventory. For
 
 ## 3. One node and one relationship per system
 
-The **kind** of a system is the first of its `kinds` in this order: `database`, `http`, `mail`, `directory`, `queue`,
-`jndi`, `socket`, `url` ([why](../../../docs/decisions/0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md)).
+**Kinds**, one list for the code and the airgap agent's reports. The **kind** of a system is the first of its kinds in
+this order: `database`, `http`, `mail`, `directory`, `queue`, `jndi`, `socket`, `url`, `host-lookup`
+([why](../../../docs/decisions/0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md)).
+under-test-external-calls uses these names. An airgap agent report line's `kind` becomes one of them: `tcp` is
+`socket`, unless its port is 5672, 9092 or 61616, which is `queue`; `udp` is `socket`; `jndi` to an `ldap://` or
+`ldaps://` URL is `directory`, any other `jndi` stays `jndi`; `database`, `http`, `mail` and `host-lookup` keep their
+names.
 
 | Node key | Value |
 |---|---|
@@ -90,8 +98,9 @@ The **kind** of a system is the first of its `kinds` in this order: `database`, 
 The relationship is as from-airgap-reports.md step 3 makes it, except: `found-by` `["code"]`, plus `"settings"` when
 the address is a setting; `kinds` the system's kinds; `callers` its points as `<type>.<method>(<file name>:<line>)`,
 each point's file and line from `connection_points`, sorted, first five; `setting` `{name, from: "<file>:<line>"}` if
-the tool found its value; `tests` the system's `tests`; no `runs`; `stand-in` and `never-reach` by the same rules, with
-a queue's stand-in `run-in-container` and a `url`'s `not-chosen`.
+the tool found its value; `tests` how many entries in `testing/tests.yaml` have an `external_systems` entry for this
+node graded `reaches` or `may-reach` (so count after step 4; 0 if none); no `runs`; `stand-in` and `never-reach` by
+the same rules, with a queue's stand-in `run-in-container` and a `url`'s `not-chosen`.
 
 The application's node, the merge with an existing file, and how the file is written are as from-airgap-reports.md
 steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none.
@@ -108,7 +117,7 @@ reach is the one whose `point` is among the system's `points`):
   | When | `grade` | `reason` |
   |---|---|---|
   | The reach has `through_mock` | `cannot-reach` | `through-a-mock` |
-  | The test's `stand_ins` has an embedded server for the kind (its simple name holds `Ldap` for a directory; `GreenMail` or `Mail` for mail; `WireMock` or `MockWebServer` for `http` and `url`; `Postgres`, `MySql`, `Mongo`, `H2` or `Database` for a database; `Kafka`, `ActiveMQ`, `Artemis` or `Rabbit` for a queue) | `cannot-reach` | `embedded-server` |
+  | The test's `stand_ins` has an embedded server for the kind (its simple name holds, ignoring case, `Ldap` for a directory; `GreenMail` or `Mail` for mail; `WireMock` or `MockWebServer` for `http` and `url`; `Postgres`, `MySQL`, `Mongo`, `H2` or `Database` for a database, so `MySQLContainer` counts; `Kafka`, `ActiveMQ`, `Artemis` or `Rabbit` for a queue) | `cannot-reach` | `embedded-server` |
   | `address_for_tests` is `none` | `cannot-reach` | `no-address-for-tests` |
   | `address_for_tests` is `local` | `cannot-reach` | `local` |
   | `address_for_tests` is `host` | `reaches` | `host` |
@@ -120,15 +129,24 @@ reach is the one whose `point` is among the system's `points`):
 Then the tests whose own code or the settings they load name a host (spring-boot.md, spring-xml.md, and in test code
 `grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>`). A host is never
 `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` or their subdomains, one ending `.example`, `.test`,
-`.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. Each gets a node by its host, if it
-has none yet, and an entry with `found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, and
-`where`, the `path:line` naming it.
+`.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. Each test gets an entry with
+`found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, and `where`, the `path:line` naming it.
 
-In `testing/tests.yaml`, replace `external_systems` in every entry and add an entry (`test`, `at` from the facts file's
+A host with no node yet gets one, keys as in step 3's table: `unique-id` and `name` from the host, as from-airgap-reports.md
+step 2 makes them; `node-type` by the entry's kind; `description` `<Thing> named by the tests at <the first where,
+sorted>.`; `metadata.under-test.addresses` the host as written. It also gets a relationship, made as step 3 says,
+except: `found-by` `["code"]` for a host in test code, `["test-settings"]` for one in settings the tests load, or both;
+`kinds` the entries' kinds; no `callers`; `setting` `{name, from}` when a setting names it. A host that already has a
+relationship gets these `found-by` and `kinds` merged in, sorted, and its `tests` counted again.
+
+In `testing/tests.yaml`, replace the entries in `external_systems` this step makes (every `found_by` but
+`airgap-report`, which from-airgap-reports.md owns) in every test and add an entry (`test`, `at` from the facts file's
 `file:line`, made relative to the repo root, without a leading `./`) for a test that has none; never touch another
-skill's keys. An entry left with only `test` and `at` goes. Set `found_by.draft-the-external-systems-list` (`version`, the
-organisation profile's `toolkit.version` or `unreleased`; `commit`, `git rev-parse --short HEAD`). Entries sorted by
-`test`; every string double-quoted. No file yet: start it as find-meaningless-and-unreliable-tests' step 3 says.
+skill's keys. An entry left with only `test` and `at` goes. Always write the file and set
+`found_by.draft-the-external-systems-list` (`version`, the organisation profile's `toolkit.version` or `unreleased`;
+`commit`, `git rev-parse --short HEAD`), even when no test has an entry (`tests: []`): measurement checks for it.
+Entries sorted by `test`; every string double-quoted. No file yet: start it as find-meaningless-and-unreliable-tests'
+step 3 says.
 
 ## 5. Check, then report
 

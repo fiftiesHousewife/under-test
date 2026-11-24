@@ -23,7 +23,7 @@ Knowing a connection exists isn't enough: tests also need to know what to use in
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. The toolkit publishes the schema for its CALM decorator.
+Agreed in discussion, waiting for approval by pull request: the first option. The toolkit publishes the schema for its CALM decorator.
 
 ### Consequences
 

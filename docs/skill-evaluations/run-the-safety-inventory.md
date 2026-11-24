@@ -1,5 +1,8 @@
 # Evaluation: run-the-safety-inventory
 
+These runs come from before the skills' renames (find-test-anti-patterns, now find-meaningless-and-unreliable-tests;
+draft-the-connection-list, now draft-the-external-systems-list), so they use the earlier names and words.
+
 Does the [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md) skill save an AI
 assistant effort and give the same result each time? It was tried against the same task done without it.
 

@@ -41,5 +41,5 @@ safety gate, where production can't be reached
 ## More Information
 
 * Builds on: [Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md), [The safety inventory is a gate before the first run, and no skill ever copies a secret](0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [connection-paths does everything a program can decide, and the connection-list skill only what needs judgement](0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md), [Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md)
 * Background: none

@@ -8,6 +8,8 @@ group: Using the toolkit in an organisation
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [Getting the classpath is under-test-external-calls' job, and the toolkit carries no copy of its steps](0091-getting-the-classpath-is-under-test-external-calls-job-and-the-toolkit-carries-no-copy-of-its-steps.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -52,5 +54,5 @@ what people decided before, and reports.
 ## More Information
 
 * Builds on: [Connections and the test paths to them are found by connection-paths, a JavaParser tool in its own repo](0072-connections-and-the-test-paths-to-them-are-found-by-connection-paths-a-javaparser-tool-in-its-own-repo.md), [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md), [A connection whose address isn't known is a system of its own per class that opens it](0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md), [Each test is graded reaches, may reach or cannot reach, from the address its own settings give](0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md), [under-test-external-calls grades each reach, and the external systems list skill reads the grade](0094-under-test-external-calls-grades-each-reach-and-the-external-systems-list-skill-reads-the-grade.md)
 * Background: none

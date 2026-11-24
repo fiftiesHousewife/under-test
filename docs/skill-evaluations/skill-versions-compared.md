@@ -1,5 +1,8 @@
 # Skill evals round by round: without the skills and with them
 
+These runs come from before the skills' renames (find-test-anti-patterns, now find-meaningless-and-unreliable-tests;
+draft-the-connection-list, now draft-the-external-systems-list), so they use the earlier names and words.
+
 Each skill's eval case, run with Sonnet in rounds. In each round a case runs five times without the toolkit's skills and
 five times with them. A run's score is the share of its checks passed. Costs are what the runs would cost at API
 prices. Each round's results are kept in [results/](results/): round 1 in [results/round-1/](results/round-1/), the

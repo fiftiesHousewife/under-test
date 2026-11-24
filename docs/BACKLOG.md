@@ -62,7 +62,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #240 | [What the follow-up skill does where an external test has no seam](https://github.com/fiftiesHousewife/under-test/issues/240) | decision | Technical Architect | person | – |
+| #240 | [What repair does where a test that reaches an external system has no place to inject a stand-in](https://github.com/fiftiesHousewife/under-test/issues/240) | decision | Technical Architect | person | – |
 | #217 | [The measure-a-repo skill measures a Maven repo, with the agents in JAVA_TOOL_OPTIONS and nothing in its pom changed](https://github.com/fiftiesHousewife/under-test/issues/217) | deliverable | Technical Architect | person | – |
 | #220 | [The connection list is drafted from a repo's settings files, and the airgap agent's reports add what they miss](https://github.com/fiftiesHousewife/under-test/issues/220) | deliverable | Technical Architect | person | – |
 | #65 | [Scan every repo for committed secrets before any of its tests or its application first runs, using an existing tool](https://github.com/fiftiesHousewife/under-test/issues/65) | deliverable | Security and Platform Owner | tool | – |

@@ -19,7 +19,7 @@ Write two files: each test found in `testing/tests.yaml` ([schema](../../../sche
 in the `meaningless_tests` and `unreliable_tests` sections of `testing/assessment.yaml`
 ([schema](../../../schema/assessment.schema.json)). Both, every time. Read code only: **never** build, test or run the
 repo, or change or delete a test
-([why](../../../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
+([why](../../../decision-guides/0059-meaningless-and-unreliable-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
 
 Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
 your reply: point at its file and line instead

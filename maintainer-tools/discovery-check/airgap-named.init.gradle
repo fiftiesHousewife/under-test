@@ -2,14 +2,22 @@
 // test classpath so each reported call names its test. Nothing in the build changes.
 //
 //   ./gradlew test --init-script airgap-named.init.gradle -Dairgap.agent=<agent jar> -Dairgap.junit=<airgap-junit jar> \
-//       -Dairgap.project=<package prefix> [-Dmockito.agent=<mockito-core jar>]
+//       -Dairgap.project=<package prefix> [-Dmockito.agent=<mockito-core jar>] [-Dairgap.enableDisabled=true]
 //
 // Each test task's report is build/airgap/<task name>/calls.jsonl; no report means no risky calls. Failing tests don't
 // fail the build, so every test runs. -Dmockito.agent loads Mockito as an agent at start, for machines that refuse
-// its usual self-attach.
-def agentJar = new File(System.getProperty("airgap.agent"))
-def junitJar = new File(System.getProperty("airgap.junit"))
+// its usual self-attach. -Dairgap.enableDisabled=true runs tests marked @Disabled too (JUnit 5 and later).
+def requiredJar = { String name, String what ->
+    def path = System.getProperty(name)
+    if (!path) {
+        throw new GradleException("airgap-named.init.gradle needs -D${name}=<${what} jar>")
+    }
+    new File(path)
+}
+def agentJar = requiredJar('airgap.agent', 'airgap-agent')
+def junitJar = requiredJar('airgap.junit', 'airgap-junit')
 def packages = System.getProperty("airgap.project", "")
+def enableDisabled = Boolean.getBoolean("airgap.enableDisabled")
 allprojects {
     plugins.withId('java') { dependencies { testRuntimeOnly files(junitJar) } }
     tasks.withType(Test).configureEach { test ->
@@ -20,6 +28,9 @@ allprojects {
                 "-Djdk.attach.allowAttachSelf=true", "-Djava.awt.headless=true")
         if (System.getProperty("mockito.agent")) {
             test.jvmArgs("-javaagent:" + System.getProperty("mockito.agent"))
+        }
+        if (enableDisabled) {
+            test.systemProperty("junit.jupiter.conditions.deactivate", "org.junit.*DisabledCondition")
         }
         test.outputs.upToDateWhen { false }
         test.ignoreFailures = true

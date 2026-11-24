@@ -25,7 +25,7 @@ Line coverage alone rewards AI-written tests that run code without checking anyt
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Agreed in discussion, waiting for approval by pull request: the first option.
 
 ### Consequences
 
@@ -34,6 +34,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [What counts as evidence for each test maturity level](0013-what-counts-as-evidence-for-each-test-maturity-level.md), [Behaviour is captured in two tracks, current and intended, and every difference is an open question](0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md)
+* Builds on: [What counts as evidence for each test maturity level](0013-what-counts-as-evidence-for-each-test-maturity-level.md), [Current and intended behaviour are recorded side by side, and every difference is an open question](0033-current-and-intended-behaviour-are-recorded-side-by-side-and-every-difference-is-an-open-question.md)
 * Later decisions that build on this: none yet
 * Background: none

@@ -1,7 +1,5 @@
 package io.github.fiftieshousewife.undertest.tools.repochecks;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ public final class LinkChecker {
 
     List<Problem> checkFile(final Path file) {
         final List<Problem> problems = new ArrayList<>();
-        final Matcher matcher = LINK.matcher(read(file));
+        final Matcher matcher = LINK.matcher(RepoFiles.read(file));
         while (matcher.find()) {
             final String target = matcher.group(1);
             if (isLocal(target) && !Files.exists(file.resolveSibling(target).normalize())) {
@@ -36,13 +34,5 @@ public final class LinkChecker {
 
     private static boolean isLocal(final String target) {
         return !target.contains("://") && !target.startsWith("mailto:");
-    }
-
-    private static String read(final Path file) {
-        try {
-            return Files.readString(file);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
     }
 }

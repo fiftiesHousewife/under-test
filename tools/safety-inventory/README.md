@@ -1,8 +1,9 @@
 # Safety inventory
 
 Finds what in a repo could reach production or real data, before any of its tests or its application run. It is two rule
-files for [gitleaks](https://github.com/gitleaks/gitleaks), the secrets scanner every repo's CI already runs, so there
-is nothing new to install or approve:
+files for [gitleaks](https://github.com/gitleaks/gitleaks), a widely used open-source secrets scanner. A repo's CI may
+already run gitleaks or another scanner; either way, the toolkit runs gitleaks itself, with these rules, through the
+[run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md) skill:
 
 * [`secrets.gitleaks.toml`](secrets.gitleaks.toml), run over the whole history: gitleaks' own rules, plus keystores and
   private key files by name, which gitleaks' own rules don't all find. gitleaks skips binary files in the history, so

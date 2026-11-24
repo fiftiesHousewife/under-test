@@ -27,7 +27,7 @@ your reply: point at its file and line instead
 | It builds with Gradle | Maven or another build tool isn't covered yet: say so and stop |
 | Its Gradle is 5.6 or later | Say the measurement script needs Gradle 5.6 or later, and stop |
 | The assessment file has a `safety` section, and each finding with `effect: blocks` has a decided `safety/<id>` decision | Stop; name the findings still blocking |
-| `testing/tests.yaml` exists, from discovery | Stop: run [draft-the-external-systems-list](../draft-the-external-systems-list/SKILL.md) first, so the tests that reach external systems can be left out |
+| `testing/tests.yaml` has `found_by.draft-the-external-systems-list`, from discovery | Stop: run [draft-the-external-systems-list](../draft-the-external-systems-list/SKILL.md) first, so the tests that reach external systems can be left out |
 | Every run uses the airgap agent's `airgap.init.gradle` ([its repo](https://github.com/fiftiesHousewife/under-test-airgap)) | Stop. Only a CI runner with no route out may pass `-Dmeasure.network=blocked-by-runner` instead; **never** pass it anywhere else |
 | It has a Gradle wrapper | Ask which Gradle the team uses, and use that `gradle` for `./gradlew` throughout |
 
@@ -62,9 +62,15 @@ The init script stops the run if the file is missing, so a test meant to be left
 ```
 
 Read `build/under-test/runs/1/<task>/*.xml`: a `testcase` with `failure` or `error` failed; with `skipped`, it is
-disabled; else it passed. Read the airgap agent's refused calls in `build/under-test/runs/1/<task>/calls.jsonl`, one
-JSON object a line, each naming its `test` and `target`. A target on `localhost`, `127.0.0.1` or `::1` is a local
-service the test needs; any other is a call off the machine.
+disabled; else it passed. Read the airgap agent's calls in `build/under-test/runs/1/<task>/calls.jsonl`, one JSON
+object a line, each naming its `test`, `target` and `outcome`; only lines with `outcome: refused` count. The agent
+always allows the machine itself, so each refused call is a call off the machine; a test that needs a service on its
+own machine that isn't running just fails
+([why](../../../docs/decisions/0090-only-a-system-on-another-machine-reaches-out-and-a-test-needing-a-service-on-its-own-machine-is-found-by-failing.md)).
+This file is run 1's whole report, and the one to hand to
+[draft-the-external-systems-list](../draft-the-external-systems-list/SKILL.md) afterwards: the init script deletes
+`build/airgap/<task>/calls.jsonl` at the start of every run it keeps, so that file ends holding only the last run's
+calls.
 
 * **A test graded `may-reach`** is confirmed when it called off the machine, and cleared when it didn't.
 * **A test that called off the machine** with no `external_systems` entry graded `reaches` or `may-reach` was missed by
@@ -122,14 +128,14 @@ Write `stage: repeats`, `runs: 5`, `flaky` (flaky and order-dependent tests), `f
 ## 6. What each stage writes
 
 **In `testing/tests.yaml`**, a `measurement` for every test that already has an entry, and for every test that didn't
-pass every run, was left out, or called anything; never touch another skill's keys, and add an entry (`test`, `at` as
+pass every run, was left out, or was refused a call; never touch another skill's keys, and add an entry (`test`, `at` as
 `"path:line"` of its method) for a test that has none. Set `found_by.measure-a-repo` (`version`, `commit`). Keys in
 this order:
 
 * `outcome`: from the table, or `disabled`, or `left-out`;
 * `runs`: each run in order, `P` passed, `F` failed, `S` skipped, `-` not run; `reruns` for a test rerun alone;
 * `left_out_because`: for `left-out`, `"graded reaches <node>"`;
-* `called`: each target off the machine it was refused, sorted; `needs_local_service`: each local one;
+* `called`: each `target` of its report lines with `outcome: refused`, distinct, sorted;
 * `missed_by_discovery: true` where the rule in step 3 says.
 
 ```yaml

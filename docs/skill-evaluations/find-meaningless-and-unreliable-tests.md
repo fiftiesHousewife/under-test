@@ -1,13 +1,17 @@
-# Evaluation: find-test-anti-patterns
+# Evaluation: find-meaningless-and-unreliable-tests
 
-Does the [find-test-anti-patterns](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) skill save an AI assistant
-effort and give the same result each time? It was tried against the same task done without it.
+Does the [find-meaningless-and-unreliable-tests](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md)
+skill save an AI assistant effort and give the same result each time? It was tried against the same task done without
+it, in its earlier version, named find-test-anti-patterns, which counted anti-patterns. These runs come from before the
+skill was renamed and split its findings into meaningless and unreliable tests; the kinds it no longer looks for are
+marked below.
 
 ## How it was tried
 
 The repo was [a sample of 22 JUnit 4 tests](find-meaningless-and-unreliable-tests/sample-repo) with a known number of each
 anti-pattern: 4 disabled, 2 with no real assertion, 2 that sleep, 3 that depend on run order, 2 that reach a shared
-database, 2 in a class with six mocks, and 2 copy-pasted. It also has tests that must not count: one that expects an
+database (a kind from the earlier version: tests that reach external systems are now graded by the external systems
+list's skill), 2 in a class with six mocks, and 2 copy-pasted (a kind from the earlier version, since dropped). It also has tests that must not count: one that expects an
 exception, and one that calls `localhost`. Each agent got the same task and the toolkit; the agent without the skill
 was told not to read the skills or this folder. Each result was compared with the known counts and checked against
 the assessment file's schema, and the tests were checked unchanged.

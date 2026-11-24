@@ -54,5 +54,5 @@ are added when a skill records them.
 ## More Information
 
 * Builds on: [The assessment file: where it lives, who writes which fields, and its schema version](0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Meaningless and unreliable tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](0059-meaningless-and-unreliable-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)
 * Background: none

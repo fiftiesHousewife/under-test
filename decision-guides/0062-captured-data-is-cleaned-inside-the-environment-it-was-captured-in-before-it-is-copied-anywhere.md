@@ -39,5 +39,5 @@ for each system are kept with its shared test kit, so every repo that records it
 ## More Information
 
 * Builds on: [Order of preference for where current behaviour is captured](0061-order-of-preference-for-where-current-behaviour-is-captured.md), [Personal data is removed from any recorded traffic or data](0046-personal-data-is-removed-from-any-recorded-traffic-or-data.md)
-* Later decisions that build on this: [How personal data in captures is replaced: dropped, keyed substitutes or synthetic values, chosen per field](0063-how-personal-data-in-captures-is-replaced-dropped-keyed-substitutes-or-synthetic-values-chosen-per-field.md)
+* Later decisions that build on this: [How personal data in captures is replaced: dropped, keyed substitutes or synthetic values, chosen per field](0063-how-personal-data-in-captures-is-replaced-dropped-keyed-substitutes-or-synthetic-values-chosen-per-field.md), [Differential tests replay saved requests offline, and live comparison runs only on read-only traffic](0066-differential-tests-replay-saved-requests-offline-and-live-comparison-runs-only-on-read-only-traffic.md)
 * Background: [capturing and cleaning black-box data](../docs/research/capturing-and-cleaning-black-box-data.md)

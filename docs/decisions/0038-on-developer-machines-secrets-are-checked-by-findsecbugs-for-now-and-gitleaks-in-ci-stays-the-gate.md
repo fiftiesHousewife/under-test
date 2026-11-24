@@ -56,5 +56,5 @@ a secret reaches CI that a laptop check should have caught.
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [No repo's code is built or run until its secrets scan is clean](../../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)
 * Background: [production-safety](../REFERENCES.md#production-safety); [gitleaks](https://github.com/gitleaks/gitleaks); [gitleaks Gradle plugin](https://plugins.gradle.org/plugin/io.dotinc.gitleaks); [gradle-trivy](https://github.com/mgerhardy/gradle-trivy); [Find Security Bugs](https://find-sec-bugs.github.io/)

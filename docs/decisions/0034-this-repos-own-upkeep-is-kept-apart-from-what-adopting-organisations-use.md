@@ -45,5 +45,5 @@ check and self-application. The README's "What's in this repo" splits the same w
 ## More Information
 
 * Builds on: [How this repository is organised](0001-how-this-repository-is-organised.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [The README describes the journey and links every decision guide, and the build checks it does](0035-the-readme-describes-the-journey-and-links-every-decision-guide-and-the-build-checks-it-does.md), [All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies](0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md)
 * Background: none

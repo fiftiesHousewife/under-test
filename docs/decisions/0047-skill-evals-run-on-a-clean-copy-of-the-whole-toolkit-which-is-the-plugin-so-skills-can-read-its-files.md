@@ -43,5 +43,5 @@ cases there, and writes the results into the repo.
 ## More Information
 
 * Builds on: [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md)
 * Background: none

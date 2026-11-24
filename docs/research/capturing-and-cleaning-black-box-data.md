@@ -18,8 +18,8 @@ every old repo. For many old applications the quickest honest source of examples
 black box: what requests and messages it receives, what it answers, what it asks of the systems behind it, and what
 files and rows it writes. Captured, those examples can become:
 
-- **approval tests** pinning current behaviour, the first of the two tracks in
-  [Behaviour is captured in two tracks, current and intended, and every difference is an open question](../../decision-guides/0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md);
+- **approval tests** pinning current behaviour, the first of the two records in
+  [Current and intended behaviour are recorded side by side, and every difference is an open question](../../decision-guides/0033-current-and-intended-behaviour-are-recorded-side-by-side-and-every-difference-is-an-open-question.md);
 - **recorded responses** standing in for the systems the application calls, the second choice in
   [Order of preference for test stand-in approaches](../../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md),
   kept in a shared test kit as

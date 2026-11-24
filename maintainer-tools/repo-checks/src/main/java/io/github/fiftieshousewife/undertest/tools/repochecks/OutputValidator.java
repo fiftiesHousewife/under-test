@@ -1,19 +1,9 @@
 package io.github.fiftieshousewife.undertest.tools.repochecks;
 
-import com.networknt.schema.Error;
-import com.networknt.schema.Schema;
-import com.networknt.schema.SchemaRegistry;
-import com.networknt.schema.SpecificationVersion;
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.json.JsonMapper;
-import tools.jackson.dataformat.yaml.YAMLMapper;
 
 /**
  * Checks the files a skill wrote in a repo's {@code testing/} folder against the toolkit's own schemas, whatever
@@ -30,7 +20,7 @@ public final class OutputValidator {
             "testing/tests.yaml", "schema/tests.schema.json");
 
     private final Path toolkit;
-    private final SchemaRegistry registry = SchemaRegistry.withDefaultDialect(SpecificationVersion.DRAFT_2020_12);
+    private final SchemaValidator validator = new SchemaValidator();
 
     public OutputValidator(final Path toolkit) {
         this.toolkit = toolkit;
@@ -38,39 +28,11 @@ public final class OutputValidator {
 
     /** The problems in one workspace's files, with each file named relative to the workspace. */
     public List<Problem> validate(final Path workspace) {
-        final List<Problem> problems = new ArrayList<>();
-        SCHEMAS.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
-            final Path file = workspace.resolve(entry.getKey());
-            if (Files.isRegularFile(file)) {
-                problems.addAll(validate(file, toolkit.resolve(entry.getValue())));
-            }
-        });
-        return problems;
-    }
-
-    private List<Problem> validate(final Path file, final Path schemaFile) {
-        final Schema schema = registry.getSchema(read(schemaFile));
-        final List<Problem> problems = new ArrayList<>();
-        try {
-            for (final Error error : schema.validate(parse(file))) {
-                problems.add(new Problem(file, error.toString()));
-            }
-        } catch (RuntimeException e) {
-            problems.add(new Problem(file, "can't be read: " + e.getMessage()));
-        }
-        return problems;
-    }
-
-    private static JsonNode parse(final Path file) {
-        final String text = read(file);
-        return file.toString().endsWith(".json") ? new JsonMapper().readTree(text) : new YAMLMapper().readTree(text);
-    }
-
-    private static String read(final Path file) {
-        try {
-            return Files.readString(file);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        return SCHEMAS.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .filter(entry -> Files.isRegularFile(workspace.resolve(entry.getKey())))
+                .flatMap(entry -> validator.validate(workspace.resolve(entry.getKey()),
+                        toolkit.resolve(entry.getValue())).stream())
+                .toList();
     }
 }

@@ -32,6 +32,29 @@ public record RepoFiles(Path root) {
         }
     }
 
+    /** The text of a file, as UTF-8. */
+    public static String read(final Path file) {
+        try {
+            return Files.readString(file);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    /** Writes a file's text, as UTF-8. */
+    public static void write(final Path file, final String text) {
+        try {
+            Files.writeString(file, text);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    /** A relative path written with forward slashes, as links and YAML paths are, whatever the platform. */
+    public static String withSlashes(final Path path) {
+        return path.toString().replace('\\', '/');
+    }
+
     private boolean notSkipped(final Path path) {
         final Path relative = root.relativize(path);
         if (relative.startsWith(EVAL_RESULTS)) {

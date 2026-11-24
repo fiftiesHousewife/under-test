@@ -23,7 +23,7 @@ public final class GuideCoverage {
             return List.of();
         }
         final Path journey = root.resolve(JOURNEY);
-        final String text = Files.isRegularFile(journey) ? read(journey) : "";
+        final String text = Files.isRegularFile(journey) ? RepoFiles.read(journey) : "";
         return names(guides).stream()
                 .filter(name -> !text.contains(GUIDES + "/" + name))
                 .map(name -> new Problem(journey, "doesn't link the decision guide " + name
@@ -37,14 +37,6 @@ public final class GuideCoverage {
                     .filter(name -> name.matches("\\d{4}-.+\\.md"))
                     .sorted()
                     .toList();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    private static String read(final Path file) {
-        try {
-            return Files.readString(file);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

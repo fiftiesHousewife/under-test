@@ -48,5 +48,5 @@ How to run it is in [Checking discovery against a run under the airgap agent](..
 ## More Information
 
 * Builds on: [Every skill and tool is also checked against real public repos by a person's review of a sample](0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md), [Each test is graded reaches, may reach or cannot reach, from the address its own settings give](0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md)
-* Later decisions that build on this: [The field trial's public repos run their tests under the airgap agent without a safety inventory first](0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md)
+* Later decisions that build on this: [The field trial's public repos run their tests under the airgap agent without a safety inventory first](0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md), [Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md)
 * Background: none

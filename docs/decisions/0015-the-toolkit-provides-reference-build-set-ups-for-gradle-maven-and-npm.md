@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: rejected
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # The toolkit provides reference build set-ups for Gradle, Maven and npm
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** rejected
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,12 +23,11 @@ Teams need a ready-made way to produce the evidence and apply the standards in e
 
 ## Decision Outcome
 
-Proposed: the first option, starting with Gradle.
+Rejected: overtaken by [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md), by [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md) and [A Maven repo is measured with the agents in JAVA_TOOL_OPTIONS, and JaCoCo and PIT run from the command line](0049-a-maven-repo-is-measured-with-the-agents-in-java-tool-options-and-jacoco-and-pit-run-from-the-command-line.md), which measure a repo without changing its build, and by [All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies](0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md).
 
 ### Consequences
 
-* Publish the convention plugin as a versioned artifact.
-* Maven parent POM and npm package as later work.
+* None: nothing is built from this record.
 
 ## More Information
 

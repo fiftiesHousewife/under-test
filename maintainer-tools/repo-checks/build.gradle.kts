@@ -13,7 +13,8 @@ val mainClassName = "io.github.fiftieshousewife.undertest.tools.repochecks.RepoC
 
 val checkRepoFiles = tasks.register<JavaExec>("checkRepoFiles") {
     group = "verification"
-    description = "Fails on broken links, YAML files that don't match their schema, and out-of-date decision indexes."
+    description = "Fails on broken links, invalid schemas, YAML files and eval fixtures that don't match their schema," +
+        " and out-of-date decision indexes and later-decisions lines."
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = mainClassName
     args("check", repoRoot)
@@ -21,7 +22,8 @@ val checkRepoFiles = tasks.register<JavaExec>("checkRepoFiles") {
 
 tasks.register<JavaExec>("buildDecisionIndexes") {
     group = "documentation"
-    description = "Rebuilds docs/decisions/README.md and decision-guides/README.md from the records."
+    description = "Rebuilds docs/decisions/README.md, decision-guides/README.md and each record's later-decisions line" +
+        " from the records."
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = mainClassName
     args("index", repoRoot)
@@ -35,14 +37,15 @@ tasks.register<JavaExec>("fixDecisionLinks") {
     args("fix-links", repoRoot)
 }
 
-// Used by maintainer-tools/skill-evals/run-all.sh: -PoutputReport=<file> -Pworkspaces=<dir>:<dir>:...
+// Used by maintainer-tools/skill-evals/run-all.sh: -PoutputReport=<file> -Pworkspaces=<dir>:<dir>:..., the folders
+// separated by the platform's path separator (":", or ";" on Windows).
 tasks.register<JavaExec>("validateSkillOutput") {
     group = "verification"
     description = "Checks the files skills wrote in eval workspaces against the toolkit's schemas."
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = mainClassName
     val report = providers.gradleProperty("outputReport").getOrElse("")
-    val workspaces = providers.gradleProperty("workspaces").getOrElse("").split(":").filter { it.isNotBlank() }
+    val workspaces = providers.gradleProperty("workspaces").getOrElse("").split(File.pathSeparator).filter { it.isNotBlank() }
     args(listOf("validate-output", repoRoot, report) + workspaces)
 }
 

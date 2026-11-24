@@ -32,6 +32,7 @@ class DecisionLinkFixerTest {
                 () -> assertThat(Files.readString(root.resolve("README.md")))
                         .contains("[a](docs/decisions/0002-how-it-is-organised.md)")
                         .contains("[b](decision-guides/0005-what-tests-mean.md)")
+                        .contains("[c](https://example.com/0001-how-it-is-organised.md)")
                         .contains("[d](0003-unknown-record.md)"),
                 () -> assertThat(Files.readString(root.resolve("plan.yaml")))
                         .contains("\"decision-guides/0005-what-tests-mean.md\""));

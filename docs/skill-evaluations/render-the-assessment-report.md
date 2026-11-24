@@ -1,5 +1,8 @@
 # Evaluation: render-the-assessment-report
 
+These runs come from before the skills' renames (find-test-anti-patterns, now find-meaningless-and-unreliable-tests;
+draft-the-connection-list, now draft-the-external-systems-list), so they use the earlier names and words.
+
 Does the [render-the-assessment-report](../../.github/skills/render-the-assessment-report/SKILL.md) skill, with
 [its template](../../templates/repo-assessment-report.html), save an AI assistant effort and give the same result each
 time? It was tried against the same task done without them.

@@ -42,5 +42,5 @@ Capturing, cleaning and checking production data all happen inside production's 
 ## More Information
 
 * Builds on: [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md)
-* Later decisions that build on this: [Order of preference for where current behaviour is captured](0061-order-of-preference-for-where-current-behaviour-is-captured.md)
+* Later decisions that build on this: [Order of preference for where current behaviour is captured](0061-order-of-preference-for-where-current-behaviour-is-captured.md), [Differential tests replay saved requests offline, and live comparison runs only on read-only traffic](0066-differential-tests-replay-saved-requests-offline-and-live-comparison-runs-only-on-read-only-traffic.md)
 * Background: [capturing and cleaning black-box data](../docs/research/capturing-and-cleaning-black-box-data.md)

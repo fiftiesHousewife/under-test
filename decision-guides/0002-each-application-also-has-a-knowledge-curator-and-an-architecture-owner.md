@@ -23,7 +23,7 @@ A repo alone can't reveal what a system should do or everything it connects to. 
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Agreed in discussion, waiting for approval by pull request: the first option.
 
 ### Consequences
 

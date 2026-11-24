@@ -8,6 +8,8 @@ group: Using the toolkit in an organisation
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md), [The field trial's public repos run their tests under the airgap agent without a safety inventory first](0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -43,5 +45,5 @@ into any file it writes or any reply**; where it must point at one, it gives the
 ## More Information
 
 * Builds on: [A repo's code first runs in measurement, which comes before capturing current behaviour and again after it](0058-a-repos-code-first-runs-in-measurement-which-comes-before-capturing-current-behaviour-and-again-after-it.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)
 * Background: none

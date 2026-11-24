@@ -8,6 +8,8 @@ group: Using the toolkit in an organisation
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [Connections and the test paths to them are found by connection-paths, a JavaParser tool in its own repo](0072-connections-and-the-test-paths-to-them-are-found-by-connection-paths-a-javaparser-tool-in-its-own-repo.md), [Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md), [Each test is graded reaches, may reach or cannot reach, from the address its own settings give](0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -64,5 +66,5 @@ toolkit's names.
 ## More Information
 
 * Builds on: [The tests something is recorded about are kept in one list, each step adding its own fields](0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md), [find-test-anti-patterns runs PMD with the toolkit's rules, and searches only what PMD cannot read](0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md), [Risky calls on developer machines are refused and reported by the airgap agent, built in its own repo](0036-risky-calls-on-developer-machines-are-refused-and-reported-by-the-airgap-agent-built-in-its-own-repo.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Connections and the test paths to them are found by connection-paths, a JavaParser tool in its own repo](0072-connections-and-the-test-paths-to-them-are-found-by-connection-paths-a-javaparser-tool-in-its-own-repo.md), [A connection whose address isn't known is a system of its own per class that opens it](0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md), [Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)
 * Background: the airgap agent's [design](https://github.com/fiftiesHousewife/under-test-airgap/blob/main/docs/design.md)

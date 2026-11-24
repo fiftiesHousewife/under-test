@@ -29,7 +29,8 @@ Proposed: the first option. The organisation profile names the tracker, its addr
 
 ### Consequences
 
-* `tools/backlog-import/` grows into a tracker-neutral loader with GitHub and Jira Cloud adapters.
+* The tracker-neutral loader, with GitHub and Jira Cloud adapters, is a sub-command of under-test-tools, as
+  [The journey's mechanical steps are one command-line tool, with a sub-command per step, in its own repo](0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md) says.
 * The load-repo-work-into-the-issue-tracker skill.
 
 ## More Information

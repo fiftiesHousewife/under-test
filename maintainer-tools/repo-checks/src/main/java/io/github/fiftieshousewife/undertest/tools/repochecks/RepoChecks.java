@@ -1,7 +1,5 @@
 package io.github.fiftieshousewife.undertest.tools.repochecks;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -9,8 +7,9 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Entry point. {@code check <root>} fails on broken links, YAML files that don't match their schema, and out-of-date
- * decision indexes and technique rules. {@code index <root>} rebuilds the decision indexes and
+ * Entry point. {@code check <root>} fails on broken links, YAML files and eval fixtures that don't match their schema,
+ * schemas that aren't valid, and out-of-date decision indexes, later-decisions lines and technique rules.
+ * {@code index <root>} rebuilds the decision indexes, each record's later-decisions line and
  * {@code techniques/rules.json}. {@code fix-links <root>} re-points links to
  * decision records at their current files, after renumbering or moving them. {@code validate-output <root> <report>
  * <workspace>...} checks the files skills wrote in each workspace against the schemas in {@code <root>}, and writes
@@ -50,13 +49,20 @@ public final class RepoChecks {
         final List<Problem> problems = new ArrayList<>(new LinkChecker().check(files));
         problems.addAll(new YamlSchemaChecker().check(files));
         problems.addAll(new ExternalSystemsListChecker().check(files));
+        problems.addAll(new SchemaFilesChecker().check(root));
+        problems.addAll(new EvalFixtures().check(root));
         problems.addAll(new GuideCoverage().check(root));
-        for (final Path folder : decisionFolders(root)) {
-            if (!new DecisionIndex().isCurrent(folder)) {
-                problems.add(new Problem(folder.resolve("README.md"),
-                        "index is out of date; run ./gradlew buildDecisionIndexes"));
-            }
-        }
+        problems.addAll(new DecisionBackLinks().check(root));
+        problems.addAll(staleGeneratedFiles(root));
+        return problems;
+    }
+
+    private static List<Problem> staleGeneratedFiles(final Path root) {
+        final List<Problem> problems = new ArrayList<>(decisionFolders(root).stream()
+                .filter(folder -> !new DecisionIndex().isCurrent(folder))
+                .map(folder -> new Problem(folder.resolve("README.md"),
+                        "index is out of date; run ./gradlew buildDecisionIndexes"))
+                .toList());
         if (TechniqueRules.applies(root) && !new TechniqueRules().isCurrent(root)) {
             problems.add(new Problem(root.resolve(TechniqueRules.FILE),
                     "out of date with the technique files; run ./gradlew buildDecisionIndexes"));
@@ -65,6 +71,7 @@ public final class RepoChecks {
     }
 
     static void index(final Path root) {
+        new DecisionBackLinks().write(root);
         decisionFolders(root).forEach(folder -> new DecisionIndex().write(folder));
         if (TechniqueRules.applies(root)) {
             new TechniqueRules().write(root);
@@ -72,6 +79,10 @@ public final class RepoChecks {
     }
 
     static void writeOutputReport(final Path root, final Path report, final List<String> workspaces) {
+        if (report.toString().isBlank()) {
+            throw new IllegalArgumentException("validate-output needs a report file:"
+                    + " pass -PoutputReport=<file> to ./gradlew validateSkillOutput");
+        }
         final OutputValidator validator = new OutputValidator(root);
         final StringBuilder lines = new StringBuilder();
         for (final String workspace : workspaces) {
@@ -80,11 +91,7 @@ public final class RepoChecks {
                     : problems.get(0).toString().replace('\t', ' ').replace('\n', ' ');
             lines.append(workspace).append('\t').append(problems.size()).append('\t').append(first).append('\n');
         }
-        try {
-            Files.writeString(report, lines.toString());
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        RepoFiles.write(report, lines.toString());
     }
 
     // The decision folders this repo has: not every repo that reuses these checks has decision guides.
@@ -97,7 +104,7 @@ public final class RepoChecks {
         if (!problems.isEmpty()) {
             throw new IllegalStateException(problems.size() + " problem(s) in the repository's own files");
         }
-        log.info("Repository files are in order: links, YAML schemas, decision indexes, and every decision guide"
-                + " linked from the journey page.");
+        log.info("Repository files are in order: links, schemas, YAML files, eval fixtures, decision indexes and"
+                + " later-decisions lines, and every decision guide linked from the journey page.");
     }
 }

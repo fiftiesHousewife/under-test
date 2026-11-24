@@ -1,5 +1,11 @@
 # Skill eval results
 
+These results predate the renames: find-test-anti-patterns is now
+[find-meaningless-and-unreliable-tests](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md),
+draft-the-connection-list is now
+[draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md), and the copy-pasted
+kind of test is no longer counted. A re-run of every case under the new names is in the backlog.
+
 Made by [run-all.sh](../../maintainer-tools/skill-evals/run-all.sh) from the cases in
 [.github/evals/](../../.github/evals/README.md), at toolkit commit `876b013`, with Claude Code
 2.1.330, model sonnet. Each case ran several times with the toolkit's skills and as many times

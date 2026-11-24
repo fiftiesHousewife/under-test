@@ -1,5 +1,8 @@
 # Evaluation: choose-techniques
 
+These runs come from before the skills' renames (find-test-anti-patterns, now find-meaningless-and-unreliable-tests;
+draft-the-connection-list, now draft-the-external-systems-list), so they use the earlier names and words.
+
 Does the [choose-techniques](../../.github/skills/choose-techniques/SKILL.md) skill make an AI assistant's choice of
 techniques the same each time, and traceable to the toolkit's rules? It was tried against the same task done without
 it, and run more than once with it, since a choice people can rely on must not depend on which run they got.

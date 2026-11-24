@@ -33,5 +33,5 @@ Chosen in discussion: the first option.
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md)
-* Later decisions that build on this: [The format for intended behaviour is chosen by piloting Gherkin and Allium side by side](0028-the-format-for-intended-behaviour-is-chosen-by-piloting-gherkin-and-allium-side-by-side.md)
+* Later decisions that build on this: [The format for intended behaviour is chosen by piloting Gherkin and Allium side by side](0028-the-format-for-intended-behaviour-is-chosen-by-piloting-gherkin-and-allium-side-by-side.md), [Dependencies are checked for known vulnerabilities against the OSV database](0029-dependencies-are-checked-for-known-vulnerabilities-against-the-osv-database.md), [Keploy is trialled on a pilot application to record current behaviour from real traffic](0037-keploy-is-trialled-on-a-pilot-application-to-record-current-behaviour-from-real-traffic.md)
 * Background: none

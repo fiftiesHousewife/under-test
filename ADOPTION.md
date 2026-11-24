@@ -193,26 +193,31 @@ Use the [record-an-organisation-decision skill](.github/skills/record-an-organis
 assistant to draft these. It writes into your organisation repo only. Settle the production-safety decisions and the container
 decision first, because most others depend on them.
 
-## Step 6a: Let organisation units add their own decisions
+## Step 7: Let organisation units add their own decisions
 
 Each organisation unit that wants its own decisions or stricter settings gets a folder in the organisation repo, under
 `units/<path>/`, owned by that unit's leads through code-owner rules. A unit's decision records name the decision
 above that they narrow, or say that they add something new. A unit can't replace or loosen anything decided above it;
 the combining tool rejects that.
 
-## Step 7: Make production safe before running anything
+## Step 8: Make production safe before running anything
 
 Old repos often hold production secrets and can reach production systems once running. Before anyone runs one's tests
 or its application, by hand, with an AI assistant, or in CI (building it without running tests may come first):
 
-1. **Scan for secrets** with the tool you already use, or your code-hosting platform's own scanning.
-2. **Run old code first only on CI runners that can't reach production.** Separate them by network, not by
-   configuration.
+1. **Run the safety inventory.** The
+   [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) skill runs gitleaks with the
+   toolkit's rules over the repo's whole history, lists the keystores ever committed, and records what it finds in the
+   assessment file; some findings block every run until they're resolved.
+2. **Run old code first only where production can't be reached:** on CI runners separated from it by network, not by
+   configuration, or, once your Security and Platform Owner approves the machines, on an engineer's own machine under
+   the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), which refuses every call off the machine
+   and reports it.
 3. **Switch on the production-address check** in the convention plugin once it exists.
 
 *Background:* the decisions in [Keeping production safe](docs/decisions/README.md#keeping-production-safe).
 
-## Step 8: Connect your issue tracker and commit rules
+## Step 9: Connect your issue tracker and commit rules
 
 1. **Import the starting backlog** into your tracker with the importer for it (see
    [tools/backlog-import](tools/backlog-import/README.md)). The Jira adapter is still to be built. In an environment
@@ -223,26 +228,29 @@ or its application, by hand, with an AI assistant, or in CI (building it without
 *Background:* [The programme backlog lives in the organisation's issue tracker, not in a file](docs/decisions/0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md)
 and [When the organisation requires it, every commit names its work item](decision-guides/0028-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
 
-## Step 9: Give your AI assistant the skills
+## Step 10: Give your AI assistant the skills
 
-Skills arrive the same way as libraries. The skills bundle is a versioned artifact, mirrored through your package
-repository, and unpacked by `./gradlew installSkills` into the folders your approved AI assistant reads. No new
-installer is needed. APM (Agent Package Manager) is an optional extra, for organisations that allow it. People direct
-the AI and review everything it produces; unattended AI agents stay off unless your profile allows them.
+Skills arrive with the rest of the toolkit, as in step 2: each repo's `apm.yml` names the toolkit at a release tag
+on your internal mirror, and `apm install` (APM, the Agent Package Manager) puts the skills where your approved AI
+assistant reads them. Nothing is copied into the repo. People direct the AI and review everything it produces;
+unattended AI agents stay off unless your profile allows them.
 
-*Background:* [How AI assistant skills and instructions reach every repo](docs/decisions/0019-how-ai-assistant-skills-and-instructions-reach-every-repo.md).
+*Background:* [The toolkit reaches each repo through APM, pinned to a release tag, and nothing in it is copied](docs/decisions/0051-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag-and-nothing-in-it-is-copied.md).
 
-## Step 10: Run the programme
+## Step 11: Run the programme
 
-The [repo journey diagrams](docs/design/repo-journey.md) show each step below, the two tracks, external systems lists and who does what.
-
+[The journey of one repo](docs/JOURNEY.md) gives each step a repo goes through, who does it and the decision guides
+behind it: the safety inventory first, then two tracks that join at the testing plan. The syntactic track finds what
+stops the tests running, measures them under the airgap agent, repairs the tests that reach external systems and
+measures again; the semantic track finds the sources of intended behaviour, captures current behaviour, elicits
+intended behaviour and designs tests from it. Then come the testing plan, the work, and keeping it there.
 
 1. **Classify your repos.** Run the repo classifier on each repo, or build a survey tool that calls it across your
    code-hosting platform ([design](docs/design/survey-tool.md)).
 2. **Pilot.** Treat one application by hand for each common combination of technology stack and application type.
    Turn what you learn into testing guides.
-3. **Roll out in batches.** For each repo: measure, generate a testing plan, have the Application Owner approve it,
-   load its work into your tracker, and work through the workstreams.
+3. **Roll out in batches.** Take each repo through [the journey](docs/JOURNEY.md): the safety inventory, both
+   tracks, a testing plan the Application Owner approves, its work loaded into your tracker, and the workstreams.
 4. **Hand over.** Your own teams run the batches, and the Toolkit Owner role moves inside your organisation.
 
 ## Keeping up to date

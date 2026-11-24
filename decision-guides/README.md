@@ -78,7 +78,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 | Decision | Status | Who decides |
 |---|---|---|
 | [Every repo starts with discovery: a draft external systems list, a source list and a check of its existing tests, and a first approval-test baseline follows](0032-every-repo-starts-with-discovery-a-draft-external-systems-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
-| [Behaviour is captured in two tracks, current and intended, and every difference is an open question](0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
+| [Current and intended behaviour are recorded side by side, and every difference is an open question](0033-current-and-intended-behaviour-are-recorded-side-by-side-and-every-difference-is-an-open-question.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
 | [Knowledge sources are listed by the knowledge curator and read through Allium skills with a citation addendum](0034-knowledge-sources-are-listed-by-the-knowledge-curator-and-read-through-allium-skills-with-a-citation-addendum.md) | proposed (agreed in discussion) | Test Quality Lead, approved by the Steering Group |
 | [Expert time is booked as a budget of short question sessions](0035-expert-time-is-booked-as-a-budget-of-short-question-sessions.md) | proposed (agreed in discussion) | Engagement Lead, with the Programme Sponsor |
 | [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md) | proposed | Test Quality Lead |
@@ -103,7 +103,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 | [Flaky tests can be quarantined only with an expiry date](0044-flaky-tests-can-be-quarantined-only-with-an-expiry-date.md) | proposed | Technical Architect |
 | [Every feature flag state in use is tested and old flags are removed](0045-every-feature-flag-state-in-use-is-tested-and-old-flags-are-removed.md) | proposed | Test Quality Lead, approved by the Steering Group |
 | [Personal data is removed from any recorded traffic or data](0046-personal-data-is-removed-from-any-recorded-traffic-or-data.md) | proposed | Security and Platform Owner (can veto) |
-| [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md) | proposed | Test Quality Lead |
+| [Meaningless and unreliable tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](0059-meaningless-and-unreliable-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md) | proposed | Test Quality Lead |
 
 ## AI-written tests
 

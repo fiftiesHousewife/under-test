@@ -6,6 +6,8 @@ group: Using the toolkit in an organisation
 
 # Keystores and private key files are found over the whole history, by rules added to the secrets scan
 
+> Narrowed by [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md).
+
 ## Context and Problem Statement
 
 [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)
@@ -42,5 +44,5 @@ that one statement in the record above; the rest of it stands.
 ## More Information
 
 * Builds on: [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md)
 * Background: [production-safety](../REFERENCES.md#production-safety)

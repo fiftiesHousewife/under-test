@@ -4,7 +4,8 @@
 5.6 or later, any JDK the build already uses. It adds:
 
 * **coverage** with JaCoCo, as an XML report;
-* **flaky tests:** each run's JUnit results kept apart in `build/under-test/runs/<n>/`, so five runs can be compared;
+* **flaky tests:** each run's JUnit results kept apart in `build/under-test/runs/<n>/`, so the runs can be compared,
+  with the tests a file names left out of a run, and JUnit 5 or 6 tests run in an order from a seed;
 * **planted bugs** with PIT, run from its own command line so it works on every Gradle version, in a
   `measurePlantedBugs` task.
 
@@ -16,17 +17,26 @@ no test reaches the network. Use it together with the agent's own init script. O
 out can it run without the agent, by passing `-Dmeasure.network=blocked-by-runner`. PIT's own process only reads
 class files; the tests it runs get the agent, with their own report in `build/airgap/measurePlantedBugs/`.
 
-```bash
-# Five runs, the first also writing the coverage report
-./gradlew clean test jacocoTestReport -Dmeasure.run=1 \
-    --init-script airgap.init.gradle --init-script measure.init.gradle
-./gradlew test -Dmeasure.run=2 --init-script airgap.init.gradle --init-script measure.init.gradle
-# ...and so on to run 5
+The [measure-a-repo](../../.github/skills/measure-a-repo/SKILL.md) skill runs it in stages, each gating the next:
+the build, one run, four repeats, then planted bugs.
 
-# Planted bugs, leaving out the tests that were flaky or failing in the five runs
+```bash
+I='--init-script airgap.init.gradle --init-script measure.init.gradle'
+
+# The build: compile the code and tests, running none
+./gradlew clean testClasses $I
+
+# One run, leaving out the tests the leave-out file names (those graded reaches), and writing the coverage report
+./gradlew test jacocoTestReport -Dmeasure.run=1 -Dmeasure.leaveOut=build/under-test/leave-out.txt $I
+
+# Four repeats, with the tests that failed in run 1 added to the leave-out file, each in an order from its own seed
+./gradlew test -Dmeasure.run=2 -Dmeasure.order.seed=2 -Dmeasure.leaveOut=build/under-test/leave-out.txt $I
+# ...and so on to run 5, seed 5
+
+# Planted bugs, leaving out the tests that were flaky or failing in the runs
 ./gradlew measurePlantedBugs -Dmeasure.targets='com.example.orders.*' \
     -Dmeasure.excludedTests='com.example.orders.MailerTest,com.example.orders.ReminderMarkerTest' \
-    --init-script airgap.init.gradle --init-script measure.init.gradle
+    $I
 ```
 
 | Setting | What it does |

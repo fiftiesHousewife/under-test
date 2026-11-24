@@ -23,7 +23,7 @@ Some AI coding agents can be assigned work items to do on their own. Unattended 
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Agreed in discussion, waiting for approval by pull request: the first option.
 
 ### Consequences
 

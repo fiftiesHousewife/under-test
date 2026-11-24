@@ -1,7 +1,7 @@
 #!/bin/bash
 # Sets up the case's workspace: the sample of JUnit 4 tests and Cucumber scenarios, with a known number of
-# each kind of meaningless or unreliable test, an assessment file holding only its repo name, and the assessment schema (the run without the
-# toolkit has no other copy). Run by claude plugin eval --scaffold, in the workspace.
+# each kind of meaningless or unreliable test, an assessment file holding only its repo name, and the assessment and
+# tests schemas, so the schema line of each file written resolves (the run without the toolkit has no other copy). Run by claude plugin eval --scaffold, in the workspace.
 set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 toolkit="$here"
@@ -11,7 +11,7 @@ while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$too
 echo "scaffold ran in $PWD" >&2
 cp -R "$toolkit/docs/skill-evaluations/find-meaningless-and-unreliable-tests/sample-repo/." .
 mkdir -p schema testing
-cp "$toolkit/schema/assessment.schema.json" schema/
+cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/tests.schema.json" schema/
 cat > testing/assessment.yaml <<'YAML'
 # yaml-language-server: $schema=../schema/assessment.schema.json
 schema: assessment/1

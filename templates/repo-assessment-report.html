@@ -225,9 +225,9 @@ button.quiet { background: transparent; color: var(--accent); }
     : toNeutralise.length ? answer("warn", "Is it safe to run?", "Once " + toNeutralise.length + " finding(s) are made harmless in the test profile or build.")
     : answer("ok", "Is it safe to run?", "Yes: nothing blocks, and every finding has a decision.");
   var offline = !C ? answer("", "Does it run on its own?", "Not known: no external systems list yet.")
-    : noStandIn.length ? answer("block", "Does it run on its own?", "Not yet: " + noStandIn.length + " connection(s) have no stand-in.")
-    : unconfirmed.length ? answer("warn", "Does it run on its own?", "Once the Architecture Owner confirms " + unconfirmed.length + " connection(s).")
-    : answer("ok", "Does it run on its own?", "Every connection has a confirmed stand-in.");
+    : noStandIn.length ? answer("block", "Does it run on its own?", "Not yet: " + noStandIn.length + " external system(s) have no stand-in.")
+    : unconfirmed.length ? answer("warn", "Does it run on its own?", "Once the Architecture Owner confirms " + unconfirmed.length + " external system(s).")
+    : answer("ok", "Does it run on its own?", "Every external system has a confirmed stand-in.");
   var trust;
   if (!T) { trust = answer("", "Can its tests be trusted?", "Not known: the tests haven't been measured."); }
   else {
@@ -257,9 +257,9 @@ button.quiet { background: transparent; color: var(--accent); }
       }))]);
 
   // ---- Running offline: the external systems list
-  section("running", "What it talks to", C ? "From the external systems list, drafted from the airgap agent's reports" : "",
-    "Each connection needs a stand-in before the tests run offline. The Architecture Owner confirms each one.",
-    !rels.length ? [nothing(C ? "No connections." : "No external systems list yet.")] : [table(["Connection", "Callers and setting", "Tests", "Stand-in"],
+  section("running", "What it talks to", C ? "From the external systems list, drafted from the code, with the airgap agent's reports" : "",
+    "Each external system needs a stand-in before the tests run offline. The Architecture Owner confirms each one.",
+    !rels.length ? [nothing(C ? "No external systems." : "No external systems list yet.")] : [table(["System", "Callers and setting", "Tests", "Stand-in"],
       rels.map(function (x) {
         var u = (x.metadata || {})["under-test"] || {};
         var dest = (((x["relationship-type"] || {}).connects || {}).destination || {}).node;

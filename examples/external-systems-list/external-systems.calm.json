@@ -64,6 +64,20 @@
       }
     },
     {
+      "unique-id": "queue-order-events-broker",
+      "node-type": "system",
+      "name": "A queue, address from environment variable ORDER_EVENTS_BROKER",
+      "description": "A queue opened by OrderEvents, found in the code by under-test-external-calls.",
+      "metadata": {
+        "under-test": {
+          "address-from": "environment variable ORDER_EVENTS_BROKER",
+          "opened-by": [
+            "com.example.orders.OrderEvents#publish(com.example.orders.Order)"
+          ]
+        }
+      }
+    },
+    {
       "unique-id": "smtp-example-com",
       "node-type": "system",
       "name": "smtp.example.com",
@@ -174,6 +188,39 @@
           "tests": 9,
           "stand-in": {
             "approach": "not-chosen"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "orders-service-to-queue-order-events-broker",
+      "protocol": "TCP",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "orders-service"
+          },
+          "destination": {
+            "node": "queue-order-events-broker"
+          }
+        }
+      },
+      "metadata": {
+        "under-test": {
+          "state": "proposed",
+          "drafted_by": "ai",
+          "found-by": [
+            "code"
+          ],
+          "kinds": [
+            "queue"
+          ],
+          "callers": [
+            "com.example.orders.OrderEvents.publish(OrderEvents.java:33)"
+          ],
+          "tests": 2,
+          "stand-in": {
+            "approach": "run-in-container"
           }
         }
       }

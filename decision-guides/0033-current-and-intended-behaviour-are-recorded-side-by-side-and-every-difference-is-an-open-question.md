@@ -4,7 +4,7 @@ decision-makers: Test Quality Lead, approved by the Steering Group
 group: Understanding what a system should do
 ---
 
-# Behaviour is captured in two tracks, current and intended, and every difference is an open question
+# Current and intended behaviour are recorded side by side, and every difference is an open question
 
 **Decided by:** Test Quality Lead, approved by the Steering Group · **Status:** proposed (agreed in discussion)
 
@@ -16,7 +16,7 @@ Legacy systems often behave differently from what people believe they should do,
 
 ## Considered Options
 
-* **Two tracks, compared: approval tests pin what the system does today; a specification records what it should do. Every difference becomes an open question, which the Application Owner settles as keep the current behaviour (recorded as a known issue), fix it (the test changes deliberately, with expert sign-off), or correct the specification**  
+* **Both, recorded side by side and compared: approval tests pin what the system does today; a specification records what it should do. Every difference becomes an open question, which the Application Owner settles as keep the current behaviour (recorded as a known issue), fix it (the test changes deliberately, with expert sign-off), or correct the specification**  
   Nothing changes silently; every disagreement gets an owner and a decision
 * **Current behaviour only**  
   Safe for change, but never tests what the system should do
@@ -25,12 +25,14 @@ Legacy systems often behave differently from what people believe they should do,
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Agreed in discussion, waiting for approval by pull request: the first option. Current behaviour comes from the code
+itself, through approval tests; intended behaviour comes from the sources people name and from experts' answers. Both
+are steps of the [semantic track](../docs/decisions/0092-the-journey-runs-two-tracks-syntactic-and-semantic-that-join-at-the-testing-plan.md).
 
 ### Consequences
 
 * The specification and the approval tests are compared when the specification is drafted (the
-  [intended behaviour](../docs/JOURNEY.md#6-intended-behaviour) step of the journey), and the open questions are kept
+  [elicit intended behaviour](../docs/JOURNEY.md#3-elicit-intended-behaviour) step of the journey's semantic track), and the open questions are kept
   with the specification.
 * Open questions are tracked as decision items in the issue tracker.
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public final class DecisionIndex {
     public String render(final Path folder) {
         final String introduction = introduction(folder.resolve("README.md"));
         final StringBuilder out = new StringBuilder(introduction).append(MARKER).append("\n\n");
-        groups(records(folder)).forEach((group, records) -> {
+        groups(recordFiles(folder).stream().map(DecisionRecord::read).toList()).forEach((group, records) -> {
             out.append("## ").append(group).append("\n\n| Decision | Status | Who decides |\n|---|---|---|\n");
             records.forEach(record -> out.append(row(record)));
             out.append('\n');
@@ -30,16 +31,19 @@ public final class DecisionIndex {
     }
 
     public void write(final Path folder) {
-        try {
-            Files.writeString(folder.resolve("README.md"), render(folder));
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        RepoFiles.write(folder.resolve("README.md"), render(folder));
     }
 
     public boolean isCurrent(final Path folder) {
-        try {
-            return Files.readString(folder.resolve("README.md")).equals(render(folder));
+        return RepoFiles.read(folder.resolve("README.md")).equals(render(folder));
+    }
+
+    // The decision records in a folder, the files named with a four-digit number, in number order.
+    static List<Path> recordFiles(final Path folder) {
+        try (Stream<Path> files = Files.list(folder)) {
+            return files.filter(file -> String.valueOf(file.getFileName()).matches("\\d{4}-.*\\.md"))
+                    .sorted()
+                    .toList();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -53,32 +57,17 @@ public final class DecisionIndex {
     private static Map<String, List<DecisionRecord>> groups(final List<DecisionRecord> records) {
         final Map<String, List<DecisionRecord>> groups = new LinkedHashMap<>();
         records.forEach(record -> groups
-                .computeIfAbsent(record.metadata().group(), key -> new java.util.ArrayList<>())
+                .computeIfAbsent(record.metadata().group(), key -> new ArrayList<>())
                 .add(record));
         return groups;
     }
 
-    private static List<DecisionRecord> records(final Path folder) {
-        try (Stream<Path> files = Files.list(folder)) {
-            return files.filter(file -> String.valueOf(file.getFileName()).matches("\\d{4}-.*\\.md"))
-                    .sorted()
-                    .map(DecisionRecord::read)
-                    .toList();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
     private static String introduction(final Path readme) {
-        try {
-            final String text = Files.readString(readme);
-            final int marker = text.indexOf(MARKER);
-            if (marker < 0) {
-                throw new IllegalStateException(readme + " has no index marker line");
-            }
-            return text.substring(0, marker);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
+        final String text = RepoFiles.read(readme);
+        final int marker = text.indexOf(MARKER);
+        if (marker < 0) {
+            throw new IllegalStateException(readme + " has no index marker line");
         }
+        return text.substring(0, marker);
     }
 }

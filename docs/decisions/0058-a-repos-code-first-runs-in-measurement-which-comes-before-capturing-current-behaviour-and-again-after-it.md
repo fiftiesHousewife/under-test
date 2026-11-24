@@ -8,6 +8,8 @@ group: Using the toolkit in an organisation
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [Finding what the code connects to is one job, in the connection-list skill, done before any code runs](0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md), [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md), [Repair pairs each test that reaches an external system, after measurement, changing only test code](0096-repair-pairs-each-test-that-reaches-an-external-system-after-measurement-changing-only-test-code.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -42,5 +44,5 @@ discovery missed to the list of tests and the connection list.
 ## More Information
 
 * Builds on: [Old code runs first only where production cannot be reached](../../decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md)
-* Later decisions that build on this: [Measurement leaves out external tests, varies the test order, and sorts connection errors by where they were going](0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md)
+* Later decisions that build on this: [Measurement leaves out external tests, varies the test order, and sorts connection errors by where they were going](0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md), [The safety inventory is a gate before the first run, and no skill ever copies a secret](0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md), [The journey runs two tracks, syntactic and semantic, that join at the testing plan](0092-the-journey-runs-two-tracks-syntactic-and-semantic-that-join-at-the-testing-plan.md)
 * Background: [the research on prior art](../PRIOR-ART.md)

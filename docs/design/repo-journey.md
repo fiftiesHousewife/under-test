@@ -6,23 +6,30 @@ the decisions behind them are in [decision-guides/](../../decision-guides/README
 
 ## 1. The repo journey
 
+Two tracks, joined at the testing plan; [the journey page](../JOURNEY.md) says who does each step and links every
+decision guide, and [the drawing](repo-journey.excalidraw) names each step's skill.
+
 ```mermaid
-flowchart LR
-    subgraph D["Discovery"]
-        C["Draft external systems list<br/>(what it talks to)"]
-        A["Approval tests<br/>(pin current behaviour)"]
-        S["Source list<br/>(knowledge that counts)"]
+flowchart TB
+    subgraph SY["Syntactic track: can its tests run here, and can they be trusted?"]
+        S1["Find what stops tests running<br/>(external systems, graded; meaningless and unreliable tests)"] --> S2["Measure<br/>(under the airgap agent, in stages)"]
+        S2 --> S3["Repair<br/>(pair each test that reaches an external system)"] --> S4["Measure again"]
     end
-    D --> Q["Expert sessions<br/>(answer prepared questions)"]
-    Q --> SP["Specification<br/>(intended behaviour)"]
-    SP --> R["Required tests<br/>(per connection and per rule)"]
-    C --> R
-    R --> AI["AI drafts tests"]
-    AI --> G["Acceptance check<br/>+ person reviews"]
-    G --> M["Progress measured<br/>(required tests met, open questions,<br/>coverage, mutation results)"]
+    subgraph SE["Semantic track: what does the code do, and what should it do?"]
+        E1["Find the sources<br/>of intended behaviour"] --> E2["Capture current behaviour<br/>(approval tests at the edges)"]
+        E2 --> E3["Elicit intended behaviour<br/>(requirements from cited sources)"] --> E4["Design tests<br/>from the requirements"]
+    end
+    G{{"Safety inventory<br/>(the gate before anything runs)"}}
+    S1 -.-> G
+    E1 -.-> G
+    G -.-> S2
+    G -.-> E2
+    S4 --> P["Testing plan"]
+    E4 --> P
+    P --> W["The work"] --> K["Keep it there"]
 ```
 
-## 2. Two tracks, compared
+## 2. Current and intended behaviour, compared
 
 ```mermaid
 flowchart TB
@@ -40,8 +47,8 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    CL["External systems list<br/>(one entry per connection)"] --> K{"Kind of connection"}
-    K -->|in-house service| CT["Contract test<br/>(Pact, via the broker)"]
+    CL["External systems list<br/>(one entry per external system)"] --> K{"Kind of external system"}
+    K -->|in-house service| CT["Contract test<br/>(Pact; pacts shared through the package repository)"]
     K -->|outside service| RR["Recorded responses or contract<br/>(WireMock)"]
     K -->|database or queue| CO["Container test<br/>(Testcontainers; CI if no local runtime)"]
     K -->|no image, no test instance| FK["Fake behind an interface<br/>(local tests)"]

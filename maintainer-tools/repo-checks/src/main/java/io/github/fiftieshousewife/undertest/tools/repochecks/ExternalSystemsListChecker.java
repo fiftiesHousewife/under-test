@@ -1,16 +1,8 @@
 package io.github.fiftieshousewife.undertest.tools.repochecks;
 
-import com.networknt.schema.Error;
-import com.networknt.schema.Schema;
-import com.networknt.schema.SchemaRegistry;
-import com.networknt.schema.SpecificationVersion;
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
-import tools.jackson.databind.json.JsonMapper;
 
 /**
  * Checks every external systems list ({@code *.calm.json}) against the toolkit's schema for it. An external systems
@@ -20,8 +12,7 @@ public final class ExternalSystemsListChecker {
 
     static final String SCHEMA = "schema/external-systems-list.schema.json";
 
-    private final JsonMapper json = new JsonMapper();
-    private final SchemaRegistry registry = SchemaRegistry.withDefaultDialect(SpecificationVersion.DRAFT_2020_12);
+    private final SchemaValidator validator = new SchemaValidator();
 
     public List<Problem> check(final RepoFiles files) {
         final List<Path> lists = files.withExtension(".calm.json");
@@ -32,21 +23,6 @@ public final class ExternalSystemsListChecker {
         if (!Files.exists(schemaFile)) {
             return List.of(new Problem(lists.get(0), "schema not found: " + SCHEMA));
         }
-        final Schema schema = registry.getSchema(read(schemaFile));
-        final List<Problem> problems = new ArrayList<>();
-        for (final Path list : lists) {
-            for (final Error error : schema.validate(json.readTree(read(list)))) {
-                problems.add(new Problem(list, error.toString()));
-            }
-        }
-        return problems;
-    }
-
-    private static String read(final Path file) {
-        try {
-            return Files.readString(file);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        return lists.stream().flatMap(list -> validator.validate(list, schemaFile).stream()).toList();
     }
 }

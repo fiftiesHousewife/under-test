@@ -1,12 +1,14 @@
 ---
-status: accepted
+status: superseded
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # Every skill and tool is also checked against real public repos, by a person's review of a sample
 
-**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md).
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -46,5 +48,5 @@ fixed.
 ## More Information
 
 * Builds on: [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md), [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [The external systems list is checked on real repos against a run of every test under the airgap agent](0088-the-external-systems-list-is-checked-on-real-repos-against-a-run-of-every-test-under-the-airgap-agent.md)
 * Background: none

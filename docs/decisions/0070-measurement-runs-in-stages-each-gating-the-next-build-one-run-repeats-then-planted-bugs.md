@@ -47,5 +47,5 @@ that stops after any stage still has a result.
 ## More Information
 
 * Builds on: [Measurement leaves out external tests, varies the test order, and sorts connection errors by where they were going](0059-measurement-leaves-out-external-tests-varies-the-test-order-and-sorts-connection-errors-by-where-they-were-going.md), [Planted bugs are counted per module, in key packages proposed from the change history](0061-planted-bugs-are-counted-per-module-in-key-packages-proposed-from-the-change-history.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md), [Repairing the existing tests is a step of its own, after measurement, changing only test code](0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md), [Each test is graded reaches, may reach or cannot reach, from the address its own settings give](0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md)
 * Background: none

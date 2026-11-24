@@ -54,7 +54,6 @@ than fixed.
   current files (see [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](../docs/decisions/0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md)).
 * The assessment file gains a section for the inventory's findings, with how each was resolved or neutralised.
 * The test profile switches off jobs that start by themselves and automatic migrations by default.
-* Discovery starts only once the blocking findings are resolved.
 
 ## More Information
 

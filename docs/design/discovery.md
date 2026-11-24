@@ -14,7 +14,7 @@ done by a tool, and the skill keeps the judgement
 
 | Order | Skill | Runs | Finds | Writes, and owns |
 |---|---|---|---|---|
-| 1 | [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) | the build's test compile; [under-test-external-calls](https://github.com/fiftiesHousewife/under-test-external-calls) | Every place the code opens or uses a connection, each connection's address (or where it will come from), the systems they make, and every test that may reach one, with the chain of calls ([why](../decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)) | `external-systems.calm.json`; `under-test-external-calls.json`; in `tests.yaml`, each test's `connections` |
+| 1 | [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) | the build's test compile; [under-test-external-calls](https://github.com/fiftiesHousewife/under-test-external-calls) | Every reach point, each external system's address (or where it will come from), the systems they make, and every test that may reach one, with the chain of calls and its grade: reaches, may reach or cannot reach ([why the grades](../decisions/0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md); [why it is one job](../decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)) | `external-systems.calm.json`; `testing/external-calls.json`, under-test-external-calls' facts; in `tests.yaml`, each test's `external_systems`, each with its `grade` and `reason` |
 | 2 | [find-meaningless-and-unreliable-tests](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) | PMD with the toolkit's rules | Meaningless tests (never run, can't fail, check only their mocks) and unreliable ones (sleep, depend on order) ([why](../decisions/0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)) | In `tests.yaml`, each test's `meaningless` and `unreliable`; `assessment.yaml`: `meaningless_tests`, `unreliable_tests` |
 | | (no skill) | — | The sources that count for intended behaviour | `sources.yaml` |
 
@@ -25,12 +25,14 @@ gate before the first run of any test or the application
 
 Measurement, the first time any test runs, comes next, in stages: build, one run, repeats, planted bugs
 ([why](../decisions/0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md)).
-Its one run leaves out the tests step 1 found reaching external systems, confirms or clears each one that may reach,
-and adds flaky and failing tests to `tests.yaml`.
+Its one run leaves out the tests step 1 graded reaches, confirms or clears each one graded may reach, adds to the list
+any test graded cannot reach that does call out, and adds flaky and failing tests to `tests.yaml`.
 
-## How each kind of connection is found
+## How each kind of reach point is found
 
-| Where the connection is | Found by |
+A reach point is a place in the code that opens or uses an external system.
+
+| Where the reach point or its address is | Found by |
 |---|---|
 | Opened in production code: a DAO, a client, a mailer, several classes down from the test | under-test-external-calls: the call graph from each test, through interfaces with few implementations, to the call that opens it |
 | A host in the test's own code | The external systems list skill: a search over test code |
@@ -44,11 +46,13 @@ and adds flaky and failing tests to `tests.yaml`.
 * [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools)' `meaningless-and-unreliable`, which does
   find-meaningless-and-unreliable-tests' mechanical steps and gives the eval's known answers, is built but not yet
   published; the skill uses it when its jar is there
-  ([proposed packaging](../decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)).
-* An eval case for the external systems list's pass from the code, from what Openfire showed.
+  ([why](../decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)).
 * The repair step, which reads these lists after measurement: each test that reaches an external system becomes a
   pair, one injecting a stand-in and one tagged external
-  ([why](../decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)).
+  ([why](../decisions/0096-repair-pairs-each-test-that-reaches-an-external-system-after-measurement-changing-only-test-code.md)).
+
+The external systems list's pass from the code has an eval case, `grades-every-test`, with a test of each grade; it
+has no results yet.
 
 How maintainers check, on real repos, that this step finds every test that reaches another machine:
 [Checking discovery against a run under the airgap agent](checking-discovery-against-a-run-under-the-airgap-agent.md).

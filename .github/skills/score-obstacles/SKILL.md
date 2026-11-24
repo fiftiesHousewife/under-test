@@ -1,6 +1,6 @@
 ---
 name: score-obstacles
-description: Score each obstacle to testing a repo has, from 0 to 3, by the named list in the decision guide, using only facts already in its testing/assessment.yaml, testing/external-systems.calm.json and testing/tests.yaml.json, and write the obstacles section with the evidence for each score. Use after measuring a repo, before choosing techniques, or when asked what makes a repo hard to test.
+description: Score each obstacle to testing a repo has, from 0 to 3, by the named list in the decision guide, using only facts already in its testing/assessment.yaml, testing/external-systems.calm.json and testing/tests.yaml, and write the obstacles section with the evidence for each score. Use after measuring a repo, before choosing techniques, or when asked what makes a repo hard to test.
 ---
 
 # Scoring obstacles
@@ -20,7 +20,7 @@ your reply: point at its file and line instead
 
 * A **connection** is a relationship in the external systems list whose `metadata.under-test.state` isn't `stale`; its
   destination node is `relationship-type.connects.destination.node`. A **queue** node is one with an interface on
-  port 5672, 9092 or 61616.
+  port 5672, 9092 or 61616, or the destination of a connection whose `metadata.under-test.kinds` contains `queue`.
 * A connection's stand-in is **decided** when its `metadata.under-test.state` is `decided`. A safety finding is
   **decided** when the decision `safety/<finding id>` has `state: decided`.
 * A meaningless or unreliable kind's count is the sum of `tests` over the `meaningless_tests` or `unreliable_tests`

@@ -50,5 +50,5 @@ all 25 checks; without them, it passed 2 and wrote the passwords it found into t
 ## More Information
 
 * Builds on: [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md), [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md), [Every skill and tool is also checked against real public repos, by a person's review of a sample](0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md)
 * Background: none

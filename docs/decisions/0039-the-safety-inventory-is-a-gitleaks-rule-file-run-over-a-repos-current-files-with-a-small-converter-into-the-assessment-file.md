@@ -6,6 +6,8 @@ group: Using the toolkit in an organisation
 
 # The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file
 
+> Narrowed by [Keystores and private key files are found over the whole history, by rules added to the secrets scan](0041-keystores-and-private-key-files-are-found-over-the-whole-history-by-rules-added-to-the-secrets-scan.md).
+
 ## Context and Problem Statement
 
 [Before any code runs, a safety inventory records what could reach production or real data, and some findings block the run](../../decision-guides/0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md)
@@ -54,5 +56,5 @@ decides, as a decision in the assessment file.
 ## More Information
 
 * Builds on: [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md), [The assessment file: where it lives, who writes which fields, and its schema version](../../decision-guides/0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Keystores and private key files are found over the whole history, by rules added to the secrets scan](0041-keystores-and-private-key-files-are-found-over-the-whole-history-by-rules-added-to-the-secrets-scan.md), [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md)
 * Background: [production-safety](../REFERENCES.md#production-safety); [gitleaks configuration](https://github.com/gitleaks/gitleaks#configuration)

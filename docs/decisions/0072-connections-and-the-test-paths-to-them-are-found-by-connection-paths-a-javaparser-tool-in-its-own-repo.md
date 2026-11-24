@@ -59,5 +59,5 @@ field initialisers count as part of a test.
 ## More Information
 
 * Builds on: [Finding what the code connects to is one job, in the connection-list skill, done before any code runs](0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [connection-paths does everything a program can decide, and the connection-list skill only what needs judgement](0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md)
 * Background: none

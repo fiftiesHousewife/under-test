@@ -6,7 +6,10 @@ connections the code opens.
 
 ## Which tests start an application, and how much of it
 
-Look at the test class, its superclasses in the repo, and any annotation of the repo's own that carries one of these.
+under-test-external-calls lists them: read `tests_starting_a_framework` in the facts file, each test with its
+`framework` (the annotation as written) and `annotated_on` (the class carrying it). Don't search for these annotations
+yourself. What it can't know, look for by hand, on the test class and on its `annotated_on` class: `@ActiveProfiles`,
+`@TestPropertySource`, `@SpringBootTest(properties = ...)` and `@AutoConfigureTestDatabase(replace = NONE)`.
 
 | Annotation | What it starts |
 |---|---|
@@ -36,13 +39,15 @@ excluded example domain is not external.
 
 The winning value of a connection setting is that system's address: its node's `addresses`, and the `setting` of its
 relationship. A test that starts an application whose winning settings name an external host gets an `external_systems`
-entry for that system, `found_by: test-settings`, the `kind` from the setting (`datasource` a database, `mail` mail,
-`ldap` a directory, `rabbitmq`, `activemq` or `kafka` a queue, otherwise from the address's scheme), and `where` at the
-line of the winning setting. The same settings, in main resources and the default profile, are what the application
+entry for that system, `found_by: test-settings`, `grade: reaches`, `reason: host`, the `kind` from the setting
+(`datasource` a database, `mail` mail, `ldap` a directory, `rabbitmq`, `activemq` or `kafka` a queue, otherwise from
+the address's scheme), and `where` at the line of the winning setting. The host gets a node and a relationship, with
+`found-by` `test-settings`, as [SKILL.md](SKILL.md)'s step 4 says for a host the tests name. The same settings, in main resources and the default profile, are what the application
 itself connects to.
 
 ```bash
-grep -rnE '@(SpringBootTest|DataJpaTest|JdbcTest|DataJdbcTest|DataMongoTest|DataRedisTest|DataLdapTest|WebMvcTest|WebFluxTest|AutoConfigureTestDatabase|ActiveProfiles|TestPropertySource)' --include='*.java' <test folders>
+python3 -c 'import json,sys; [print(t["test"], t["framework"], t["annotated_on"]) for t in json.load(open(sys.argv[1])).get("tests_starting_a_framework", [])]' <facts file>
+grep -rnE '@(ActiveProfiles|TestPropertySource|AutoConfigureTestDatabase)|@SpringBootTest\([^)]*properties' --include='*.java' <test folders>
 find . -path '*/src/*/resources/*' -name 'application*.properties' -o -path '*/src/*/resources/*' -name 'application*.y*ml' | grep -v '/build/'
 grep -nE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})|bootstrap-servers|\.host *[=:]' <each settings file found>
 ```

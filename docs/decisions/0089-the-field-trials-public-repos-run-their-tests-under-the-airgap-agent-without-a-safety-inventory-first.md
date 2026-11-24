@@ -41,5 +41,5 @@ Every other repo keeps the gate.
 ## More Information
 
 * Builds on: [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md), [The external systems list is checked on real repos against a run of every test under the airgap agent](0088-the-external-systems-list-is-checked-on-real-repos-against-a-run-of-every-test-under-the-airgap-agent.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md)
 * Background: none

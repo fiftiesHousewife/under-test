@@ -66,7 +66,7 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 | Gradle: "Failed to load JUnit Platform" after adding the listener | The test task's classpath was replaced, dropping the launcher | Add the listener as a `testRuntimeOnly` dependency, as the script does |
 | Calls with no test named | The listener isn't on the test classpath | Add `airgap-junit` |
 
-## Results so far
+## Results
 
 With under-test-external-calls 0067944 (Commons Net: 232cab9). "Flagged" is graded reaches or may reach.
 
@@ -77,8 +77,9 @@ With under-test-external-calls 0067944 (Commons Net: 232cab9). "Flagged" is grad
 | jsoup 1.15.3 (Maven, JUnit 5), disabled tests run | 1,165: 1,124 passed, 41 failed | 40, to 20 hosts | 0 | 13 of 53 flagged | 4 go through a proxy on localhost, so reach the outside only through another program the agent can't see: reaches is right for them. 1 throws before connecting; 8 are graded may reach and clear in a run |
 | Apache Commons Net 3.6 (Maven, JUnit 3 and 4), tests its build leaves out run | 356: 266 passed, 71 failed, 19 skipped | 18, to 7 hosts (FTP, Telnet, HTTP) | 0 | 111 of 129 flagged; 15 that called out graded may reach | A `super.setUp()` resolved to a sibling class that connects; hosts given through JUnit 3's `suite()` and a constructor, or written in `setUp()`; lookups of numeric addresses taken as reaches |
 
-On jsoup, every test that called out is graded reaches (40 of 40), and 40 of the 45 graded reaches called out. No test
-that called out is graded may reach or cannot reach on any of the three repos.
+On jsoup, every test that called out is graded reaches (40 of 40), and 40 of the 45 graded reaches called out. On Openfire,
+spring-petclinic and jsoup no test that called out is graded may reach or cannot reach; on Commons Net 15 are graded
+may reach.
 
 A test that reaches the outside only through a proxy on the same machine makes no call the agent can see: the proxy,
 another program, makes it. Such a test is graded reaches, and the check counts it as a false alarm; read those by

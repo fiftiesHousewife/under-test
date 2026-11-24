@@ -34,6 +34,6 @@ Chosen in discussion: the first option. Until the pilot decides, business rule t
 
 ## More Information
 
-* Builds on: [Behaviour is captured in two tracks, current and intended, and every difference is an open question](../../decision-guides/0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md), [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md)
+* Builds on: [Behaviour is captured in two tracks, current and intended, and every difference is an open question](../../decision-guides/0033-current-and-intended-behaviour-are-recorded-side-by-side-and-every-difference-is-an-open-question.md), [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md)
 * Later decisions that build on this: none yet
 * Background: none

@@ -27,7 +27,7 @@ Proposed: the first option.
 
 ### Consequences
 
-* Implemented in the convention plugin.
+* Implemented in the java-conventions plugin of [All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies](0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md).
 
 ## More Information
 

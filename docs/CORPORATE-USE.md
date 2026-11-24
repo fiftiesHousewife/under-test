@@ -59,8 +59,8 @@ more options.
 
 ### What crosses the boundary, and how
 
-Only versioned artifacts cross into the network, through routes that already exist. Nothing at build time or run time
-reaches the internet.
+Only versioned artifacts and the toolkit's tagged releases cross into the network, through routes that already exist.
+Nothing at build time or run time reaches the internet.
 
 ```mermaid
 flowchart LR
@@ -72,7 +72,7 @@ flowchart LR
     end
     subgraph Corp["Corporate network"]
         PR["Package repository<br/>(approved remote copies)"]
-        MIR["Optional internal mirror<br/>of the toolkit source"]
+        MIR["Internal mirror of the toolkit<br/>(skills, decision guides, schemas, technique rules)"]
         ORG["Organisation repo<br/>(profile, decisions, units)"]
         REPO["Each target repo"]
         CI["CI runners<br/>(no route to production)"]
@@ -81,18 +81,18 @@ flowchart LR
     MC -->|approved remote| PR
     GP -->|approved remote| PR
     NPM -->|approved remote| PR
-    GH -.->|optional, approved mirroring| MIR
+    GH -->|approved mirroring| MIR
     PR --> REPO
     PR --> CI
     PR --> DEV
+    MIR -->|apm install, pinned to a release tag| REPO
     ORG -->|names toolkit version and settings| REPO
 ```
 
 | Toolkit part | Reaches people as | Through |
 |---|---|---|
 | Convention plugin (quality checks, testing evidence, `underTest` settings) | Versioned Gradle plugin artifact | Package repository |
-| Skills for the AI assistant | Versioned skills bundle, unpacked by `./gradlew installSkills` | Package repository |
-| Decision guides, schemas, technique rules | Versioned content bundle | Package repository |
+| Skills for the AI assistant, with the decision guides, schemas and technique rules | One APM (Agent Package Manager) package, pinned to a release tag in each repo's `apm.yml` and installed by `apm install`; nothing in it is copied | The internal mirror of the toolkit |
 | Lessons with runnable examples | The lessons repo ([under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons)), through the internal source mirror | Code hosting |
 | Organisation profile and decisions | Files in the organisation repo | Internal code hosting |
 | Third-party tools the checks use (Checkstyle, PMD, SpotBugs, FindSecBugs, JaCoCo, PIT, forbidden APIs) | Ordinary Maven artifacts | Package repository |
@@ -134,14 +134,15 @@ practice:
 
 ### AI assistant
 
-- Only the organisation's approved assistant is used, with the skills bundle installed into the folders it reads.
+- Only the organisation's approved assistant is used, with the toolkit's skills installed by `apm install`, from the
+  internal mirror at a pinned release tag, into the folders it reads.
 - A person directs it and reviews everything it produces. Unattended agents stay off unless the organisation profile
   allows them.
 - AI-written tests must pass the acceptance check before they are kept.
 - Only models the organisation has approved are used, through its approved assistant. No AI tools, agents, plugins or
   models are brought in from outside, and nothing calls an AI service the organisation hasn't approved. The toolkit's
-  skills are instructions for the approved assistant, delivered through the package repository like the rest of the
-  toolkit; they bring no model or AI tool of their own.
+  skills are instructions for the approved assistant, delivered with the rest of the toolkit through APM from the
+  internal mirror, pinned to a release tag; they bring no model or AI tool of their own.
 
 ### Containers and production safety
 
@@ -154,8 +155,11 @@ practice:
   approved copies.
 - CI on Kubernetes has no Docker daemon. The organisation chooses how container tests run there (for example kubedock
   or rootless Podman) and records it in its organisation repo.
-- Old repos are scanned for secrets before anything builds or runs them, and their first runs happen only on runners
-  that can't reach production.
+- Old repos go through the safety inventory, a secrets scan among it, before any of their tests or the application
+  runs (a build that runs no tests may come first), and their first runs happen only where production can't be
+  reached: on CI runners with no route to it, or under the
+  [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), which refuses every call to another machine,
+  on machines the organisation has approved.
 
 ### Generated deployment files
 
@@ -163,8 +167,9 @@ practice:
   platform's template more than the application, so discovery reads the application's own settings and the inputs the
   platform generates from, not the generated files, when drafting the external systems list.
 - The toolkit never asks a team to write Helm charts or push images. A shared service the toolkit suggests, such as a
-  contract broker, is deployed through the control layers like any other service, and someone has to own and run it
-  from then on.
+  stand-in service from a shared test kit, is deployed by the platform like any other service, and someone has to own
+  and run it from then on. Contract tests need no such service: their pacts are shared as versioned artifacts through
+  the package repository.
 
 ---
 
@@ -197,7 +202,7 @@ See also the [repo journey diagrams](design/repo-journey.md).
 
 ---
 
-## Gaps today
+## Gaps
 
 These are being worked on; each has an item in the backlog.
 
@@ -205,8 +210,8 @@ These are being worked on; each has an item in the backlog.
 |---|---|---|
 | The backlog importer needs Python (no longer the GitHub CLI; it calls the REST API) | Python may be unavailable | A Java-only loader with GitHub and Jira adapters |
 | No Jira adapter yet | Jira organisations must use the tracker's own bulk import | Jira Cloud adapter |
-| Convention plugin, skills bundle and content bundle not yet published | Organisations would build them from an internal copy of the source | Publish to Maven Central with each release |
-| APM (Agent Package Manager) is used for this repo's own external skills | APM usually isn't allowed | Skills bundle through the package repository; APM optional |
+| Convention plugin not yet published | Organisations would build it from an internal copy of the source | Publish to Maven Central with each release |
+| The toolkit arrives through APM (Agent Package Manager), from an internal mirror | APM has to be approved and installed where the AI assistant runs | Approve APM during set-up, like any other developer tool |
 | External artifact list not yet generated | Security review has to compile it by hand | Generated with each release |
 
 ---
@@ -216,5 +221,6 @@ These are being worked on; each has an item in the backlog.
 - [ ] The list of external artifacts and licences for the toolkit version (from the release).
 - [ ] Confirmation that builds resolve only from the package repository (no direct internet access).
 - [ ] Confirmation that no unattended AI agents are enabled.
-- [ ] Confirmation that old repos are secret-scanned and run first only on runners with no route to production.
+- [ ] Confirmation that old repos pass the safety inventory first, and run first only on runners with no route to
+  production, or under the airgap agent on machines the Security and Platform Owner has approved.
 - [ ] The organisation profile, reviewed by the Security and Platform Owner.

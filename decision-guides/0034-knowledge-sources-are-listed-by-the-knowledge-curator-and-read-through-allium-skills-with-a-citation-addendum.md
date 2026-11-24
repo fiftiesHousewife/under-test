@@ -25,7 +25,7 @@ A repo alone can't reveal its full functional footprint. Regression packs, wiki 
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. The AI assistant never fetches sources on its own; people export them or make them reachable.
+Agreed in discussion, waiting for approval by pull request: the first option. The AI assistant never fetches sources on its own; people export them or make them reachable.
 
 ### Consequences
 
@@ -35,5 +35,5 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ## More Information
 
 * Builds on: [Each application also has a knowledge curator and an architecture owner](0002-each-application-also-has-a-knowledge-curator-and-an-architecture-owner.md), [We reuse existing tools before building new ones](../docs/decisions/0021-we-reuse-existing-tools-before-building-new-ones.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md)
 * Background: none

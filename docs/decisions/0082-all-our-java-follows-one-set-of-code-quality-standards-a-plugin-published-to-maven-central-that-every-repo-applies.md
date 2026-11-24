@@ -8,6 +8,8 @@ group: How we work
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [For-each loops are flagged, not forbidden](0083-for-each-loops-are-flagged-not-forbidden.md), [The quality plugin may pull Gradle plugins from the Gradle Plugin Portal](0084-the-quality-plugin-may-pull-gradle-plugins-from-the-gradle-plugin-portal.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -56,5 +58,5 @@ Chosen in discussion: a code-quality plugin for our own repos, now, in its own r
 ## More Information
 
 * Builds on: [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md), [Lessons live in their own repo, with a copy of the build conventions](0017-lessons-live-in-their-own-repo-with-a-copy-of-the-build-conventions.md), [This repo's own upkeep is kept apart from what adopting organisations use](0034-this-repos-own-upkeep-is-kept-apart-from-what-adopting-organisations-use.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [For-each loops are flagged, not forbidden](0083-for-each-loops-are-flagged-not-forbidden.md), [The quality plugin may pull Gradle plugins from the Gradle Plugin Portal](0084-the-quality-plugin-may-pull-gradle-plugins-from-the-gradle-plugin-portal.md)
 * Background: nothing

@@ -23,7 +23,7 @@ Developer machines have no container runtime today, but may get one (WSL2 or a s
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Agreed in discussion, waiting for approval by pull request: the first option.
 
 ### Consequences
 

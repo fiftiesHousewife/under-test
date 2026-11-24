@@ -1,7 +1,8 @@
 #!/bin/bash
 # Sets up the case's workspace: a repo holding only two airgap agent reports (one from its tests, one from starting
-# the application) and an assessment file that already has a safety section and a decision, plus the two schemas and
-# the two decision guides the task needs. Run by claude plugin eval --scaffold, in the workspace.
+# the application) and an assessment file that already has a safety section and a decision, plus the schemas of the
+# files the skill writes (the external systems list, the assessment file and testing/tests.yaml) and the two decision
+# guides the task needs. Run by claude plugin eval --scaffold, in the workspace.
 set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 toolkit="$here"
@@ -11,7 +12,8 @@ while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$too
 echo "scaffold ran in $PWD" >&2
 cp -R "$here/fixture/." .
 mkdir -p schema decision-guides
-cp "$toolkit/schema/external-systems-list.schema.json" "$toolkit/schema/assessment.schema.json" schema/
+cp "$toolkit/schema/external-systems-list.schema.json" "$toolkit/schema/assessment.schema.json" \
+   "$toolkit/schema/tests.schema.json" schema/
 cp "$toolkit/decision-guides/0031-the-external-systems-list-says-what-tests-use-for-each-system-and-which-addresses-tests-must-never-reach.md" \
    "$toolkit/decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md" decision-guides/
 # The fixture's YAML files name their schemas where they are in the toolkit, so its own checks can validate them;

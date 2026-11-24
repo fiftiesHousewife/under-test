@@ -75,11 +75,11 @@
               "required": ["found-by", "state", "stand-in"],
               "properties": {
                 "state": true, "drafted_by": true, "by": true,
-                "found-by": {"type": "array", "minItems": 1, "items": {"enum": ["airgap-agent", "settings", "code", "person"]}, "description": "How the connection was found: the airgap agent's reports, the repo's settings, reading its code, or a person."},
-                "kinds": {"type": "array", "items": {"enum": ["database", "http", "mail", "directory", "jndi", "queue", "socket", "url", "host-lookup", "process", "tcp", "udp"]}, "description": "The kinds of connection found: by under-test-external-calls in the code, or by the airgap agent in a run."},
+                "found-by": {"type": "array", "minItems": 1, "items": {"enum": ["airgap-agent", "settings", "test-settings", "code", "person"]}, "description": "How the connection was found: the airgap agent's reports, the repo's settings, settings the tests load (properties, YAML, Spring XML, Spring Boot's settings), reading its code or its tests' code, or a person."},
+                "kinds": {"type": "array", "items": {"enum": ["database", "http", "mail", "directory", "jndi", "queue", "socket", "url", "host-lookup", "process", "file-share", "tcp", "udp"]}, "description": "The kinds of connection found: by under-test-external-calls in the code, by the airgap agent in a run (its tcp and udp written as socket or queue), or in settings the tests load (file-share for a Windows or SMB share)."},
                 "callers": {"type": "array", "items": {"type": "string"}, "description": "Where in the application's own code the connection is made, as class.method(File.java:line): from the airgap agent, the line of the call; from the code, the method's first line."},
                 "setting": {"type": "object", "required": ["name"], "additionalProperties": false, "properties": {"name": {"type": "string"}, "from": {"type": "string"}}, "description": "The setting that supplied the address, and where it was read."},
-                "tests": {"type": "integer", "minimum": 0, "description": "How many tests made the call (airgap agent) or may make it (code), as testing/tests.yaml records them."},
+                "tests": {"type": "integer", "minimum": 0, "description": "From the airgap agent, how many distinct tests made the call; from the code or the tests' settings, how many tests have an entry for this node in testing/tests.yaml graded reaches or may-reach."},
                 "runs": {"type": "array", "items": {"enum": ["test", "application", "build"]}},
                 "stand-in": {
                   "type": "object",

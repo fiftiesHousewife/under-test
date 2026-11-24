@@ -39,20 +39,12 @@ public final class TechniqueRules {
     }
 
     public void write(final Path root) {
-        try {
-            Files.writeString(root.resolve(FILE), render(root));
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        RepoFiles.write(root.resolve(FILE), render(root));
     }
 
     public boolean isCurrent(final Path root) {
         final Path file = root.resolve(FILE);
-        try {
-            return Files.isRegularFile(file) && Files.readString(file).equals(render(root));
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        return Files.isRegularFile(file) && RepoFiles.read(file).equals(render(root));
     }
 
     // True where the repo has technique rules: not every repo that reuses these checks does.
@@ -61,18 +53,10 @@ public final class TechniqueRules {
     }
 
     private ObjectNode compact(final Path file) {
-        final JsonNode technique = yaml.readTree(read(file));
+        final JsonNode technique = yaml.readTree(RepoFiles.read(file));
         final ObjectNode kept = json.createObjectNode();
         FIELDS.stream().filter(technique::has).forEach(field -> kept.set(field, technique.get(field)));
         return kept;
-    }
-
-    private static String read(final Path file) {
-        try {
-            return Files.readString(file);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
     }
 
     private static List<Path> techniqueFiles(final Path root) {

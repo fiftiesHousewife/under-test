@@ -70,7 +70,9 @@
               "required": [
                 "node",
                 "kind",
-                "found_by"
+                "found_by",
+                "grade",
+                "reason"
               ],
               "properties": {
                 "node": {
@@ -100,7 +102,7 @@
                     "test-settings",
                     "airgap-report"
                   ],
-                  "description": "code-path: under-test-external-calls found a chain of calls from the test to where the connection is opened; test-code: the test's own code names the host; test-settings: a file the test loads names it (properties, YAML, Spring XML, Spring Boot's settings); airgap-report: only the agent saw it."
+                  "description": "code-path: under-test-external-calls found a chain of calls from the test to where the connection is opened; test-code: the test's own code names the host; test-settings: a file the test loads names it (properties, YAML, Spring XML, Spring Boot's settings); airgap-report: the airgap agent refused the test a call to it, on another machine."
                 },
                 "grade": {
                   "enum": [
@@ -108,7 +110,7 @@
                     "may-reach",
                     "cannot-reach"
                   ],
-                  "description": "reaches: measurement leaves the test out, and repair twins it; may-reach: its one run under the airgap agent confirms or clears it; cannot-reach: it runs, and a call out is a miss of discovery."
+                  "description": "reaches: measurement leaves the test out, and repair pairs it; may-reach: its one run under the airgap agent confirms or clears it; cannot-reach: it runs, and a call out is a miss of discovery."
                 },
                 "reason": {
                   "enum": [
@@ -133,7 +135,7 @@
                 "where": {
                   "type": "string",
                   "pattern": "^[^:]+:[0-9]+$",
-                  "description": "For test-code and test-settings: path:line of the line naming the host."
+                  "description": "For test-code and test-settings: path:line of the line naming the host; for airgap-report: the file and line of the caller the agent reported."
                 }
               }
             }
@@ -207,14 +209,7 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "Each target the airgap agent refused for this test, as its report names it, sorted."
-              },
-              "needs_local_service": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "description": "Each localhost address it couldn't reach: set-up work, not an external system."
+                "description": "Each target the airgap agent refused for this test, as its report names it, sorted: only report lines with outcome refused, which are all on another machine, since the agent allows the machine itself."
               },
               "missed_by_discovery": {
                 "const": true,

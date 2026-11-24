@@ -23,7 +23,7 @@ The testing pyramid (many unit tests, fewer integration tests, few end-to-end te
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Agreed in discussion, waiting for approval by pull request: the first option.
 
 ### Consequences
 

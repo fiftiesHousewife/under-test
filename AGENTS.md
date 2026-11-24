@@ -27,7 +27,7 @@ Name a product only as an option or an example.
 | [`techniques/`](techniques/README.md) | One `technique.yaml` per technique: the rules the toolkit's tools read. |
 | [`templates/`](templates/) | Starting points an organisation copies into its own repo: its backlog, a testing guide, a shared test kit. Testing guides and shared test kits themselves belong to each organisation. |
 | `tools/` | The few tools and rule files adopting organisations run. The toolkit is AI first: a step of the journey is a skill that runs existing tools, and code that must be code gets its own repo (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). |
-| `maintainer-tools/` | Tools that keep this repo itself in order, not used by adopters: [`repo-checks`](maintainer-tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`); [`sync`](maintainer-tools/sync/README.md) is the maintainers' push script; [`skill-evals`](.github/evals/README.md) runs every skill's eval cases with `claude plugin eval` and writes [the results page](docs/skill-evaluations/eval-results.md); [`drawing-export`](maintainer-tools/drawing-export/README.md) turns an Excalidraw drawing into the SVG the README shows; [`discovery-check`](maintainer-tools/discovery-check/README.md) runs a field-trial repo's tests under the airgap agent and compares them with discovery; `git-hooks` refuses a plain `git push`. |
+| `maintainer-tools/` | Tools that keep this repo itself in order, not used by adopters: [`repo-checks`](maintainer-tools/repo-checks/build.gradle.kts) checks this repo's own files (`./gradlew check`), rebuilds decision indexes (`buildDecisionIndexes`) and repairs decision links (`fixDecisionLinks`); [`sync`](maintainer-tools/sync/README.md) is the maintainers' push script; [`skill-evals`](.github/evals/README.md) runs every skill's eval cases with `claude plugin eval` and writes [the results page](docs/skill-evaluations/eval-results.md); [`drawing-export`](maintainer-tools/drawing-export/README.md) turns an Excalidraw drawing into the SVG the README shows; [`discovery-check`](maintainer-tools/discovery-check/README.md) runs a field-trial repo's tests under the airgap agent and compares them with discovery; [`safety-inventory-rules`](maintainer-tools/safety-inventory-rules/check.sh) runs gitleaks with the safety inventory's rule files over its sample repo, in CI, and compares the findings with the expected lists; `git-hooks` refuses a plain `git push`. |
 | [`schema/`](schema/) | Schemas for every YAML format. |
 | [`ADOPTION.md`](ADOPTION.md) | Step-by-step adoption for an organisation |
 | [`examples/organisation-repo/`](examples/organisation-repo/README.md) | The shape of an organisation's private organisation repo. |
@@ -40,14 +40,13 @@ Name a product only as an option or an example.
 |---|---|
 | [work-on-an-item](.github/skills/work-on-an-item/SKILL.md) | Pick up a work item from the issue tracker and finish it |
 | [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turn a repo's gitleaks reports, and a list of keystores ever committed, into the safety section of its assessment file, the gate before any of its tests or its application first run |
-| [draft-the-external-systems-list](.github/skills/draft-the-external-systems-list/SKILL.md) | Draft a repo's external systems list from its code with under-test-external-calls and from its settings, record which tests may reach each connection, and later merge in the airgap agent's reports |
+| [draft-the-external-systems-list](.github/skills/draft-the-external-systems-list/SKILL.md) | Draft a repo's external systems list from its code with under-test-external-calls and from its settings, grade each test reaches, may reach or cannot reach for each external system, and later merge in the airgap agent's reports |
 | [find-meaningless-and-unreliable-tests](.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) | Find a repo's meaningless tests (never run, can't fail, check only their mocks) and unreliable ones (sleep, depend on order), the same way every time |
-| [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Measure a Gradle repo under the airgap agent: five runs for flaky tests, coverage, planted bugs, test mix |
+| [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Measure a Gradle repo under the airgap agent, in stages: build, one run leaving out the tests graded reaches, repeats in varied orders for flaky tests, with coverage, then planted bugs; and the test mix |
 | [score-obstacles](.github/skills/score-obstacles/SKILL.md) | Score a repo's obstacles to testing from what is already recorded, by the named list in the decision guide |
 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Propose adopt, defer or reject for every technique, each traced to the rule that decided it |
 | [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generate a repo's testing plan from its assessment file and external systems list, each piece of work with a stable key |
 | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fill the report template from a repo's files, and apply the changes people paste back from it |
-
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |
 | [record-an-organisation-decision](.github/skills/record-an-organisation-decision/SKILL.md) | Record an organisation's own choice in its private organisation repo |
 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turn a repo's approved testing plan into work items (placeholder until the loader exists) |
@@ -60,7 +59,7 @@ Prompts, for short, repeatable jobs where a skill would add more than it saves:
 
 | Prompt | Use it to |
 |---|---|
-| [strengthen-tests-until-pit-catches-the-planted-bugs](.github/prompts/strengthen-tests-until-pit-catches-the-planted-bugs.prompt.md) | Improve tests until PIT catches the planted bugs in key code, after discovery has shown they can't be trusted |
+| [strengthen-tests-until-pit-catches-the-planted-bugs](.github/prompts/strengthen-tests-until-pit-catches-the-planted-bugs.prompt.md) | Improve tests until PIT catches the planted bugs in key code, after measurement's planted bugs show they can't be trusted |
 
 External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with `apm install` (APM, the Agent Package Manager). Run it once after cloning.
 

@@ -24,6 +24,7 @@ What it does, in order:
   5. Adds "blocked by" links between items.
   6. With --page <path>, writes a readable Markdown page of the open items, ordered and linked to their issues.
 """
+import argparse
 import http.client
 import json
 import os
@@ -179,11 +180,24 @@ def write_page(items, by_key, path):
     print(f"wrote {path}")
 
 
+def parse_args(argv):
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("repo", metavar="OWNER/REPO", help="the GitHub repository to import into")
+    parser.add_argument("--apply", action="store_true", help="make the changes; without it, a dry run")
+    parser.add_argument("--relink", action="store_true", help="post every item's links again, not only new ones")
+    parser.add_argument("--file", type=Path, help="the backlog file, relative to the toolkit's root (default: "
+                        "plan/toolkit-backlog.yaml)")
+    parser.add_argument("--page", type=Path, help="write a Markdown page of the open items here, relative to the "
+                        "toolkit's root")
+    return parser.parse_args(argv)
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
-    repo, apply = sys.argv[1], "--apply" in sys.argv
-    seed = REPO_ROOT / sys.argv[sys.argv.index("--file") + 1] if "--file" in sys.argv else DEFAULT_SEED
+    args = parse_args(sys.argv[1:])
+    repo, apply = args.repo, args.apply
+    seed = REPO_ROOT / args.file if args.file else DEFAULT_SEED
     items = parse_seed(seed)
     print(f"{len(items)} items in {seed.name}; {'APPLYING to' if apply else 'dry run for'} {repo}")
     if not apply:
@@ -243,7 +257,7 @@ def main():
     # harmlessly; any other failure is named, since an unchanged issue's links aren't tried again without --relink.
     failed = []
     for item in items:
-        if item["key"] not in written and "--relink" not in sys.argv:
+        if item["key"] not in written and not args.relink:
             continue
         issue = by_key[item["key"]]
         if "parent" in item:
@@ -260,8 +274,8 @@ def main():
     if failed:
         print(f"  {len(failed)} link(s) not made (some may already exist): {', '.join(failed)}")
         print("  run again with --relink to try every link")
-    if "--page" in sys.argv:
-        write_page(items, by_key, REPO_ROOT / sys.argv[sys.argv.index("--page") + 1])
+    if args.page:
+        write_page(items, by_key, REPO_ROOT / args.page)
     print("done")
 
 

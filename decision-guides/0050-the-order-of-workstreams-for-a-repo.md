@@ -24,7 +24,7 @@ Some work must come before other work: you can't strengthen tests that don't run
 ## Decision Outcome
 
 Proposed: the first option. The "record current behaviour" workstream extends the first baseline of approval tests
-recorded when [current behaviour is captured](../docs/JOURNEY.md#5-capture-current-behaviour), the journey's fifth step.
+recorded when [current behaviour is captured](../docs/JOURNEY.md#2-capture-current-behaviour), on the journey's semantic track.
 
 ### Consequences
 

@@ -9,7 +9,7 @@
 
 ## What it stands in for
 
-<The real system, the parts of it the kit covers, and the parts it doesn't. Name the system's connection-list entry.>
+<The real system, the parts of it the kit covers, and the parts it doesn't. Name the system's external systems list entry.>
 
 ## Two parts
 

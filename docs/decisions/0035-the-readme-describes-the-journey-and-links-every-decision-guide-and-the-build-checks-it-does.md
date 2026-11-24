@@ -43,5 +43,5 @@ organisation; each step links the guides that settle it, and a section lists the
 ## More Information
 
 * Builds on: [How this repository is organised](0001-how-this-repository-is-organised.md), [This repo's own upkeep is kept apart from what adopting organisations use](0034-this-repos-own-upkeep-is-kept-apart-from-what-adopting-organisations-use.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [A short README summarises the journey, and a journey page links every decision guide, which the build checks](0042-a-short-readme-summarises-the-journey-and-a-journey-page-links-every-decision-guide-which-the-build-checks.md)
 * Background: none

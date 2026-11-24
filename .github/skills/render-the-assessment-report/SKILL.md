@@ -39,6 +39,8 @@ Without Ruby, give the same bytes another way, reading the YAML as YAML 1.1 does
 three keys in that order and every other key in file order, `null` for a missing connection or source list, no spaces after `,` or `:`,
 non-ASCII characters as they are, and every `</` as `<\/`; put it between the data block's tags, keeping their line
 breaks, and check it parses. If `testing/assessment.yaml` is missing or the command fails, write no page and say why.
+No `testing/sources.yaml` (or no external systems list) is not a failure: there is no source list yet, so `sources` is
+`null`, the page says "No source list yet.", and you carry on.
 
 The command ends by printing the template's summary script. Work out its three answers for these files, exactly as
 that script does, and reply with exactly these lines, as plain text, not in a code block, and nothing else:

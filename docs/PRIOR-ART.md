@@ -11,9 +11,9 @@ against the real system, keep fakes honest. Meta has published the checks it run
 
 Three parts of the toolkit's [journey](JOURNEY.md) have little or no precedent: **finding, before any test runs, which
 tests may reach an external system through the production code**, where one paid tool comes close; the **safety
-inventory as a gate before the first run**; and **sorting existing tests that reach external systems**. The
+inventory as a gate before the first run**; and **pairing existing tests that reach external systems**. The
 [field trial](decisions/0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md)
-and the [checks on real public repos](decisions/0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md)
+and the [checks on real public repos](decisions/0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md)
 test them hardest.
 
 | Step | Nearest prior art | Support |
@@ -22,9 +22,11 @@ test them hardest.
 | Discovery: what the code connects to, and which tests reach it | Static call graphs; one paid tool (Moderne Prethink); open tools that each do one part | Partial; the toolkit's own tool combines them |
 | Safety inventory, the gate before the first run | Forum advice: a start-up check that refuses production | None; the toolkit's own |
 | Measurement | Test Certified's first level; flaky-test and mutation research | Strong |
+| Repair | Abstract test cases (Rainsberger) and test interfaces (JUnit): one set of test bodies run against a stand-in and the real system | Supported; pairing every existing test, and the JUnit 4 form, are the toolkit's own |
 | Capture current behaviour | Characterisation and approval tests | Strong |
+| Intended behaviour | Characterisation tests as today's specification (Feathers) | Little; drafting requirements from cited sources, with every difference an open question, is the toolkit's own |
 | Obstacles and techniques | Measurable success criteria | Partial; no published scoring scheme |
-| The work | Feathers' algorithm; test doubles; contract tests | Strong; the sorting is the toolkit's own |
+| The work | Feathers' algorithm; test doubles; contract tests | Strong |
 | Keeping it there | Test Certified's later levels; mutation results in code review | Supported |
 
 ## What changes when AI assistants do the work
@@ -51,8 +53,9 @@ things follow.
 * **Its tests pass checks before a person sees them** (see [Tests written by AI](#tests-written-by-ai)).
 * **Skills are evaluated against known answers, with and without the skill**
   ([Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](decisions/0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md)),
-  and checked on real public repos, where a person reviews a sample
-  ([Every skill and tool is also checked against real public repos, by a person's review of a sample](decisions/0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md)).
+  and checked on real public repos: discovery against a run under the airgap agent, the other skills by a person's
+  review of a sample
+  ([Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](decisions/0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md)).
   One replication found a plain model matched or beat several specialised test-writing tools
   ([replication](https://arxiv.org/html/2601.09695v1)), so a skill has to show what it adds.
 * **Results vary from run to run,** even for identical requests ([Ouyang et al.](https://arxiv.org/html/2308.02828v2)),
@@ -87,7 +90,7 @@ find them, so discovery's searches and measurement's planted bugs are both neede
 toolkit's rules, then reads only the methods PMD flags
 ([find-test-anti-patterns runs PMD with the toolkit's rules and searches only what PMD cannot read](decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md)),
 and records each kind
-([Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
+([Meaningless and unreliable tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-meaningless-and-unreliable-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)).
 Every test something is learned about goes into one list, keyed by class and name, which later steps add to instead of
 searching again
 ([The tests something is recorded about are kept in one list, each step adding its own fields](decisions/0057-the-tests-something-is-recorded-about-are-kept-in-one-list-each-step-adding-its-own-fields.md)).
@@ -158,7 +161,7 @@ under-test-external-calls, on Openfire's server module with the same classpath:
 |---|---|---|
 | Time | 20 s, one jar | 1 min 45 s, through the Maven plug-in |
 | Calls resolved | 99.8% | all, from the compiler's own types; 33 files flagged as partly extracted |
-| Tests reaching a connection from their own body | 122 | the same 122 |
+| Tests reaching a reach point from their own body | 122 | the same 122 |
 | Tests reaching one through set-up methods and fields | 40 more | can't tell: the tables hold no annotations, and no calls from field initialisers |
 | Reach points | 54 | 37: the tables hold only the repo's own class hierarchy, so a call on a library's subclass (`CloseableHttpClient.execute`) can't match a rule on `HttpClient` |
 | Where an address comes from | traced from the syntax tree | nothing to trace it from |
@@ -172,9 +175,11 @@ The comparison also found two mail calls the toolkit's rules had missed.
 with the classpath its build resolves (building without running tests is allowed before the safety gate:
 [why](decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)). It finds every
 reach point, walks the graph back to the tests, follows set-up methods and field initialisers, and reports what it
-couldn't resolve and the dispatch points it didn't follow. On Openfire it found that 162 of 415 tests may reach the
-database, every one through one seam (the test kit's fixtures, the settings class, the connection manager), which is
-what a plan needs: one stand-in covers them all.
+couldn't resolve and the dispatch points it didn't follow. On Openfire's server module 230 of 415 tests have a chain
+of calls to a reach point, and those reaching the database all go through one shared chain, the calls every such test
+goes through (the test kit's fixtures, the settings class, the connection manager), which is what a plan needs: one
+stand-in covers them all. Graded from the address each test's own settings give, all 230 cannot reach
+([Each test is graded reaches, may reach or cannot reach, from the address its own settings give](decisions/0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md)).
 [draft-the-external-systems-list](../.github/skills/draft-the-external-systems-list/SKILL.md) runs it, settles what the tool
 can't, and drafts the external systems list, one system per host, else per setting, else per class that opens it
 ([A connection whose address isn't known is a system of its own per class that opens it](decisions/0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md)).
@@ -285,7 +290,7 @@ problem at a time ([Carlo, on Bellotti](https://understandlegacycode.com/blog/ke
 [choose-techniques](../.github/skills/choose-techniques/SKILL.md) traces each proposal to the rule that decided it. The
 assistant drafts rules of intended behaviour from cited sources, and every difference from today's behaviour becomes
 an open question
-([Behaviour is captured in two tracks, current and intended, and every difference is an open question](../decision-guides/0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md)).
+([Current and intended behaviour are recorded side by side, and every difference is an open question](../decision-guides/0033-current-and-intended-behaviour-are-recorded-side-by-side-and-every-difference-is-an-open-question.md)).
 The scoring is the toolkit's own; its test is whether different runs, and people, score a repo the same way. The plan
 is then generated and approved, as Test Certified had peers sign off each level.
 
@@ -297,7 +302,7 @@ tests, make the change and refactor
 next change, so it fits inside the toolkit's
 [workstreams](../decision-guides/0050-the-order-of-workstreams-for-a-repo.md). People write tests with AI help, and
 each AI-written test passes the [checks below](#tests-written-by-ai). Tests that reach external systems are
-[sorted and treated](#tests-that-reach-external-systems). Some have no seam, Feathers' word for a place where behaviour
+[paired](#tests-that-reach-external-systems). Some have no seam, Feathers' word for a place where behaviour
 can be changed without editing the code there; what to do then is [still open](#what-is-still-open).
 
 ## Keeping it there
@@ -368,7 +373,7 @@ reaches) from scope (how much code it checks). **No published procedure sorts an
 and sorting needs a judgement per test; pairing every test needs none, keeps every test's real run, and costs a
 larger external suite, run on a schedule. "External" matches the tag of
 Google's build tool, Bazel
-([The toolkit calls a system a test cannot run without an external system](decisions/0062-the-toolkit-calls-a-system-a-test-cannot-run-without-an-external-system.md)).
+([An external system is one on another machine that a test cannot run without](decisions/0098-an-external-system-is-one-on-another-machine-that-a-test-cannot-run-without.md)).
 
 **Contract tests keep fakes honest.** Here a contract test runs one set of checks against both the double and the real
 system, unlike contract testing with Pact, where two teams agree a request and response. Google says "a fake must have
@@ -386,7 +391,7 @@ checks logic, but cannot show SQL works on the real product
 **A schedule and an owner.** Fowler runs contract tests outside the normal pipeline ("often running just once a day is
 plenty") and has a failure "trigger a task" rather than break the build
 ([ContractTest](https://martinfowler.com/bliki/ContractTest.html)). Doubles drift, and Rainsberger's answer is to "rely
-on the human to pay attention and check". A tagged set nobody runs protects nothing. So each connection's external
+on the human to pay attention and check". A tagged set nobody runs protects nothing. So each external system's external
 tests have a schedule (daily by default), a place that can reach the system's test instance, and a named owner; a
 failure opens a work item and never breaks a normal build
 ([Tests that reach external systems are tagged and left out of normal runs](../decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md)).
@@ -408,7 +413,7 @@ The larger risk is false confidence, not a missing step. Four things read as str
   built at run time). "May reach" is a plan to check, not a finding, until the first run confirms or clears it.
 * **A passing AI-written test.** Its expected values confirm what the code does today.
 
-No study evaluates the safety inventory, the sorting of external tests, blocking the network inside the JVM,
+No study evaluates the safety inventory, the pairing of external tests, blocking the network inside the JVM,
 AI-written approval tests, or how often review catches a wrong assertion.
 
 **Palomba and Zaidman's journal paper on test smells and flaky tests, "The smell of fear", was retracted by its
@@ -421,10 +426,14 @@ Do not cite it. Figures that sources back only with slides, search snippets or s
   as sprout and wrap ([Carlo, on Feathers](https://understandlegacycode.com/blog/key-points-of-working-effectively-with-legacy-code/)),
   and calls it risky work needing care. Until the field trial shows which option would have handled each case, the
   skill stops and records the refactoring as work
-  ([What the follow-up skill does where an external test has no seam](decisions/0064-what-the-follow-up-skill-does-where-an-external-test-has-no-seam.md)).
-* **How precise "may reach" is on real code.** On Openfire every chain read looked real, but no one has yet compared
-  the static list with what the tests do when they run. The field trial measures both.
-* **Connections that no call matches.** Clients declared as annotated interfaces (Feign, some JAX-RS clients) have no
+  ([What repair does where a test that reaches an external system has no place to inject a stand-in](decisions/0064-what-repair-does-where-a-test-that-reaches-an-external-system-has-no-place-to-inject-a-stand-in.md)).
+* **How complete the static list is beyond HTTP, FTP and Telnet.** The static list has now been compared with runs
+  of every test under the airgap agent on four public repos
+  ([Checking discovery against a run under the airgap agent](design/checking-discovery-against-a-run-under-the-airgap-agent.md)):
+  no test that called out was missed, and on three of them none was graded may reach or cannot reach. But the tests
+  that called out reached only HTTP, FTP and Telnet hosts. Whether it finds every test that reaches the other kinds,
+  such as databases and directories, is still to be checked on repos whose tests reach them.
+* **Reach points that no call matches.** Clients declared as annotated interfaces (Feign, some JAX-RS clients) have no
   supertype for a rule to match, and need a rule on the annotation.
 * **The full record of which tests catch each planted bug.** PIT stops at the first, and its documentation calls the
   full record partially supported, with no stated cost. The field trial tries it on one module, with its run time.

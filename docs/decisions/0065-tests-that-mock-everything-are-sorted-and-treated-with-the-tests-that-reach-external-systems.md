@@ -57,6 +57,6 @@ planted bugs survive come first.
 
 ## More Information
 
-* Builds on: [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)
+* Builds on: [Tests that reach external systems are sorted into logic, connection or both, and treated accordingly](0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md), [Meaningless and unreliable tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../../decision-guides/0059-meaningless-and-unreliable-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)
 * Later decisions that build on this: none yet
 * Background: [the prior art](../PRIOR-ART.md#tests-that-reach-external-systems)

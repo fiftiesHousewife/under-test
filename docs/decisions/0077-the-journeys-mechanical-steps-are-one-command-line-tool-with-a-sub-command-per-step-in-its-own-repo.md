@@ -46,5 +46,5 @@ decisions and reports.
 ## More Information
 
 * Builds on: [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)
-* Later decisions that build on this: [Which of repair's changes OpenRewrite recipes make, and which the AI makes](0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)
+* Later decisions that build on this: [Repair is directed by a work order per external system that under-test-tools writes](0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md)
 * Background: none

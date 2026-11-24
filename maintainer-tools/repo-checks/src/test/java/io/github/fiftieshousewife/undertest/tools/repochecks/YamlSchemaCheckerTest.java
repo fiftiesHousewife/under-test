@@ -55,6 +55,12 @@ class YamlSchemaCheckerTest {
     }
 
     @Test
+    void reportsMalformedYamlAgainstTheFile() throws IOException {
+        assertThat(check("# yaml-language-server: $schema=thing.schema.json\nname: [unclosed\n")).singleElement()
+                .extracting(Problem::message).asString().startsWith("can't be read");
+    }
+
+    @Test
     void trustsSchemasOnTheWebWithoutFetchingThem() throws IOException {
         assertThat(check("# yaml-language-server: $schema=https://example.com/s.json\nanything: 1\n")).isEmpty();
     }

@@ -16,7 +16,7 @@ Setting coverage targets before anyone knows what a repo connects to, what its t
 
 ## Considered Options
 
-* **Every repo starts with a discovery step that produces a draft external systems list, a source list and a check of its existing tests. A first baseline of approval tests, pinning current behaviour at the code's edges, follows in the next step, before the testing plan, as a safety net; the "record current behaviour" workstream extends it across the code as the plan sets out. Coverage targets apply only once discovery is done; approval tests are the first tests added to every legacy repo**  
+* **Every repo starts with a discovery step that produces a draft external systems list, a source list and a check of its existing tests. A first baseline of approval tests, pinning current behaviour at the code's edges, follows in capturing current behaviour, before the testing plan, as a safety net; the "record current behaviour" workstream extends it across the code as the plan sets out. Coverage targets apply only once discovery is done; approval tests are the first tests added to every legacy repo**  
   Tests rest on what the system actually does and connects to
 * **Discovery only for high-criticality repos**  
   Cheaper; lower-criticality repos get targets without that grounding
@@ -25,13 +25,15 @@ Setting coverage targets before anyone knows what a repo connects to, what its t
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Agreed in discussion, waiting for approval by pull request: the first option.
 
 Discovery comes first, before any of the repo's tests run; only its build may. The draft external systems list starts
 from the code, read by under-test-external-calls, and the airgap agent's reports add what it missed once tests run. Discovery
 also takes stock of the tests the repo already has, which are meaningless and which unreliable, and of the test assets
 outside it. The first approval-test baseline is
-recorded in the step after discovery, at the code's edges and before the testing plan, as a safety net. It is built
+recorded when current behaviour is captured, on the
+[semantic track](../docs/decisions/0092-the-journey-runs-two-tracks-syntactic-and-semantic-that-join-at-the-testing-plan.md),
+at the code's edges and before the testing plan, as a safety net. It is built
 from captured and cleaned behaviour, as the capture guides set out, and the "record current behaviour" workstream
 later extends it across the code as the plan sets out. See
 [Order of preference for where current behaviour is captured](0061-order-of-preference-for-where-current-behaviour-is-captured.md)
@@ -42,10 +44,10 @@ and [Captured data is cleaned inside the environment it was captured in, before 
 * Discovery comes before any workstream.
 * The assessment file records whether discovery is complete.
 * Existing tests and test assets: [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md)
-  and [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md).
+  and [Meaningless and unreliable tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](0059-meaningless-and-unreliable-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md).
 
 ## More Information
 
 * Builds on: [Before any test or application runs, a safety inventory records what could reach production or real data, and some findings block the run](0057-before-any-test-or-application-runs-a-safety-inventory-records-what-could-reach-production-or-real-data-and-some-findings-block-the-run.md), [Each application's external systems are recorded as a CALM list](0030-each-applications-external-systems-are-recorded-as-a-calm-list.md), [Each application also has a knowledge curator and an architecture owner](0002-each-application-also-has-a-knowledge-curator-and-an-architecture-owner.md)
-* Later decisions that build on this: [Behaviour is captured in two tracks, current and intended, and every difference is an open question](0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md)
+* Later decisions that build on this: [Current and intended behaviour are recorded side by side, and every difference is an open question](0033-current-and-intended-behaviour-are-recorded-side-by-side-and-every-difference-is-an-open-question.md)
 * Background: [legacy-code](../docs/REFERENCES.md#legacy-code)

@@ -48,5 +48,5 @@ table says it applies. A search or script that does work, rather than explaining
 ## More Information
 
 * Builds on: [A skill finds what to read by searching, and reads only what the searches find](0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md), [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [The journey works module by module](0060-the-journey-works-module-by-module.md)
 * Background: none

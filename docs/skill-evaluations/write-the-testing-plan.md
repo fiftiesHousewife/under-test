@@ -1,5 +1,8 @@
 # Evaluation: write-the-testing-plan
 
+These runs come from before the skills' renames (find-test-anti-patterns, now find-meaningless-and-unreliable-tests;
+draft-the-connection-list, now draft-the-external-systems-list), so they use the earlier names and words.
+
 Does the [write-the-testing-plan](../../.github/skills/write-the-testing-plan/SKILL.md) skill, with
 [its template](../../templates/testing-plan.md), give the same plan every time from the same files? A plan is loaded
 into the issue tracker by key, so two runs that key or split the work differently would duplicate or lose tracker

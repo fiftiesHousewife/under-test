@@ -32,5 +32,5 @@ Not yet chosen. The options are below. Open.
 ## More Information
 
 * Builds on: [What counts as evidence for each test maturity level](0013-what-counts-as-evidence-for-each-test-maturity-level.md), [Tests that reach external systems are tagged and left out of normal runs](0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Test assets outside the repo are mined for behaviour, and kept running until repo tests replace them](0058-test-assets-outside-the-repo-are-mined-for-behaviour-and-kept-running-until-repo-tests-replace-them.md)
 * Background: none

@@ -1,6 +1,7 @@
 package io.github.fiftieshousewife.undertest.tools.repochecks;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.io.IOException;
@@ -54,6 +55,21 @@ class OutputValidatorTest {
 
         assertThat(new OutputValidator(toolkit).validate(workspace)).singleElement()
                 .extracting(Problem::message).asString().startsWith("can't be read");
+    }
+
+    @Test
+    void reportsASchemaThatCantBeReadAgainstTheFile() throws IOException {
+        Files.writeString(workspace.resolve("testing/tests.yaml"), "name: a\n");
+
+        assertThat(new OutputValidator(toolkit).validate(workspace)).singleElement()
+                .extracting(Problem::message).asString().startsWith("schema tests.schema.json can't be read");
+    }
+
+    @Test
+    void refusesAnEmptyReportPath() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> RepoChecks.main("validate-output", toolkit.toString(), "", workspace.toString()))
+                .withMessageContaining("needs a report file");
     }
 
     @Test

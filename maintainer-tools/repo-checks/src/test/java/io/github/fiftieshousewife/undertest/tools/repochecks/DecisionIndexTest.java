@@ -63,6 +63,24 @@ class DecisionIndexTest {
     }
 
     @Test
+    void readsFieldsOnlyFromTheFrontMatterAndNamesTheFileWhenOneIsMissing() throws IOException {
+        final Path file = folder.resolve("0001-body-only.md");
+        Files.writeString(file, "---\nstatus: proposed\ndecision-makers: x\n---\n\n# Title\n\ngroup: in the body\n");
+
+        assertThatIllegalStateException().isThrownBy(() -> DecisionRecord.read(file))
+                .withMessage(file + ": front matter has no group");
+    }
+
+    @Test
+    void refusesARecordWithoutFrontMatter() throws IOException {
+        final Path file = folder.resolve("0001-no-front-matter.md");
+        Files.writeString(file, "# Title\n\nstatus: proposed\n");
+
+        assertThatIllegalStateException().isThrownBy(() -> DecisionRecord.read(file))
+                .withMessageContaining("0001-no-front-matter.md");
+    }
+
+    @Test
     void refusesARecordWithoutATitle() throws IOException {
         final Path file = folder.resolve("0001-untitled.md");
         Files.writeString(file, "---\nstatus: proposed\ndecision-makers: x\ngroup: y\n---\n");

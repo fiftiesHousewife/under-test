@@ -40,5 +40,5 @@ each bug; the field trial tries the full record on one module of one repo, with 
 ## More Information
 
 * Builds on: [The journey works module by module](0060-the-journey-works-module-by-module.md), [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [Measurement runs in stages, each gating the next: build, one run, repeats, then planted bugs](0070-measurement-runs-in-stages-each-gating-the-next-build-one-run-repeats-then-planted-bugs.md)
 * Background: [the research on prior art](../PRIOR-ART.md)

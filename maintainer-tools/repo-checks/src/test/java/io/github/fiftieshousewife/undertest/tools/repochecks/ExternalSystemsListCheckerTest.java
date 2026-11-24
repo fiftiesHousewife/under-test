@@ -50,6 +50,12 @@ class ExternalSystemsListCheckerTest {
     }
 
     @Test
+    void reportsMalformedJsonAgainstTheFile() throws IOException {
+        assertThat(check("{\"nodes\": [", true)).singleElement()
+                .satisfies(problem -> assertThat(problem.toString()).contains("external-systems.calm.json"));
+    }
+
+    @Test
     void ignoresARepoWithNoConnectionList() {
         assertThat(new ExternalSystemsListChecker().check(new RepoFiles(root))).isEmpty();
     }

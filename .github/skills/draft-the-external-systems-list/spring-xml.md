@@ -27,12 +27,14 @@ Only these; for each, find the context files with the searches below.
 | A placeholder `${name:default}` no settings file sets | Its value is the default after `:`. A placeholder that neither a file nor a default sets is unknown: say so in the report |
 | A placeholder set in a specific file (`<context:property-placeholder location=...>`, a `PropertyPlaceholderConfigurer` or `PropertySourcesPlaceholderConfigurer` bean's `location` or `locations`, `<util:properties location=...>`) | Its value comes from that file, a later file overriding an earlier one, where it differs from what the tool found |
 | `<beans profile="...">` | Its beans count only for an active profile: `@ActiveProfiles` on the class or a superclass, or `spring.profiles.active` in a property file. Blocks outside any profile always count. Drop a point the tool took from an inactive block |
-| `<jee:jndi-lookup jndi-name=...>` or a `JndiObjectFactoryBean` | Needs a real container's resource: its node gets `address-from: "JNDI name <name>"`, the `kind` from the name (`jdbc/...` a database, `mail/...` mail, `jms/...` a queue), and a test that loads it an `external_systems` entry with `where` at its line |
+| `<jee:jndi-lookup jndi-name=...>` or a `JndiObjectFactoryBean` | Needs a real container's resource: its node gets `address-from: "JNDI name <name>"`, the `kind` from the name (`jdbc/...` a database, `mail/...` mail, `jms/...` a queue), and a test that loads it an `external_systems` entry with `found_by: test-settings`, `grade: may-reach`, `reason: run-time` and `where` at its line |
 
 A host you find this way gives every test in the class an `external_systems` entry for that system,
-`found_by: test-settings`, the `kind` of system (`jdbc:` a database, `http`/`https` a service, `ldap`/`ldaps` a
-directory, `smtp` or a mail sender a mail server, `tcp`, `amqp` or a broker a queue, `\\` or `smb` a file share), and
-`where` at the line naming it. An XML namespace, schema location or DTD address is never a host.
+`found_by: test-settings`, `grade: reaches`, `reason: host`, the `kind` of system (`jdbc:` a database, `http`/`https`
+`http`, `ldap`/`ldaps` a directory, `smtp` or a mail sender `mail`, `tcp`, `amqp` or a broker a queue, `\\` or `smb`
+a `file-share`), and `where` at the line naming it. The host gets a node and a relationship, with `found-by`
+`test-settings`, as [SKILL.md](SKILL.md)'s step 4 says for a host the tests name. An XML namespace, schema location or
+DTD address is never a host.
 
 ```bash
 grep -rnE 'getConfig(Locations|Paths)|classpath\*:|@interface' --include='*.java' <test folders>
