@@ -62,7 +62,17 @@ Apache-2.0, depending only on OpenRewrite's Apache-2.0 modules.
 * A recipes module in under-test-tools, each recipe with a case in the repair eval's example repo.
 * The repair skill runs the recipes and does the rest; the organisation profile says whether the testing module may
   be used, after the licence check in [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md).
-* Still to check: which JDK OpenRewrite's Maven and Gradle plugins need, against repos on JDK 8.
+* Tried on Openfire 4.6.0's `xmppserver` (Java 8, JUnit 4, Maven 3.6.2), with OpenRewrite's Maven plugin 6.46.1 run
+  on JDK 11 by its coordinates, `dryRun`, nothing changed in the build: it compiled and ran no tests, parsed all 1,478
+  source files, and wrote a patch for 57 test files in about four minutes. The plugin and OpenRewrite's core declare
+  and are compiled for Java 8; a run on a JDK 8 itself is still to be seen.
+* `JUnit4to5Migration` converts every test class at once and changes the build: it upgrades Surefire and Mockito
+  (2.27 to 4.11), removes JUnit 4, and adds dependencies to the parent POM, reaching modules with no tests. Repair
+  therefore makes the build change once, as its own reviewed step that keeps JUnit 4 tests running beside JUnit 5
+  ones, and migrates only the classes it twins.
+* The testing module's version must match the OpenRewrite core the plugin brings: 3.27.0 with plugin 6.46.1 failed
+  in nine files (`NoSuchMethodError` in `MockitoJUnitRunnerToExtension`). Versions are pinned together, as
+  OpenRewrite's recipe bill of materials lists them, and the organisation profile names them.
 
 ## More Information
 

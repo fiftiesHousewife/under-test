@@ -2146,7 +2146,8 @@ items:
     done_when:
       - "Recipes, driven by what testing/tests.yaml records: tag external tests (@Tag, or @Category on JUnit 4); twin a test sorted as both into a JUnit 5 or 6 test interface; switch a logic test to its stand-in; make a test that never runs run; remove a catch that swallows a failure, leaving the expected-exception idiom"
       - "Apache-2.0, depending only on OpenRewrite's Apache-2.0 modules; each recipe has a before-and-after case"
-      - "Checked: which JDK OpenRewrite's Maven and Gradle plugins need, and that they run on a repo built with JDK 8 without changing its build"
+      - "Checked: which JDK OpenRewrite's Maven and Gradle plugins need, and that they run on a repo built with JDK 8 without changing its build (Maven: done on Openfire 4.6.0 on JDK 11, the plugin built for Java 8; a run on a JDK 8 itself, and Gradle, still to do)"
+      - "The JUnit 5 build change is its own reviewed step, keeping JUnit 4 tests running; recipes migrate only the classes repair twins; plugin and recipe versions pinned together"
       - "The organisation profile says whether OpenRewrite's testing module (Moderne Source Available License) may be used, after the tool check"
     blocked_by:
       - "decide-how-repair-fixes-each-kind-of-problem"
