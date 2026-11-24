@@ -32,7 +32,7 @@ Discovery keeps three lists of tests apart, each with one owner
 **Tests that reach external systems** come first, from the
 [draft-the-external-systems-list](../.github/skills/draft-the-external-systems-list/SKILL.md) skill, to be renamed for the
 external systems list ([why](decisions/0081-external-system-replaces-the-word-connection.md)). It runs
-[connection-paths](https://github.com/fiftiesHousewife/connection-paths), a tool that reads the code and finds every
+[connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls), a tool that reads the code and finds every
 reach point, where it opens or uses an external system (a database, an HTTP service, mail, a directory, a queue, a
 socket), and every test that may reach one, with the chain of calls that gets there. The skill traces each address to
 the code or the settings, or records where it will come from, and drafts the external systems list, with a proposed

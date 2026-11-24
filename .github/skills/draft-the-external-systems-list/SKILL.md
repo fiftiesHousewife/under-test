@@ -35,7 +35,7 @@ grep -rlE '<beans|@ImportResource|@ContextConfiguration\(.*\.xml|XmlApplicationC
 
 ## 1. Run connection-paths
 
-[connection-paths](https://github.com/fiftiesHousewife/connection-paths) finds, from source, every place the code opens
+[connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls) finds, from source, every place the code opens
 or uses a connection, where each address comes from, which points stay on the machine, the systems they make, and every
 test that may reach each one with the chain of calls
 ([why](../../../docs/decisions/0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md)).

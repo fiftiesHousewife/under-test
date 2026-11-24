@@ -36,7 +36,7 @@ graph gives a number a plan can use.
 
 ## Decision Outcome
 
-Chosen in discussion: [connection-paths](https://github.com/fiftiesHousewife/connection-paths), a command-line jar in
+Chosen in discussion: [connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls), a command-line jar in
 its own repo, following [the toolkit is AI first](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md). It reads a module's source and its dependency jars, which come from the
 organisation's package repository by reading the build files, never by running the build. It writes a facts file,
 with a schema in this toolkit: each place a connection is opened and its kind, each test that may reach one and a

@@ -37,7 +37,7 @@ things follow.
   The toolkit's own trials showed why. Reading a module's tests to find meaningless ones, an assistant printed whole files
   and its answers varied between runs; PMD with the toolkit's rules read the 61 test files of Openfire's server module in about a second, the
   same way every time. Following the external systems list steps by hand on Openfire, nearly every step was one a program
-  does better, so they moved into a tool, [connection-paths](https://github.com/fiftiesHousewife/connection-paths).
+  does better, so they moved into a tool, [connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls).
 * **It searches, then reads only what the searches find,** so no file goes unread on large repos
   ([A skill finds what to read by searching, and reads only what the searches find](decisions/0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md)),
   reading only the instructions for the kind of repo in front of it
@@ -165,10 +165,10 @@ connection-paths, on Openfire's server module with the same classpath:
 
 An adapter over OpenRewrite would have to rebuild most of connection-paths, so the toolkit builds its own, on
 JavaParser's symbol solver, and borrows the connection-call lists of Prethink's and Konveyor's documented detectors
-(connection-paths' [decision](https://github.com/fiftiesHousewife/connection-paths/blob/main/docs/decisions/0005-connection-paths-is-built-not-adopted-after-checking-the-existing-tools.md)).
+(connection-paths' [decision](https://github.com/fiftiesHousewife/under-test-external-calls/blob/main/docs/decisions/0005-connection-paths-is-built-not-adopted-after-checking-the-existing-tools.md)).
 The comparison also found two mail calls the toolkit's rules had missed.
 
-**In the toolkit.** [connection-paths](https://github.com/fiftiesHousewife/connection-paths) reads a module's source
+**In the toolkit.** [connection-paths](https://github.com/fiftiesHousewife/under-test-external-calls) reads a module's source
 with the classpath its build resolves (building without running tests is allowed before the safety gate:
 [why](decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)). It finds every
 reach point, walks the graph back to the tests, follows set-up methods and field initialisers, and reports what it
