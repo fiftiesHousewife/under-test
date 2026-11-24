@@ -46,6 +46,6 @@ modules or folders that hold its code, and every skill works on one application 
 
 ## More Information
 
-* Builds on: [Each application's connections are recorded as a CALM connection list](../../decision-guides/0030-each-applications-connections-are-recorded-as-a-calm-connection-list.md)
+* Builds on: [Each application's connections are recorded as a CALM connection list](../../decision-guides/0030-each-applications-external-systems-are-recorded-as-a-calm-list.md)
 * Later decisions that build on this: none yet
 * Background: none

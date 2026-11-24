@@ -12,7 +12,7 @@ for the toolkit's maintainers and adopting organisations to settle.
 
 ## The question
 
-[Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](../../decision-guides/0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md)
+[Every repo starts with discovery: a draft external systems list, a source list and a check of its existing tests, and a first approval-test baseline follows](../../decision-guides/0032-every-repo-starts-with-discovery-a-draft-external-systems-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md)
 makes approval tests (tests that save what the code does today and fail when it changes) the first deliverable on
 every old repo. For many old applications the quickest honest source of examples is the application itself, run as a
 black box: what requests and messages it receives, what it answers, what it asks of the systems behind it, and what
@@ -168,7 +168,7 @@ lives in that environment's vault, never in the repo.
 
 | Option | What it does | Runs on | Licence, latest release | Corporate verdict |
 |---|---|---|---|---|
-| **Field rules written from the connection list and the schema** | People name the fields that hold personal data (by JSONPath, XPath, header, column) from the API description, the database schema and a look at sample captures. | Anything | Not applicable | **The primary method.** Known structure beats guessing; every rule is reviewable. |
+| **Field rules written from the external systems list and the schema** | People name the fields that hold personal data (by JSONPath, XPath, header, column) from the API description, the database schema and a look at sample captures. | Anything | Not applicable | **The primary method.** Known structure beats guessing; every rule is reviewable. |
 | **Pattern and check-digit detectors in Java** | Regular expressions plus check digits for card numbers (Luhn), IBANs, email addresses (Apache Commons Validator [37]), and patterns for national identifiers, phone numbers and postcodes. | JDK 8 and later | Apache-2.0 (Commons Validator) | **Adopt as the gate's core.** Few false alarms on structured identifiers; runs anywhere. Misses names and free text. |
 | **gitleaks** | Scans files and folders, not only Git history, for secrets [38]. | A single binary | MIT [38] | **Adopt for secrets in recordings** (tokens, cookies, keys). Already required by [No repo's tests or application run until its secrets scan is clean](../../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md). Its README now says it is feature complete and will get security fixes only, as its maintainer moves to a successor project [38]; the secrets-scan guide should watch this. |
 | **Presidio** | Detects personal data in text with patterns, checksums and named-entity recognition (a language model that spots names, places and organisations), and replaces it; has a module for structured and semi-structured data, and HTTP services in Docker images [32]. States plainly that "there is no guarantee that Presidio will find all sensitive information" [32]. Moved from Microsoft to an independent organisation, keeping its MIT licence [32]. | Python, or its container images | MIT; 2.2.366 [32] | **Second line, in CI or the capture environment where Python or its images are approved.** Best at names in free text, which the Java detectors miss. The language models it uses come as extra packages, which a closed network must also mirror (**not verified** in detail). Never the only check. |
@@ -216,7 +216,7 @@ cleaning, and fails the build:
 
 ## Recommended approach, in order of preference
 
-**Capture**, taking the first that fits each connection in the connection list:
+**Capture**, taking the first that fits each connection in the external systems list:
 
 1. **Generate the examples, don't capture them,** where the inputs are simple enough: synthetic requests and files
    (Datafaker) driven through the application on a laptop or in CI. No personal data, no approval. Many approval
@@ -271,7 +271,7 @@ with stable substitutes, in plain Java, inside a closed network. So the toolkit 
    Commons Validator and the toolkit's own patterns (UK and EU identifiers to begin with, each with check digits where
    they have one), calling gitleaks for secrets and Presidio where configured, with an allowlist file with reasons.
 3. **A converter from the airgap agent's report to a recording plan**: each HTTP target becomes a WireMock proxy
-   mapping and a draft cleaning-rules file, and each target is marked in the draft connection list as "recorded
+   mapping and a draft cleaning-rules file, and each target is marked in the draft external systems list as "recorded
    responses". Small, and it joins two things the toolkit already has.
 4. **A replay helper for differential tests**: a JUnit extension that sends each saved request to two base URLs
    and compares the answers with JSONUnit or XMLUnit, with ignore rules shared with the approval tests. Possibly just

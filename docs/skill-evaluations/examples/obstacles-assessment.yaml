@@ -68,7 +68,7 @@ safety:
     - src/test/resources/orders.csv
 running_offline:
   found_by:
-    tool: draft-connection-list
+    tool: draft-the-external-systems-list
     version: 0.1.0
     commit: 1a2b3c4
   reports:
@@ -150,7 +150,7 @@ obstacles:
   findings:
     - id: can-reach-production
       score: 0
-      evidence: ["testing/connections.calm.json: orders-service-to-db-orders-prod-example-com"]
+      evidence: ["testing/external-systems.calm.json: orders-service-to-db-orders-prod-example-com"]
     - id: holds-production-secrets
       score: 1
       evidence: ["testing/assessment.yaml: safety/db-password", "testing/assessment.yaml: safety/payments-keystore"]
@@ -162,13 +162,13 @@ obstacles:
       evidence: ["testing/assessment.yaml: safety/flyway-at-start", "testing/assessment.yaml: safety/reminder-job"]
     - id: needs-real-infrastructure
       score: 0
-      evidence: ["testing/connections.calm.json: orders-service-to-db-orders-prod-example-com"]
+      evidence: ["testing/external-systems.calm.json: orders-service-to-db-orders-prod-example-com"]
     - id: depends-on-other-services
       score: 1
-      evidence: ["testing/connections.calm.json: orders-service-to-payments-example-com"]
+      evidence: ["testing/external-systems.calm.json: orders-service-to-payments-example-com"]
     - id: talks-to-unplanned-systems
       score: 1
-      evidence: ["testing/connections.calm.json: orders-service-to-payments-example-com"]
+      evidence: ["testing/external-systems.calm.json: orders-service-to-payments-example-com"]
     - id: tests-reach-external-systems
       score: 2
       evidence: ["testing/assessment.yaml: anti_patterns/reaches-external-system, 6 tests"]
@@ -275,7 +275,7 @@ techniques:
     - "the QA team's Selenium suite (uat-regression-suite) keeps running as it is"
   - id: stand-in-commands
     because:
-    - "needed_when 'batch jobs call other programs ... that tests must not reach': the service starts sendmail (connection list)"
+    - "needed_when 'batch jobs call other programs ... that tests must not reach': the service starts sendmail (external systems list)"
     - "precondition 'Scripts call programs by name (found on PATH), not by fixed absolute path': unknown"
   - id: structured-output-comparison
     because:
@@ -420,7 +420,7 @@ decisions:
     state: proposed
     drafted_by: ai
     choice: defer
-    reason: "defer: the service starts sendmail (connection list), but whether it calls it by name on PATH or by a fixed absolute path is unknown, and no shell scripts are known. Check how MailNotifier starts sendmail; if by name, a stand-in sendmail first on PATH tests it; otherwise fake-behind-an-interface (adopted) covers it."
+    reason: "defer: the service starts sendmail (external systems list), but whether it calls it by name on PATH or by a fixed absolute path is unknown, and no shell scripts are known. Check how MailNotifier starts sendmail; if by name, a stand-in sendmail first on PATH tests it; otherwise fake-behind-an-interface (adopted) covers it."
   techniques/structured-output-comparison:
     state: proposed
     drafted_by: ai

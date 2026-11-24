@@ -642,7 +642,7 @@ items:
       - "testing/connections.calm.json template"
       - "Toolkit CALM decorator schema for test stand-ins and never-reach addresses"
       - "Validated in Java (no Node.js needed)"
-    notes: "Done: schema/connection-list.schema.json (the parts of CALM 1.3 the toolkit uses, with its own fields in each element's metadata under under-test), examples/connection-list/connections.calm.json, and a check in maintainer-tools/repo-checks for every *.calm.json file. Needs from the programme: Each application's connections are recorded as a CALM connection list; The connection list says what tests use for each connection, and which addresses tests must never reach"
+    notes: "Done: schema/external-systems-list.schema.json (the parts of CALM 1.3 the toolkit uses, with its own fields in each element's metadata under under-test), examples/external-systems-list/external-systems.calm.json, and a check in maintainer-tools/repo-checks for every *.calm.json file. Needs from the programme: Each application's connections are recorded as a CALM connection list; The connection list says what tests use for each connection, and which addresses tests must never reach"
   - key: "draft-connection-list-from-classifier"
     type: "deliverable"
     title: "Skill: draft the connection list from the repo's settings and the classifier's findings, for a person to confirm"
@@ -2069,6 +2069,7 @@ items:
     blocked_by:
       - "decide-how-the-journeys-tools-are-packaged"
   - key: "register-connection-paths-facts-with-the-output-validator"
+    status: "done"
     type: "deliverable"
     title: "The skill evals' output validator checks testing/connection-paths.json against its schema"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
@@ -2251,8 +2252,8 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "testing/connections.calm.json becomes testing/external-systems.calm.json; draft-the-connection-list becomes draft-the-external-systems-list; a test's connections become its external_systems; connection point becomes reach point"
-      - "Schemas, skills, eval cases and graders, templates and docs renamed together; the skill evals' output validator follows (a person's change)"
+      - "testing/connections.calm.json becomes testing/external-systems.calm.json; draft-the-connection-list becomes draft-the-external-systems-list; a test's connections become its external_systems; connection point becomes reach point (done)"
+      - "Schemas, skills, eval cases and graders, templates and docs renamed together; the skill evals' output validator follows (done; accepted decision records and past eval reports keep their words, with links re-pointed; programme backlog keys unchanged)"
       - "connection-paths' own name is settled in its repo"
     blocked_by:
       - "decide-external-system-replaces-connection"

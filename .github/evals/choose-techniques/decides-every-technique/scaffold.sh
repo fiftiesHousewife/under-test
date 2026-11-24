@@ -1,7 +1,7 @@
 #!/bin/bash
 # Sets up the case's workspace: the example order service (a Spring Boot 2.3 web service on JDK 8 with JUnit 4 and
 # Oracle, high business criticality, a decided target of level 4, flaky and weak tests, container tests in CI only)
-# with its assessment file, connection list and source list, plus what the run without the toolkit needs to decide:
+# with its assessment file, external systems list and source list, plus what the run without the toolkit needs to decide:
 # every technique rule as it is in the toolkit now (its needed_when, possible_when and reject_or_defer_when lists), the
 # technique and assessment schemas, and the two decision guides on the target level and the order of workstreams. That
 # developers' machines can't run containers is stated in the prompt. Run by claude plugin eval --scaffold, in the

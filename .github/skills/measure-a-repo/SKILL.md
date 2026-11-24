@@ -68,7 +68,7 @@ Per cents: round half up to one decimal, dropping `.0` (`64.7`, `100`, `0`).
 For each test failing in every run, give the host it tried to reach, from its failure message (one containing
 `refused by the airgap agent`) or the agent's report (`build/airgap/test/calls.jsonl` or `build/airgap/calls.jsonl`),
 as a host name, not an address; if neither names one, say so. Its connection needs a stand-in
-([draft-the-connection-list](../draft-the-connection-list/SKILL.md)). Group flaky tests that failed in exactly the same
+([draft-the-external-systems-list](../draft-the-external-systems-list/SKILL.md)). Group flaky tests that failed in exactly the same
 runs ([How flaky tests are found](../../../decision-guides/0043-how-flaky-tests-are-found.md)).
 
 ## 4. Write

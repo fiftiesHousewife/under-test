@@ -14,7 +14,7 @@ done by a tool, and the skill keeps the judgement
 
 | Order | Skill | Runs | Finds | Writes, and owns |
 |---|---|---|---|---|
-| 1 | [draft-the-connection-list](../../.github/skills/draft-the-connection-list/SKILL.md) | the build's dependency resolution; [connection-paths](https://github.com/fiftiesHousewife/connection-paths) | Every place the code opens or uses a connection, each connection's address (or where it will come from), the systems they make, and every test that may reach one, with the chain of calls ([why](../decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)) | `connections.calm.json`; `connection-paths.json`; in `tests.yaml`, each test's `connections` |
+| 1 | [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) | the build's dependency resolution; [connection-paths](https://github.com/fiftiesHousewife/connection-paths) | Every place the code opens or uses a connection, each connection's address (or where it will come from), the systems they make, and every test that may reach one, with the chain of calls ([why](../decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)) | `external-systems.calm.json`; `connection-paths.json`; in `tests.yaml`, each test's `connections` |
 | 2 | [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | PMD with the toolkit's rules, and its copy-paste detector | Every test with a problem, by kind; `reaches-external-system` from step 1's record ([why](../decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md)) | In `tests.yaml`, each test's `anti_patterns`; `assessment.yaml`: `anti_patterns` |
 | | (no skill) | — | The sources that count for intended behaviour | `sources.yaml` |
 
@@ -33,8 +33,8 @@ and adds flaky and failing tests to `tests.yaml`.
 | Where the connection is | Found by |
 |---|---|
 | Opened in production code: a DAO, a client, a mailer, several classes down from the test | connection-paths: the call graph from each test, through interfaces with few implementations, to the call that opens it |
-| A host in the test's own code | The connection-list skill: a search over test code |
-| A host in a file the test loads: properties, YAML, Spring XML, Spring Boot's settings | The connection-list skill: following what the test loads |
+| A host in the test's own code | The external systems list skill: a search over test code |
+| A host in a file the test loads: properties, YAML, Spring XML, Spring Boot's settings | The external systems list skill: following what the test loads |
 | An address from a setting, an environment variable, a system property or JNDI | connection-paths traces it; the skill looks the setting up, or records where it will come from ([why](../decisions/0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md)) |
 | Dispatch points with many implementations (listeners, handlers, plug-ins) | connection-paths reports them instead of following them; a person looks at the largest |
 | Anything a search can't follow: reflection, beans wired only in XML, code loaded by name, an address built at run time | Measurement: the airgap agent refuses the call and reports who made it; without it, a connection error's destination |
@@ -45,9 +45,9 @@ and adds flaky and failing tests to `tests.yaml`.
   find-test-anti-patterns' mechanical steps and gives the eval's known answers, is built but not yet published; the
   skill uses it when its jar is there
   ([proposed packaging](../decisions/0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md)).
-* find-test-anti-patterns reading `reaches-external-system` from the connection list's record by default; today it
+* find-test-anti-patterns reading `reaches-external-system` from the external systems list's record by default; today it
   may, and otherwise finds hosts itself.
-* An eval case for the connection list's pass from the code, from what Openfire showed.
+* An eval case for the external systems list's pass from the code, from what Openfire showed.
 * The repair step, which reads these lists after measurement: the tests that reach external systems are sorted and
   treated, and the other anti-patterns fixed in the test code
   ([why](../decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)).

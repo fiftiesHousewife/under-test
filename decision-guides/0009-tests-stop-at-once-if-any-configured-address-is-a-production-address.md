@@ -23,15 +23,15 @@ A second line of defence in case a machine can reach production after all.
 
 ## Decision Outcome
 
-Proposed: a production-address check refuses to run tests if any configured address is on the central list or matches a pattern, or a production profile is active. The check is part of the convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). Until then, the airgap agent refuses every call off the machine, and the never-reach addresses in the connection list say what must never be reached.
+Proposed: a production-address check refuses to run tests if any configured address is on the central list or matches a pattern, or a production profile is active. The check is part of the convention plugin, in its own repo, later (see [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](../docs/decisions/0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md)). Until then, the airgap agent refuses every call off the machine, and the never-reach addresses in the external systems list say what must never be reached.
 
 ### Consequences
 
 * The production-address check, part of the convention plugin, in its own repo, later; until then the airgap agent
-  refuses calls off the machine, and the connection list's never-reach addresses record what must never be reached.
+  refuses calls off the machine, and the external systems list's never-reach addresses record what must never be reached.
 
 ## More Information
 
 * Builds on: [Old code runs first only where production cannot be reached](0008-old-code-runs-first-only-where-production-cannot-be-reached.md)
-* Later decisions that build on this: [The connection list says what tests use for each connection, and which addresses tests must never reach](0031-the-connection-list-says-what-tests-use-for-each-connection-and-which-addresses-tests-must-never-reach.md)
+* Later decisions that build on this: [The external systems list says what tests use for each system, and which addresses tests must never reach](0031-the-external-systems-list-says-what-tests-use-for-each-system-and-which-addresses-tests-must-never-reach.md)
 * Background: none

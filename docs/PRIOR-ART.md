@@ -36,7 +36,7 @@ things follow.
   ([A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](decisions/0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)).
   The toolkit's own trials showed why. Reading a module's tests to find anti-patterns, an assistant printed whole files
   and its answers varied between runs; PMD with the toolkit's rules read the 61 test files of Openfire's server module in about a second, the
-  same way every time. Following the connection-list steps by hand on Openfire, nearly every step was one a program
+  same way every time. Following the external systems list steps by hand on Openfire, nearly every step was one a program
   does better, so they moved into a tool, [connection-paths](https://github.com/fiftiesHousewife/connection-paths).
 * **It searches, then reads only what the searches find,** so no file goes unread on large repos
   ([A skill finds what to read by searching, and reads only what the searches find](decisions/0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md)),
@@ -161,7 +161,7 @@ connection-paths, on Openfire's server module with the same classpath:
 | Calls resolved | 99.8% | all, from the compiler's own types; 33 files flagged as partly extracted |
 | Tests reaching a connection from their own body | 122 | the same 122 |
 | Tests reaching one through set-up methods and fields | 40 more | can't tell: the tables hold no annotations, and no calls from field initialisers |
-| Connection points | 54 | 37: the tables hold only the repo's own class hierarchy, so a call on a library's subclass (`CloseableHttpClient.execute`) can't match a rule on `HttpClient` |
+| Reach points | 54 | 37: the tables hold only the repo's own class hierarchy, so a call on a library's subclass (`CloseableHttpClient.execute`) can't match a rule on `HttpClient` |
 | Where an address comes from | traced from the syntax tree | nothing to trace it from |
 
 An adapter over OpenRewrite would have to rebuild most of connection-paths, so the toolkit builds its own, on
@@ -172,12 +172,12 @@ The comparison also found two mail calls the toolkit's rules had missed.
 **In the toolkit.** [connection-paths](https://github.com/fiftiesHousewife/connection-paths) reads a module's source
 with the classpath its build resolves (building without running tests is allowed before the safety gate:
 [why](decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)). It finds every
-connection point, walks the graph back to the tests, follows set-up methods and field initialisers, and reports what it
+reach point, walks the graph back to the tests, follows set-up methods and field initialisers, and reports what it
 couldn't resolve and the dispatch points it didn't follow. On Openfire it found that 162 of 415 tests may reach the
 database, every one through one seam (the test kit's fixtures, the settings class, the connection manager), which is
 what a plan needs: one stand-in covers them all.
-[draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) runs it, settles what the tool
-can't, and drafts the connection list, one system per host, else per setting, else per class that opens it
+[draft-the-external-systems-list](../.github/skills/draft-the-external-systems-list/SKILL.md) runs it, settles what the tool
+can't, and drafts the external systems list, one system per host, else per setting, else per class that opens it
 ([A connection whose address isn't known is a system of its own per class that opens it](decisions/0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md)).
 Measurement's first run then confirms or clears each test; the
 [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), where approved, catches what no static graph

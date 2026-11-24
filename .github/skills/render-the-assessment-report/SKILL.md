@@ -1,6 +1,6 @@
 ---
 name: render-the-assessment-report
-description: Make a repo's assessment report, one self-contained HTML page from its testing/assessment.yaml, testing/connections.calm.json and testing/sources.yaml, and apply the changes people paste back from it to those files. Use when asked for a repo's report, status page or a summary for its owners, or when someone pastes changes copied from the report.
+description: Make a repo's assessment report, one self-contained HTML page from its testing/assessment.yaml, testing/external-systems.calm.json and testing/sources.yaml, and apply the changes people paste back from it to those files. Use when asked for a repo's report, status page or a summary for its owners, or when someone pastes changes copied from the report.
 ---
 
 # Rendering the assessment report
@@ -9,7 +9,7 @@ The report is [a fixed template](../../../templates/repo-assessment-report.html)
 JSON data block. Fill that block and change nothing else: don't write the page by hand, edit the template's script or
 styles, or put anything in the data that isn't in the files. The files follow
 [the assessment file's schema](../../../schema/assessment.schema.json),
-[the connection list's](../../../schema/connection-list.schema.json) and
+[the external systems list's](../../../schema/external-systems-list.schema.json) and
 [the source list's](../../../schema/source-list.schema.json). The page is never edited: make it again instead.
 
 Never copy a secret's value (a password, key or token met in code, settings or a report) into a file you write or
@@ -24,7 +24,7 @@ from this skill's folder (`<skill folder>/../../..`), and the template is `templ
 ```bash
 ruby -ryaml -rjson -e '
 r = ->(f) { File.exist?(f) ? File.read(f, encoding: "UTF-8") : nil }
-a, c, s = r["testing/assessment.yaml"], r["testing/connections.calm.json"], r["testing/sources.yaml"]
+a, c, s = r["testing/assessment.yaml"], r["testing/external-systems.calm.json"], r["testing/sources.yaml"]
 abort "testing/assessment.yaml is missing" unless a
 j = JSON.generate({"assessment" => YAML.safe_load(a), "connections" => c && JSON.parse(c),
   "sources" => s && YAML.safe_load(s)}).gsub("</", "<\\/")
@@ -66,14 +66,14 @@ What people paste has up to two parts, each headed by a comment naming its file.
 
 * **`testing/assessment.yaml`:** each pasted entry replaces, in full and in place, the entry under `decisions` with
   the same key, written as pasted (two-space indent).
-* **`testing/connections.calm.json`:** every `#   <unique-id>: …` line is one entry. In that relationship's
+* **`testing/external-systems.calm.json`:** every `#   <unique-id>: …` line is one entry. In that relationship's
   `metadata.under-test`, replace `stand-in` in full with the pasted one, written one key per line at the file's
   two-space indentation, and set `state` and `by`; a key not there yet goes at the end, in that order. Leave
   `drafted_by` as it is.
 
 A decision key with no entry yet is added at the end of `decisions` when what it decides is in the files: a finding
 (`safety/`, `running-offline/`, `anti-patterns/`), a technique (`techniques/`), `level/target`, a `repo/` field, or a
-question. Any other key, and any relationship not in the connection list, is refused: say so.
+question. Any other key, and any relationship not in the external systems list, is refused: say so.
 
 The `by` on each entry is the role the person chose on the page. The role that decides each kind is:
 

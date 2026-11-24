@@ -96,7 +96,7 @@ flowchart LR
 | Lessons with runnable examples | The lessons repo ([under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons)), through the internal source mirror | Code hosting |
 | Organisation profile and decisions | Files in the organisation repo | Internal code hosting |
 | Third-party tools the checks use (Checkstyle, PMD, SpotBugs, FindSecBugs, JaCoCo, PIT, forbidden APIs) | Ordinary Maven artifacts | Package repository |
-| connection-paths, which the connection-list skill runs | One runnable jar, beside each version tag (and its library on Maven Central) | Package repository |
+| connection-paths, which the external systems list skill runs | One runnable jar, beside each version tag (and its library on Maven Central) | Package repository |
 
 ### Keeping the approval cost low
 
@@ -161,7 +161,7 @@ practice:
 
 - A repo's Helm and Kubernetes files are the platform's output, not something its team maintains. They show the
   platform's template more than the application, so discovery reads the application's own settings and the inputs the
-  platform generates from, not the generated files, when drafting the connection list.
+  platform generates from, not the generated files, when drafting the external systems list.
 - The toolkit never asks a team to write Helm charts or push images. A shared service the toolkit suggests, such as a
   contract broker, is deployed through the control layers like any other service, and someone has to own and run it
   from then on.

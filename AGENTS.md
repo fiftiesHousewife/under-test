@@ -40,12 +40,12 @@ Name a product only as an option or an example.
 |---|---|
 | [work-on-an-item](.github/skills/work-on-an-item/SKILL.md) | Pick up a work item from the issue tracker and finish it |
 | [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turn a repo's gitleaks reports, and a list of keystores ever committed, into the safety section of its assessment file, the gate before any of its tests or its application first run |
-| [draft-the-connection-list](.github/skills/draft-the-connection-list/SKILL.md) | Draft a repo's connection list from its code with connection-paths and from its settings, record which tests may reach each connection, and later merge in the airgap agent's reports |
+| [draft-the-external-systems-list](.github/skills/draft-the-external-systems-list/SKILL.md) | Draft a repo's external systems list from its code with connection-paths and from its settings, record which tests may reach each connection, and later merge in the airgap agent's reports |
 | [find-test-anti-patterns](.github/skills/find-test-anti-patterns/SKILL.md) | Count the anti-patterns in a repo's existing tests the same way every time, and note what the list misses |
 | [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Measure a Gradle repo under the airgap agent: five runs for flaky tests, coverage, planted bugs, test mix |
 | [score-obstacles](.github/skills/score-obstacles/SKILL.md) | Score a repo's obstacles to testing from what is already recorded, by the named list in the decision guide |
 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Propose adopt, defer or reject for every technique, each traced to the rule that decided it |
-| [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generate a repo's testing plan from its assessment file and connection list, each piece of work with a stable key |
+| [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generate a repo's testing plan from its assessment file and external systems list, each piece of work with a stable key |
 | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fill the report template from a repo's files, and apply the changes people paste back from it |
 
 | [write-a-decision-record](.github/skills/write-a-decision-record/SKILL.md) | Draft a decision guide in this repo |

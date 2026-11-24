@@ -8,7 +8,7 @@
   The repo assessment report. One self-contained page per repo: no network, no server, no libraries.
   The render-the-assessment-report skill fills the data block below from three files, and changes nothing else:
     assessment   testing/assessment.yaml        (schema/assessment.schema.json)
-    connections  testing/connections.calm.json  (schema/connection-list.schema.json)
+    connections  testing/external-systems.calm.json  (schema/external-systems-list.schema.json)
     sources      testing/sources.yaml           (schema/source-list.schema.json)
   Changes people make on the page come out as text to paste into those files, in a pull request.
 -->
@@ -200,7 +200,7 @@ button.quiet { background: transparent; color: var(--accent); }
   ["safety", "running_offline", "tests", "anti_patterns", "techniques", "level"].forEach(function (k) {
     if (A[k] && A[k].found_by) { (commits[A[k].found_by.commit] = commits[A[k].found_by.commit] || []).push(k.replace(/_/g, " ")); } });
   if (C && C.metadata && C.metadata["under-test"] && C.metadata["under-test"].commit) {
-    var cc = C.metadata["under-test"].commit; (commits[cc] = commits[cc] || []).push("connection list"); }
+    var cc = C.metadata["under-test"].commit; (commits[cc] = commits[cc] || []).push("external systems list"); }
   if (Object.keys(commits).length > 1) {
     page.appendChild(el("p", {cls: "pill warn", text: "Found at different commits: " + Object.keys(commits).map(function (c) { return c + " (" + commits[c].join(", ") + ")"; }).join("; ") +
       ". Re-run the older ones if the code has changed since."}));
@@ -223,7 +223,7 @@ button.quiet { background: transparent; color: var(--accent); }
     : blocking.length ? answer("block", "Is it safe to run?", "No. " + blocking.length + " finding(s) block every run until resolved.")
     : toNeutralise.length ? answer("warn", "Is it safe to run?", "Once " + toNeutralise.length + " finding(s) are made harmless in the test profile or build.")
     : answer("ok", "Is it safe to run?", "Yes: nothing blocks, and every finding has a decision.");
-  var offline = !C ? answer("", "Does it run on its own?", "Not known: no connection list yet.")
+  var offline = !C ? answer("", "Does it run on its own?", "Not known: no external systems list yet.")
     : noStandIn.length ? answer("block", "Does it run on its own?", "Not yet: " + noStandIn.length + " connection(s) have no stand-in.")
     : unconfirmed.length ? answer("warn", "Does it run on its own?", "Once the Architecture Owner confirms " + unconfirmed.length + " connection(s).")
     : answer("ok", "Does it run on its own?", "Every connection has a confirmed stand-in.");
@@ -255,10 +255,10 @@ button.quiet { background: transparent; color: var(--accent); }
           decisionCell("safety/" + f.id, opts, "Decision on " + f.id)]);
       }))]);
 
-  // ---- Running offline: the connection list
-  section("running", "What it talks to", C ? "From the connection list, drafted from the airgap agent's reports" : "",
+  // ---- Running offline: the external systems list
+  section("running", "What it talks to", C ? "From the external systems list, drafted from the airgap agent's reports" : "",
     "Each connection needs a stand-in before the tests run offline. The Architecture Owner confirms each one.",
-    !rels.length ? [nothing(C ? "No connections." : "No connection list yet.")] : [table(["Connection", "Callers and setting", "Tests", "Stand-in"],
+    !rels.length ? [nothing(C ? "No connections." : "No external systems list yet.")] : [table(["Connection", "Callers and setting", "Tests", "Stand-in"],
       rels.map(function (x) {
         var u = (x.metadata || {})["under-test"] || {};
         var dest = (((x["relationship-type"] || {}).connects || {}).destination || {}).node;
@@ -345,7 +345,7 @@ button.quiet { background: transparent; color: var(--accent); }
     }
     if (con.length) {
       if (lines.length) { lines.push(""); }
-      lines.push("# testing/connections.calm.json: in each relationship's metadata.under-test, set");
+      lines.push("# testing/external-systems.calm.json: in each relationship's metadata.under-test, set");
       con.forEach(function (f) {
         lines.push("#   " + f.key + ": \"stand-in\": {\"approach\": " + JSON.stringify(f.input.value) + "}, \"state\": \"decided\", \"by\": " + JSON.stringify(role));
       });

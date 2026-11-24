@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftiesHousewife/under-test/schema/external-systems-list.schema.json",
+  "title": "External systems list",
+  "description": "One application's connections, kept as testing/external-systems.calm.json: a CALM 1.3 architecture document (https://calm.finos.org/release/1.3/meta/calm.json) using only nodes and 'connects' relationships, with the toolkit's own fields in each element's metadata, under 'under-test'. This schema checks the parts the toolkit uses, without fetching CALM's own schemas; the CALM command-line tool can check the rest where Node.js is allowed.",
+  "type": "object",
+  "required": ["$schema", "nodes", "relationships", "metadata"],
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Lower-case words joined by hyphens, the same on every draft, so tests and plans can name a connection."},
+    "state": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": {"enum": ["proposed", "decided", "stale"], "description": "proposed: drafted, waiting for the Architecture Owner. decided: confirmed by them. stale: no longer seen, kept for the record."},
+        "drafted_by": {"enum": ["ai", "person"]},
+        "by": {"type": "string", "description": "The role that confirmed it. Required once decided."}
+      },
+      "if": {"properties": {"state": {"const": "decided"}}},
+      "then": {"required": ["by"]}
+    },
+    "node": {
+      "type": "object",
+      "required": ["unique-id", "node-type", "name", "description"],
+      "properties": {
+        "unique-id": {"$ref": "#/$defs/id"},
+        "node-type": {"type": "string", "description": "A CALM node type: actor, ecosystem, system, service, database, network, ldap, webclient or data-asset."},
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "interfaces": {"type": "array", "items": {"type": "object", "required": ["unique-id"], "properties": {"unique-id": {"$ref": "#/$defs/id"}}}},
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "under-test": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "addresses": {"type": "array", "items": {"type": "string"}, "description": "Host names, host:port or URLs this node is, or was reached at; left out while the address isn't known."},
+                "opened-by": {"type": "array", "items": {"type": "string"}, "description": "Methods in the code that open or use this connection, as connection-paths names them (type#method(parameter types)), sorted."},
+                "address-from": {"type": "string", "description": "Where the address comes from when it isn't known before the code runs: an environment variable, a system property, a JNDI name, a setting with no value, or built at run time; for instance 'JNDI name java:comp/env/jdbc/orders'."},
+                "programs-started": {"type": "array", "items": {"type": "string"}, "description": "For the application itself: other programs it starts."}
+              }
+            }
+          }
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "required": ["unique-id", "relationship-type", "metadata"],
+      "properties": {
+        "unique-id": {"$ref": "#/$defs/id"},
+        "description": {"type": "string"},
+        "protocol": {"enum": ["HTTP", "HTTPS", "FTP", "SFTP", "JDBC", "WebSocket", "SocketIO", "LDAP", "AMQP", "TLS", "mTLS", "TCP"]},
+        "relationship-type": {
+          "type": "object",
+          "required": ["connects"],
+          "properties": {
+            "connects": {
+              "type": "object",
+              "required": ["source", "destination"],
+              "properties": {
+                "source": {"type": "object", "required": ["node"], "properties": {"node": {"$ref": "#/$defs/id"}, "interfaces": {"type": "array", "items": {"type": "string"}}}},
+                "destination": {"type": "object", "required": ["node"], "properties": {"node": {"$ref": "#/$defs/id"}, "interfaces": {"type": "array", "items": {"type": "string"}}}}
+              }
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["under-test"],
+          "properties": {
+            "under-test": {
+              "allOf": [{"$ref": "#/$defs/state"}],
+              "type": "object",
+              "required": ["found-by", "state", "stand-in"],
+              "properties": {
+                "state": true, "drafted_by": true, "by": true,
+                "found-by": {"type": "array", "minItems": 1, "items": {"enum": ["airgap-agent", "settings", "code", "person"]}, "description": "How the connection was found: the airgap agent's reports, the repo's settings, reading its code, or a person."},
+                "kinds": {"type": "array", "items": {"enum": ["database", "http", "mail", "directory", "jndi", "queue", "socket", "url", "host-lookup", "process", "tcp", "udp"]}, "description": "The kinds of connection found: by connection-paths in the code, or by the airgap agent in a run."},
+                "callers": {"type": "array", "items": {"type": "string"}, "description": "Where in the application's own code the connection is made, as class.method(File.java:line): from the airgap agent, the line of the call; from the code, the method's first line."},
+                "setting": {"type": "object", "required": ["name"], "additionalProperties": false, "properties": {"name": {"type": "string"}, "from": {"type": "string"}}, "description": "The setting that supplied the address, and where it was read."},
+                "tests": {"type": "integer", "minimum": 0, "description": "How many tests made the call (airgap agent) or may make it (code), as testing/tests.yaml records them."},
+                "runs": {"type": "array", "items": {"enum": ["test", "application", "build"]}},
+                "stand-in": {
+                  "type": "object",
+                  "required": ["approach"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "approach": {"enum": ["not-chosen", "run-in-container", "recorded-responses", "contract", "fake-behind-an-interface", "shared-test-environment", "accept-risk"], "description": "What tests use instead of the real system, from the order of preference for test stand-in approaches."},
+                    "kit": {"type": "string", "description": "The shared test kit that provides it, if any."}
+                  }
+                },
+                "never-reach": {"type": "array", "items": {"type": "string"}, "description": "Addresses of this system that tests must never reach, such as production's."}
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "$schema": {"const": "https://calm.finos.org/release/1.3/meta/calm.json"},
+    "nodes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/node"}},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationship"}},
+    "metadata": {
+      "type": "object",
+      "required": ["under-test"],
+      "properties": {
+        "under-test": {
+          "type": "object",
+          "required": ["application", "node"],
+          "additionalProperties": false,
+          "properties": {
+            "application": {"type": "string"},
+            "node": {"$ref": "#/$defs/id", "description": "The unique-id of the application's own node."},
+            "reports": {"type": "array", "items": {"type": "string"}, "description": "The airgap reports this draft was made from."},
+            "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"}
+          }
+        }
+      }
+    }
+  }
+}

@@ -60,10 +60,10 @@
             "pattern": "^[^:]+:[0-9]+$",
             "description": "Where it is now: path:line, the path from the repo root and the line with the test's name. Each step that touches the entry refreshes it."
           },
-          "connections": {
+          "external_systems": {
             "type": "array",
             "minItems": 1,
-            "description": "Owned by draft-the-connection-list: each system on the connection list the test may reach, how that was found, and whether the test can reach it from its own settings. Measurement confirms or clears what it may reach.",
+            "description": "Owned by draft-the-external-systems-list: each system on the external systems list the test may reach, how that was found, and whether the test can reach it from its own settings. Measurement confirms or clears what it may reach.",
             "items": {
               "type": "object",
               "additionalProperties": false,
@@ -75,7 +75,7 @@
               "properties": {
                 "node": {
                   "type": "string",
-                  "description": "The system's unique-id in testing/connections.calm.json."
+                  "description": "The system's unique-id in testing/external-systems.calm.json."
                 },
                 "kind": {
                   "enum": [
@@ -128,7 +128,7 @@
                 },
                 "via": {
                   "type": "string",
-                  "description": "For code-path: the chain from the test to the connection point, as Class.method steps joined by ' > '."
+                  "description": "For code-path: the chain from the test to the reach point, as Class.method steps joined by ' > '."
                 },
                 "where": {
                   "type": "string",

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../schema/assessment.schema.json
 # An example testing/assessment.yaml for a made-up order service, after discovery, the safety inventory and one
-# measurement run. The repo assessment report renders this file, with the connection list and the source list.
+# measurement run. The repo assessment report renders this file, with the external systems list and the source list.
 schema: assessment/1
 repo:
   name: orders-service
@@ -53,7 +53,7 @@ safety:
       what: 40 rows checked; synthetic
       where: ["src/test/resources/orders.csv"]
 running_offline:
-  found_by: {tool: draft-connection-list, version: "0.1.0", commit: 1a2b3c4}
+  found_by: {tool: draft-the-external-systems-list, version: "0.1.0", commit: 1a2b3c4}
   reports: ["build/airgap/test/calls.jsonl", "build/airgap/bootRun/calls.jsonl"]
   findings:
     - id: orders-db

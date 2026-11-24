@@ -34,7 +34,7 @@ Each repo needs one machine-readable record of what was measured and what people
 
 Proposed: the first option, at schema version `assessment/1`. The AI assistant may add decisions only as `proposed`,
 marked `drafted_by: ai`; a person confirms one by setting `state: decided` and `by:` to their role. The file doesn't
-repeat what has its own home: stand-ins are in the connection list and test assets in the source list, and the repo
+repeat what has its own home: stand-ins are in the external systems list and test assets in the source list, and the repo
 assessment report reads all three. (The toolkit maintainers chose this in discussion; an organisation may still
 narrow or replace it.)
 

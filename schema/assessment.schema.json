@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/fiftiesHousewife/under-test/schema/assessment.schema.json",
   "title": "Assessment file",
-  "description": "One repo's record of what tools found and what people decided, kept in the repo as testing/assessment.yaml. Tools rewrite their own sections in full on every run; each finding has an id that stays the same between runs. People's answers live only in decisions, keyed by section and finding id, which tools never write. The AI assistant may add decisions only as proposed. The connection list (testing/connections.calm.json) and the source list (testing/sources.yaml) are separate files; this file doesn't repeat them.",
+  "description": "One repo's record of what tools found and what people decided, kept in the repo as testing/assessment.yaml. Tools rewrite their own sections in full on every run; each finding has an id that stays the same between runs. People's answers live only in decisions, keyed by section and finding id, which tools never write. The AI assistant may add decisions only as proposed. The external systems list (testing/external-systems.calm.json) and the source list (testing/sources.yaml) are separate files; this file doesn't repeat them.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema", "repo"],
@@ -93,7 +93,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["found_by", "reports", "findings"],
-      "description": "What the code tried to reach under the airgap agent, summarised from its reports. Each finding is a draft entry for the connection list.",
+      "description": "What the code tried to reach under the airgap agent, summarised from its reports. Each finding is a draft entry for the external systems list.",
       "properties": {
         "found_by": {"$ref": "#/$defs/found_by"},
         "reports": {"type": "array", "items": {"type": "string"}, "description": "The airgap reports read, e.g. build/airgap/test/calls.jsonl."},

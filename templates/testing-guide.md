@@ -24,7 +24,7 @@ Techniques are named by their id in the toolkit's `techniques/`; this guide neve
 
 ## Where the edges are
 
-<What this kind of repo talks to, and what tests use instead of each (from the connection lists of the pilot): which
+<What this kind of repo talks to, and what tests use instead of each (from the external systems lists of the pilot): which
 shared test kits apply, and which addresses tests must never reach.>
 
 ## Target test mix

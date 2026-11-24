@@ -1,6 +1,6 @@
 ---
 name: write-the-testing-plan
-description: Generate a repo's testing/TESTING-PLAN.md from its testing/assessment.yaml and connection list: the target level, every piece of work in workstream order with a stable key, the techniques deferred and rejected, and what the Application Owner settles by approving it. Use after the techniques are chosen, when asked for a repo's testing plan, or to regenerate it after the assessment file changes.
+description: Generate a repo's testing/TESTING-PLAN.md from its testing/assessment.yaml and external systems list: the target level, every piece of work in workstream order with a stable key, the techniques deferred and rejected, and what the Application Owner settles by approving it. Use after the techniques are chosen, when asked for a repo's testing plan, or to regenerate it after the assessment file changes.
 ---
 
 # Writing the testing plan
@@ -17,7 +17,7 @@ your reply: point at its file and line instead
 ## 1. Read and check
 
 Read `testing/assessment.yaml` ([its schema](../../../schema/assessment.schema.json));
-`testing/connections.calm.json` ([its schema](../../../schema/connection-list.schema.json)) if it exists; each
+`testing/external-systems.calm.json` ([its schema](../../../schema/external-systems-list.schema.json)) if it exists; each
 technique's `name`, `workstream`, `test_stand_in_approach` and `evidence_for_maturity_levels`, only from its
 `techniques/<id>/technique.yaml` ([the toolkit's techniques](../../../techniques/README.md); that list is not a
 source); and only the Key and Tracker item columns of any existing `testing/TESTING-PLAN.md`.
@@ -41,14 +41,14 @@ target level, or a `safety` finding with `effect: blocks` and no `safety/<findin
 ## 2. Work out the pieces of work
 
 Each row's **key** is `<repo.name>:<workstream>:<slug>`. Make rows by these rules only; in Work and Done when, fill
-`<...>` from the files and write the rest exactly. A **connection** is any relationship in the connection list
+`<...>` from the files and write the rest exactly. A **connection** is any relationship in the external systems list
 whose state isn't `stale`; its destination node id is `relationship-type.connects.destination.node`, its destination name
 that node's `name`, and its `stand-in.approach`, `stand-in.kit`, `state`, `never-reach` and `tests` are all under `metadata.under-test`.
 
 | # | From | Made when | Workstream | Slug | Work | Done when |
 |---|---|---|---|---|---|---|
 | 1 | each connection | approach is `run-in-container`, `recorded-responses`, `contract` or `fake-behind-an-interface` | `make-it-run-on-its-own` | `stand-in-<destination node id>` | Give tests a stand-in for <destination name>: <approach, in words>, with <technique name> | Tests that reach <destination name> use the stand-in and pass with outbound calls blocked. |
-| 2 | each connection | approach is `not-chosen` | `make-it-run-on-its-own` | `choose-stand-in-<destination node id>` | Choose what tests use for <destination name> | The Architecture Owner has decided the stand-in in the connection list |
+| 2 | each connection | approach is `not-chosen` | `make-it-run-on-its-own` | `choose-stand-in-<destination node id>` | Choose what tests use for <destination name> | The Architecture Owner has decided the stand-in in the external systems list |
 | 3 | `tests.failing` | more than 0 | `make-it-run-on-its-own` | `tests-failing-every-run` | Make the <n> tests that fail in every run pass with outbound calls blocked | No test fails in every run |
 | 4 | each anti-pattern finding of kind `reaches-external-system` | always | `make-it-run-on-its-own` | `tag-<finding id>` | Tag the <n> tests that reach an external system, and leave them out of normal runs | No test in a normal run reaches an external system |
 | 5 | `tests.flaky` | more than 0 | `fix-flaky-tests` | `flaky-tests` | Fix the <n> flaky tests, groups that fail together first | Five runs in a row with no flaky test |

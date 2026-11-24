@@ -68,7 +68,7 @@ safety:
     - src/test/resources/orders.csv
 running_offline:
   found_by:
-    tool: draft-connection-list
+    tool: draft-the-external-systems-list
     version: 0.1.0
     commit: 1a2b3c4
   reports:
@@ -190,7 +190,7 @@ techniques:
     - "precondition 'A test point is chosen: a place where inputs can be fed in and outputs read without editing the logic': part of the work"
   - id: contract-testing
     because:
-    - "needed_when 'The repo calls, or is called by, a service another team in the organisation owns': true; the connection list has payments.example.com as another team's payments service"
+    - "needed_when 'The repo calls, or is called by, a service another team in the organisation owns': true; the external systems list has payments.example.com as another team's payments service"
     - "reject_or_defer_when 'The provider is an external vendor's API': false; the provider is another team's service"
     - "precondition 'Provider team agreement': not given"
   - id: database-unit-tests
@@ -278,7 +278,7 @@ techniques:
   - id: recorded-http-responses
     because:
     - "needed_when 'Dependency you do not own, over HTTP': true; payments.example.com is another team's service called over HTTPS"
-    - "possible_when 'A non-prod instance is reachable to record from': unknown; the connection list names only payments.example.com, and no non-prod instance was given"
+    - "possible_when 'A non-prod instance is reachable to record from': unknown; the external systems list names only payments.example.com, and no non-prod instance was given"
     - "precondition 'The airgap agent's report lists the HTTP hosts the code contacts': part of the work"
     - "precondition 'Recordings are cleaned in the capture environment and pass the detector check': part of the work"
     - "precondition 'First sample of cleaned recordings signed off': part of the work"
@@ -307,7 +307,7 @@ techniques:
     - "precondition 'The Spring Boot version and starters in the build file': part of the work"
   - id: stand-in-commands
     because:
-    - "needed_when 'Scripts, batch jobs or application code start other programs (curl, sqlplus, scp, sendmail, a vendor command-line tool) that are slow, need credentials or can reach production, or that tests must make report progress, retry or fail on demand': true; the connection list says orders-service starts sendmail"
+    - "needed_when 'Scripts, batch jobs or application code start other programs (curl, sqlplus, scp, sendmail, a vendor command-line tool) that are slow, need credentials or can reach production, or that tests must make report progress, retry or fail on demand': true; the external systems list says orders-service starts sendmail"
     - "reject_or_defer_when 'The script's logic is mostly in the program it calls; test that program instead': false; no file says so"
     - "precondition 'Scripts call programs by name (found on PATH), not by fixed absolute path': part of the work"
     - "precondition 'With AI help, list the programs each script calls, and what output and exit codes it relies on': part of the work"
@@ -496,7 +496,7 @@ decisions:
     state: proposed
     drafted_by: ai
     choice: adopt
-    reason: "adopt: 'Scripts, batch jobs or application code start other programs (curl, sqlplus, scp, sendmail, a vendor command-line tool) that are slow, need credentials or can reach production, or that tests must make report progress, retry or fail on demand', the connection list says orders-service starts sendmail."
+    reason: "adopt: 'Scripts, batch jobs or application code start other programs (curl, sqlplus, scp, sendmail, a vendor command-line tool) that are slow, need credentials or can reach production, or that tests must make report progress, retry or fail on demand', the external systems list says orders-service starts sendmail."
   techniques/structured-output-comparison:
     state: proposed
     drafted_by: ai

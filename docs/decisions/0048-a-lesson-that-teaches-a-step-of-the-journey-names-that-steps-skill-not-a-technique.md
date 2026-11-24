@@ -17,7 +17,7 @@ service's tests under the airgap agent until every outside call has a stand-in, 
 connection list. That is not a technique the
 [choose-techniques](../../.github/skills/choose-techniques/SKILL.md) skill adopts or defers for a repo: every repo
 does it, as a step of [its journey](../JOURNEY.md), with the
-[draft-the-connection-list](../../.github/skills/draft-the-connection-list/SKILL.md) skill and then the
+[draft-the-connection-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) skill and then the
 make-it-run-on-its-own workstream. The nearest technique, recorded HTTP responses, covers only one kind of stand-in.
 
 ## Considered Options

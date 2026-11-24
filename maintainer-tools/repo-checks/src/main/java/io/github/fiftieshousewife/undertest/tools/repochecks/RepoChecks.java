@@ -49,7 +49,7 @@ public final class RepoChecks {
         final RepoFiles files = new RepoFiles(root);
         final List<Problem> problems = new ArrayList<>(new LinkChecker().check(files));
         problems.addAll(new YamlSchemaChecker().check(files));
-        problems.addAll(new ConnectionListChecker().check(files));
+        problems.addAll(new ExternalSystemsListChecker().check(files));
         problems.addAll(new GuideCoverage().check(root));
         for (final Path folder : decisionFolders(root)) {
             if (!new DecisionIndex().isCurrent(folder)) {

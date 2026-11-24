@@ -6,7 +6,7 @@ allowed_tools: [Read, Glob, Grep, Write, Edit, Bash, Skill]
 ---
 We need to decide which testing techniques this repo's testing plan should use. Go through every technique in
 `techniques/` (one `technique.yaml` per folder) and propose adopt, defer or reject for each, with the reason. What we
-know about the repo is in `testing/assessment.yaml`, `testing/connections.calm.json` (its connection list) and
+know about the repo is in `testing/assessment.yaml`, `testing/external-systems.calm.json` (its external systems list) and
 `testing/sources.yaml` (its source list), and its build is `build.gradle`. `decision-guides/` has our guides on the
 target level for each business criticality and on the order of workstreams. Our CI can run container tests;
 developers' machines can't run containers. Write the techniques section of `testing/assessment.yaml`, and a proposed

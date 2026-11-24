@@ -11,8 +11,8 @@ toolkit="$here"
 while [ ! -f "$toolkit/AGENTS.md" ]; do toolkit="$(dirname "$toolkit")"; [ "$toolkit" = "/" ] && exit 1; done
 echo "scaffold ran in $PWD" >&2
 mkdir -p schema testing
-cp "$here/fixture/assessment.yaml" "$here/fixture/connections.calm.json" "$here/fixture/sources.yaml" testing/
-cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/connection-list.schema.json" \
+cp "$here/fixture/assessment.yaml" "$here/fixture/external-systems.calm.json" "$here/fixture/sources.yaml" testing/
+cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/external-systems-list.schema.json" \
   "$toolkit/schema/source-list.schema.json" schema/
 # The fixture's YAML files name their schemas where they are in the toolkit, so its own checks can validate them;
 # here the schemas are in schema/, beside the files' folder.

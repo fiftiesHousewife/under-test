@@ -141,7 +141,7 @@ Everything below can reach a corporate that installs only through its own Artifa
 |---|---|---|---|
 | FINOS CALM schema 1.3, CLI 1.74.x, calm-server ([npm](https://registry.npmjs.org/@finos/calm-cli)) | Apache-2.0 | npm proxy. Fix the versions. Change the `$ref` allowlist to point at an internal copy of the schema | Adopt |
 | CALM VS Code extension | Apache-2.0 | VSIX from releases, held in the internal artefact store | Adopt |
-| CALM Hub (Docker) | Apache-2.0 | Docker registry mirror. Its AI connection point (MCP) is experimental and off by default | Optional, later |
+| CALM Hub (Docker) | Apache-2.0 | Docker registry mirror. Its AI reach point (MCP) is experimental and off by default | Optional, later |
 | CALM discovery skill and `calm init-ai -p copilot` prompts | Apache-2.0 | Bundled with the CLI, or vendored under `.github/skills/` | Adopt as the first draft source |
 | Allium skills and agents (`juxt/allium`) | MIT | Vendor the plain files into the repository. Copilot reads `.github/agents/` | Adopt, fixing a language version |
 | Allium CLI (`allium-cli` on crates.io) | MIT | Cargo proxy, or build internally and sign the binary (the macOS and Windows release binaries are unsigned) | Adopt. The skills work without it, but the repeatable test list does not |

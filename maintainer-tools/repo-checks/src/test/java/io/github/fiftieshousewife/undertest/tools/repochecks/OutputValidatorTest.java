@@ -26,7 +26,7 @@ class OutputValidatorTest {
     @BeforeEach
     void writeSchemas() throws IOException {
         final Path schemas = Files.createDirectories(toolkit.resolve("schema"));
-        for (final String name : new String[] {"assessment", "source-list", "connection-list"}) {
+        for (final String name : new String[] {"assessment", "source-list", "external-systems-list"}) {
             Files.writeString(schemas.resolve(name + ".schema.json"), OBJECT_WITH_NAME);
         }
         Files.createDirectories(workspace.resolve("testing"));
@@ -35,7 +35,7 @@ class OutputValidatorTest {
     @Test
     void passesFilesThatMatchTheirSchemasWhateverTheirSchemaLine() throws IOException {
         Files.writeString(workspace.resolve("testing/assessment.yaml"), "# yaml-language-server: $schema=x\nname: a\n");
-        Files.writeString(workspace.resolve("testing/connections.calm.json"), "{\"name\": \"a\"}");
+        Files.writeString(workspace.resolve("testing/external-systems.calm.json"), "{\"name\": \"a\"}");
 
         assertThat(new OutputValidator(toolkit).validate(workspace)).isEmpty();
     }
@@ -50,7 +50,7 @@ class OutputValidatorTest {
 
     @Test
     void reportsAFileThatCantBeRead() throws IOException {
-        Files.writeString(workspace.resolve("testing/connections.calm.json"), "{not json");
+        Files.writeString(workspace.resolve("testing/external-systems.calm.json"), "{not json");
 
         assertThat(new OutputValidator(toolkit).validate(workspace)).singleElement()
                 .extracting(Problem::message).asString().startsWith("can't be read");

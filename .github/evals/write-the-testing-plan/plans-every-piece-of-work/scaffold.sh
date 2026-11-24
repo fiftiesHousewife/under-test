@@ -1,7 +1,7 @@
 #!/bin/bash
 # Sets up the case's workspace: the example order service after its techniques were chosen (9 adopted, 10
-# deferred, 4 rejected), with its assessment file, connection list and source list, plus what the run without the
-# toolkit needs: every technique rule, the assessment and connection-list schemas, and the decision guides on the
+# deferred, 4 rejected), with its assessment file, external systems list and source list, plus what the run without the
+# toolkit needs: every technique rule, the assessment and external-systems-list schemas, and the decision guides on the
 # target level and the order of workstreams. The plan template is part of the skill, so it is not copied. Run by
 # claude plugin eval --scaffold, in the workspace.
 set -euo pipefail
@@ -18,7 +18,7 @@ for rule in "$toolkit"/techniques/*/technique.yaml; do
   mkdir -p "techniques/$(basename "$(dirname "$rule")")"
   cp "$rule" "techniques/$(basename "$(dirname "$rule")")/"
 done
-cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/connection-list.schema.json" "$toolkit/schema/source-list.schema.json" \
+cp "$toolkit/schema/assessment.schema.json" "$toolkit/schema/external-systems-list.schema.json" "$toolkit/schema/source-list.schema.json" \
   "$toolkit/schema/technique.schema.json" schema/
 cp "$toolkit/decision-guides/0015-target-test-maturity-level-for-each-business-criticality.md" \
    "$toolkit/decision-guides/0050-the-order-of-workstreams-for-a-repo.md" decision-guides/

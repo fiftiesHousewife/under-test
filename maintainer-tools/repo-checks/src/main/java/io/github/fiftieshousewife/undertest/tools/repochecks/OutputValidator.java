@@ -25,7 +25,8 @@ public final class OutputValidator {
     private static final Map<String, String> SCHEMAS = Map.of(
             "testing/assessment.yaml", "schema/assessment.schema.json",
             "testing/sources.yaml", "schema/source-list.schema.json",
-            "testing/connections.calm.json", "schema/connection-list.schema.json",
+            "testing/external-systems.calm.json", "schema/external-systems-list.schema.json",
+            "testing/connection-paths.json", "schema/connection-paths.schema.json",
             "testing/tests.yaml", "schema/tests.schema.json");
 
     private final Path toolkit;

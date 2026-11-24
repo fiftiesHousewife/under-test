@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/fiftiesHousewife/under-test/schema/connection-paths.schema.json",
   "title": "Connections and the tests that may reach them",
-  "description": "What connection-paths found in a module's source: each place the code opens or uses a connection to something outside the program, each test that may reach one with a chain of calls showing how, and what it could not resolve or chose not to follow. Written by connection-paths and read by the connection-list skill; 'may' means measurement confirms or clears each test.",
+  "description": "What connection-paths found in a module's source: each place the code opens or uses a connection to something outside the program, each test that may reach one with a chain of calls showing how, and what it could not resolve or chose not to follow. Written by connection-paths and read by the external systems list skill; 'may' means measurement confirms or clears each test.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -183,7 +183,7 @@
     },
     "systems": {
       "type": "array",
-      "description": "The systems the connection points make: by host, else by setting, variable or JNDI name, else by the class that opens them. Local, host-lookup and process points belong to none.",
+      "description": "The systems the reach points make: by host, else by setting, variable or JNDI name, else by the class that opens them. Local, host-lookup and process points belong to none.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -289,7 +289,7 @@
                   "type": "boolean"
                 },
                 "chain": {
-                  "description": "From the test to the connection point, one method a step. The first step is the method that declares the test, which for an inherited test is in the superclass: take the class that runs it from test, not from here.",
+                  "description": "From the test to the reach point, one method a step. The first step is the method that declares the test, which for an inherited test is in the superclass: take the class that runs it from test, not from here.",
                   "type": "array",
                   "minItems": 1,
                   "items": {

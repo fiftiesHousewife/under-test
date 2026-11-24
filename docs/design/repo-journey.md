@@ -9,7 +9,7 @@ the decisions behind them are in [decision-guides/](../../decision-guides/README
 ```mermaid
 flowchart LR
     subgraph D["Discovery"]
-        C["Draft connection list<br/>(what it talks to)"]
+        C["Draft external systems list<br/>(what it talks to)"]
         A["Approval tests<br/>(pin current behaviour)"]
         S["Source list<br/>(knowledge that counts)"]
     end
@@ -36,11 +36,11 @@ flowchart TB
     AO -->|specification was wrong| SPEC["Specification corrected"]
 ```
 
-## 3. Connection list to test types
+## 3. External systems list to test types
 
 ```mermaid
 flowchart LR
-    CL["Connection list<br/>(one entry per connection)"] --> K{"Kind of connection"}
+    CL["External systems list<br/>(one entry per connection)"] --> K{"Kind of connection"}
     K -->|in-house service| CT["Contract test<br/>(Pact, via the broker)"]
     K -->|outside service| RR["Recorded responses or contract<br/>(WireMock)"]
     K -->|database or queue| CO["Container test<br/>(Testcontainers; CI if no local runtime)"]
@@ -54,7 +54,7 @@ flowchart LR
 ```mermaid
 flowchart TB
     KC["Knowledge Curator"] -->|chooses sources| S["Source list"]
-    AR["Architecture Owner"] -->|confirms| C["Connection list"]
+    AR["Architecture Owner"] -->|confirms| C["External systems list"]
     FDE["Forward Deployed Engineer<br/>+ AI assistant"] -->|runs discovery, drafts rules and tests| W["Repo work"]
     SME["Subject-matter expert"] -->|answers questions| SP["Specification"]
     APO["Application Owner"] -->|settles open questions,<br/>approves plans| P["Testing plan"]

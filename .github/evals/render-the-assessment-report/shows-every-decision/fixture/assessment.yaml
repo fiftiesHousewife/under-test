@@ -51,7 +51,7 @@ safety:
       what: 40 rows checked; synthetic
       where: ["src/test/resources/orders.csv"]
 running_offline:
-  found_by: {tool: draft-connection-list, version: "0.1.0", commit: 1a2b3c4}
+  found_by: {tool: draft-the-external-systems-list, version: "0.1.0", commit: 1a2b3c4}
   reports: ["build/airgap/test/calls.jsonl", "build/airgap/bootRun/calls.jsonl"]
   findings:
     - id: orders-db

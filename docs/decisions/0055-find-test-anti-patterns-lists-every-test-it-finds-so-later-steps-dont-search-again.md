@@ -53,6 +53,6 @@ repo, and calls the code makes without naming the host come from the airgap agen
 
 ## More Information
 
-* Builds on: [A skill finds what to read by searching, and reads only what the searches find](0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md), [Each application's connections are recorded as a CALM connection list](../../decision-guides/0030-each-applications-connections-are-recorded-as-a-calm-connection-list.md)
+* Builds on: [A skill finds what to read by searching, and reads only what the searches find](0054-a-skill-finds-what-to-read-by-searching-and-reads-only-what-the-searches-find.md), [Each application's connections are recorded as a CALM connection list](../../decision-guides/0030-each-applications-external-systems-are-recorded-as-a-calm-list.md)
 * Later decisions that build on this: none yet
 * Background: none

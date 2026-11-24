@@ -1,6 +1,6 @@
 ---
 name: choose-techniques
-description: Propose adopt, defer or reject for every technique in techniques/ against a repo's assessment file, connection list and source list, each traced to the rule that decided it, in testing/assessment.yaml. Use before writing a repo's testing plan, or when asked which testing techniques fit a repo.
+description: Propose adopt, defer or reject for every technique in techniques/ against a repo's assessment file, external systems list and source list, each traced to the rule that decided it, in testing/assessment.yaml. Use before writing a repo's testing plan, or when asked which testing techniques fit a repo.
 ---
 
 # Choosing techniques
@@ -14,7 +14,7 @@ your reply: point at its file and line instead
 ## 1. Read
 
 The repo's `testing/assessment.yaml` ([its schema](../../../schema/assessment.schema.json)), or stop if it is missing;
-`testing/connections.calm.json` and `testing/sources.yaml` if they exist; its build files (JDK, build tool, test
+`testing/external-systems.calm.json` and `testing/sources.yaml` if they exist; its build files (JDK, build tool, test
 framework); the organisation's testing guide for its stack and application type, if given; and every technique's
 rules, in one read of [`techniques/rules.json`](../../../techniques/rules.json) in the toolkit, whose root is three
 folders up from this skill's folder (not in the repo; generated from the `techniques/<id>/technique.yaml` files, one
@@ -34,7 +34,7 @@ Give each `needed_when`, `possible_when` and `reject_or_defer_when` condition a 
   it holds; **false** when they show it can't hold; **unknown** when it depends on code or facts you weren't given.
   Something missing from the files is unknown, not false, unless a file that would list it leaves it out: the build
   file for dependencies and frameworks, the measurement run for tests, the anti-pattern check for anti-patterns, the
-  connection list for connections and the programs the application starts. A condition about which framework the
+  external systems list for connections and the programs the application starts. A condition about which framework the
   code uses is known from the build file's dependencies (Spring Boot starters mean Spring contexts); a precondition
   check that would measure it more closely doesn't make it unknown.
 * A `reject_or_defer_when` condition the files don't mention is false. One they mention but don't settle is unknown.
@@ -51,7 +51,7 @@ Give each `needed_when`, `possible_when` and `reject_or_defer_when` condition a 
   `reject_or_defer_when` condition: a `reject_or_defer_when` condition true now stays true even when planned work will
   change it (a flaky suite that fix-flaky-tests will fix still defers), and the reason says `Waits for` that work.
 * A precondition check marked `outside_approval: true` that the files or the request don't show as given defers the
-  technique. A decided stand-in in the connection list is not an `outside_approval`. Every other check is part of the
+  technique. A decided stand-in in the external systems list is not an `outside_approval`. Every other check is part of the
   work, and never defers it.
 * `constraints` never change the choice; respect them in the work.
 
@@ -135,7 +135,7 @@ Then `.`; then, as they apply, in this order:
   list's order, whose `stand-in.approach` is `not-chosen`, or equals that `test_stand_in_approach` and no adopted
   technique has the same `test_stand_in_approach`: `Its fallback, <fallback>, stands in for <unique-id>.`
   `<fallback>` is the technique's `fallback`, in single quotes if it isn't a technique id; `<unique-id>` is the
-  connection's CALM relationship `unique-id`. Connections come only from `testing/connections.calm.json`'s
+  connection's CALM relationship `unique-id`. Connections come only from `testing/external-systems.calm.json`'s
   `relationships`, never from the assessment file's `running_offline` findings.
 
 The `<fact>` text in reasons and `because` lines is your own evidence and may vary between runs. The choice, the
@@ -152,5 +152,5 @@ An adopt with two true needs:
 Briefly: what to adopt, grouped by workstream in the order of
 [The order of workstreams for a repo](../../../decision-guides/0050-the-order-of-workstreams-for-a-repo.md); what is
 deferred, each with what would bring it back; any connection left without a technique to stand in for it; any decided
-choice the rules now disagree with. Connections are the relationships in `testing/connections.calm.json` only; a
-`running_offline` finding with no relationship there isn't one, so say it needs adding to the connection list.
+choice the rules now disagree with. Connections are the relationships in `testing/external-systems.calm.json` only; a
+`running_offline` finding with no relationship there isn't one, so say it needs adding to the external systems list.

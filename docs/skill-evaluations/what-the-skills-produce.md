@@ -9,14 +9,14 @@ output is in [examples/](examples/).
 The cases differ a little from each other, because each holds the facts its own skill needs, so the numbers don't
 carry from one section to the next.
 
-## 1. Discovery: the connection list, [draft-the-connection-list](../../.github/skills/draft-the-connection-list/SKILL.md)
+## 1. Discovery: the external systems list, [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md)
 
 **Given:** the airgap agent's reports of every call the tests and the application tried to make off the machine. (This
 case is the skill's later pass, merging in measurement's reports; its first pass, from the code with connection-paths,
 has no eval case yet.)
-**Writes:** `testing/connections.calm.json`, a [CALM](https://calm.finos.org/) file with a node for each system the
+**Writes:** `testing/external-systems.calm.json`, a [CALM](https://calm.finos.org/) file with a node for each system the
 code reaches and a proposed stand-in for each connection
-([whole file](examples/connections.calm.json)).
+([whole file](examples/external-systems.calm.json)).
 
 ```json
 {"under-test": {
@@ -118,7 +118,7 @@ outside the machine.
 
 ## 3. Obstacles to testing: [score-obstacles](../../.github/skills/score-obstacles/SKILL.md)
 
-**Given:** the assessment file and connection list so far.
+**Given:** the assessment file and external systems list so far.
 **Writes:** the `obstacles` section, each obstacle scored 0 to 3 by
 [the named list](../../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md), with
 its evidence ([whole file](examples/obstacles-assessment.yaml)).
@@ -160,13 +160,13 @@ deferring machine-state checks.
 
 ## 6. Testing plan: [write-the-testing-plan](../../.github/skills/write-the-testing-plan/SKILL.md)
 
-**Given:** the assessment file, with its decisions, and the connection list.
+**Given:** the assessment file, with its decisions, and the external systems list.
 **Writes:** `testing/TESTING-PLAN.md`: the decisions approving it makes, then the work in a fixed order, each piece
 with a key the issue tracker can follow ([whole file](examples/TESTING-PLAN.md)).
 
 | Key | Work | Done when |
 |---|---|---|
-| `orders-service:make-it-run-on-its-own:choose-stand-in-payments-example-com` | Choose what tests use for payments.example.com | The Architecture Owner has decided the stand-in in the connection list |
+| `orders-service:make-it-run-on-its-own:choose-stand-in-payments-example-com` | Choose what tests use for payments.example.com | The Architecture Owner has decided the stand-in in the external systems list |
 | `orders-service:make-it-run-on-its-own:tag-reaches-external-system` | Tag the 6 tests that reach an external system, and leave them out of normal runs | No test in a normal run reaches an external system |
 | `orders-service:fix-flaky-tests:flaky-tests` | Fix the 7 flaky tests, groups that fail together first | Five runs in a row with no flaky test |
 
@@ -174,7 +174,7 @@ with a key the issue tracker can follow ([whole file](examples/TESTING-PLAN.md))
 
 ## Every step: [render-the-assessment-report](../../.github/skills/render-the-assessment-report/SKILL.md)
 
-**Given:** the assessment file, connection list and source list.
+**Given:** the assessment file, external systems list and source list.
 **Writes:** `testing/assessment-report.html`, a single page for the Application Owner showing every decision they can
 change, filled from the toolkit's report template
 ([the page](examples/assessment-report.html): download it and open it in a browser).

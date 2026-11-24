@@ -12,7 +12,7 @@ Each cell gives the mean score, how many runs scored 1, the mean cost per run an
 | Skill | Case | Without, round 1 | Without, round 2 | With, round 1 | With, round 2 |
 |---|---|---|---|---|---|
 | [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md) | `finds-every-kind` | 0.22 (0 of 5), $0.14, 5 turns | 0.22 (0 of 5), $0.14, 5 turns | 1 (5 of 5), $0.15, 7 turns | 1 (5 of 5), $0.16, 6 turns |
-| [draft-the-connection-list](../../.github/skills/draft-the-connection-list/SKILL.md) | `drafts-every-connection` | 0.35 (0 of 5), $0.19, 9 turns | 0.36 (0 of 5), $0.20, 12 turns | 1 (5 of 5), $0.19, 9 turns | 1 (5 of 5), $0.20, 9 turns |
+| [draft-the-connection-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) | `drafts-every-connection` | 0.35 (0 of 5), $0.19, 9 turns | 0.36 (0 of 5), $0.20, 12 turns | 1 (5 of 5), $0.19, 9 turns | 1 (5 of 5), $0.20, 9 turns |
 | [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | `counts-every-kind` | 0.54 (0 of 5), $0.12, 6 turns | 0.51 (0 of 5), $0.13, 11 turns | 0.99 (4 of 5), $0.16, 13 turns | 0.98 (3 of 5), $0.16, 15 turns |
 | [measure-a-repo](../../.github/skills/measure-a-repo/SKILL.md) | `measures-five-runs` | 0.90 (0 of 5), $0.17, 9 turns | 0.86 (0 of 5), $0.16, 9 turns | 1 (5 of 5), $0.15, 9 turns | 1 (5 of 5), $0.14, 9 turns |
 | [score-obstacles](../../.github/skills/score-obstacles/SKILL.md) | `scores-every-obstacle` | 0.93 (0 of 5), $0.18, 9 turns | 0.94 (0 of 5), $0.18, 9 turns | 1 (5 of 5), $0.17, 8 turns | 0.99 (4 of 5), $0.16, 9 turns |

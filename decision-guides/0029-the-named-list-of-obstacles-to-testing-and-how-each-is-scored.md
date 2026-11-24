@@ -24,7 +24,7 @@ Plans need a consistent, named list of what makes a repo hard to test, with a ru
 ## Decision Outcome
 
 Proposed: the first option, scored only from facts the toolkit's skills already record in the assessment file and the
-connection list. Each obstacle scores 0 (not an obstacle), 1, 2 or 3 (severe). An obstacle whose facts aren't
+external systems list. Each obstacle scores 0 (not an obstacle), 1, 2 or 3 (severe). An obstacle whose facts aren't
 recorded yet isn't scored. Obstacles that need a code scan (the system clock used directly, hard-wired dependencies)
 are added when a skill records them.
 

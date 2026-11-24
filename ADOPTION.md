@@ -96,7 +96,7 @@ Nothing is fetched from the internet at build time. Before anyone uses the toolk
    (`net.sourceforge.pmd:pmd-cli` and `pmd-java`), which the toolkit's
    [pmd-install](tools/test-anti-patterns/pmd-install/build.gradle) fetches from your package repository
    ([why](docs/decisions/0067-find-test-anti-patterns-needs-pmd-and-installs-it-when-it-is-missing.md)). The
-   draft-the-connection-list skill needs [connection-paths](https://github.com/fiftiesHousewife/connection-paths), one
+   draft-the-external-systems-list skill needs [connection-paths](https://github.com/fiftiesHousewife/connection-paths), one
    jar published beside each of its version tags: mirror it, and name its path in your organisation profile
    (`tools.connection_paths_jar`). It reads each module with the classpath its build resolves, so the build must reach
    your package repository; building without running tests is allowed in discovery
@@ -234,7 +234,7 @@ the AI and review everything it produces; unattended AI agents stay off unless y
 
 ## Step 10: Run the programme
 
-The [repo journey diagrams](docs/design/repo-journey.md) show each step below, the two tracks, connection lists and who does what.
+The [repo journey diagrams](docs/design/repo-journey.md) show each step below, the two tracks, external systems lists and who does what.
 
 
 1. **Classify your repos.** Run the repo classifier on each repo, or build a survey tool that calls it across your

@@ -36,6 +36,6 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 
 ## More Information
 
-* Builds on: [Every repo starts with discovery: a draft connection list, a source list and a check of its existing tests, and a first approval-test baseline follows](0032-every-repo-starts-with-discovery-a-draft-connection-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md)
+* Builds on: [Every repo starts with discovery: a draft external systems list, a source list and a check of its existing tests, and a first approval-test baseline follows](0032-every-repo-starts-with-discovery-a-draft-external-systems-list-a-source-list-and-a-check-of-its-existing-tests-and-a-first-approval-test-baseline-follows.md)
 * Later decisions that build on this: [Progress is measured by required tests met, alongside coverage and mutation results](0014-progress-is-measured-by-required-tests-met-alongside-coverage-and-mutation-results.md), [The format for intended behaviour is chosen by piloting Gherkin and Allium side by side](../docs/decisions/0028-the-format-for-intended-behaviour-is-chosen-by-piloting-gherkin-and-allium-side-by-side.md), [Expert time is booked as a budget of short question sessions](0035-expert-time-is-booked-as-a-budget-of-short-question-sessions.md)
 * Background: [legacy-code](../docs/REFERENCES.md#legacy-code)

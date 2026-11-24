@@ -66,8 +66,8 @@ java -jar "$UNDER_TEST_TOOLS_JAR" anti-patterns --repo . [--module <folder>]... 
 It writes `testing/tests.yaml` and the `anti_patterns` section and decisions of `testing/assessment.yaml` exactly as
 the steps below say. Then do only what it leaves:
 
-1. `reaches-external-system`, by step 2's row (or from the connection list's `connections` in `testing/tests.yaml`,
-   where the connection-list skill has run), and the `other` kinds, for the tests you read: add each to its test's
+1. `reaches-external-system`, by step 2's row (or from the external systems list's `external_systems` in `testing/tests.yaml`,
+   where the external systems list skill has run), and the `other` kinds, for the tests you read: add each to its test's
    `anti_patterns.kinds` in `testing/tests.yaml` (and `reaches` for the first), keeping what the tool wrote.
 2. Run it again with `--summary-only`, which reworks the summary and decisions from the list.
 3. Report, as step 6 says.
