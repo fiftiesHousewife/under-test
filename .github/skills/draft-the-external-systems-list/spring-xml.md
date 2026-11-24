@@ -7,7 +7,8 @@ often more than one at once.
 
 It reaches an XML file's beans from a test whose class, or a superclass in the repo's test source, has
 `@ContextConfiguration`, `@SpringJUnitConfig` or `@ImportResource` naming the file, and from code that does
-`new ClassPathXmlApplicationContext("…xml")` (or the `FileSystem` or `Generic` variant). A chain through the file has a
+`new ClassPathXmlApplicationContext("…xml")` (or the `FileSystem` or `Generic` variant), and follows each
+`<import resource=...>` to the imported file's beans. A chain through the file has a
 step `org.springframework.context.ApplicationContext#<xml file name>()`. A bean whose class matches a connection rule
 is a point, and the first of its `url`, `jdbcUrl`, `URL`, `serverURL`, `brokerURL`, `providerUrl`, `uri`, `baseUrl`,
 `serviceUrl`, `connectionString`, `host` or `serverName` properties is its address. A `${name}` in it becomes the
@@ -23,7 +24,6 @@ Only these; for each, find the context files with the searches below.
 | Spring's JUnit 3 base classes: `extends AbstractDependencyInjectionSpringContextTests` (or `AbstractTransactionalSpringContextTests`, `AbstractJpaTests`, ...) with `getConfigLocations()` or `getConfigPaths()` | These classes' `test...()` methods run, with no `@Test`: treat them as loading the files the method lists |
 | A location with `*`, every `classpath*:` one included | Every matching file, under test or main resources |
 | Two files with the same name in different folders | The tool can't tell them apart: say which one the test loads |
-| `<import resource=...>` | Follow every one, to any depth; the imported beans count as the importing file's |
 | A placeholder `${name:default}` no settings file sets | Its value is the default after `:`. A placeholder that neither a file nor a default sets is unknown: say so in the report |
 | A placeholder set in a specific file (`<context:property-placeholder location=...>`, a `PropertyPlaceholderConfigurer` or `PropertySourcesPlaceholderConfigurer` bean's `location` or `locations`, `<util:properties location=...>`) | Its value comes from that file, a later file overriding an earlier one, where it differs from what the tool found |
 | `<beans profile="...">` | Its beans count only for an active profile: `@ActiveProfiles` on the class or a superclass, or `spring.profiles.active` in a property file. Blocks outside any profile always count. Drop a point the tool took from an inactive block |
@@ -36,6 +36,6 @@ directory, `smtp` or a mail sender a mail server, `tcp`, `amqp` or a broker a qu
 
 ```bash
 grep -rnE 'getConfig(Locations|Paths)|classpath\*:|@interface' --include='*.java' <test folders>
-grep -nE '<import |property-placeholder|PlaceholderConfigurer|util:properties|location|<beans profile|jndi-lookup|JndiObjectFactoryBean' <each context file found>
+grep -nE 'property-placeholder|PlaceholderConfigurer|util:properties|location|<beans profile|jndi-lookup|JndiObjectFactoryBean' <each context file found>
 grep -nE '\$\{[^}]*:' <each context and property file found>
 ```
