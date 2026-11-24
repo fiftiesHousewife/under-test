@@ -2014,6 +2014,7 @@ items:
       - "On Openfire 4.6.0's xmppserver it gives the reviewed hits (it runs in two seconds over 415 tests; a person's review is still to do)"
       - "The under-test-tools repo is created and its jar published, for organisations to mirror (the maintainer's step)"
       - "find-test-anti-patterns runs it and keeps only the other kinds, uncertain hits, proposed decisions and the report"
+      - "A test a class inherits is keyed under each concrete class that runs it, as test reports and connection-paths name it, not under the abstract class that declares it"
     blocked_by:
       - "decide-how-the-journeys-tools-are-packaged"
   - key: "tool-for-run-the-safety-inventory"
