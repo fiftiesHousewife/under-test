@@ -2317,9 +2317,9 @@ items:
     owner_role: "Technical Architect"
     done_by: "person"
     done_when:
-      - "Each test's external systems in testing/tests.yaml carry the grade and its reason (a host, run time, through a mock, no address for tests, local, an embedded server), with a schema change"
+      - "Each test's external systems in testing/tests.yaml carry the grade and its reason (a host, run time, through a mock, no address for tests, local, an embedded server), with a schema change (done: schema and skill)"
       - "Measurement leaves out the tests that reach, runs the rest, and records each may-reach confirmed or cleared and each cannot-reach that called out as a miss"
-      - "The eval case has a test of each grade; on Openfire 4.6.0's server module all 230 chains come out cannot reach"
+      - "The eval case has a test of each grade (written: draft-the-connection-list/grades-every-test, its facts from connection-paths itself; not yet run, as eval runs are paused); on Openfire 4.6.0's server module all 230 chains come out cannot reach (done in connection-paths' facts)"
     blocked_by:
       - "decide-how-each-test-is-graded-for-external-systems"
       - "draft-the-connection-list-keeps-only-judgement"

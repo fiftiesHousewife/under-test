@@ -40,7 +40,8 @@ or uses a connection, where each address comes from, which points stay on the ma
 test that may reach each one with the chain of calls
 ([why](../../../docs/decisions/0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md)).
 It needs Java 17 or later and its jar: the organisation profile's `tools.connection_paths_jar`, else
-`$CONNECTION_PATHS_JAR`. With neither, stop and say so.
+`$CONNECTION_PATHS_JAR`. With neither, stop and say so, unless the person says the facts file below is already there
+and current: then use it, and skip to reading it.
 
 The classpath comes from the build, which may compile but runs no test. Use the repo's wrapper (`sh mvnw`, `./gradlew`)
 if it has one, else the organisation profile's `tools.maven` or `tools.gradle`, else `mvn` or `gradle`:
@@ -104,6 +105,18 @@ For each test in the facts file's `tests`, one `connections` entry per name in i
 reach is the one whose `point` is among the system's `points`):
 
 * `node`: the system's `unique-id`; `kind`: its kind; `found_by: code-path`;
+* `grade` and `reason`, by the first that holds
+  ([why](../../../docs/decisions/0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md)):
+
+  | When | `grade` | `reason` |
+  |---|---|---|
+  | The reach has `through_mock` | `cannot-reach` | `through-a-mock` |
+  | The test's `stand_ins` has an embedded server for the kind (its simple name holds `Ldap` for a directory; `GreenMail` or `Mail` for mail; `WireMock` or `MockWebServer` for `http` and `url`; `Postgres`, `MySql`, `Mongo`, `H2` or `Database` for a database; `Kafka`, `ActiveMQ`, `Artemis` or `Rabbit` for a queue) | `cannot-reach` | `embedded-server` |
+  | `address_for_tests` is `none` | `cannot-reach` | `no-address-for-tests` |
+  | `address_for_tests` is `local` | `cannot-reach` | `local` |
+  | `address_for_tests` is `host` | `reaches` | `host` |
+  | Otherwise (`run-time`, or a facts file before `connection-paths/4`: say to run a newer connection-paths) | `may-reach` | `run-time` |
+
 * `through_set_up`: the reach's `through_set_up`;
 * `via`: the reach's `chain` as `<Class>.<method>` steps (simple class names, no parameters), joined by ` > `.
 
@@ -111,13 +124,14 @@ Then the tests whose own code or the settings they load name a host (spring-boot
 `grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>`). A host is never
 `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` or their subdomains, one ending `.example`, `.test`,
 `.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. Each gets a node by its host, if it
-has none yet, and an entry with `found_by: test-code` or `test-settings` and `where`, the `path:line` naming it.
+has none yet, and an entry with `found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, and
+`where`, the `path:line` naming it.
 
 In `testing/tests.yaml`, replace `connections` in every entry and add an entry (`test`, `at` from the facts file's
-`file:line`, made relative to the repo root) for a test that has none; never touch another skill's keys. An entry left
-with only `test` and `at` goes. Set `found_by.draft-the-connection-list` (`version`, the organisation profile's
-`toolkit.version` or `unreleased`; `commit`, `git rev-parse --short HEAD`). Entries sorted by `test`; every string
-double-quoted. No file yet: start it as find-test-anti-patterns' step 3 says.
+`file:line`, made relative to the repo root, without a leading `./`) for a test that has none; never touch another
+skill's keys. An entry left with only `test` and `at` goes. Set `found_by.draft-the-connection-list` (`version`, the
+organisation profile's `toolkit.version` or `unreleased`; `commit`, `git rev-parse --short HEAD`). Entries sorted by
+`test`; every string double-quoted. No file yet: start it as find-test-anti-patterns' step 3 says.
 
 ## 5. Check, then report
 
@@ -132,4 +146,6 @@ Check the files against their schemas if a validator is at hand. Then tell the p
 3. How much connection-paths resolved, and the dispatch points it didn't follow that a person should look at: the
    three with most implementations.
 4. For the safety inventory: the `process` and `host-lookup` points, by method.
-5. End with: "Every test listed may reach a real system until measurement confirms or clears it."
+5. How many tests are graded each way, and each test graded `reaches`, with its system.
+6. End with: "Measurement leaves out the tests that reach, and runs the rest once under the airgap agent, which
+   confirms or clears each that may reach."

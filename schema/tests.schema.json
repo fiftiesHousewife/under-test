@@ -63,7 +63,7 @@
           "connections": {
             "type": "array",
             "minItems": 1,
-            "description": "Owned by draft-the-connection-list: each system on the connection list the test may reach, and how that was found. 'May': measurement confirms or clears it.",
+            "description": "Owned by draft-the-connection-list: each system on the connection list the test may reach, how that was found, and whether the test can reach it from its own settings. Measurement confirms or clears what it may reach.",
             "items": {
               "type": "object",
               "additionalProperties": false,
@@ -101,6 +101,26 @@
                     "airgap-report"
                   ],
                   "description": "code-path: connection-paths found a chain of calls from the test to where the connection is opened; test-code: the test's own code names the host; test-settings: a file the test loads names it (properties, YAML, Spring XML, Spring Boot's settings); airgap-report: only the agent saw it."
+                },
+                "grade": {
+                  "enum": [
+                    "reaches",
+                    "may-reach",
+                    "cannot-reach"
+                  ],
+                  "description": "reaches: measurement leaves the test out, and repair twins it; may-reach: its one run under the airgap agent confirms or clears it; cannot-reach: it runs, and a call out is a miss of discovery."
+                },
+                "reason": {
+                  "enum": [
+                    "host",
+                    "run-time",
+                    "through-a-mock",
+                    "embedded-server",
+                    "no-address-for-tests",
+                    "local",
+                    "airgap-report"
+                  ],
+                  "description": "Why the grade: the test's settings give a host, or the address is known only at run time; or the chain calls a mock first, the test starts an embedded server of that kind, its settings give no address, or the address stays on the machine; or the airgap agent saw the call."
                 },
                 "through_set_up": {
                   "type": "boolean",

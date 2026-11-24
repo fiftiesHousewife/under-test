@@ -1,0 +1,302 @@
+{
+  "classpath_notes" : [ ],
+  "connection_points" : [ {
+    "address" : {
+      "source" : "literal",
+      "value" : "jdbc:h2:mem:archive"
+    },
+    "call" : "java.sql.DriverManager#getConnection",
+    "file" : "./src/main/java/com/example/orders/ArchiveStore.java",
+    "kind" : "database",
+    "line" : 9,
+    "local" : "an H2 database in memory or in a file",
+    "method" : "com.example.orders.ArchiveStore#archive(String)"
+  }, {
+    "address" : {
+      "setting_file" : "./src/main/resources/application.properties",
+      "setting_line" : 3,
+      "setting_value" : "ldap://directory.acme.internal:389",
+      "source" : "setting",
+      "value" : "ldap.url",
+      "via" : "settings.getProperty"
+    },
+    "call" : "javax.naming.directory.InitialDirContext#<init>",
+    "file" : "./src/main/java/com/example/orders/Directory.java",
+    "kind" : "directory",
+    "line" : 20,
+    "method" : "com.example.orders.Directory#knows(String)"
+  }, {
+    "address" : {
+      "setting_file" : "./src/main/resources/application.properties",
+      "setting_line" : 2,
+      "setting_value" : "smtp.acme.internal",
+      "source" : "setting",
+      "value" : "mail.smtp.host",
+      "via" : "settings.getProperty"
+    },
+    "call" : "java.net.Socket#<init>",
+    "file" : "./src/main/java/com/example/orders/Notifier.java",
+    "kind" : "socket",
+    "line" : 17,
+    "method" : "com.example.orders.Notifier#send(String)"
+  }, {
+    "address" : {
+      "placeholder" : true,
+      "setting_file" : "./src/main/resources/application.properties",
+      "setting_line" : 1,
+      "setting_value" : "${ORDERS_DB_URL}",
+      "source" : "setting",
+      "value" : "orders.db.url",
+      "via" : "settings.getProperty"
+    },
+    "call" : "java.sql.DriverManager#getConnection",
+    "file" : "./src/main/java/com/example/orders/OrderStore.java",
+    "kind" : "database",
+    "line" : 16,
+    "method" : "com.example.orders.OrderStore#count()"
+  }, {
+    "address" : {
+      "source" : "literal",
+      "value" : "https://partner.payments.internal/pay"
+    },
+    "call" : "java.net.URL#openStream",
+    "file" : "./src/test/java/com/example/orders/PaymentsSmokeTest.java",
+    "kind" : "url",
+    "line" : 12,
+    "method" : "com.example.orders.PaymentsSmokeTest#paysThePartner()"
+  }, {
+    "address" : {
+      "source" : "literal",
+      "value" : "https://prices.acme.internal/prices/{?}"
+    },
+    "call" : "java.net.URL#openStream",
+    "file" : "./src/main/java/com/example/orders/PriceClient.java",
+    "kind" : "url",
+    "line" : 9,
+    "method" : "com.example.orders.PriceClient#price(String)"
+  }, {
+    "address" : {
+      "source" : "system-property",
+      "value" : "rates.url"
+    },
+    "call" : "java.net.URL#openStream",
+    "file" : "./src/main/java/com/example/orders/RatesClient.java",
+    "kind" : "url",
+    "line" : 9,
+    "method" : "com.example.orders.RatesClient#rate(String)"
+  } ],
+  "dispatch_points_not_followed" : [ ],
+  "not_resolved" : [ {
+    "reason" : "UnsolvedSymbolException: Unsolved symbol : org.junit.jupiter.api.Assertions",
+    "count" : 5,
+    "example" : "./src/test/java/com/example/orders/ArchiveStoreTest.java:10 Unsolved symbol : org.junit.jupiter.api.Assertions"
+  }, {
+    "reason" : "UnsolvedSymbolException: Unsolved symbol in an expression",
+    "count" : 2,
+    "example" : "./src/test/java/com/example/orders/DirectoryTest.java:13 Unsolved symbol in EmbeddedLdapRuleBuilder.newInstance().bindingToPort(12345).build() : Em..."
+  }, {
+    "reason" : "UnsolvedSymbolException: Unsolved symbol : EmbeddedLdapRuleBuilder",
+    "count" : 1,
+    "example" : "./src/test/java/com/example/orders/DirectoryTest.java:13 Unsolved symbol in EmbeddedLdapRuleBuilder.newInstance() : EmbeddedLdapRuleBuilder"
+  }, {
+    "reason" : "UnsolvedSymbolException: Unsolved symbol : org.junit.Assert",
+    "count" : 1,
+    "example" : "./src/test/java/com/example/orders/DirectoryTest.java:19 Unsolved symbol : org.junit.Assert"
+  }, {
+    "reason" : "UnsolvedSymbolException: Unsolved symbol : org.mockito.Mockito",
+    "count" : 1,
+    "example" : "./src/test/java/com/example/orders/OrderServiceTest.java:26 Unsolved symbol : org.mockito.Mockito"
+  } ],
+  "schema" : "connection-paths/4",
+  "summary" : {
+    "calls_not_resolved" : 10,
+    "calls_resolved" : 47,
+    "files" : 13,
+    "files_not_parsed" : 0,
+    "methods" : 19,
+    "tests" : 7,
+    "tests_reaching" : 7,
+    "tests_starting_a_framework" : 0
+  },
+  "systems" : [ {
+    "address" : {
+      "setting_file" : "./src/main/resources/application.properties",
+      "setting_line" : 3,
+      "setting_value" : "ldap://directory.acme.internal:389",
+      "source" : "setting",
+      "value" : "ldap.url",
+      "via" : "settings.getProperty"
+    },
+    "alternatives" : [ ],
+    "kinds" : [ "directory" ],
+    "name" : "directory.acme.internal",
+    "named_by" : "host",
+    "points" : [ "com.example.orders.Directory#knows(String)" ],
+    "shared_chain" : [ "com.example.orders.Directory#knows(String)" ],
+    "tests" : 1
+  }, {
+    "address" : {
+      "placeholder" : true,
+      "setting_file" : "./src/main/resources/application.properties",
+      "setting_line" : 1,
+      "setting_value" : "${ORDERS_DB_URL}",
+      "source" : "setting",
+      "value" : "orders.db.url",
+      "via" : "settings.getProperty"
+    },
+    "alternatives" : [ ],
+    "kinds" : [ "database" ],
+    "name" : "orders.db.url",
+    "named_by" : "setting",
+    "points" : [ "com.example.orders.OrderStore#count()" ],
+    "shared_chain" : [ "com.example.orders.OrderService#orders()", "com.example.orders.OrderStore#count()" ],
+    "tests" : 1
+  }, {
+    "address" : {
+      "source" : "literal",
+      "value" : "https://partner.payments.internal/pay"
+    },
+    "alternatives" : [ ],
+    "kinds" : [ "url" ],
+    "name" : "partner.payments.internal",
+    "named_by" : "host",
+    "points" : [ "com.example.orders.PaymentsSmokeTest#paysThePartner()" ],
+    "shared_chain" : [ ],
+    "tests" : 1
+  }, {
+    "address" : {
+      "source" : "literal",
+      "value" : "https://prices.acme.internal/prices/{?}"
+    },
+    "alternatives" : [ ],
+    "kinds" : [ "url" ],
+    "name" : "prices.acme.internal",
+    "named_by" : "host",
+    "points" : [ "com.example.orders.PriceClient#price(String)" ],
+    "shared_chain" : [ "com.example.orders.PriceClient#price(String)" ],
+    "tests" : 1
+  }, {
+    "address" : {
+      "source" : "system-property",
+      "value" : "rates.url"
+    },
+    "alternatives" : [ ],
+    "kinds" : [ "url" ],
+    "name" : "rates.url",
+    "named_by" : "system-property",
+    "points" : [ "com.example.orders.RatesClient#rate(String)" ],
+    "shared_chain" : [ "com.example.orders.RatesClient#rate(String)" ],
+    "tests" : 1
+  }, {
+    "address" : {
+      "setting_file" : "./src/main/resources/application.properties",
+      "setting_line" : 2,
+      "setting_value" : "smtp.acme.internal",
+      "source" : "setting",
+      "value" : "mail.smtp.host",
+      "via" : "settings.getProperty"
+    },
+    "alternatives" : [ ],
+    "kinds" : [ "socket" ],
+    "name" : "smtp.acme.internal",
+    "named_by" : "host",
+    "points" : [ "com.example.orders.Notifier#send(String)" ],
+    "shared_chain" : [ "com.example.orders.OrderService#confirm(String)", "com.example.orders.Notifier#send(String)" ],
+    "tests" : 1
+  } ],
+  "tests" : [ {
+    "file" : "./src/test/java/com/example/orders/ArchiveStoreTest.java",
+    "line" : 8,
+    "reaches" : [ {
+      "address_for_tests" : "local",
+      "chain" : [ "com.example.orders.ArchiveStoreTest#archives()", "com.example.orders.ArchiveStore#archive(String)" ],
+      "kind" : "database",
+      "point" : "com.example.orders.ArchiveStore#archive(String)",
+      "through_set_up" : false
+    } ],
+    "stand_ins" : [ ],
+    "systems" : [ ],
+    "test" : "com.example.orders.ArchiveStoreTest.archives"
+  }, {
+    "file" : "./src/test/java/com/example/orders/DirectoryTest.java",
+    "line" : 15,
+    "reaches" : [ {
+      "address_for_tests" : "local",
+      "chain" : [ "com.example.orders.DirectoryTest#findsAUser()", "com.example.orders.Directory#knows(String)" ],
+      "kind" : "directory",
+      "point" : "com.example.orders.Directory#knows(String)",
+      "through_set_up" : false
+    } ],
+    "stand_ins" : [ "org.zapodot.junit.ldap.EmbeddedLdapRule" ],
+    "systems" : [ "directory.acme.internal" ],
+    "test" : "com.example.orders.DirectoryTest.findsAUser"
+  }, {
+    "file" : "./src/test/java/com/example/orders/OrderServiceTest.java",
+    "line" : 23,
+    "reaches" : [ {
+      "address_for_tests" : "host",
+      "chain" : [ "com.example.orders.OrderServiceTest#confirmsByMail()", "com.example.orders.OrderService#confirm(String)", "com.example.orders.Notifier#send(String)" ],
+      "kind" : "socket",
+      "point" : "com.example.orders.Notifier#send(String)",
+      "through_mock" : "com.example.orders.Notifier#send(String)",
+      "through_set_up" : false
+    } ],
+    "stand_ins" : [ ],
+    "systems" : [ "smtp.acme.internal" ],
+    "test" : "com.example.orders.OrderServiceTest.confirmsByMail"
+  }, {
+    "file" : "./src/test/java/com/example/orders/OrderServiceTest.java",
+    "line" : 17,
+    "reaches" : [ {
+      "address_for_tests" : "none",
+      "chain" : [ "com.example.orders.OrderServiceTest#countsOrders()", "com.example.orders.OrderService#orders()", "com.example.orders.OrderStore#count()" ],
+      "kind" : "database",
+      "point" : "com.example.orders.OrderStore#count()",
+      "through_set_up" : false
+    } ],
+    "stand_ins" : [ ],
+    "systems" : [ "orders.db.url" ],
+    "test" : "com.example.orders.OrderServiceTest.countsOrders"
+  }, {
+    "file" : "./src/test/java/com/example/orders/PaymentsSmokeTest.java",
+    "line" : 10,
+    "reaches" : [ {
+      "address_for_tests" : "host",
+      "chain" : [ "com.example.orders.PaymentsSmokeTest#paysThePartner()" ],
+      "kind" : "url",
+      "point" : "com.example.orders.PaymentsSmokeTest#paysThePartner()",
+      "through_set_up" : false
+    } ],
+    "stand_ins" : [ ],
+    "systems" : [ "partner.payments.internal" ],
+    "test" : "com.example.orders.PaymentsSmokeTest.paysThePartner"
+  }, {
+    "file" : "./src/test/java/com/example/orders/PriceClientTest.java",
+    "line" : 8,
+    "reaches" : [ {
+      "address_for_tests" : "host",
+      "chain" : [ "com.example.orders.PriceClientTest#fetchesAPrice()", "com.example.orders.PriceClient#price(String)" ],
+      "kind" : "url",
+      "point" : "com.example.orders.PriceClient#price(String)",
+      "through_set_up" : false
+    } ],
+    "stand_ins" : [ ],
+    "systems" : [ "prices.acme.internal" ],
+    "test" : "com.example.orders.PriceClientTest.fetchesAPrice"
+  }, {
+    "file" : "./src/test/java/com/example/orders/RatesClientTest.java",
+    "line" : 8,
+    "reaches" : [ {
+      "address_for_tests" : "run-time",
+      "chain" : [ "com.example.orders.RatesClientTest#readsARate()", "com.example.orders.RatesClient#rate(String)" ],
+      "kind" : "url",
+      "point" : "com.example.orders.RatesClient#rate(String)",
+      "through_set_up" : false
+    } ],
+    "stand_ins" : [ ],
+    "systems" : [ "rates.url" ],
+    "test" : "com.example.orders.RatesClientTest.readsARate"
+  } ],
+  "tests_starting_a_framework" : [ ],
+  "tool_version" : "0.1.0"
+}
