@@ -94,9 +94,10 @@
       "enum": [
         "connection-paths/1",
         "connection-paths/2",
-        "connection-paths/3"
+        "connection-paths/3",
+        "connection-paths/4"
       ],
-      "description": "Version 2 adds each point's address and whether it stays local, the systems, and each test's systems; version 3 adds the tests that start a framework. Nothing is ever removed."
+      "description": "Version 2 adds each point's address and whether it stays local, the systems, and each test's systems; version 3 adds the tests that start a framework; version 4 adds, for each reach, the first call on a mock and the address as the test's settings give it, and each test's embedded servers. Nothing is ever removed."
     },
     "tool_version": {
       "type": "string"
@@ -294,6 +295,19 @@
                   "items": {
                     "$ref": "#/$defs/method"
                   }
+                },
+                "through_mock": {
+                  "$ref": "#/$defs/method",
+                  "description": "Version 4, left out when none: the first step after the test that is an instance method of a type the test mocks (a @Mock, @MockBean or @MockitoBean field, or mock(T.class) in the test, what runs with it, or test helpers it calls), or of a subtype. That call runs the mock, not the code after it."
+                },
+                "address_for_tests": {
+                  "enum": [
+                    "host",
+                    "local",
+                    "none",
+                    "run-time"
+                  ],
+                  "description": "Version 4, always present: the reached point's address as the settings on the test classpath give it (src/test/resources before src/main/resources). none: no file gives the setting a value, or only a placeholder, so the test cannot reach the system; local: it stays on the machine; host: a host can be read; run-time: it comes from a parameter, run-time code, an environment variable, a system property or a JNDI name."
                 }
               }
             }
@@ -304,6 +318,13 @@
               "type": "string"
             },
             "description": "Version 2: the systems the test may reach, by name."
+          },
+          "stand_ins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Version 4, always present: the full class names of embedded servers the test class (or a superclass or outer class) starts as a @Rule, @ClassRule or @RegisterExtension field, such as GreenMail, WireMock, MockWebServer, embedded Postgres or EmbeddedKafka: a stand-in already in place."
           }
         }
       }
