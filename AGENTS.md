@@ -95,6 +95,9 @@ Never run another repo's tests or application unless its secrets scan is clean, 
 reached (see [Old code runs first only where production cannot be reached](decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md)).
 Building it, or resolving its dependencies, without running tests is allowed before that
 (see [A repo may be built, without running its tests, before the safety gate](docs/decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)).
+The one exception is the field trial's old releases of public repos: to check the toolkit's tools, their tests may run
+without a safety inventory, and only under the airgap agent with every call to another machine refused
+(see [The field trial's public repos run their tests under the airgap agent without a safety inventory first](docs/decisions/0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md)).
 
 ## Before you finish
 Run `./gradlew check`. It must pass. Push only with `maintainer-tools/sync/sync.sh "What changed"`, which syncs the issues and
