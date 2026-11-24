@@ -93,9 +93,10 @@
     "schema": {
       "enum": [
         "connection-paths/1",
-        "connection-paths/2"
+        "connection-paths/2",
+        "connection-paths/3"
       ],
-      "description": "Version 2 adds each point's address and whether it stays local, the systems, and each test's systems; nothing is removed."
+      "description": "Version 2 adds each point's address and whether it stays local, the systems, and each test's systems; version 3 adds the tests that start a framework. Nothing is ever removed."
     },
     "tool_version": {
       "type": "string"
@@ -133,6 +134,10 @@
         },
         "tests_reaching": {
           "$ref": "#/$defs/count"
+        },
+        "tests_starting_a_framework": {
+          "$ref": "#/$defs/count",
+          "description": "Version 3: how many tests start a framework."
         }
       }
     },
@@ -299,6 +304,41 @@
               "type": "string"
             },
             "description": "Version 2: the systems the test may reach, by name."
+          }
+        }
+      }
+    },
+    "tests_starting_a_framework": {
+      "type": "array",
+      "description": "Version 3: the tests whose class, a superclass in the source, or the class around a @Nested one starts a framework (Spring, Testcontainers, Quarkus, Micronaut, Arquillian) by annotation. Starting one may open connections whatever the test's body does. A test can be here and in tests.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "test",
+          "file",
+          "line",
+          "framework",
+          "annotated_on"
+        ],
+        "properties": {
+          "test": {
+            "type": "string",
+            "description": "The same key as in tests: the fully qualified class, a dot, the method."
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "$ref": "#/$defs/count"
+          },
+          "framework": {
+            "type": "string",
+            "description": "The annotation as written, such as @SpringBootTest, @Testcontainers or @RunWith(SpringJUnit4ClassRunner.class)."
+          },
+          "annotated_on": {
+            "type": "string",
+            "description": "The class carrying the annotation: the test's own, a superclass in the source, or a class around a @Nested one."
           }
         }
       }
