@@ -2256,4 +2256,43 @@ items:
       - "connection-paths' own name is settled in its repo"
     blocked_by:
       - "decide-external-system-replaces-connection"
+  - key: "decide-all-our-java-follows-one-quality-plugin"
+    status: "done"
+    type: "decision"
+    title: "All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies"
+    parent: "this-repo-keeps-itself-in-order"
+    phase: "set-up"
+    horizon: "now"
+    owner_role: "Toolkit Owner"
+    done_by: "person"
+    done_when:
+      - "Toolkit maintainers accept, narrow or replace the proposed outcome"
+    decision_record: "docs/decisions/0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md"
+  - key: "java-conventions-plugin"
+    type: "deliverable"
+    title: "The java-conventions plugin: our code-quality standards in their own repo, published to Maven Central"
+    parent: "this-repo-keeps-itself-in-order"
+    phase: "set-up"
+    horizon: "now"
+    owner_role: "Toolkit Owner"
+    done_by: "person"
+    done_when:
+      - "The repo is created by a maintainer and seeded from connection-paths' conventions once its restructure is done"
+      - "It enforces the decision's rules, the tighter ones included, with the rule files inside its jar; each rule has a case it fails"
+      - "Published to Maven Central, signed, with its plugin marker; a repo applies it with a pinned version and mavenCentral() in pluginManagement"
+    blocked_by:
+      - "decide-all-our-java-follows-one-quality-plugin"
+  - key: "our-repos-apply-the-java-conventions-plugin"
+    type: "deliverable"
+    title: "The toolkit, connection-paths, under-test-tools and the lessons repo apply the java-conventions plugin instead of their copies"
+    parent: "this-repo-keeps-itself-in-order"
+    phase: "set-up"
+    horizon: "now"
+    owner_role: "Toolkit Owner"
+    done_by: "person"
+    done_when:
+      - "Each repo's build-logic copy and config/quality are gone, and check passes under the plugin, the tighter rules' findings fixed"
+      - "AGENTS.md's code standards in each repo name the plugin and its rules"
+    blocked_by:
+      - "java-conventions-plugin"
 

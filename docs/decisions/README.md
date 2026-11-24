@@ -31,6 +31,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The journey's mechanical steps are one command-line tool, with a sub-command per step, in its own repo](0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md) | proposed | Toolkit maintainers |
 | [External system replaces the word connection](0081-external-system-replaces-the-word-connection.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies](0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
