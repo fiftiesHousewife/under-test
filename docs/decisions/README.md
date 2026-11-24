@@ -34,6 +34,8 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies](0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [For-each loops are flagged, not forbidden](0083-for-each-loops-are-flagged-not-forbidden.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The quality plugin may pull Gradle plugins from the Gradle Plugin Portal](0084-the-quality-plugin-may-pull-gradle-plugins-from-the-gradle-plugin-portal.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The external systems list is checked on real repos against a run of every test under the airgap agent](0088-the-external-systems-list-is-checked-on-real-repos-against-a-run-of-every-test-under-the-airgap-agent.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The field trial's public repos run their tests under the airgap agent without a safety inventory first](0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 

@@ -1,0 +1,27 @@
+// Runs a Gradle build's tests under the airgap agent, refusing every call to another machine, with airgap-junit on the
+// test classpath so each reported call names its test. Nothing in the build changes.
+//
+//   ./gradlew test --init-script airgap-named.init.gradle -Dairgap.agent=<agent jar> -Dairgap.junit=<airgap-junit jar> \
+//       -Dairgap.project=<package prefix> [-Dmockito.agent=<mockito-core jar>]
+//
+// Each test task's report is build/airgap/<task name>/calls.jsonl; no report means no risky calls. Failing tests don't
+// fail the build, so every test runs. -Dmockito.agent loads Mockito as an agent at start, for machines that refuse
+// its usual self-attach.
+def agentJar = new File(System.getProperty("airgap.agent"))
+def junitJar = new File(System.getProperty("airgap.junit"))
+def packages = System.getProperty("airgap.project", "")
+allprojects {
+    plugins.withId('java') { dependencies { testRuntimeOnly files(junitJar) } }
+    tasks.withType(Test).configureEach { test ->
+        def report = new File(test.project.layout.buildDirectory.get().asFile, "airgap/${test.name}/calls.jsonl")
+        test.doFirst { report.delete() }
+        test.jvmArgs("-Xbootclasspath/a:${agentJar.absolutePath}",
+                "-javaagent:${agentJar.absolutePath}=mode=refuse;report=${report.absolutePath};root=${test.project.rootDir.absolutePath};project=${packages}",
+                "-Djdk.attach.allowAttachSelf=true", "-Djava.awt.headless=true")
+        if (System.getProperty("mockito.agent")) {
+            test.jvmArgs("-javaagent:" + System.getProperty("mockito.agent"))
+        }
+        test.outputs.upToDateWhen { false }
+        test.ignoreFailures = true
+    }
+}

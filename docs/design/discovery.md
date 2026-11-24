@@ -14,7 +14,7 @@ done by a tool, and the skill keeps the judgement
 
 | Order | Skill | Runs | Finds | Writes, and owns |
 |---|---|---|---|---|
-| 1 | [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) | the build's dependency resolution; [connection-paths](https://github.com/fiftiesHousewife/connection-paths) | Every place the code opens or uses a connection, each connection's address (or where it will come from), the systems they make, and every test that may reach one, with the chain of calls ([why](../decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)) | `external-systems.calm.json`; `connection-paths.json`; in `tests.yaml`, each test's `connections` |
+| 1 | [draft-the-external-systems-list](../../.github/skills/draft-the-external-systems-list/SKILL.md) | the build's test compile; [connection-paths](https://github.com/fiftiesHousewife/connection-paths) | Every place the code opens or uses a connection, each connection's address (or where it will come from), the systems they make, and every test that may reach one, with the chain of calls ([why](../decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)) | `external-systems.calm.json`; `connection-paths.json`; in `tests.yaml`, each test's `connections` |
 | 2 | [find-meaningless-and-unreliable-tests](../../.github/skills/find-meaningless-and-unreliable-tests/SKILL.md) | PMD with the toolkit's rules | Meaningless tests (never run, can't fail, check only their mocks) and unreliable ones (sleep, depend on order) ([why](../decisions/0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)) | In `tests.yaml`, each test's `meaningless` and `unreliable`; `assessment.yaml`: `meaningless_tests`, `unreliable_tests` |
 | | (no skill) | — | The sources that count for intended behaviour | `sources.yaml` |
 
@@ -49,3 +49,6 @@ and adds flaky and failing tests to `tests.yaml`.
 * The repair step, which reads these lists after measurement: each test that reaches an external system becomes a
   pair, one injecting a stand-in and one tagged external
   ([why](../decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)).
+
+How maintainers check, on real repos, that this step finds every test that reaches another machine:
+[Checking discovery against a run under the airgap agent](checking-discovery-against-a-run-under-the-airgap-agent.md).
