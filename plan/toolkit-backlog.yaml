@@ -1438,6 +1438,18 @@ items:
       - "check-install.sh runs in CI"
     blocked_by:
       - "decide-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag"
+  - key: "decide-all-our-java-applies-the-java-conventions-plugin"
+    status: "done"
+    type: "decision"
+    title: "All our Java applies the java-conventions plugin, which holds our code-quality standards"
+    parent: "the-toolkit-is-ready-to-use-in-any-repo"
+    phase: "set-up"
+    horizon: "now"
+    owner_role: "Toolkit Owner"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md"
   - key: "decide-the-apm-package-carries-only-the-journey-skills"
     status: "done"
     type: "decision"
@@ -2458,6 +2470,7 @@ items:
     done_by: "person"
     done_when:
       - "Toolkit maintainers accept, narrow or replace the proposed outcome"
+    notes: "Replaced by All our Java applies the java-conventions plugin, which holds our code-quality standards (0100)."
     decision_record: "docs/decisions/0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md"
   - key: "java-conventions-plugin"
     type: "deliverable"

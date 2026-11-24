@@ -8,6 +8,8 @@ group: Using the toolkit in an organisation
 
 **Decided by:** Toolkit maintainers · **Status:** accepted
 
+> Narrowed by [All our Java applies the java-conventions plugin, which holds our code-quality standards](0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement

@@ -3,7 +3,7 @@
 Always push this way:
 
 ```bash
-maintainer-tools/sync/sync.sh "What changed"
+maintainer-tools/sync/sync.sh "What changed"            # add --relink to try every issue link again
 ```
 
 In order, it checks the build, commits, brings this repo's GitHub issues up to date with

@@ -1,12 +1,14 @@
 ---
-status: accepted
+status: superseded
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The quality plugin may pull Gradle plugins from the Gradle Plugin Portal
 
-**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [All our Java applies the java-conventions plugin, which holds our code-quality standards](0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md).
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 

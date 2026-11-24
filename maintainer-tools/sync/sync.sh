@@ -3,7 +3,9 @@
 # with plan/toolkit-backlog.yaml, refreshes docs/BACKLOG.md (a readable, ordered table of the open issues), commits that,
 # and only then pushes, once.
 #
-#   maintainer-tools/sync/sync.sh "Commit message"
+#   maintainer-tools/sync/sync.sh "Commit message" [--relink]
+#
+# --relink tries every issue link again (sub-issues and blocked-by), not only those of issues written in this run.
 #
 # Needs: JDK 25, git, Python 3, and a token that can write issues in UNDERTEST_GITHUB_TOKEN. If that isn't set and the
 # GitHub CLI happens to be logged in, its token is borrowed. Safe to re-run: every step skips what is already done.
@@ -28,7 +30,7 @@ if [ -z "${UNDERTEST_GITHUB_TOKEN:-}" ] && command -v gh >/dev/null && env -u GI
   UNDERTEST_GITHUB_TOKEN="$(env -u GITHUB_TOKEN gh auth token)"
 fi
 export UNDERTEST_GITHUB_TOKEN="${UNDERTEST_GITHUB_TOKEN:?set UNDERTEST_GITHUB_TOKEN to a token that can write issues}"
-python3 -u tools/backlog-import/import_to_github.py "$REPO" --apply --file plan/toolkit-backlog.yaml --page docs/BACKLOG.md
+python3 -u tools/backlog-import/import_to_github.py "$REPO" --apply --file plan/toolkit-backlog.yaml --page docs/BACKLOG.md "${@:2}"
 git add docs/BACKLOG.md
 git diff --cached --quiet || git commit -q -m "Refresh backlog page" -m "$COAUTHOR"
 

@@ -1,12 +1,14 @@
 ---
-status: accepted
+status: superseded
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies
 
-**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
+**Decided by:** Toolkit maintainers · **Status:** superseded
+
+> Replaced by [All our Java applies the java-conventions plugin, which holds our code-quality standards](0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md).
 
 > Narrowed by [For-each loops are flagged, not forbidden](0083-for-each-loops-are-flagged-not-forbidden.md), [The quality plugin may pull Gradle plugins from the Gradle Plugin Portal](0084-the-quality-plugin-may-pull-gradle-plugins-from-the-gradle-plugin-portal.md).
 

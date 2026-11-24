@@ -76,7 +76,7 @@ External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with
 | No unsafe, deprecated, internal or non-portable JDK APIs, and no reflection tricks | forbidden-APIs bundled signatures |
 | Methods short and simple: 20 lines or fewer (blank lines not counted), cyclomatic complexity 5 or less, cognitive complexity 6 or less, NPath complexity under 50, boolean expressions of 3 operators or fewer; files of 150 lines or fewer | Checkstyle and PMD |
 | No comment on a field (name it, or say it on the class or method); Javadoc only on public API, other comments as `//` | Checkstyle |
-| Advice, never failing the build: a stream or `forEach` rather than a for-each loop | PMD, in `pmdAdvice` ([why](docs/decisions/0083-for-each-loops-are-flagged-not-forbidden.md)) |
+| Advice, never failing the build: a stream or `forEach` rather than a for-each loop | PMD, in `pmdAdvice` ([why](docs/decisions/0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md)) |
 | No copy-pasted code (75 tokens or more) | PMD's copy-paste detector (`cpdCheck`) |
 | No bug patterns or security bugs | SpotBugs with FindSecBugs |
 | No dependency with a known vulnerability | OSV check in `maintainer-tools/repo-checks` (planned; a one-off check found none) |

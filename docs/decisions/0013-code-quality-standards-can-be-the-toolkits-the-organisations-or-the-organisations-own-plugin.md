@@ -27,10 +27,10 @@ Proposed: the first option.
 
 ### Consequences
 
-* Implemented in the java-conventions plugin of [All our Java follows one set of code-quality standards: a plugin published to Maven Central that every repo applies](0082-all-our-java-follows-one-set-of-code-quality-standards-a-plugin-published-to-maven-central-that-every-repo-applies.md).
+* Implemented in the java-conventions plugin of [All our Java applies the java-conventions plugin, which holds our code-quality standards](0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md).
 
 ## More Information
 
 * Builds on: [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [All our Java applies the java-conventions plugin, which holds our code-quality standards](0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md)
 * Background: none
