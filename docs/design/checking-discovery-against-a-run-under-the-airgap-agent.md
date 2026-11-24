@@ -69,8 +69,8 @@ graded cannot reach that called out is the serious fault, and so is a miss.
 
 ## Results so far
 
-| Repo | Tests run | Tests that called out | Recall | Precision | Main causes of false alarms |
+| Repo | Tests run | Tests that called out | Missed (no chain) | Flagged but made no outside call | Main causes of false alarms |
 |---|---|---|---|---|---|
-| Openfire 4.6.0, `xmppserver` (Maven, JUnit 4) | 461: 448 passed, 13 skipped | 0 | nothing to find | 0 false alarms before connection-paths 46b03d3; 174 after | A lookup behind a database connection that can't open; the DNS context's constructor taken as the lookup; implementations chosen by a setting the tests don't set |
-| spring-petclinic (Gradle, Spring Boot) | 81: 77 passed, 4 skipped (no Docker) | 0 | nothing to find | 21 false alarms | Spring Data calls given their argument as the address; HTTP to the application under test on localhost |
-| jsoup 1.15.3 (Maven, JUnit 5), disabled tests run | 1,165: 1,124 passed, 41 failed | 40, to 20 hosts | 40 of 40 | 40 of 107 | jsoup's own test web server on localhost not seen as a stand-in; none graded reaches, as addresses written in the test aren't followed into the request builder |
+| Openfire 4.6.0, `xmppserver` (Maven, JUnit 4) | 461: 448 passed, 13 skipped | 0 | none to miss | 0 before connection-paths 46b03d3; 174 after | A lookup behind a database connection that can't open; the DNS context's constructor taken as the lookup; implementations chosen by a setting the tests don't set |
+| spring-petclinic (Gradle, Spring Boot) | 81: 77 passed, 4 skipped (no Docker) | 0 | none to miss | 21 | Spring Data calls given their argument as the address; HTTP to the application under test on localhost |
+| jsoup 1.15.3 (Maven, JUnit 5), disabled tests run | 1,165: 1,124 passed, 41 failed | 40, to 20 hosts | 0 | 67 of the 107 flagged | jsoup's own test web server on localhost not seen as a stand-in; none graded reaches, as addresses written in the test aren't followed into the request builder |
