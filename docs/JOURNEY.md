@@ -8,9 +8,9 @@ Excalidraw.
 ```mermaid
 %%{init: {"flowchart": {"wrappingWidth": 230, "nodeSpacing": 28, "rankSpacing": 36}}}%%
 flowchart LR
-    D["<b>1. Discovery</b><br/>connection list · existing tests and their anti-patterns · source list; only the build runs"] --> S["<b>2. Safety inventory</b><br/>the gate before the first run: secrets, real data, jobs that start themselves"]
+    D["<b>1. Discovery</b><br/>external systems list · meaningless and unreliable tests · source list; only the build runs"] --> S["<b>2. Safety inventory</b><br/>the gate before the first run: secrets, real data, jobs that start themselves"]
     S --> M["<b>3. Measurement</b><br/>the first run, in stages: build, one run, repeats, planted bugs"]
-    M --> R["<b>4. Repair</b><br/>the existing tests made trustworthy, test code only, then measure again"]
+    M --> R["<b>4. Repair</b><br/>each test reaching an external system twinned: stand-in and real, test code only"]
     R --> C["<b>5. Capture current behaviour</b><br/>capture, clean in place, check, approval tests, then measure again"]
     C --> B["<b>6. Intended behaviour</b><br/>specification from sources and experts"]
     B --> P["<b>7. Testing plan</b><br/>techniques, target level, approved"]
@@ -27,16 +27,21 @@ its build, which may resolve dependencies and compile without running a test
 ([why](decisions/0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)), and nothing found is
 copied anywhere if it is a secret ([why](decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).
 
-The [draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) skill comes first. It runs
+Discovery keeps three lists of tests apart, each with one owner
+([why](decisions/0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)).
+**Tests that reach external systems** come first, from the
+[draft-the-connection-list](../.github/skills/draft-the-connection-list/SKILL.md) skill, to be renamed for the
+external systems list ([why](decisions/0081-external-system-replaces-the-word-connection.md)). It runs
 [connection-paths](https://github.com/fiftiesHousewife/connection-paths), a tool that reads the code and finds every
-place it opens a connection (a database, an HTTP service, mail, a directory, a queue, a socket) and every test that may
-reach one, with the chain of calls that gets there. The skill traces each connection's address to the code or the
-settings, or records where it will come from, and drafts the connection list: one system each, with a proposed
-stand-in and the addresses tests must never reach, for the Architecture Owner to confirm. Each test's connections go
-into the repo's list of tests ([why](decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)).
-Then the [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill checks the repo's own
-tests with PMD and the toolkit's rules: tests that never run, are disabled, have no real assertion, swallow their own
-failures, sleep, depend on order, mock everything or are copies, and those that reach external systems. Each is
+reach point, where it opens or uses an external system (a database, an HTTP service, mail, a directory, a queue, a
+socket), and every test that may reach one, with the chain of calls that gets there. The skill traces each address to
+the code or the settings, or records where it will come from, and drafts the external systems list, with a proposed
+stand-in for each and the addresses tests must never reach, for the Architecture Owner to confirm. Each test's
+external systems go into the repo's list of tests ([why](decisions/0068-finding-what-the-code-connects-to-is-one-job-in-the-connection-list-skill-done-before-any-code-runs.md)).
+Then the [find-test-anti-patterns](../.github/skills/find-test-anti-patterns/SKILL.md) skill, to be renamed for what it
+now finds, checks the repo's own tests with PMD and the toolkit's rules, in one pass, for the other two lists:
+**meaningless tests**, that never run (disabled, or never picked up), can't fail (no real assertion, or a swallowed
+failure) or check only their mocks; and **unreliable tests**, that sleep or depend on the order they run in. Each is
 recorded and triaged, and no existing test is deleted before current behaviour is recorded. The Knowledge Curator lists
 the sources that count: regression packs, wiki pages, tracker queries, other repos, and the test assets that live
 outside the repo, such as automation suites run against a shared test environment and manual test scripts. Those keep
@@ -103,32 +108,28 @@ It runs again after repair, on the same settings. It also records the mix of tes
 
 ## 4. Repair
 
-Measurement shows which existing tests can't be trusted; repair makes them trustworthy before anything is built on
-them, changing only test code
+Repair makes the tests that reach external systems safe to run and still worth running, changing only test code
 ([why](decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)).
-It works one connection, then one kind of problem, at a time, each change a pull request a person reviews:
+Each such test becomes a pair from one set of test bodies: one run injects the external system's stand-in and joins
+the normal runs, the other is tagged `external` and runs against the real system on a schedule, where its test
+instance can be reached
+([why](decisions/0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md)).
+With JUnit 5 or 6 the pair is a test interface and two classes; with JUnit 4, where the repo must stay on it, a
+parameterised class. connection-paths' record says where the stand-in goes: the first method each test calls,
+whether it gets there through set-up, and the calls every test reaching a system shares. The mechanical changes are
+made by OpenRewrite recipes, the rest by the AI, and a person reviews each, one external system at a time
+([proposed](decisions/0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md)).
 
-* **Tests that reach external systems** are sorted into logic, connection or both: logic tests switch to the
-  connection's stand-in, connection tests stay real and are tagged `external`, and the rest become twins, one set of
-  test bodies run against the stand-in and, under the tag, against the real system
-  ([why](decisions/0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md)).
-  connection-paths' record says where: the first method each test calls, whether it gets there through set-up, and
-  the calls every test reaching a system shares, where one stand-in covers them all.
-* **Flaky and failing tests, sleeps, order-dependent tests, tests that never run, tests that swallow their own
-  failures, tests with no real assertion, tests that mock everything and copied tests** are fixed in the test code.
-  The mechanical changes are made by OpenRewrite recipes; what needs judgement, by the AI with a person reviewing,
-  judged by the planted bugs that measurement found no test catches
-  ([proposed](decisions/0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md)).
-* **What needs production code changed** (a dependency a test can't replace, an address written in the code
-  that a stand-in needs in a setting), **deleting a test**, and **disabled tests** wait: each is recorded against its
-  test, and the testing plan turns it into work.
+What needs production code changed (a dependency a test can't replace, an address written in the code that a
+stand-in needs in a setting) waits: it is recorded against its test, and the testing plan turns it into work. The
+meaningless and unreliable tests discovery listed, confirmed by measurement, also become work in the testing plan
+([why](decisions/0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)).
 
 A repaired test is kept only if it passes the checks for AI-written tests. Measurement then runs again, on the same
 settings, so what repair changed shows as a change.
 
-- **Who:** a Forward Deployed Engineer with the AI; a person reviews every change; the Application Owner decides
-  disabled tests.
-- **Leaves in the repo:** the repaired tests, the stand-ins they use, the `external` tag on tests that must reach a
+- **Who:** a Forward Deployed Engineer with the AI; a person reviews every change.
+- **Leaves in the repo:** the paired tests, the stand-ins they inject, the `external` tag on the half that reaches a
   real system, and in `testing/tests.yaml` each test's treatment and what was left for later.
 - **Decided in:** [Tests that reach external systems are tagged and left out of normal runs](../decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [The checks an AI-written test must pass before it is kept](../decision-guides/0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md).
 

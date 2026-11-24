@@ -30,6 +30,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Every skill and tool is also checked against real public repos, by a person's review of a sample](0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The journey's mechanical steps are one command-line tool, with a sub-command per step, in its own repo](0077-the-journeys-mechanical-steps-are-one-command-line-tool-with-a-sub-command-per-step-in-its-own-repo.md) | proposed | Toolkit maintainers |
+| [External system replaces the word connection](0081-external-system-replaces-the-word-connection.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
@@ -85,6 +86,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [A connection whose address isn't known is a system of its own per class that opens it](0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Repairing the existing tests is a step of its own, after measurement, changing only test code](0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [How repair fixes each kind of problem, and which changes OpenRewrite recipes make](0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md) | proposed | Toolkit maintainers |
+| [Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

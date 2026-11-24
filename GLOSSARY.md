@@ -76,7 +76,7 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | **Application Owner** | Client | Owns an application and its repos | Commits to a batch; approves the repo and application testing plans; accepts the results |
 | **Toolkit Owner** | Delivery, moving to client at handover | Keeps the testing guides, shared test kits and lessons current | Releases of the toolkit; who maintains each shared test kit (with the Steering Group) |
 | **Knowledge Curator** | Client | Decides which knowledge sources count for an application (regression packs, wiki pages, tracker queries, other repos) and how current each is | The application's source list |
-| **Architecture Owner** | Client | Confirms an application's connection list and owns its boundary contracts | What the application connects to, and its contracts |
+| **Architecture Owner** | Client | Confirms an application's external systems list and owns its boundary contracts | What the application reaches, and its contracts |
 | **Subject-matter expert** | Client | Knows the business rules | The expected results for tests against requirements |
 | **Data Protection Officer** | Client | The organisation's own data protection role, required in law for many organisations | Whether cleaned recordings of real data may be treated as anonymous; capture from production |
 | **Steering Group** | Both | Programme Sponsor, Engagement Lead, Technical Architect and Security and Platform Owner | Disputes, approving moves between phases, cross-cutting decisions |
@@ -107,15 +107,17 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | strangler fig | Replacing a system piece by piece, routing each piece to the new version as it is ready, instead of all at once. |
 | flaky test | A test that sometimes passes and sometimes fails without any code change. |
 | Testcontainers, WireMock, Pact, PIT, ArchUnit, jetCheck, bats-core | Tool names. Say what the tool does the first time. |
-| **connection list** | A file listing everything an application connects to (interfaces, databases, queues, outside services), with what tests use instead of each one and which addresses tests must never reach. Written in FINOS CALM, an open standard format. | dependency map, architecture document |
+| **external systems list** | A file listing every external system an application reaches (databases, services, mail, directories, queues, file shares), with the stand-in tests use for each and the addresses tests must never reach; `testing/external-systems.calm.json`, in CALM's format. | connection list |
 | **safety inventory** | The gate before any of a repo's tests or its application first runs, done alongside discovery: secrets, keystores, real personal data, jobs that start by themselves, automatic migrations, build tasks that publish or deploy, fixed file paths and file shares. Some findings block the repo from running. | security scan (for the whole step) |
-| **discovery** | The first step on every repo, in which nothing runs but its build: a draft connection list (from its code and settings), a source list, and the tests and test assets that already exist, with their anti-patterns. Coverage targets apply only afterwards. | |
-| **repair** | The step after measurement that makes a repo's existing tests trustworthy, changing only test code: tests that reach external systems are sorted and treated, and the other anti-patterns fixed; what needs production code changed, or a test deleted, is left as work for the testing plan. | clean-up, remediation |
-| **connection point** | A place in the code that opens or uses a connection to something outside the program: a database, an HTTP service, mail, a directory, a queue, a socket. Found by connection-paths. | sink, integration point |
-| **system** (on the connection list) | Something outside the program the code connects to: one host, or, while its address isn't known, one setting or one class that opens it. | node, dependency |
+| **discovery** | The first step on every repo, in which nothing runs but its build: a draft external systems list (from its code and settings), the meaningless and unreliable tests, a source list, and the test assets that already exist. Coverage targets apply only afterwards. | |
+| **meaningless test** | A test that passes whatever the code does: it never runs, can't fail (no real assertion, or a swallowed failure), or checks only its mocks. | |
+| **unreliable test** | A test that may give a different answer on another run: it sleeps for a fixed time, or depends on the order tests run in. | |
+| **repair** | The step after measurement that turns each test reaching an external system into a pair from one set of test bodies: one injects a stand-in and runs normally, the other is tagged `external` and runs against the real system. It changes only test code; what needs production code changed is left as work for the testing plan. | clean-up, remediation |
+| **reach point** | A place in the code that opens or uses an external system: a database, an HTTP service, mail, a directory, a queue, a socket. | connection point |
+| **system** (on the external systems list) | Something outside the program the code connects to: one host, or, while its address isn't known, one setting or one class that opens it. | node, dependency |
 | **dispatch point** | A call through an interface with many implementations, such as "notify every listener", which a call graph reports instead of following. | |
-| **call graph** | Which methods call which, worked out from the source, used to find the tests that may reach each connection point. | |
-| **chain** (of calls) | The calls from a test to a connection point, one method a step: the test first, then the method it calls (or the set-up that leads there), the connection point last. | path, trace |
+| **call graph** | Which methods call which, worked out from the source, used to find the tests that may reach each reach point. | |
+| **chain** (of calls) | The calls from a test to a reach point, one method a step: the test first, then the method it calls (or the set-up that leads there), the reach point last. | path, trace |
 | **through set-up** | Said of a chain that starts in what runs with a test rather than in the test itself: a set-up or tear-down method, the test class's constructor or fields, or a superclass's. | |
 | **shared chain** | The calls every test that may reach one system goes through, nearest the test first, without the test: where one stand-in can cover all of them. | seam |
 | **alternatives** (of a system) | Systems reached through the same interface or superclass method, which a program chooses between, so a test reaches one of them, not all. | |

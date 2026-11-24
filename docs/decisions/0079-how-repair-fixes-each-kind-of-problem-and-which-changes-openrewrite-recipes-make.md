@@ -38,7 +38,9 @@ that help repair (`JUnit4to5Migration`, `JUnit5to6Migration`, `CategoryToTag`, `
 
 ## Decision Outcome
 
-Proposed: recipes for the mechanical changes, the AI and a person for the rest.
+Proposed: recipes for the mechanical changes, the AI and a person for the rest. Repair itself makes only the first
+three rows' changes, for tests that reach external systems; the other rows apply when the testing plan's work fixes
+meaningless and unreliable tests ([Discovery keeps three lists of tests apart: those that reach external systems, meaningless tests, and unreliable tests](0080-discovery-keeps-three-lists-of-tests-apart-those-that-reach-external-systems-meaningless-tests-and-unreliable-tests.md)).
 
 | Kind | How repair fixes it | By |
 |---|---|---|
