@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../schema/assessment.schema.json
-# An example testing/assessment.yaml for a made-up order service, after the safety inventory, discovery and one
+# An example testing/assessment.yaml for a made-up order service, after discovery, the safety inventory and one
 # measurement run. The repo assessment report renders this file, with the connection list and the source list.
 schema: assessment/1
 repo:

@@ -190,7 +190,7 @@ One repo's journey repeats across all of them, in five phases, each ending with 
 3. **Pilots:** one application per common pairing of technology stack and application type is taken through the
    journey by hand, and what it teaches becomes that organisation's testing guides.
 4. **Rolling out in batches:** each batch sits within one part of the organisation; high-criticality applications,
-   the commonest pairings, the most widely shared systems and widely used libraries go first.
+   the commonest pairings, the external systems and libraries the most repos use go first.
 5. **Handing over:** the organisation's own teams run the batches, and the Toolkit Owner role moves to them.
 
 Decided in: [The programme runs as a forward deployed engagement with named roles](../decision-guides/0001-the-programme-runs-as-a-forward-deployed-engagement-with-named-roles.md), [The programme moves through five phases, each ending with a sign-off](../decision-guides/0003-the-programme-moves-through-five-phases-each-ending-with-a-sign-off.md), [One pilot application per common technology stack and application type pair](../decision-guides/0053-one-pilot-application-per-common-technology-stack-and-application-type-pair.md), [How each batch of repos is chosen](../decision-guides/0054-how-each-batch-of-repos-is-chosen.md).

@@ -345,8 +345,8 @@ output as a source of examples).
    substitutes as adequate pseudonymisation for internal test repos?
 5. **Presidio inside a closed network:** can its Python packages, container images and language models all be
    mirrored and approved? If not, the gate rests on Java detectors and people's review.
-6. **gitleaks' future:** its README says it is feature complete, with security fixes only [38]; [No repo's code is
-   built or run until its secrets scan is clean](../../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
+6. **gitleaks' future:** its README says it is feature complete, with security fixes only [38]; [No repo's tests or
+   application run until its secrets scan is clean](../../decision-guides/0007-no-repos-tests-or-application-run-until-its-secrets-scan-is-clean.md)
    may need to name a successor.
 7. **Hoverfly's Java binding on locked-down Windows:** how does it supply the Hoverfly binary, and would application
    allowlisting block it? Not verified [6].

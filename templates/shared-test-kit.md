@@ -1,7 +1,7 @@
 # Shared test kit: <system name>
 
 <!-- Template from the toolkit (under-test), templates/shared-test-kit.md. Copy it into your organisation repo as
-     shared-test-kits/<system-id>/README.md when a shared system (a database, a queue, an internal service) is used
+     shared-test-kits/<system-id>/README.md when an external system (a database, a queue, an internal service) is used
      by enough repos that every one standing in for it separately would cost more than one kit. Words follow the
      toolkit's GLOSSARY.md. Delete these comments. -->
 

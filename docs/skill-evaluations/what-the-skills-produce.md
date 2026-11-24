@@ -9,7 +9,54 @@ output is in [examples/](examples/).
 The cases differ a little from each other, because each holds the facts its own skill needs, so the numbers don't
 carry from one section to the next.
 
-## 1. Safety inventory: [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md)
+## 1. Discovery: the connection list, [draft-the-connection-list](../../.github/skills/draft-the-connection-list/SKILL.md)
+
+**Given:** the airgap agent's reports of every call the tests and the application tried to make off the machine. (This
+case is the skill's later pass, merging in measurement's reports; its first pass, from the code with connection-paths,
+has no eval case yet.)
+**Writes:** `testing/connections.calm.json`, a [CALM](https://calm.finos.org/) file with a node for each system the
+code reaches and a proposed stand-in for each connection
+([whole file](examples/connections.calm.json)).
+
+```json
+{"under-test": {
+  "state": "proposed", "drafted_by": "ai",
+  "found-by": ["airgap-agent", "settings"],
+  "kinds": ["database", "host-lookup"],
+  "callers": ["com.example.orders.OrderRepository.connect(OrderRepository.java:41)"],
+  "setting": {"name": "spring.datasource.url", "from": "application.yml:12"},
+  "tests": 2,
+  "stand-in": {"approach": "run-in-container"},
+  "never-reach": ["db-orders.prod.example.com"]
+}}
+```
+
+**Without the skill:** every run left out the systems the plan and the tracker need as nodes, and none marked which
+connection must never be reached.
+
+## 1. Discovery: anti-patterns in the existing tests, [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md)
+
+**Given:** the repo's test code, read only.
+**Writes:** the `anti_patterns` section: a count for each kind, and the first three tests of each as `path:line`
+([whole file](examples/anti-patterns-assessment.yaml)).
+
+```yaml
+anti_patterns:
+  findings:
+    - id: disabled
+      kind: disabled
+      tests: 4
+      examples: ["src/test/java/com/example/orders/OrderServiceTest.java:35", "src/test/java/com/example/orders/RefundTest.java:13", "src/test/java/com/example/orders/RefundTest.java:18"]
+    - id: mocks-everything
+      kind: mocks-everything
+      tests: 2
+      examples: ["src/test/java/com/example/orders/PricingServiceTest.java:23", "src/test/java/com/example/orders/PricingServiceTest.java:30"]
+```
+
+**Without the skill:** six of the counts were wrong in every run and a seventh in most, and no run gave its examples
+as `path:line`, so the next run couldn't compare them.
+
+## 2. Safety inventory: [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md)
 
 **Given:** gitleaks' reports over the repo and its history, and a list of keystores ever committed.
 **Writes:** the `safety` section of the assessment file, one finding for each risk, each with a stable id, what it
@@ -39,52 +86,7 @@ safety:
 **Without the skill:** no run gave the 18 findings ids anything later could follow, and in each round one run
 repeated a password, in its reply or in the assessment file.
 
-## 2. Connection list: [draft-the-connection-list](../../.github/skills/draft-the-connection-list/SKILL.md)
-
-**Given:** the airgap agent's reports of every call the tests and the application tried to make off the machine.
-**Writes:** `testing/connections.calm.json`, a [CALM](https://calm.finos.org/) file with a node for each system the
-code reaches and a proposed stand-in for each connection
-([whole file](examples/connections.calm.json)).
-
-```json
-{"under-test": {
-  "state": "proposed", "drafted_by": "ai",
-  "found-by": ["airgap-agent", "settings"],
-  "kinds": ["database", "host-lookup"],
-  "callers": ["com.example.orders.OrderRepository.connect(OrderRepository.java:41)"],
-  "setting": {"name": "spring.datasource.url", "from": "application.yml:12"},
-  "tests": 2,
-  "stand-in": {"approach": "run-in-container"},
-  "never-reach": ["db-orders.prod.example.com"]
-}}
-```
-
-**Without the skill:** every run left out the systems the plan and the tracker need as nodes, and none marked which
-connection must never be reached.
-
-## 2. Anti-patterns in the existing tests: [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md)
-
-**Given:** the repo's test code, read only.
-**Writes:** the `anti_patterns` section: a count for each kind, and the first three tests of each as `path:line`
-([whole file](examples/anti-patterns-assessment.yaml)).
-
-```yaml
-anti_patterns:
-  findings:
-    - id: disabled
-      kind: disabled
-      tests: 4
-      examples: ["src/test/java/com/example/orders/OrderServiceTest.java:35", "src/test/java/com/example/orders/RefundTest.java:13", "src/test/java/com/example/orders/RefundTest.java:18"]
-    - id: mocks-everything
-      kind: mocks-everything
-      tests: 2
-      examples: ["src/test/java/com/example/orders/PricingServiceTest.java:23", "src/test/java/com/example/orders/PricingServiceTest.java:30"]
-```
-
-**Without the skill:** six of the counts were wrong in every run and a seventh in most, and no run gave its examples
-as `path:line`, so the next run couldn't compare them.
-
-## 4. Measurement: [measure-a-repo](../../.github/skills/measure-a-repo/SKILL.md)
+## 3. Measurement: [measure-a-repo](../../.github/skills/measure-a-repo/SKILL.md)
 
 **Given:** a Gradle repo, the airgap agent and the toolkit's measurement script.
 **Writes:** the `tests` and `level` sections from five runs under the agent, with coverage and planted bugs
@@ -114,7 +116,7 @@ level:
 **Without the skill:** every run got the starting level wrong, and half measured with a build that could reach
 outside the machine.
 
-## 4. Obstacles to testing: [score-obstacles](../../.github/skills/score-obstacles/SKILL.md)
+## 3. Obstacles to testing: [score-obstacles](../../.github/skills/score-obstacles/SKILL.md)
 
 **Given:** the assessment file and connection list so far.
 **Writes:** the `obstacles` section, each obstacle scored 0 to 3 by

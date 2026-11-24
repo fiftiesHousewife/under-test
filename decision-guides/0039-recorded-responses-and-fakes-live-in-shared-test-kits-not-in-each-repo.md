@@ -16,7 +16,7 @@ Many repos use the same systems. Recording and faking them once saves work and k
 
 ## Considered Options
 
-* **One shared test kit per widely shared system, with a part for local tests and a part for container tests, versioned and published**  
+* **One shared test kit per external system that many repos use, with a part for local tests and a part for container tests, versioned and published**  
   Reuse across the organisation
 * **Each repo keeps its own**  
   Duplicated effort; drift

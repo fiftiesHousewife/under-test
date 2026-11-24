@@ -16,7 +16,7 @@ Work is cheapest when it reuses testing guides and shared test kits, and most va
 
 ## Considered Options
 
-* **Each batch sits within one part of the organisation, and covers: high-criticality applications first; the most common technology stack and application type pairs; the most widely shared systems; widely used libraries whatever their place in the organisation**  
+* **Each batch sits within one part of the organisation, and covers: high-criticality applications first; the most common technology stack and application type pairs; the external systems the most repos use; widely used libraries whatever their place in the organisation**  
   Balances value and reuse
 * **By request**  
   Uneven; misses reuse

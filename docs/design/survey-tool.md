@@ -12,7 +12,7 @@ between the two.
 
 1. Which repos does the organisation have, and which are still in use?
 2. For each repo in use: its technology stacks and application types, and what it depends on.
-3. Across the organisation: how many repos of each kind; which shared systems and libraries are used most widely;
+3. Across the organisation: how many repos of each kind; which external systems and libraries the most repos use;
    which repos no rule could classify.
 
 These answers feed decisions about pilot applications, batches and shared test kits.

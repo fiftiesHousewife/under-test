@@ -40,7 +40,7 @@
     "uses": {
       "type": "object",
       "additionalProperties": false,
-      "description": "What the repo talks to: the inputs a survey tool needs to build a map of shared systems.",
+      "description": "What the repo talks to: the inputs a survey tool needs to build a map of the external systems repos use.",
       "properties": {
         "libraries": {"type": "array", "items": {"type": "string"}, "description": "Library coordinates (group:name:version or npm name@version)."},
         "http_services": {"type": "array", "items": {"type": "string"}},

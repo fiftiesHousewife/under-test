@@ -148,4 +148,5 @@ Then tell the person, briefly, in this order, each item's findings by id and fil
 2. **Needs a person's answer:** suspected personal data, which blocks until answered.
 3. **To neutralise:** the rest, with the proposed choices.
 4. Decisions marked stale or reopened.
-5. End with: "Nothing in the repo may be built or run until every blocking finding is resolved."
+5. End with: "None of the repo's tests, nor its application, may run until every blocking finding is resolved; building it
+   without running its tests is allowed."

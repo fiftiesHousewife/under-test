@@ -18,7 +18,7 @@ done by a tool, and the skill keeps the judgement
 | 2 | [find-test-anti-patterns](../../.github/skills/find-test-anti-patterns/SKILL.md) | PMD with the toolkit's rules, and its copy-paste detector | Every test with a problem, by kind; `reaches-external-system` from step 1's record ([why](../decisions/0066-find-test-anti-patterns-runs-pmd-with-the-toolkits-rules-and-searches-only-what-pmd-cannot-read.md)) | In `tests.yaml`, each test's `anti_patterns`; `assessment.yaml`: `anti_patterns` |
 | | (no skill) | — | The sources that count for intended behaviour | `sources.yaml` |
 
-Alongside, and settled before anything runs: [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md)
+Alongside, and settled before any test runs: [run-the-safety-inventory](../../.github/skills/run-the-safety-inventory/SKILL.md)
 turns gitleaks' reports and a list of keystores ever committed into `assessment.yaml`'s `safety` section. It is the
 gate before the first run of any test or the application
 ([why](../decisions/0069-the-safety-inventory-is-a-gate-before-the-first-run-and-no-skill-ever-copies-a-secret.md)).

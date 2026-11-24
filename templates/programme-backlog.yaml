@@ -828,7 +828,7 @@ items:
       - "Approved application and repo testing plans for each pilot"
     blocked_by:
       - "pilot-applications-chosen"
-    notes: "Needs from the toolkit: Measurement run: builds reliably, outbound calls, starts on its own, five runs for flaky tests, coverage and test mix, sampled mutation testing"
+    notes: "Needs from the toolkit: Measurement run, in stages each gating the next: builds reliably; one run, with outbound calls refused and tests reaching external systems left out; repeated runs for flaky tests, coverage and test mix; sampled mutation testing"
   - key: "testing-guides"
     type: "deliverable"
     title: "A testing guide for each technology stack and each application type"
@@ -844,7 +844,7 @@ items:
       - "pilots-assessed-and-planned"
   - key: "shared-test-kits"
     type: "deliverable"
-    title: "Shared test kits for the most widely shared systems"
+    title: "Shared test kits for the external systems the most repos use"
     parent: "pilot-applications-prove-the-approach"
     phase: "pilots"
     horizon: "next"
@@ -894,7 +894,7 @@ items:
     blocked_by:
       - "decide-independent-ai-agents-working-unattended-are-a-future-direction-only"
       - "runners-that-cannot-reach-production"
-    notes: "Needs from the toolkit: Scan every repo for committed secrets before it is built or run, using an existing tool"
+    notes: "Needs from the toolkit: Scan every repo for committed secrets before any of its tests or its application first runs, using an existing tool"
   - key: "name-the-engagement-roles"
     type: "deliverable"
     title: "Name the people for each engagement role"

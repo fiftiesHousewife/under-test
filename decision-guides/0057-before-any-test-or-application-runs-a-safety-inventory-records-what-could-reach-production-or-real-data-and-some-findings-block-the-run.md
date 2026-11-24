@@ -16,7 +16,7 @@ A secrets scan finds committed passwords and tokens, but an old repo holds other
 before it first runs: keystores and private keys, production credentials in configuration, real personal data in test
 fixtures or database dumps, jobs that start by themselves, database migrations that run against whatever database is
 configured, build tasks that publish or deploy, fixed file paths and Windows file shares, and native libraries. Some of
-these must be fixed before anything runs; others are harmless once the test profile and the airgap agent are in place,
+these must be fixed before any test or the application runs; others are harmless once the test profile and the airgap agent are in place,
 as long as someone has looked.
 
 ## Considered Options
