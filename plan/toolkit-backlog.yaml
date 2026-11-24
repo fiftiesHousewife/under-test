@@ -1472,7 +1472,8 @@ items:
     done_by: "person"
     done_when:
       - "The toolkit's backlog-sync.yml and its own sync-backlog.yml exist, and sync.sh and the push hook are gone (done)"
-      - "A push changing plan/toolkit-backlog.yaml updates the issues and commits docs/BACKLOG.md, and a run by hand with relink posts every link"
+      - "A push changing plan/toolkit-backlog.yaml updates the issues and commits docs/BACKLOG.md (done: first run on 3f1b146 committed 710b100), and a run by hand with relink posts every link"
+      - "The airgap agent's and the lessons repo's Checkstyle and PMD workarounds (quality-cli) are deleted"
       - "The airgap agent's and the lessons repo's backlogs sync through the shared workflow, and their sync scripts, importers and hooks are deleted"
     blocked_by:
       - "decide-backlogs-sync-in-one-shared-workflow"
