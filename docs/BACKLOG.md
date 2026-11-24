@@ -54,6 +54,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #173 | [Dependency vulnerability check against OSV in maintainer-tools/repo-checks, run in CI](https://github.com/fiftiesHousewife/under-test/issues/173) | deliverable | Toolkit Owner | tool | – |
 | #286 | [The toolkit, under-test-external-calls, under-test-tools and the lessons repo apply the java-conventions plugin instead of their copies](https://github.com/fiftiesHousewife/under-test/issues/286) | deliverable | Toolkit Owner | person | – |
 | #175 | [Self-application: this repo adopts the toolkit as its own first adopter](https://github.com/fiftiesHousewife/under-test/issues/175) | deliverable | Toolkit Owner | ai | [The toolkit installs as one APM package, pinned to a release tag: skills, decision guides, schemas and technique rules](https://github.com/fiftiesHousewife/under-test/issues/222) |
+| #323 | [repo-checks is published once and applied by every repo of ours, in place of copies](https://github.com/fiftiesHousewife/under-test/issues/323) | deliverable | Toolkit Owner | person | – |
 
 ## [The toolkit supports every step of a repo's journey, on both its tracks: safety, discovery, measurement, repair, planning and tracking](https://github.com/fiftiesHousewife/under-test/issues/185)
 
