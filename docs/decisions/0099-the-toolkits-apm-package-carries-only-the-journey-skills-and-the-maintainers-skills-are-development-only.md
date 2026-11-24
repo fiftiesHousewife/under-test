@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The toolkit's APM package carries only the journey skills, and the maintainers' skills are development-only
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -30,7 +30,7 @@ paths inside commands.
 
 ## Decision Outcome
 
-Proposed: `.apm/skills/` holds a link to each journey skill, and the third-party skills are `devDependencies`, which
+Chosen in discussion: `.apm/skills/` holds a link to each journey skill, and the third-party skills are `devDependencies`, which
 `apm install` installs only in the toolkit itself. Each journey skill says where the toolkit's files are: its links
 work as they are, and a command naming `<toolkit>` finds the toolkit's root under `apm_modules/`.
 

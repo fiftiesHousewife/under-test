@@ -1439,6 +1439,7 @@ items:
     blocked_by:
       - "decide-the-toolkit-reaches-each-repo-through-apm-pinned-to-a-release-tag"
   - key: "decide-the-apm-package-carries-only-the-journey-skills"
+    status: "done"
     type: "decision"
     title: "The toolkit's APM package carries only the journey skills, and the maintainers' skills are development-only"
     parent: "the-toolkit-is-ready-to-use-in-any-repo"
@@ -1447,7 +1448,7 @@ items:
     owner_role: "Toolkit Owner"
     done_by: "person"
     done_when:
-      - "Toolkit maintainers accept, narrow or replace the proposed outcome"
+      - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0099-the-toolkits-apm-package-carries-only-the-journey-skills-and-the-maintainers-skills-are-development-only.md"
   - key: "decide-an-organisation-adopts-every-decision-guide-by-default"
     status: "done"

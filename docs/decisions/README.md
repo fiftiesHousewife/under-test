@@ -39,7 +39,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Getting the classpath is under-test-external-calls' job, and the toolkit carries no copy of its steps](0091-getting-the-classpath-is-under-test-external-calls-job-and-the-toolkit-carries-no-copy-of-its-steps.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [An accepted record that later records narrow gets a narrowed-by line, and back-links are generated](0093-an-accepted-record-that-later-records-narrow-gets-a-narrowed-by-line-and-back-links-are-generated.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md) | accepted (chosen in discussion) | Toolkit maintainers |
-| [The toolkit's APM package carries only the journey skills, and the maintainers' skills are development-only](0099-the-toolkits-apm-package-carries-only-the-journey-skills-and-the-maintainers-skills-are-development-only.md) | proposed | Toolkit maintainers |
+| [The toolkit's APM package carries only the journey skills, and the maintainers' skills are development-only](0099-the-toolkits-apm-package-carries-only-the-journey-skills-and-the-maintainers-skills-are-development-only.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 
