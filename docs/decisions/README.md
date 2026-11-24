@@ -41,6 +41,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Discovery is checked on real repos against an airgap run, and the other skills by a review of a sample](0097-discovery-is-checked-on-real-repos-against-an-airgap-run-and-the-other-skills-by-a-review-of-a-sample.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The toolkit's APM package carries only the journey skills, and the maintainers' skills are development-only](0099-the-toolkits-apm-package-carries-only-the-journey-skills-and-the-maintainers-skills-are-development-only.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [All our Java applies the java-conventions plugin, which holds our code-quality standards](0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Every repo's backlog is synced to its issues by one shared GitHub Actions workflow, on push](0101-every-repos-backlog-is-synced-to-its-issues-by-one-shared-github-actions-workflow-on-push.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Using the toolkit in an organisation
 

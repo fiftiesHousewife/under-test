@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# Brings a repo's GitHub issues up to date with its backlog file and refreshes its backlog page. Shared by every repo
+# of ours: each calls it from a short workflow of its own (this repo's is sync-backlog.yml), so there is one importer,
+# tools/backlog-import/import_to_github.py, and nothing to run by hand. It uses the calling run's own token.
+name: Backlog sync (shared)
+
+on:
+  workflow_call:
+    inputs:
+      backlog-file:
+        description: The backlog file, from the calling repo's root
+        required: true
+        type: string
+      page:
+        description: Where to write the readable page of open items, from the calling repo's root
+        required: false
+        type: string
+        default: docs/BACKLOG.md
+      toolkit-ref:
+        description: The under-test tag or branch whose importer to use
+        required: false
+        type: string
+        default: main
+      relink:
+        description: Post every issue link again, not only those of issues written in this run
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # One import at a time per repo; a newer push waits for the one before.
+    concurrency:
+      group: backlog-sync-${{ github.repository }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+        with:
+          repository: fiftiesHousewife/under-test
+          ref: ${{ inputs.toolkit-ref }}
+          path: .under-test
+          sparse-checkout: tools/backlog-import
+      - name: Bring the issues up to date and write the page
+        env:
+          UNDERTEST_GITHUB_TOKEN: ${{ github.token }}
+          RELINK: ${{ inputs.relink && '--relink' || '' }}
+        run: >
+          python3 -u .under-test/tools/backlog-import/import_to_github.py "${{ github.repository }}" --apply
+          --file "${{ inputs.backlog-file }}" --page "${{ inputs.page }}" $RELINK
+      - name: Commit the page if it changed
+        env:
+          PAGE: ${{ inputs.page }}
+        run: |
+          git add -- "$PAGE"
+          if git diff --cached --quiet; then echo "The page is unchanged."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "Refresh backlog page"
+          git pull -q --rebase origin "${GITHUB_REF_NAME}"
+          git push -q origin "HEAD:${GITHUB_REF_NAME}"

@@ -155,7 +155,8 @@ def changed(issue, payload):
 def write_page(items, by_key, path):
     """An ordered, readable table of open items, grouped by outcome, linked to their issues."""
     titles = {item["key"]: item["title"] for item in items}
-    open_keys = {key for key, issue in by_key.items() if issue.get("state") == "open"}
+    open_keys = ({key for key, issue in by_key.items() if issue.get("state") == "open"} if by_key
+                 else {item["key"] for item in items if item.get("status") != "done"})
     def link(key):
         return f"[{titles[key]}]({by_key[key]['html_url']})" if key in by_key else titles[key]
     def waiting(item):
@@ -180,15 +181,21 @@ def write_page(items, by_key, path):
     print(f"wrote {path}")
 
 
+def resolve(path):
+    """A backlog file named relative to the folder this runs in, else to the toolkit's root (for its own templates)."""
+    here = Path.cwd() / path
+    return here if here.exists() else REPO_ROOT / path
+
+
 def parse_args(argv):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("repo", metavar="OWNER/REPO", help="the GitHub repository to import into")
     parser.add_argument("--apply", action="store_true", help="make the changes; without it, a dry run")
     parser.add_argument("--relink", action="store_true", help="post every item's links again, not only new ones")
-    parser.add_argument("--file", type=Path, help="the backlog file, relative to the toolkit's root (default: "
-                        "plan/toolkit-backlog.yaml)")
-    parser.add_argument("--page", type=Path, help="write a Markdown page of the open items here, relative to the "
-                        "toolkit's root")
+    parser.add_argument("--file", type=Path, help="the backlog file, relative to the folder this runs in, else to the "
+                        "toolkit's root (default: plan/toolkit-backlog.yaml in the toolkit)")
+    parser.add_argument("--page", type=Path, help="write a Markdown page of the open items here, relative to the folder "
+                        "this runs in")
     return parser.parse_args(argv)
 
 
@@ -197,7 +204,7 @@ def main():
         sys.exit(__doc__)
     args = parse_args(sys.argv[1:])
     repo, apply = args.repo, args.apply
-    seed = REPO_ROOT / args.file if args.file else DEFAULT_SEED
+    seed = resolve(args.file) if args.file else DEFAULT_SEED
     items = parse_seed(seed)
     print(f"{len(items)} items in {seed.name}; {'APPLYING to' if apply else 'dry run for'} {repo}")
     if not apply:
@@ -275,7 +282,7 @@ def main():
         print(f"  {len(failed)} link(s) not made (some may already exist): {', '.join(failed)}")
         print("  run again with --relink to try every link")
     if args.page:
-        write_page(items, by_key, REPO_ROOT / args.page)
+        write_page(items, by_key, Path.cwd() / args.page)
     print("done")
 
 

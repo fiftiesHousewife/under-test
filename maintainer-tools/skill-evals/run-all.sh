@@ -14,7 +14,7 @@
 # tokens on your account, or your plan's usage on a Claude subscription; MAX_COST_USD (default 60) is a hard ceiling
 # on the cost the eval estimates at API prices. Needs claude and jq. The full results stay in
 # .github/evals/results/, which isn't committed. Each run's workspace is kept in the system's temporary folder, so
-# its files can be checked against the schemas. Review the page, then push with maintainer-tools/sync/sync.sh.
+# its files can be checked against the schemas. Review the page, then commit and push it.
 set -uo pipefail
 
 root="$(cd "$(dirname "$0")/../.." && pwd)"

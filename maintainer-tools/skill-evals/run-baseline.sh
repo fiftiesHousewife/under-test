@@ -96,5 +96,5 @@ still="$(for case_file in $cases; do n="$(basename "$(dirname "$case_file")")"; 
 if [ -n "$still" ]; then
   echo "== Still to run: $(echo "$still" | tr '\n' ' '). Run this script again when your usage allows."
 else
-  echo "== Every case done. Review docs/skill-evaluations/eval-results.md, then push with maintainer-tools/sync/sync.sh."
+  echo "== Every case done. Review docs/skill-evaluations/eval-results.md, then commit and push it."
 fi

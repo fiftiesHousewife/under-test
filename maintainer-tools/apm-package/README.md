@@ -20,4 +20,4 @@ A journey skill added to `.github/skills/` reaches adopters only once it is link
 1. `./gradlew check`, then `maintainer-tools/apm-package/check-install.sh`.
 2. Bump `version` in `apm.yml`.
 3. `maintainer-tools/apm-package/release-notes.sh <previous tag>` for the notes.
-4. Tag `v<version>` with those notes and push the tag, after syncing with `maintainer-tools/sync/sync.sh`.
+4. Push, then tag `v<version>` with those notes and push the tag.
