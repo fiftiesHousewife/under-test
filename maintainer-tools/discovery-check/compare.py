@@ -53,8 +53,9 @@ def main(facts_file, calls_file):
     print(f"Recall: {len(called) - len(missed)} of {len(called)} tests that called out have a chain; missed: {len(missed)}")
     for test in missed:
         print("  MISSED", test, sorted(seen[test])[:3])
-    print(f"Precision: {len(called & set(predicted))} of {len(predicted)} tests with a chain called out; "
-          f"{len(set(predicted) - called)} flagged but made no outside call (false alarms)")
+    flagged = {t for t, f in predicted.items() if grade(f) != "cannot reach"}
+    print(f"Flagged (graded reaches or may reach): {len(flagged)}; of those, called out: {len(flagged & called)}; "
+          f"made no outside call (false alarms): {len(flagged - called)}")
     for test in sorted(t for t in called if t in predicted and grade(predicted[t]) == "cannot reach"):
         print("  GRADED CANNOT REACH BUT CALLED OUT", test, sorted(seen[test])[:3])
     reaches = [t for t, f in predicted.items() if grade(f) == "reaches"]
