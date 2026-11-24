@@ -55,7 +55,7 @@ public final class TechniqueRules {
         }
     }
 
-    /** True where the repo has technique rules: not every repo that reuses these checks does. */
+    // True where the repo has technique rules: not every repo that reuses these checks does.
     static boolean applies(final Path root) {
         return Files.isDirectory(root.resolve("techniques"));
     }

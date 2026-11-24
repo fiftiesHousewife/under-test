@@ -33,12 +33,15 @@ public final class RepoChecks {
             throw new IllegalArgumentException("usage: RepoChecks check|index|fix-links <repository root>, or"
                     + " RepoChecks validate-output <repository root> <report file> <workspace>...");
         }
-        final Path root = Path.of(args[1]);
-        switch (args[0]) {
+        run(args[0], Path.of(args[1]));
+    }
+
+    private static void run(final String command, final Path root) {
+        switch (command) {
             case "check" -> failOn(check(root));
             case "index" -> index(root);
             case "fix-links" -> log.info("{} file(s) relinked", new DecisionLinkFixer().fix(new RepoFiles(root)));
-            default -> throw new IllegalArgumentException("unknown command: " + args[0]);
+            default -> throw new IllegalArgumentException("unknown command: " + command);
         }
     }
 
@@ -84,7 +87,7 @@ public final class RepoChecks {
         }
     }
 
-    /** The decision folders this repo has: not every repo that reuses these checks has decision guides. */
+    // The decision folders this repo has: not every repo that reuses these checks has decision guides.
     static List<Path> decisionFolders(final Path root) {
         return DECISION_FOLDERS.stream().map(root::resolve).filter(Files::isDirectory).toList();
     }

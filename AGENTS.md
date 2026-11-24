@@ -70,11 +70,13 @@ External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with
 | Line coverage at least 80% per project (raise it with `quality.minLineCoverage`) | JaCoCo coverage verification |
 | No more than **three parameters** for any method or constructor. Use a Lombok `@Builder` instead | Checkstyle `ParameterNumber`, PMD `ExcessiveParameterList` |
 | No record with more than three components. Use a Lombok `@Builder` class instead of a large record | Checkstyle `RecordComponentNumber` |
-| A test with more than one assertion wraps them in `assertAll(...)` | PMD rule `MultipleAssertionsMustUseAssertAll` |
+| A test makes one assertion statement: one `assert...` or `assertThat` chain, or one `assertAll(...)` | PMD rule `MultipleAssertionsMustUseAssertAll` |
 | Logging through Lombok `@Slf4j` (SLF4J API, Log4j 2 at run time). No `System.out`, no `java.util.logging` | forbidden-APIs check |
 | Time comes from an injected `java.time.Clock`, never `now()` or `currentTimeMillis()` | forbidden-APIs check |
 | No unsafe, deprecated, internal or non-portable JDK APIs, and no reflection tricks | forbidden-APIs bundled signatures |
-| Methods short and simple: cyclomatic complexity 10 or less, cognitive complexity 15 or less, 50 lines or fewer | Checkstyle and PMD |
+| Methods short and simple: 20 lines or fewer (blank lines not counted), cyclomatic complexity 5 or less, cognitive complexity 6 or less, NPath complexity under 50, boolean expressions of 3 operators or fewer; files of 150 lines or fewer | Checkstyle and PMD |
+| No comment on a field (name it, or say it on the class or method); Javadoc only on public API, other comments as `//` | Checkstyle |
+| Advice, never failing the build: a stream or `forEach` rather than a for-each loop | PMD, in `pmdAdvice` ([why](docs/decisions/0083-for-each-loops-are-flagged-not-forbidden.md)) |
 | No copy-pasted code (75 tokens or more) | PMD's copy-paste detector (`cpdCheck`) |
 | No bug patterns or security bugs | SpotBugs with FindSecBugs |
 | No dependency with a known vulnerability | OSV check in `maintainer-tools/repo-checks` (planned; a one-off check found none) |

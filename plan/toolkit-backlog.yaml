@@ -2293,7 +2293,8 @@ items:
     owner_role: "Toolkit Owner"
     done_by: "person"
     done_when:
-      - "Each repo's build-logic copy and config/quality are gone, and check passes under the plugin, the tighter rules' findings fixed"
+      - "Each repo's build-logic copy and config/quality are gone, and check passes under the plugin, the tighter rules' findings fixed (until it is published, the copies carry the settled rules: done in this repo, connection-paths and under-test-tools, whose code now meets them; the lessons repo's examples still to do)"
+      - "When the plugin is applied, includeBuild(\"build-logic\") goes in the same change, so Gradle can't keep using the local copy of the same plugin id"
       - "AGENTS.md's code standards in each repo name the plugin and its rules"
     blocked_by:
       - "java-conventions-plugin"
