@@ -1450,6 +1450,17 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0100-all-our-java-applies-the-java-conventions-plugin-which-holds-our-code-quality-standards.md"
+  - key: "one-published-repo-checks"
+    type: "deliverable"
+    title: "repo-checks is published once and applied by every repo of ours, in place of copies"
+    parent: "this-repo-keeps-itself-in-order"
+    phase: "set-up"
+    horizon: "later"
+    owner_role: "Toolkit Owner"
+    done_by: "person"
+    done_when:
+      - "The checks of decision records, links, schemas and YAML files are one published artifact (for example a Gradle plugin beside java-conventions), with a decision record"
+      - "The toolkit and the airgap agent apply it, and the airgap agent's older copy in maintainer-tools/repo-checks is deleted"
   - key: "decide-backlogs-sync-in-one-shared-workflow"
     status: "done"
     type: "decision"
