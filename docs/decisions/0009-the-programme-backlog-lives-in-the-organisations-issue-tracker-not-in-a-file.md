@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The programme backlog lives in the organisation's issue tracker, not in a file
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -25,7 +25,7 @@ A backlog kept as a hand-written file has no owners, notifications, client visib
 
 ## Decision Outcome
 
-Proposed: the first option. The starting list of work is kept in this repo as a seed file with a schema, and an importer loads it into the organisation's tracker using that tracker's existing command-line tool or API (for example the GitHub CLI, or the Jira REST API). After import, the tracker is the only list.
+Chosen in discussion: the first option. The starting list of work is kept in this repo as a seed file with a schema, and an importer loads it into the organisation's tracker using that tracker's existing command-line tool or API (for example the GitHub CLI, or the Jira REST API). After import, the tracker is the only list.
 
 ### Consequences
 

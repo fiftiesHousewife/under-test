@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # Organisation-specific facts and decisions live in a private organisation repo
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -25,7 +25,7 @@ This toolkit is meant to be reusable and may be public. Every organisation that 
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. Facts with no choice go in the profile, not in decision records. Decision records here are written as guides: they give the options and say which fits which situation.
+Chosen in discussion: the first option. Facts with no choice go in the profile, not in decision records. Decision records here are written as guides: they give the options and say which fits which situation.
 
 ### Consequences
 

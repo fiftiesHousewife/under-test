@@ -50,7 +50,7 @@ things follow.
   ([Google](https://arxiv.org/html/2501.06972v1)).
 * **Its tests pass checks before a person sees them** (see [Tests written by AI](#tests-written-by-ai)).
 * **Skills are evaluated against known answers, with and without the skill**
-  ([The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](decisions/0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md)),
+  ([Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](decisions/0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md)),
   and checked on real public repos, where a person reviews a sample
   ([Every skill and tool is also checked against real public repos, by a person's review of a sample](decisions/0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md)).
   One replication found a plain model matched or beat several specialised test-writing tools

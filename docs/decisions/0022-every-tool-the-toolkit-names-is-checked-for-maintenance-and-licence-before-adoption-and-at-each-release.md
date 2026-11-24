@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # Every tool the toolkit names is checked for maintenance and licence before adoption and at each release
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,7 +23,7 @@ Reusing tools only helps if they stay maintained and their licences allow use in
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Chosen in discussion: the first option.
 
 ### Consequences
 

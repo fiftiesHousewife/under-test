@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -25,7 +25,7 @@ Large organisations have several levels (for example division, department, team)
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Chosen in discussion: the first option.
 
 ### Consequences
 

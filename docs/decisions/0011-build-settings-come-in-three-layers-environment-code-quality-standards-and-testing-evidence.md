@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Build settings come in three layers: environment, code-quality standards and testing evidence
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -25,7 +25,7 @@ Organisations that adopt the toolkit already have their own proxy, package repos
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option.
+Chosen in discussion: the first option.
 
 ### Consequences
 

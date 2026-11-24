@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -29,7 +29,7 @@ the toolkit's schemas, templates or technique rules.
 
 ## Decision Outcome
 
-Proposed: the first option, with everything else in the decision it would replace unchanged. The plugin
+Chosen in discussion: the first option, with everything else in the decision it would replace unchanged. The plugin
 manifest is [`.claude-plugin/plugin.json`](../../.claude-plugin/plugin.json) at the repo's root, naming
 `.github/skills/` and the cases in [`.github/evals/`](../../.github/evals/README.md).
 [`run-all.sh`](../../maintainer-tools/skill-evals/run-all.sh) copies the toolkit into a temporary folder, runs the

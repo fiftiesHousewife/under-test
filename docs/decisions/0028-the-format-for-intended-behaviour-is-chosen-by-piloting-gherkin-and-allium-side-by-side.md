@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Understanding what a system should do
 ---
 
 # The format for intended behaviour is chosen by piloting Gherkin and Allium side by side
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -25,7 +25,7 @@ Two strong candidates suit intended behaviour, with different strengths. Gherkin
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. Until the pilot decides, business rule tests (table-driven JUnit tests confirmed by experts) remain available as a fallback.
+Chosen in discussion: the first option. Until the pilot decides, business rule tests (table-driven JUnit tests confirmed by experts) remain available as a fallback.
 
 ### Consequences
 

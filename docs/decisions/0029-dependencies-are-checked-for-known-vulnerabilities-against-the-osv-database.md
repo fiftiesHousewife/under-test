@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # Dependencies are checked for known vulnerabilities against the OSV database
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -25,7 +25,7 @@ The toolkit and everything it brings into a build (libraries, quality tools, Gra
 
 ## Decision Outcome
 
-Agreed in discussion: the first option. Run it in CI on every build, after confirming dependencies are on their latest versions.
+Chosen in discussion: the first option. Run it in CI on every build, after confirming dependencies are on their latest versions.
 
 ### Consequences
 

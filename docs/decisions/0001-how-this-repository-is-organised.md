@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # How this repository is organised
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,7 +23,7 @@ This repo holds the rules, tools and AI assistant skills for the programme; less
 
 ## Decision Outcome
 
-Proposed: one folder per kind of content: `docs/decisions/` (the toolkit's own decisions), `decision-guides/` (guides for adopting organisations), `techniques/<id>/technique.yaml` (rules the tools read), lessons in their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons) (lesson, runnable example, exercise, video scripts), `templates/` (starting points an organisation copies, including a testing guide and a shared test kit; see [Testing guides and shared test kits belong to each organisation, and the toolkit provides templates for them](0033-testing-guides-and-shared-test-kits-belong-to-each-organisation-and-the-toolkit-provides-templates-for-them.md)), `applications/<app-id>/`, `schema/`, `tools/<id>/`, `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
+Chosen in discussion: one folder per kind of content: `docs/decisions/` (the toolkit's own decisions), `decision-guides/` (guides for adopting organisations), `techniques/<id>/technique.yaml` (rules the tools read), lessons in their own repo, [under-test-lessons](https://github.com/fiftiesHousewife/under-test-lessons) (lesson, runnable example, exercise, video scripts), `templates/` (starting points an organisation copies, including a testing guide and a shared test kit; see [Testing guides and shared test kits belong to each organisation, and the toolkit provides templates for them](0033-testing-guides-and-shared-test-kits-belong-to-each-organisation-and-the-toolkit-provides-templates-for-them.md)), `examples/organisation-repo/` (the shape of an organisation's private organisation repo), `self/` (this repo's own organisation profile, as its own first adopter), `schema/`, `tools/<id>/` (tools adopting organisations run), `maintainer-tools/` (tools that keep this repo itself in order), `plan/`, `.github/skills/`, and `GLOSSARY.md`. Testing guides refer to techniques by id and never copy their rules. Summaries by organisation unit are views over the central results store, not files. Group, package and plugin ids use `io.github.fiftieshousewife`.
 
 ### Consequences
 

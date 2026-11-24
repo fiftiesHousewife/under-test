@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -30,7 +30,7 @@ also skips empty files, which is why the sample repo's empty fixture files went 
 
 ## Decision Outcome
 
-Proposed: the first option. The key-file rules stay in the secrets scan for text key files, and for keystores in
+Chosen in discussion: the first option. The key-file rules stay in the secrets scan for text key files, and for keystores in
 the current files.
 
 ### Consequences

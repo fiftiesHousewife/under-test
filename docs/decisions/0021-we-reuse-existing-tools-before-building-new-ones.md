@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # We reuse existing tools before building new ones
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,7 +23,7 @@ Many needs (classification, secrets scanning, coverage, mutation testing, depend
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. Every tool item records which existing tools were considered, and why one was chosen, in a decision record.
+Chosen in discussion: the first option. Every tool item records which existing tools were considered, and why one was chosen, in a decision record.
 
 ### Consequences
 

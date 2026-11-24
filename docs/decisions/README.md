@@ -10,21 +10,21 @@ Numbers follow reading order until a record is accepted; after that a number nev
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [How this repository is organised](0001-how-this-repository-is-organised.md) | proposed | Toolkit maintainers |
-| [The toolkit's licence for code and for lessons and videos](0002-the-toolkits-licence-for-code-and-for-lessons-and-videos.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [Organisation-specific facts and decisions live in a private organisation repo](0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [The programme backlog lives in the organisation's issue tracker, not in a file](0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md) | proposed | Toolkit maintainers |
+| [How this repository is organised](0001-how-this-repository-is-organised.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [The toolkit's licence for code and for lessons and videos](0002-the-toolkits-licence-for-code-and-for-lessons-and-videos.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
+| [Organisation-specific facts and decisions live in a private organisation repo](0003-organisation-specific-facts-and-decisions-live-in-a-private-organisation-repo.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
+| [The programme backlog lives in the organisation's issue tracker, not in a file](0009-the-programme-backlog-lives-in-the-organisations-issue-tracker-not-in-a-file.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Decision records follow MADR and are approved by pull request review](0010-decision-records-follow-madr-and-are-approved-by-pull-request-review.md) | proposed | Toolkit maintainers |
-| [We write in plain English using the agreed word list](0020-we-write-in-plain-english-using-the-agreed-word-list.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [Dependencies are checked for known vulnerabilities against the OSV database](0029-dependencies-are-checked-for-known-vulnerabilities-against-the-osv-database.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [We write in plain English using the agreed word list](0020-we-write-in-plain-english-using-the-agreed-word-list.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
+| [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
+| [Every tool the toolkit names is checked for maintenance and licence before adoption and at each release](0022-every-tool-the-toolkit-names-is-checked-for-maintenance-and-licence-before-adoption-and-at-each-release.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
+| [Dependencies are checked for known vulnerabilities against the OSV database](0029-dependencies-are-checked-for-known-vulnerabilities-against-the-osv-database.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
 | [This repo's own upkeep is kept apart from what adopting organisations use](0034-this-repos-own-upkeep-is-kept-apart-from-what-adopting-organisations-use.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The README describes the journey and links every decision guide, and the build checks it does](0035-the-readme-describes-the-journey-and-links-every-decision-guide-and-the-build-checks-it-does.md) | superseded | Toolkit maintainers |
 | [The toolkit is AI first: its steps are skills that run existing tools, and code lives in its own repos](0040-the-toolkit-is-ai-first-its-steps-are-skills-that-run-existing-tools-and-code-lives-in-its-own-repos.md) | accepted | Toolkit maintainers |
 | [A short README summarises the journey, and a journey page links every decision guide, which the build checks](0042-a-short-readme-summarises-the-journey-and-a-journey-page-links-every-decision-guide-which-the-build-checks.md) | accepted (chosen in discussion) | Toolkit maintainers |
-| [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md) | accepted (chosen in discussion) | Toolkit maintainers |
-| [Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md) | proposed | Toolkit maintainers |
+| [The toolkit's skills are evaluated with claude plugin eval, against known answers, five runs with and without them](0045-the-toolkits-skills-are-evaluated-with-claude-plugin-eval-against-known-answers-five-runs-with-and-without-them.md) | superseded | Toolkit maintainers |
+| [Skill evals run on a clean copy of the whole toolkit, which is the plugin, so skills can read its files](0047-skill-evals-run-on-a-clean-copy-of-the-whole-toolkit-which-is-the-plugin-so-skills-can-read-its-files.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The journey is field-trialled on old releases of well-known public repos before any organisation pilot](0050-the-journey-is-field-trialled-on-old-releases-of-well-known-public-repos-before-any-organisation-pilot.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [The toolkit calls a system a test cannot run without an external system](0062-the-toolkit-calls-a-system-a-test-cannot-run-without-an-external-system.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Every skill and tool is also checked against real public repos, by a person's review of a sample](0071-every-skill-and-tool-is-also-checked-against-real-public-repos-by-a-persons-review-of-a-sample.md) | accepted (chosen in discussion) | Toolkit maintainers |
@@ -37,11 +37,11 @@ Numbers follow reading order until a record is accepted; after that a number nev
 |---|---|---|
 | [The organisation repo refers to the toolkit by version through the organisation's package repository](0004-the-organisation-repo-refers-to-the-toolkit-by-version-through-the-organisations-package-repository.md) | superseded | Toolkit maintainers |
 | [The toolkit is installed into organisation and target repos as managed files, with a lock file](0005-the-toolkit-is-installed-into-organisation-and-target-repos-as-managed-files-with-a-lock-file.md) | superseded | Toolkit maintainers |
-| [The toolkit applies itself: this repo is its own first adopter](0006-the-toolkit-applies-itself-this-repo-is-its-own-first-adopter.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich](0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [The toolkit applies itself: this repo is its own first adopter](0006-the-toolkit-applies-itself-this-repo-is-its-own-first-adopter.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
+| [Decisions cascade from toolkit to organisation to organisation units to repos, and lower levels only enrich](0007-decisions-cascade-from-toolkit-to-organisation-to-organisation-units-to-repos-and-lower-levels-only-enrich.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
 | [A repo that cannot meet a decision gets a time-limited exception approved by the deciding role](0008-a-repo-that-cannot-meet-a-decision-gets-a-time-limited-exception-approved-by-the-deciding-role.md) | proposed | Toolkit maintainers |
-| [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md) | proposed (agreed in discussion) | Toolkit maintainers |
-| [The build environment (proxy and package repository) comes from the organisation's own build set-up](0012-the-build-environment-proxy-and-package-repository-comes-from-the-organisations-own-build-set-up.md) | proposed | Toolkit maintainers |
+| [Build settings come in three layers: environment, code-quality standards and testing evidence](0011-build-settings-come-in-three-layers-environment-code-quality-standards-and-testing-evidence.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
+| [The build environment (proxy and package repository) comes from the organisation's own build set-up](0012-the-build-environment-proxy-and-package-repository-comes-from-the-organisations-own-build-set-up.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Code-quality standards can be the toolkit's, the organisation's, or the organisation's own plugin](0013-code-quality-standards-can-be-the-toolkits-the-organisations-or-the-organisations-own-plugin.md) | proposed | Toolkit maintainers |
 | [Testing evidence is defined by standard report files, not by one build plugin](0014-testing-evidence-is-defined-by-standard-report-files-not-by-one-build-plugin.md) | proposed | Toolkit maintainers |
 | [The toolkit provides reference build set-ups for Gradle, Maven and npm](0015-the-toolkit-provides-reference-build-set-ups-for-gradle-maven-and-npm.md) | proposed | Toolkit maintainers |
@@ -58,7 +58,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [On developer machines, secrets are checked by FindSecBugs for now, and gitleaks in CI stays the gate](0038-on-developer-machines-secrets-are-checked-by-findsecbugs-for-now-and-gitleaks-in-ci-stays-the-gate.md) | accepted | Toolkit maintainers |
 | [The safety inventory is a gitleaks rule file run over a repo's current files, with a small converter into the assessment file](0039-the-safety-inventory-is-a-gitleaks-rule-file-run-over-a-repos-current-files-with-a-small-converter-into-the-assessment-file.md) | accepted | Toolkit maintainers |
 | [Keystores and private key files are found over the whole history, by rules added to the secrets scan](0041-keystores-and-private-key-files-are-found-over-the-whole-history-by-rules-added-to-the-secrets-scan.md) | accepted | Toolkit maintainers |
-| [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md) | proposed | Toolkit maintainers |
+| [Binary keystores are found over the whole history by listing every file ever added, because gitleaks skips binary files there](0043-binary-keystores-are-found-over-the-whole-history-by-listing-every-file-ever-added-because-gitleaks-skips-binary-files-there.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Each technique rule separates what calls for the technique from what makes it possible](0046-each-technique-rule-separates-what-calls-for-the-technique-from-what-makes-it-possible.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A lesson that teaches a step of the journey names that step's skill, not a technique](0048-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill-not-a-technique.md) | accepted (chosen in discussion) | Toolkit maintainers |
@@ -97,7 +97,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call](0024-the-estate-survey-sits-outside-the-toolkit-which-provides-a-repo-classifier-a-survey-tool-can-call.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call](0024-the-estate-survey-sits-outside-the-toolkit-which-provides-a-repo-classifier-a-survey-tool-can-call.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
 | [Repos are classified by rules only, so results can be explained and repeated](0025-repos-are-classified-by-rules-only-so-results-can-be-explained-and-repeated.md) | proposed | Toolkit maintainers |
 | [Which existing tools the repo classifier combines](0026-which-existing-tools-the-repo-classifier-combines.md) | proposed | Toolkit maintainers |
 | [The lists of technology stacks and application types](0027-the-lists-of-technology-stacks-and-application-types.md) | proposed | Toolkit maintainers |
@@ -106,5 +106,5 @@ Numbers follow reading order until a record is accepted; after that a number nev
 
 | Decision | Status | Who decides |
 |---|---|---|
-| [The format for intended behaviour is chosen by piloting Gherkin and Allium side by side](0028-the-format-for-intended-behaviour-is-chosen-by-piloting-gherkin-and-allium-side-by-side.md) | proposed (agreed in discussion) | Toolkit maintainers |
+| [The format for intended behaviour is chosen by piloting Gherkin and Allium side by side](0028-the-format-for-intended-behaviour-is-chosen-by-piloting-gherkin-and-allium-side-by-side.md) | accepted (chosen in discussion) (agreed in discussion) | Toolkit maintainers |
 

@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # We write in plain English using the agreed word list
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,7 +23,7 @@ Testing and delivery work is full of specialist and repurposed words (ladder, tr
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. `GLOSSARY.md` is the agreed word list, including words not to use.
+Chosen in discussion: the first option. `GLOSSARY.md` is the agreed word list, including words not to use.
 
 ### Consequences
 

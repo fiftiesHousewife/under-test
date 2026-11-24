@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # The toolkit applies itself: this repo is its own first adopter
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,7 +23,7 @@ A toolkit that isn't used on itself drifts from reality: awkward steps, broken s
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. The toolkit's own adoption records sit beside its other decisions, clearly marked as self-application.
+Chosen in discussion: the first option. The toolkit's own adoption records sit beside its other decisions, clearly marked as self-application.
 
 ### Consequences
 

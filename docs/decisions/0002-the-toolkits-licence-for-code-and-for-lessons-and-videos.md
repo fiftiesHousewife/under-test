@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: How we work
 ---
 
 # The toolkit's licence for code and for lessons and videos
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -27,7 +27,7 @@ Without a licence, nobody may legally use, edit, rebrand or redistribute any par
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: Apache-2.0 for everything.
+Chosen in discussion: Apache-2.0 for everything.
 
 ### Consequences
 

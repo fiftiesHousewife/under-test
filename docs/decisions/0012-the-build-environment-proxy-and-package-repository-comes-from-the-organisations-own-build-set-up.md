@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Using the toolkit in an organisation
 ---
 
 # The build environment (proxy and package repository) comes from the organisation's own build set-up
 
-**Decided by:** Toolkit maintainers · **Status:** proposed
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,7 +23,7 @@ Builds must reach packages through the organisation's proxy and package reposito
 
 ## Decision Outcome
 
-Proposed: the first option. Public repositories in this toolkit's own build are defaults for building it outside any organisation.
+Chosen in discussion: the first option. Public repositories in this toolkit's own build are defaults for building it outside any organisation.
 
 ### Consequences
 

@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 decision-makers: Toolkit maintainers
 group: Understanding our repos
 ---
 
 # The estate survey sits outside the toolkit, which provides a repo classifier a survey tool can call
 
-**Decided by:** Toolkit maintainers · **Status:** proposed (agreed in discussion)
+**Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion) (agreed in discussion)
 
 *This is a decision about the toolkit itself, made by its maintainers.*
 
@@ -23,7 +23,7 @@ Surveying every repo an organisation has depends on its code-hosting platform, s
 
 ## Decision Outcome
 
-Agreed in discussion; waiting for approval by pull request. Agreed in discussion: the first option. The design is in `docs/design/survey-tool.md`.
+Chosen in discussion: the first option. The design is in `docs/design/survey-tool.md`.
 
 ### Consequences
 
