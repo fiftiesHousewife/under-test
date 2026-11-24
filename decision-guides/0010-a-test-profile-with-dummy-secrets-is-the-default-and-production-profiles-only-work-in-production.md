@@ -27,7 +27,7 @@ Proposed: the first option.
 
 ### Consequences
 
-* The test profile is added in the [safety inventory](../docs/JOURNEY.md#1-safety-inventory), the first step of a
+* The test profile is added in the [safety inventory](../docs/JOURNEY.md#2-safety-inventory-the-gate-before-the-first-run), the first step of a
   repo's journey, where the inventory's findings are made harmless in it.
 * A lesson on running old code safely on your own machine, planned in [the lessons catalogue](https://github.com/fiftiesHousewife/under-test-lessons/blob/main/lessons/CATALOGUE.md).
 

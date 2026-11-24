@@ -48,5 +48,6 @@ and adds flaky and failing tests to `tests.yaml`.
 * find-test-anti-patterns reading `reaches-external-system` from the connection list's record by default; today it
   may, and otherwise finds hosts itself.
 * An eval case for the connection list's pass from the code, from what Openfire showed.
-* What the skill for tests that reach external systems and tests that mock everything does with these lists, after
-  discovery and measurement ([why](../decisions/0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md)).
+* The repair step, which reads these lists after measurement: the tests that reach external systems are sorted and
+  treated, and the other anti-patterns fixed in the test code
+  ([why](../decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)).

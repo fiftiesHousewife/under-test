@@ -48,7 +48,7 @@
 | **external system** | A database, service, mail server, directory, file share or queue a test reaches off the machine it runs on. A test that reaches one is tagged `external` and left out of normal runs. | shared system |
 | **high-risk files** | Files that change often *and* are complex: the top 10% by both. | hotspots |
 | **outbound network calls** | Connections a test makes to other systems. | egress |
-| **measurement run** | The automated run that builds a repo, runs its tests 5 times, and measures coverage and test strength. | probe, dynamic probe |
+| **measurement run** | The automated run that builds a repo and runs its tests in stages, each gating the next: once, then repeated in varied orders for flaky tests, then with planted bugs; it measures coverage and test strength. | probe, dynamic probe |
 | **assessment file** | `testing/assessment.yaml` in each repo: measured results plus decisions people have made. | record, assessment record |
 | **batch** (of repos) | The set of repos being worked on together this quarter, chosen within one part of the organisation. | wave |
 | **the organisation** / **its repos** | The organisation using the toolkit, and the repositories in scope. | estate |
@@ -110,10 +110,17 @@ The programme runs as a forward deployed engagement (see [The programme runs as 
 | **connection list** | A file listing everything an application connects to (interfaces, databases, queues, outside services), with what tests use instead of each one and which addresses tests must never reach. Written in FINOS CALM, an open standard format. | dependency map, architecture document |
 | **safety inventory** | The gate before any of a repo's tests or its application first runs, done alongside discovery: secrets, keystores, real personal data, jobs that start by themselves, automatic migrations, build tasks that publish or deploy, fixed file paths and file shares. Some findings block the repo from running. | security scan (for the whole step) |
 | **discovery** | The first step on every repo, in which nothing runs but its build: a draft connection list (from its code and settings), a source list, and the tests and test assets that already exist, with their anti-patterns. Coverage targets apply only afterwards. | |
+| **repair** | The step after measurement that makes a repo's existing tests trustworthy, changing only test code: tests that reach external systems are sorted and treated, and the other anti-patterns fixed; what needs production code changed, or a test deleted, is left as work for the testing plan. | clean-up, remediation |
 | **connection point** | A place in the code that opens or uses a connection to something outside the program: a database, an HTTP service, mail, a directory, a queue, a socket. Found by connection-paths. | sink, integration point |
 | **system** (on the connection list) | Something outside the program the code connects to: one host, or, while its address isn't known, one setting or one class that opens it. | node, dependency |
 | **dispatch point** | A call through an interface with many implementations, such as "notify every listener", which a call graph reports instead of following. | |
 | **call graph** | Which methods call which, worked out from the source, used to find the tests that may reach each connection point. | |
+| **chain** (of calls) | The calls from a test to a connection point, one method a step: the test first, then the method it calls (or the set-up that leads there), the connection point last. | path, trace |
+| **through set-up** | Said of a chain that starts in what runs with a test rather than in the test itself: a set-up or tear-down method, the test class's constructor or fields, or a superclass's. | |
+| **shared chain** | The calls every test that may reach one system goes through, nearest the test first, without the test: where one stand-in can cover all of them. | seam |
+| **alternatives** (of a system) | Systems reached through the same interface or superclass method, which a program chooses between, so a test reaches one of them, not all. | |
+| **local** (connection) | A connection that stays on the machine: a database in memory or in a file, a file, a jar, a classpath resource, localhost. Part of no system. | |
+| **test that starts a framework** | A test whose annotation (such as Spring's or Quarkus's) starts a framework that wires objects together and may connect in ways no call in the source shows. | |
 | **test assets** | Tests that live outside the repo: automation suites run against a shared test environment, manual test scripts, regression packs. A source of behaviour, never evidence for a test maturity level. | QA artefacts |
 | **capture** (of current behaviour) | Recording what an application receives and sends, so it can become approval tests and recorded responses. Always followed by cleaning. | traffic sniffing |
 | **cleaning** (of captured data) | Removing or replacing personal and sensitive data in a capture, inside the environment it was captured in, before it is copied anywhere. | sanitising, scrubbing |

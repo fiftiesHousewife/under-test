@@ -13,7 +13,7 @@ organisation, works inside locked-down corporate networks, and never lets an AI 
 
 ## The journey of one repo
 
-[![The journey of one repo: eight steps from discovery to keeping it there, each with the skills that do it, the question that can stop it and who answers that question](docs/design/repo-journey.svg)](docs/JOURNEY.md)
+[![The journey of one repo: nine steps from discovery to keeping it there, each with the skills that do it, the question that can stop it and who answers that question](docs/design/repo-journey.svg)](docs/JOURNEY.md)
 
 The drawing's source is [repo-journey.excalidraw](docs/design/repo-journey.excalidraw); open it in Excalidraw to
 change it, then export it again with [drawing-export](maintainer-tools/drawing-export/README.md).
@@ -40,9 +40,10 @@ the result the same every time.
 | 2 | [run-the-safety-inventory](.github/skills/run-the-safety-inventory/SKILL.md) | Turns gitleaks' reports, and a list of keystores ever committed, into the assessment file's safety section: the gate before the first run | [About 40% fewer tool calls and tokens; ids the same every run; no secrets in the reply](docs/skill-evaluations/run-the-safety-inventory.md) |
 | 3 | [measure-a-repo](.github/skills/measure-a-repo/SKILL.md) | Runs the tests five times under the airgap agent, with coverage and planted bugs, through an init script that changes nothing in the build | [A third fewer tool calls and half the time; the same result shape on Gradle 6.9 and 9](docs/skill-evaluations/measure-a-repo.md) |
 | 3 | [score-obstacles](.github/skills/score-obstacles/SKILL.md) | Scores each obstacle to testing 0 to 3 by the named list, with the evidence for each | Not yet tried: its eval case runs with the baseline |
-| 6 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Proposes adopt, defer or reject for every technique, each traced to its rule | [Two runs agree on 22 of 23 techniques](docs/skill-evaluations/choose-techniques.md) |
-| 6 | [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generates the testing plan from the assessment file, every piece of work with a stable key for the tracker | [Two runs give the same 15 pieces of work, keys and order](docs/skill-evaluations/write-the-testing-plan.md) |
-| 6 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turns an approved testing plan into work items | Not yet: waits for the loader |
+| 4 | A repair skill, in the backlog | Makes the existing tests trustworthy, changing only test code: sorts and treats the tests that reach external systems, fixes the rest with OpenRewrite recipes where the change is mechanical, and records what needs production code for later ([why](docs/decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)) | Not yet built |
+| 7 | [choose-techniques](.github/skills/choose-techniques/SKILL.md) | Proposes adopt, defer or reject for every technique, each traced to its rule | [Two runs agree on 22 of 23 techniques](docs/skill-evaluations/choose-techniques.md) |
+| 7 | [write-the-testing-plan](.github/skills/write-the-testing-plan/SKILL.md) | Generates the testing plan from the assessment file, every piece of work with a stable key for the tracker | [Two runs give the same 15 pieces of work, keys and order](docs/skill-evaluations/write-the-testing-plan.md) |
+| 7 | [load-repo-work-into-the-issue-tracker](.github/skills/load-repo-work-into-the-issue-tracker/SKILL.md) | Turns an approved testing plan into work items | Not yet: waits for the loader |
 | All | [render-the-assessment-report](.github/skills/render-the-assessment-report/SKILL.md) | Fills the report page from the repo's files, and applies people's changes back | [Half the tool calls and tokens, a sixth of the time; the same page for every repo](docs/skill-evaluations/render-the-assessment-report.md) |
 
 The tools the skills run:
@@ -53,6 +54,7 @@ The tools the skills run:
 | [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools) | The mechanical steps of the journey's skills, one sub-command each; its first, `anti-patterns`, does find-test-anti-patterns' listing, PMD run, counting and writing. Built, not yet published |
 | [The toolkit's PMD rules](tools/test-anti-patterns/anti-patterns.pmd.xml) | Find the anti-patterns in tests that PMD can see: tests that never run, have no real assertion, swallow failures, sleep, run in a fixed order, or mock everything |
 | [gitleaks](https://github.com/gitleaks/gitleaks), with [the toolkit's rules](tools/safety-inventory/) | Finds secrets and production credentials, over the whole history |
+| [OpenRewrite](https://docs.openrewrite.org/) | Changes Java source by recipes that understand types; repair runs the toolkit's own recipes for its mechanical changes ([proposed](docs/decisions/0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md)) |
 | [The airgap agent](https://github.com/fiftiesHousewife/under-test-airgap) | Refuses every call off the machine when old code first runs on a developer's machine, and reports it |
 
 Each journey skill is also evaluated repeatably with `claude plugin eval`: [the latest results](docs/skill-evaluations/eval-results.md), and

@@ -10,13 +10,14 @@ Excalidraw.
 flowchart LR
     D["<b>1. Discovery</b><br/>connection list · existing tests and their anti-patterns · source list; only the build runs"] --> S["<b>2. Safety inventory</b><br/>the gate before the first run: secrets, real data, jobs that start themselves"]
     S --> M["<b>3. Measurement</b><br/>the first run, in stages: build, one run, repeats, planted bugs"]
-    M --> C["<b>4. Capture current behaviour</b><br/>capture, clean in place, check, approval tests, then measure again"]
-    C --> B["<b>5. Intended behaviour</b><br/>specification from sources and experts"]
-    B --> P["<b>6. Testing plan</b><br/>techniques, target level, approved"]
-    P --> W["<b>7. The work</b><br/>workstreams, in order, reviewed"]
-    W --> K["<b>8. Keep it there</b><br/>re-measured, progress reported"]
+    M --> R["<b>4. Repair</b><br/>the existing tests made trustworthy, test code only, then measure again"]
+    R --> C["<b>5. Capture current behaviour</b><br/>capture, clean in place, check, approval tests, then measure again"]
+    C --> B["<b>6. Intended behaviour</b><br/>specification from sources and experts"]
+    B --> P["<b>7. Testing plan</b><br/>techniques, target level, approved"]
+    P --> W["<b>8. The work</b><br/>workstreams, in order, reviewed"]
+    W --> K["<b>9. Keep it there</b><br/>re-measured, progress reported"]
     classDef step fill:#eaf6ec,stroke:#3c9a52,color:#0f2e17
-    class D,S,C,M,B,P,W,K step
+    class D,S,C,M,R,B,P,W,K step
 ```
 
 ## 1. Discovery
@@ -91,7 +92,7 @@ result ([why](decisions/0070-measurement-runs-in-stages-each-gating-the-next-bui
 4. **Planted bugs:** PIT (mutation testing) on the tests that passed every time, per module, in key packages where it
    is large.
 
-It also records the mix of test types. Scoring each obstacle to testing, with evidence, is the
+It runs again after repair, on the same settings. It also records the mix of test types. Scoring each obstacle to testing, with evidence, is the
 [score-obstacles](../.github/skills/score-obstacles/SKILL.md) skill.
 
 - **Who:** the measure-a-repo skill, run by a Forward Deployed Engineer.
@@ -100,7 +101,38 @@ It also records the mix of test types. Scoring each obstacle to testing, with ev
   platform's control layers.
 - **Decided in:** [The assessment file: where it lives, who writes which fields, and its schema version](../decision-guides/0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md), [Where measured results are stored and how each repo sees its own](../decision-guides/0025-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md), [How flaky tests are found](../decision-guides/0043-how-flaky-tests-are-found.md), [The named list of obstacles to testing and how each is scored](../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md).
 
-## 4. Capture current behaviour
+## 4. Repair
+
+Measurement shows which existing tests can't be trusted; repair makes them trustworthy before anything is built on
+them, changing only test code
+([why](decisions/0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md)).
+It works one connection, then one kind of problem, at a time, each change a pull request a person reviews:
+
+* **Tests that reach external systems** are sorted into logic, connection or both: logic tests switch to the
+  connection's stand-in, connection tests stay real and are tagged `external`, and the rest become twins, one set of
+  test bodies run against the stand-in and, under the tag, against the real system
+  ([why](decisions/0063-tests-that-reach-external-systems-are-sorted-into-logic-connection-or-both-and-treated-accordingly.md)).
+  connection-paths' record says where: the first method each test calls, whether it gets there through set-up, and
+  the calls every test reaching a system shares, where one stand-in covers them all.
+* **Flaky and failing tests, sleeps, order-dependent tests, tests that never run, tests that swallow their own
+  failures, tests with no real assertion, tests that mock everything and copied tests** are fixed in the test code.
+  The mechanical changes are made by OpenRewrite recipes; what needs judgement, by the AI with a person reviewing,
+  judged by the planted bugs that measurement found no test catches
+  ([proposed](decisions/0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md)).
+* **What needs production code changed** (a dependency a test can't replace, an address written in the code
+  that a stand-in needs in a setting), **deleting a test**, and **disabled tests** wait: each is recorded against its
+  test, and the testing plan turns it into work.
+
+A repaired test is kept only if it passes the checks for AI-written tests. Measurement then runs again, on the same
+settings, so what repair changed shows as a change.
+
+- **Who:** a Forward Deployed Engineer with the AI; a person reviews every change; the Application Owner decides
+  disabled tests.
+- **Leaves in the repo:** the repaired tests, the stand-ins they use, the `external` tag on tests that must reach a
+  real system, and in `testing/tests.yaml` each test's treatment and what was left for later.
+- **Decided in:** [Tests that reach external systems are tagged and left out of normal runs](../decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md), [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](../decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [The checks an AI-written test must pass before it is kept](../decision-guides/0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md).
+
+## 5. Capture current behaviour
 
 Record a first baseline of what the code does today at its edges, before the testing plan, so any later change in
 behaviour shows up. Measurement comes first, and runs again once the approval tests exist, on the same settings, so
@@ -119,7 +151,7 @@ agrees otherwise. The cleaned captures become approval tests and recorded respon
   shared test kit for each system.
 - **Decided in:** [Black-box captures are taken in non-production first, and from production only with named approvals](../decision-guides/0060-black-box-captures-are-taken-in-non-production-first-and-from-production-only-with-named-approvals.md), [Order of preference for where current behaviour is captured](../decision-guides/0061-order-of-preference-for-where-current-behaviour-is-captured.md), [Captured data is cleaned inside the environment it was captured in, before it is copied anywhere](../decision-guides/0062-captured-data-is-cleaned-inside-the-environment-it-was-captured-in-before-it-is-copied-anywhere.md), [How personal data in captures is replaced: dropped, keyed substitutes or synthetic values, chosen per field](../decision-guides/0063-how-personal-data-in-captures-is-replaced-dropped-keyed-substitutes-or-synthetic-values-chosen-per-field.md), [Cleaned captures pass a detector check before they are kept, and a person signs off the first sample](../decision-guides/0064-cleaned-captures-pass-a-detector-check-before-they-are-kept-and-a-person-signs-off-the-first-sample.md), [Cleaned captures are treated as personal data unless the Data Protection Officer agrees they are anonymous](../decision-guides/0065-cleaned-captures-are-treated-as-personal-data-unless-the-data-protection-officer-agrees-they-are-anonymous.md).
 
-## 5. Intended behaviour
+## 6. Intended behaviour
 
 What the code does today isn't always what it should do. The AI drafts rules from the listed sources, citing a
 source for every rule, and compares them with the approval tests. Experts answer the differences in short, booked
@@ -130,7 +162,7 @@ behaviour as a known issue, fix it deliberately, or correct the specification.
 - **Leaves in the repo:** a specification of intended behaviour, and its open questions.
 - **Decided in:** [Behaviour is captured in two tracks, current and intended, and every difference is an open question](../decision-guides/0033-behaviour-is-captured-in-two-tracks-current-and-intended-and-every-difference-is-an-open-question.md), [Expert time is booked as a budget of short question sessions](../decision-guides/0035-expert-time-is-booked-as-a-budget-of-short-question-sessions.md).
 
-## 6. Testing plan
+## 7. Testing plan
 
 The repo's target test maturity level follows from its business criticality. The [choose-techniques](../.github/skills/choose-techniques/SKILL.md) skill marks each
 technique adopt, defer or reject for the repo from its rules and the measurements. The
@@ -143,9 +175,9 @@ work into the organisation's issue tracker, one item per piece of work, and the 
 - **Leaves in the repo:** decisions in `testing/assessment.yaml`, and `testing/TESTING-PLAN.md`.
 - **Decided in:** [What each test maturity level means](../decision-guides/0012-what-each-test-maturity-level-means.md), [Target test maturity level for each business criticality](../decision-guides/0015-target-test-maturity-level-for-each-business-criticality.md), [Testing plans are generated from the assessment file, and the issue tracker follows the work](../decision-guides/0024-testing-plans-are-generated-from-the-assessment-file-and-the-issue-tracker-follows-the-work.md), [Who approves repo and application testing plans](../decision-guides/0026-who-approves-repo-and-application-testing-plans.md), [Repo work is tracked in the organisation's issue tracker with standard labels](../decision-guides/0027-repo-work-is-tracked-in-the-organisations-issue-tracker-with-standard-labels.md), [Shared libraries target level 4, whatever the criticality of the apps using them](../decision-guides/0016-shared-libraries-target-level-4-whatever-the-criticality-of-the-apps-using-them.md), [How an application's test maturity level is worked out from its repos](../decision-guides/0017-how-an-applications-test-maturity-level-is-worked-out-from-its-repos.md), [Target test mix for each application type and the top-heavy phase at level 2](../decision-guides/0018-target-test-mix-for-each-application-type-and-the-top-heavy-phase-at-level-2.md), [When the organisation requires it, every commit names its work item](../decision-guides/0028-when-the-organisation-requires-it-every-commit-names-its-work-item.md).
 
-## 7. The work
+## 8. The work
 
-The work goes in a fixed order of workstreams: make it run on its own, fix flaky tests, record current behaviour, make
+The work takes what repair left, and the plan's own pieces of work, in a fixed order of workstreams: make it run on its own, fix flaky tests, record current behaviour, make
 code testable, test against requirements, strengthen tests, check in production; key-journey code and high-risk
 files first. For each thing the code talks to, the first stand-in that fits is used: a container, recorded responses,
 a contract with the other team, a fake behind an interface. People write the tests with AI help. An AI-written test is
@@ -158,7 +190,7 @@ triage, not the bin.
 - **Leaves in the repo:** the tests, and any time-limited exceptions to a decision.
 - **Decided in:** [The order of workstreams for a repo](../decision-guides/0050-the-order-of-workstreams-for-a-repo.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [People do the work with AI coding assistance, and review everything it produces](../decision-guides/0005-people-do-the-work-with-ai-coding-assistance-and-review-everything-it-produces.md), [The checks an AI-written test must pass before it is kept](../decision-guides/0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md), [AI-written tests that expect different behaviour go to triage, not the bin](../decision-guides/0048-ai-written-tests-that-expect-different-behaviour-go-to-triage-not-the-bin.md), [Independent AI agents working unattended are a future direction only](../decision-guides/0006-independent-ai-agents-working-unattended-are-a-future-direction-only.md), [How strict the checks on AI-written tests are at the start](../decision-guides/0049-how-strict-the-checks-on-ai-written-tests-are-at-the-start.md), [Differential tests replay saved requests offline, and live comparison runs only on read-only traffic](../decision-guides/0066-differential-tests-replay-saved-requests-offline-and-live-comparison-runs-only-on-read-only-traffic.md).
 
-## 8. Keep it there
+## 9. Keep it there
 
 Progress is measured by required tests met (one of the right kind for each connection, and passing tests for each
 rule in the specification), alongside coverage and mutation results. Changed repos are re-scanned nightly, and repos

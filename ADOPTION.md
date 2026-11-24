@@ -202,8 +202,8 @@ the combining tool rejects that.
 
 ## Step 7: Make production safe before running anything
 
-Old repos often hold production secrets and can reach production systems once running. Before anyone builds or runs
-one, by hand, with an AI assistant, or in CI:
+Old repos often hold production secrets and can reach production systems once running. Before anyone runs one's tests
+or its application, by hand, with an AI assistant, or in CI (building it without running tests may come first):
 
 1. **Scan for secrets** with the tool you already use, or your code-hosting platform's own scanning.
 2. **Run old code first only on CI runners that can't reach production.** Separate them by network, not by

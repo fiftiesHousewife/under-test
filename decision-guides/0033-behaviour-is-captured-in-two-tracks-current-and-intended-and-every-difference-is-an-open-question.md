@@ -30,7 +30,7 @@ Agreed in discussion; waiting for approval by pull request. Agreed in discussion
 ### Consequences
 
 * The specification and the approval tests are compared when the specification is drafted (the
-  [intended behaviour](../docs/JOURNEY.md#5-intended-behaviour) step of the journey), and the open questions are kept
+  [intended behaviour](../docs/JOURNEY.md#6-intended-behaviour) step of the journey), and the open questions are kept
   with the specification.
 * Open questions are tracked as decision items in the issue tracker.
 

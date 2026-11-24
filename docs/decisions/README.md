@@ -83,6 +83,8 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [connection-paths does everything a program can decide, and the connection-list skill only what needs judgement](0074-connection-paths-does-everything-a-program-can-decide-and-the-connection-list-skill-only-what-needs-judgement.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A connection whose address isn't known is a system of its own per class that opens it](0076-a-connection-whose-address-is-not-known-is-a-system-of-its-own-per-class-that-opens-it.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Repairing the existing tests is a step of its own, after measurement, changing only test code](0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [How repair fixes each kind of problem, and which changes OpenRewrite recipes make](0079-how-repair-fixes-each-kind-of-problem-and-which-changes-openrewrite-recipes-make.md) | proposed | Toolkit maintainers |
 
 ## Recording results and owning plans
 
