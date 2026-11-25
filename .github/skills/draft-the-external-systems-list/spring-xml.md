@@ -9,7 +9,8 @@ It reaches an XML file's beans from a test whose class, or a superclass in the r
 `@ContextConfiguration`, `@SpringJUnitConfig` or `@ImportResource` naming the file, and from code that does
 `new ClassPathXmlApplicationContext("…xml")` (or the `FileSystem` or `Generic` variant), and follows each
 `<import resource=...>` to the imported file's beans. A chain through the file has a
-step `org.springframework.context.ApplicationContext#<xml file name>()`. A bean whose class matches a connection rule
+step `org.springframework.context.ApplicationContext#<xml path>()`, the file's path on the classpath (`spring/app.xml`;
+a wildcard location stands for each file it matches). A bean whose class matches a connection rule
 is a point, and the first of its `url`, `jdbcUrl`, `URL`, `serverURL`, `brokerURL`, `providerUrl`, `uri`, `baseUrl`,
 `serviceUrl`, `connectionString`, `host` or `serverName` properties is its address. A `${name}` in it becomes the
 setting `name`, looked up in all the repo's settings files, the test's own first. Take all of that from the facts file.
