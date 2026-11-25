@@ -77,7 +77,10 @@ each test reaches that call with a client the test class makes.
 | `contract`, `shared-test-environment`, `accept-risk` | Is the test as it is, pointed at the agreed test system; `accept-risk` needs a person's decision recorded in the list, so record the test as waiting if there is none |
 
 What the stand-in returns for each test (the server's replies, a fake's data, a container's start-up data) is yours to
-write, from what the test asserts; a person reviews it. The external half is the test as it was: same client, same
+write, from what the test asserts; a person reviews it. Mark each class and method you write with a comment,
+`// AI-written by pair-the-tests-that-reach-external-systems (<what it does>)`, not an annotation: add no import the
+repo doesn't already use, since the build's JDK may lack it (`javax.annotation.Generated` is gone from JDK 11 on), and
+write only Java the repo's source level allows. The external half is the test as it was: same client, same
 address, nothing stubbed.
 
 ## 5. Check the pair
