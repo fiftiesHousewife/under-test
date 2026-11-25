@@ -1,7 +1,7 @@
 #!/bin/bash
 # Sets up the case's workspace: Apache Commons Net 3.6, a real Maven library of about 250 Java files whose functional
-# tests connect to public FTP, telnet and whois servers, with under-test-external-calls' facts for it (made by the tool
-# at commit 7e73f41), plus the schemas and the decision guide the task needs. Run by claude plugin eval --scaffold, in
+# tests connect to public FTP, telnet and whois servers, with under-test-external-calls' facts for it (external-calls/2, made by
+# the tool at commit e9ba8b2), plus the schemas and the decision guide the task needs. Run by claude plugin eval --scaffold, in
 # the workspace.
 #
 # The right answer comes from the field trial, which ran every test under the airgap agent with every call to another

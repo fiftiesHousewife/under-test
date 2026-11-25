@@ -1,7 +1,7 @@
 ---
 type: regex
 pattern: '\bgrade:\s*"?may-reach\b'
-match: count:69
+match: count:42
 target: {source: file, path: testing/tests.yaml}
 ---
-Sixty-nine entries may reach, all on ListingFunctionalTest's tests.
+Forty-two entries may reach, all on ListingFunctionalTest's tests.

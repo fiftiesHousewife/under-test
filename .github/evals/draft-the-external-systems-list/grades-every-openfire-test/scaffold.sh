@@ -1,6 +1,6 @@
 #!/bin/bash
 # Sets up the case's workspace: Openfire 4.6.0, a real multi-module Maven repo of about 800 Java files, with
-# under-test-external-calls' facts for its xmppserver module (made by the tool at commit 7e73f41), plus the schemas and
+# under-test-external-calls' facts for its xmppserver module (external-calls/2, made by the tool at commit e9ba8b2), plus the schemas and
 # the decision guide the task needs. Run by claude plugin eval --scaffold, in the workspace.
 #
 # The right answer comes from the field trial, which ran every one of the module's tests under the airgap agent with
