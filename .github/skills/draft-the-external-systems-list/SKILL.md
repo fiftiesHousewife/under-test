@@ -94,8 +94,9 @@ names.
 | `unique-id` | `named_by: host`: the host as from-airgap-reports.md step 2 makes it; a setting, variable or JNDI name: `<kind>-<name>`; `class`: `<kind>-via-<the class's simple name, after its enclosing classes' (`HttpConnection.Response`)>`; lower-cased, every character but `a-z` and `0-9` turned to `-`, runs collapsed, ends trimmed |
 | `node-type` | `database` for a database; `ldap` for a directory; `service` for `http`; else `system` |
 | `name` | the host; else `<A database / A directory / An HTTP service / A mail server / A queue / A system>, address from <setting / environment variable / system property / JNDI name> <name>`, or `..., address unknown, opened by <the class's simple name, after its enclosing classes'>` |
-| `description` | `<Thing> opened by <the opening classes' simple names, sorted, joined by ", ">, found in the code by under-test-external-calls.` |
-| `metadata.under-test` | `addresses`: the literal, or a setting's value that isn't a placeholder, as written; else `address-from`: `setting <name>, which has no value in the repo`, `setting <name>, whose value in <file>:<line> is a placeholder`, `environment variable <name>`, `system property <name>`, `JNDI name <name>`, or `built at run time in <value>`; and `opened-by`, the system's `points` |
+| `description` | `<Thing> opened by <the opening classes' simple names, after their enclosing classes', sorted, joined by ", ">, found in the code by under-test-external-calls.` |
+| `metadata.under-test` | `addresses`: the literal, or a setting's value that isn't a placeholder, as written; else `address-from`: `setting <name>, which has no value in the repo`, `setting <name>, whose value in <file>:<line> is a placeholder`, `environment variable <name>`, `system property <name>`, `JNDI name <name>`, `parameter <value>, given by the code that calls it` for an address from a parameter, or `built at run time in
+<value>`; and `opened-by`, the system's `points` |
 
 The relationship is as from-airgap-reports.md step 3 makes it, except: `found-by` `["code"]`, plus `"settings"` when
 the address is a setting; `kinds` the system's kinds; `callers` its points as `<type>.<method>(<file name>:<line>)`,
@@ -130,10 +131,10 @@ kinds):
   | Otherwise (`run-time`, or a facts file labelled `connection-paths/1` to `/3`: say to run a newer under-test-external-calls) | `may-reach` | `run-time` |
 
 * `through_set_up`: the reach's `through_set_up`;
-* `via`: the reach's `chain` as `<Class>.<method>` steps (simple class names, no parameters), joined by ` > `.
+* `via`: the reach's `chain` as `<Class>.<method>` steps (simple class names after their enclosing classes', no parameters), joined by ` > `.
 
 Then the tests whose own code or the settings they load name a host (spring-boot.md, spring-xml.md, and in test code
-`grep -rnE '(//|:@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test source folders>`, not their
+`LC_ALL=en_US.UTF-8 grep -rnE '(//|:@|=)([[:alnum:].-]+\.[[:alpha:]]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test source folders>`, not their
 resources, which are data; leave out comments, whole lines or the end of one: `:@` is an Oracle JDBC address, so a mail
 or XMPP address such as `user@host` names no host). A host is never
 `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` or their subdomains, one ending `.example`, `.test`,
