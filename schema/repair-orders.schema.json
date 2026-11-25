@@ -244,7 +244,7 @@
             "where"
           ],
           "additionalProperties": false,
-          "description": "Where the stand-in goes, by the first rule that holds: not-known when the chain is empty (the repair skill finds the place by reading the test); framework-settings when the facts' tests_starting_a_framework names the test; set-up when the reach has through_set_up; else test-body. field when the reach has client_field (external-calls/2), before set-up and test-body; the call's file and line are the reach's first_call (external-calls/2). A shared stand-in is the order's shared_chain, which the repair skill may choose instead. The reach used is the one whose system is the order's (external-calls/2); in an earlier facts file, the one whose point is among the system's points, else the test's reach of one of the system's kinds (a test reaching two systems of one kind has one reach for both).",
+          "description": "Where the stand-in goes, by the first rule that holds: not-known when the chain is empty (the repair skill finds the place by reading the test); framework-settings when the facts' tests_starting_a_framework names the test; set-up when the reach has through_set_up; field when the reach has client_field (external-calls/2); else test-body. A set-up reach with a client_field still gives inject.field. The call's file and line are the reach's first_call (external-calls/2). A shared stand-in is the order's shared_chain, which the repair skill may choose instead. The reach used is the one whose system is the order's (external-calls/2); in an earlier facts file, the one whose point is among the system's points, else the test's reach of one of the system's kinds (a test reaching two systems of one kind has one reach for both).",
           "properties": {
             "where": {
               "enum": [
@@ -289,7 +289,7 @@
             },
             "field": {
               "type": "string",
-              "description": "For field: the test class's field the client is called on, the reach's client_field (external-calls/2)."
+              "description": "The test class's field the client is called on, the reach's client_field (external-calls/2), whatever where is."
             }
           }
         },
