@@ -149,7 +149,8 @@ address to connect to (a URL, a JDBC or LDAP address, a host setting), never a n
 used as an identifier (a form type, a capabilities node), a certificate or directory name (`CN=`, `dc=`), or a `.class`
 literal; nor one the test never connects to: a base URI given to a parser, or an expected value (in an
 assertion, a header or an exception message). A host in a field counts for each test that uses the field, `where` at
-the field's line; one entry per test and node, at its first line. Each test gets an entry with
+the field's line; one entry per test and node, at its first line. A host whose node the test already has a
+`code-path` entry for adds no entry: the facts found it already. Each test gets an entry with
 `found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, `where`, the `path:line` naming it, and
 `kind`: the node's kind when the host already has a node, else from the address's scheme as spring-xml.md says.
 
