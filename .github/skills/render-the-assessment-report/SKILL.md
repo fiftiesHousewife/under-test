@@ -20,8 +20,8 @@ your reply: point at its file and line instead
 
 ## 1. Make the report
 
-Run this from the repo's root, with `TEMPLATE` set to the template's path: its path is the file the template link above points
-to (in a repo that installed the toolkit, under `apm_modules/`), that is `templates/repo-assessment-report.html` there:
+Run this from the repo's root, with `TEMPLATE` set to the template's path: the link is relative to this skill's own folder in the
+toolkit, never to the repo being worked on (in a repo that installed the toolkit, the toolkit is under `apm_modules/`), so it is `templates/repo-assessment-report.html` there:
 
 ```bash
 ruby -ryaml -rjson -e '

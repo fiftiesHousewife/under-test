@@ -33,6 +33,14 @@ if [ "$model" != "default" ]; then options+=(--model "$model"); fi
 
 # The eval runs on a clean copy of the toolkit, with the cases in evals/ (see copy-toolkit.sh).
 copy="$("$root/maintainer-tools/skill-evals/copy-toolkit.sh")" || exit 1
+# A case the eval's sandbox can't run has a runs-outside-eval.txt; it is left out here and run with
+# run-outside-eval.sh (run-baseline.sh does both).
+for outside in "$copy"/evals/*/*/runs-outside-eval.txt; do
+  [ -f "$outside" ] || continue
+  name="$(basename "$(dirname "$outside")")"
+  echo "Leaving out $name, which the eval's sandbox can't run: run maintainer-tools/skill-evals/run-outside-eval.sh $name"
+  rm -rf "$(dirname "$outside")"
+done
 
 echo "== Running the skill evals with ${model} on a copy of the toolkit in $copy; results go to $json"
 cd "$copy" || exit 1

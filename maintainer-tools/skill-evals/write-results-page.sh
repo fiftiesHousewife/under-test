@@ -68,6 +68,16 @@ errors="$(jq -r '
   echo "|---|---|---|---|---|---|---|---|---|"
   echo "$rows"
   echo
+  # A case the eval's sandbox can't run is run by run-outside-eval.sh, with its own results file.
+  for outside in "$root"/.github/evals/*/*/runs-outside-eval.txt; do
+    [ -f "$outside" ] || continue
+    case_name="$(basename "$(dirname "$outside")")"
+    if ! jq -e --arg n "$case_name" '.cases[] | select(.name == $n)' "$json" >/dev/null; then
+      echo "\`$case_name\` isn't in this table: the eval's sandbox can't run it, so it runs with"
+      echo "[run-outside-eval.sh](../../maintainer-tools/skill-evals/run-outside-eval.sh)."
+      echo
+    fi
+  done
   echo "## Checks that failed with the skills"
   echo
   if [ -n "$failed" ]; then echo "$failed"; else echo "None."; fi

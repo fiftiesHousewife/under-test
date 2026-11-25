@@ -95,8 +95,8 @@ that node's `name`, and its `stand-in.approach`, `stand-in.kit`, `state`, `never
 
 ## 3. Write `testing/TESTING-PLAN.md`
 
-Fill [the plan template](../../../templates/testing-plan.md): its path is the file the template link above points
-to (in a repo that installed the toolkit, under `apm_modules/`), that is `templates/testing-plan.md` there. If you can't read the template, stop and say so; don't
+Fill [the plan template](../../../templates/testing-plan.md): the link is relative to this skill's own folder in the
+toolkit, never to the repo being worked on (in a repo that installed the toolkit, the toolkit is under `apm_modules/`), so it is `templates/testing-plan.md` there. If you can't read the template, stop and say so; don't
 write the plan from memory. Replace each `{...}` as below; keep every other
 character, the generated-file comment included. Remove the "Template note" comment and each line that is only a
 braced instruction ending in `:}`, each with the blank line after it. A list placeholder becomes one line per item; a

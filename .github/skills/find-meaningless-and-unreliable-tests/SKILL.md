@@ -136,7 +136,7 @@ Feature files can be read whole.
 | List | `kind` | A test counts when |
 |---|---|---|
 | meaningless | `never-runs` | It looks like a test but never runs (step 1). |
-| meaningless | `disabled` | It or its class has `@Ignore` or `@Disabled`. |
+| meaningless | `disabled` | It or its class has `@Ignore` or `@Disabled`; a Cucumber scenario counts too, by its tag ([cucumber.md](cucumber.md)). |
 | meaningless | `no-real-assertion` | Its body has no assertion, or only `assertNotNull`, `assertTrue(true)`, `isNotNull()`, a bare `assertThat(x);` with nothing after it, a bare `verify(mock);`, or `expected = Exception.class` or `Throwable.class`. `assertNull`, `verify(...)`, `fail(...)`, `@Test(expected = ...)`, `assertThrows` and `@Rule ExpectedException` are real, and so is a call to a method in the test's class that itself asserts; a helper in another class counts only by its name (`check...`, `verify...`, `assert...`). |
 | meaningless | `swallows-failures` | Its body catches an exception around the code it tests and does nothing that fails: the catch block is empty, or only logs or prints. Or it catches `AssertionError`, `Error` or `Throwable` and neither records the exception, rethrows it nor fails, which swallows its own failures. **Not** the expected-exception idiom: a `try` whose last statement is `fail(...)`, with a catch of the expected exception that is empty or checks it. |
 | meaningless | `mocks-everything` | Its class has five or more mocks in total: `@Mock` and `@MockBean` fields, and `mock(` and `Mockito.mock(` calls (a field set by `mock(` counts once; `@Spy` doesn't count). |
