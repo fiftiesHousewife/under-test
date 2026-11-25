@@ -8,6 +8,8 @@ group: Using the toolkit in an organisation
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [A Maven repo's tests get the airgap agent from its Maven extension, named on the command line](0104-a-maven-repos-tests-get-the-airgap-agent-from-its-maven-extension-named-on-the-command-line.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -64,5 +66,5 @@ Chosen in discussion: the agents in `JAVA_TOOL_OPTIONS`. In order:
 ## More Information
 
 * Builds on: [A repo is measured by a Gradle init script that adds JaCoCo and PIT without changing its build](0044-a-repo-is-measured-by-a-gradle-init-script-that-adds-jacoco-and-pit-without-changing-its-build.md), [Risky calls on developer machines are refused and reported by the airgap agent, built in its own repo](0036-risky-calls-on-developer-machines-are-refused-and-reported-by-the-airgap-agent-built-in-its-own-repo.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [A Maven repo's tests get the airgap agent from its Maven extension, named on the command line](0104-a-maven-repos-tests-get-the-airgap-agent-from-its-maven-extension-named-on-the-command-line.md)
 * Background: none

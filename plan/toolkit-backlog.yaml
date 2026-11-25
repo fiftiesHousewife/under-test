@@ -1938,6 +1938,18 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md"
+  - key: "decide-a-maven-repos-tests-get-the-airgap-agent-from-its-maven-extension"
+    status: "done"
+    type: "decision"
+    title: "A Maven repo's tests get the airgap agent from its Maven extension, named on the command line"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0104-a-maven-repos-tests-get-the-airgap-agent-from-its-maven-extension-named-on-the-command-line.md"
   - key: "decide-the-ai-makes-repairs-mechanical-changes-until-the-recipes-exist"
     status: "done"
     type: "decision"
