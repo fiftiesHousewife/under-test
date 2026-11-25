@@ -114,7 +114,7 @@ steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none
 
 For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, and no other: a reach
 with no `system`, and a test whose `systems` is empty, get no entry from this step. A reach with no `system` that is
-graded `reaches` or `may-reach` is a fault in the facts, since its test may reach a system the list doesn't name: list
+graded `reaches` or `may-reach`, of any kind but `host-lookup` (a host lookup is in no system by design), is a fault in the facts, since its test may reach a system the list doesn't name: list
 each in the reply (step 5), by test and point, for under-test-external-calls' maintainers. Keys in this order (the
 reach is the one whose `system` is this name in a facts file labelled `external-calls/2`; in an earlier one, the one
 whose `point` is among the system's `points` and whose kind is the system's kind (two reaches at one point, such as
@@ -183,6 +183,6 @@ Check the files against their schemas if a validator is at hand. Then tell the p
    three with most implementations.
 4. For the safety inventory: the `process` and `host-lookup` points, by method.
 5. How many tests are graded each way, and each test graded `reaches`, with its system. Then any reach graded `reaches` or
-   `may-reach` that has no `system` (step 4): a fault for under-test-external-calls' maintainers.
+   `may-reach`, other than a `host-lookup`, that has no `system` (step 4): a fault for under-test-external-calls' maintainers.
 6. End with: "Measurement leaves out the tests that reach, and runs the rest once under the airgap agent, which
    confirms or clears each that may reach."
