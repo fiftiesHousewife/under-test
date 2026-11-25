@@ -20,3 +20,24 @@ the toolkit's schemas.
 * draft-the-external-systems-list / `grades-every-openfire-test`: `every-test-listed`, in 2 run(s)
 
 Total cost of this run of the evals: $2.62.
+
+## Real repos
+
+Two cases run the skill on real repos, against what the field trial's run under the airgap agent showed: Openfire 4.6.0,
+where no test reached another machine, and Apache Commons Net 3.6, where 18 did. They ran three times each way, at
+toolkit commit `b4023ec`, with Claude Code 2.1.332, model sonnet.
+
+| Skill | Case | Runs | With: mean score (lowest) | Without: mean score | Mean cost per run, with / without | Mean turns, with / without | Mean time, with / without | Files in the right shape, with / without |
+|---|---|---|---|---|---|---|---|---|
+| draft-the-external-systems-list | `grades-every-commons-net-test` | 3 | 0.88 (0.64) | 0.43 | $0.39 / $0.53 | 16 / 16 | 91 s / 130 s | 3 of 3 / 3 of 3 |
+| draft-the-external-systems-list | `grades-every-openfire-test` | 3 | 1 (1) | 0.36 | $0.39 / $0.51 | 14 / 18 | 92 s / 127 s | 3 of 3 / 3 of 3 |
+
+Checks that failed with the skills:
+
+* draft-the-external-systems-list / `grades-every-commons-net-test`: `eight-reach`, in 1 run(s)
+* draft-the-external-systems-list / `grades-every-commons-net-test`: `every-test-listed`, in 1 run(s)
+* draft-the-external-systems-list / `grades-every-commons-net-test`: `no-host-from-test-code`, in 1 run(s)
+* draft-the-external-systems-list / `grades-every-commons-net-test`: `one-node-per-system`, in 1 run(s)
+* draft-the-external-systems-list / `grades-every-commons-net-test`: `one-relationship-per-system`, in 1 run(s)
+
+These runs cost $5.46 in all.

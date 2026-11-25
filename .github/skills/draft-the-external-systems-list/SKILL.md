@@ -112,7 +112,8 @@ steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none
 
 ## 4. Record each test's connections in testing/tests.yaml
 
-For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, keys in this order (the
+For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, and no other: a reach
+with no `system`, and a test whose `systems` is empty, get no entry from this step. Keys in this order (the
 reach is the one whose `system` is this name in a facts file labelled `external-calls/2`; in an earlier one, the one
 whose `point` is among the system's `points` and whose kind is the system's kind (two reaches at one point, such as
 `http` and `url`, may differ), else, for a test reaching two systems of one kind, its reach of one of the system's
@@ -138,7 +139,8 @@ kinds):
 Then the tests whose own code or the settings they load name a host (spring-boot.md, spring-xml.md, and in test code
 `LC_ALL=en_US.UTF-8 grep -rnE '(//|:@|=)([[:alnum:].-]+\.[[:alpha:]]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test source folders>`, not their
 resources, which are data; leave out comments, whole lines or the end of one: `:@` is an Oracle JDBC address, so a mail
-or XMPP address such as `user@host` names no host). A host is never
+or XMPP address such as `user@host` names no host). Only the lines that search finds count: a host it doesn't match (a quoted host passed to a method, say) is the code
+path's to find, through the facts, not this step's. A host is never
 `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` or their subdomains, one ending `.example`, `.test`,
 `.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. A host counts only where it is an
 address to connect to (a URL, a JDBC or LDAP address, a host setting), never a name that only looks like one: a URI
