@@ -39,6 +39,10 @@ def has_stand_in(test, kind):
 
 
 def grade(test):
+    """The test's most severe grade: the tool's own, from external-calls/2 on; worked out here for older facts."""
+    own = [reach["grade"] for reach in test["reaches"] if "grade" in reach]
+    if own:
+        return next((g.replace("-", " ") for g in ("reaches", "may-reach") if g in own), "cannot reach")
     found = "cannot reach"
     for reach in test["reaches"]:
         address = reach.get("address_for_tests")
