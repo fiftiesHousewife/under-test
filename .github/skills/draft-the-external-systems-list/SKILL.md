@@ -98,7 +98,9 @@ names.
 | `metadata.under-test` | `addresses`: the literal, or a setting's value that isn't a placeholder, as written; else `address-from`: `setting <name>, which has no value in the repo`, `setting <name>, whose value in <file>:<line> is a placeholder`, `environment variable <name>`, `system property <name>`, `JNDI name <name>`, `parameter <value>, given by the code that calls it` for an address from a parameter, or `built at run time in
 <value>`; and `opened-by`, the system's `points` |
 
-The relationship is as from-airgap-reports.md step 3 makes it, except: `found-by` `["code"]`, plus `"settings"` when
+The relationship is as from-airgap-reports.md step 3 makes it, except: a `socket` system's `protocol` is none when
+every one of its connection points calls `java.net.DatagramSocket` or `DatagramChannel` (it is `udp`), else `TCP`;
+`found-by` `["code"]`, plus `"settings"` when
 the address is a setting; `kinds` the system's kinds; `callers` its points as `<type>.<method>(<file name>:<line>)`,
 each point's file and line from `connection_points`, sorted, first five; `setting` `{name, from: "<file>:<line>"}` if
 the tool found its value; `tests` how many entries in `testing/tests.yaml` have an `external_systems` entry for this
