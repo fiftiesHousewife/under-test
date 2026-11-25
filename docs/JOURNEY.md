@@ -181,7 +181,7 @@ plan. A repaired test is kept only if it passes the checks for AI-written tests.
 - **Leaves in the repo:** `testing/repair-orders.json`; the paired tests, the stand-ins they inject, the `external`
   tag on the half that reaches a real system, and in `testing/tests.yaml` each test's treatment and what was left for
   later.
-- **Decided in:** [Tests that reach external systems are tagged and left out of normal runs](../decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [The checks an AI-written test must pass before it is kept](../decision-guides/0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md).
+- **Decided in:** [Tests that reach external systems are tagged and left out of normal runs](../decision-guides/0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md), [Order of preference for test stand-in approaches](../decision-guides/0036-order-of-preference-for-test-stand-in-approaches.md), [An in-process server the test starts is a stand-in, and comes first where developers' machines can't run containers](../decision-guides/0067-an-in-process-server-the-test-starts-is-a-stand-in-and-comes-first-where-developers-machines-cannot-run-containers.md), [The checks an AI-written test must pass before it is kept](../decision-guides/0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md).
 
 ### 4. Measure again
 

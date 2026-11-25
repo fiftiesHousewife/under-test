@@ -157,6 +157,7 @@
                 "contract",
                 "fake-behind-an-interface",
                 "shared-test-environment",
+                "in-process-server",
                 "accept-risk"
               ]
             },

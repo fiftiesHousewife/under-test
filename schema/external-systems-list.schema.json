@@ -86,7 +86,7 @@
                   "required": ["approach"],
                   "additionalProperties": false,
                   "properties": {
-                    "approach": {"enum": ["not-chosen", "run-in-container", "recorded-responses", "contract", "fake-behind-an-interface", "shared-test-environment", "accept-risk"], "description": "What tests use instead of the real system, from the order of preference for test stand-in approaches."},
+                    "approach": {"enum": ["not-chosen", "run-in-container", "recorded-responses", "contract", "fake-behind-an-interface", "shared-test-environment", "in-process-server", "accept-risk"], "description": "What tests use instead of the real system, from the order of preference for test stand-in approaches."},
                     "kit": {"type": "string", "description": "The shared test kit that provides it, if any."}
                   }
                 },

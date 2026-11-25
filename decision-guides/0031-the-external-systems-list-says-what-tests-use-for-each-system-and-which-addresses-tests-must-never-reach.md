@@ -36,5 +36,5 @@ Agreed in discussion, waiting for approval by pull request: the first option. Th
 ## More Information
 
 * Builds on: [Each application's external systems are recorded as a CALM list](0030-each-applications-external-systems-are-recorded-as-a-calm-list.md), [Tests stop at once if any configured address is a production address](0009-tests-stop-at-once-if-any-configured-address-is-a-production-address.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [An in-process server the test starts is a stand-in, and comes first where developers' machines can't run containers](0067-an-in-process-server-the-test-starts-is-a-stand-in-and-comes-first-where-developers-machines-cannot-run-containers.md)
 * Background: none

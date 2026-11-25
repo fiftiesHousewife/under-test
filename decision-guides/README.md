@@ -94,6 +94,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 | [Who owns and maintains each shared test kit](0040-who-owns-and-maintains-each-shared-test-kit.md) | proposed | Steering Group |
 | [Tests that reach external systems are tagged and left out of normal runs](0041-tests-that-reach-external-systems-are-tagged-and-left-out-of-normal-runs.md) | proposed | Security and Platform Owner (can veto) |
 | [Whether a shared test environment can count as evidence for a limited time](0042-whether-a-shared-test-environment-can-count-as-evidence-for-a-limited-time.md) | proposed (open) | Test Quality Lead, approved by the Steering Group |
+| [An in-process server the test starts is a stand-in, and comes first where developers' machines can't run containers](0067-an-in-process-server-the-test-starts-is-a-stand-in-and-comes-first-where-developers-machines-cannot-run-containers.md) | proposed | Technical Architect |
 
 ## Test hygiene
 

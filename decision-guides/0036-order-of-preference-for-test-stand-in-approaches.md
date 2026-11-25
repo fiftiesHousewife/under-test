@@ -8,6 +8,8 @@ group: Standing in for real systems
 
 **Decided by:** Technical Architect · **Status:** proposed
 
+> Narrowed by [An in-process server the test starts is a stand-in, and comes first where developers' machines can't run containers](0067-an-in-process-server-the-test-starts-is-a-stand-in-and-comes-first-where-developers-machines-cannot-run-containers.md).
+
 *This is a decision guide for adopting organisations. Each organisation accepts, narrows or replaces it in its own organisation repo.*
 
 ## Context and Problem Statement
@@ -32,5 +34,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [Tests are split by what they need: local tests and container tests](0019-tests-are-split-by-what-they-need-local-tests-and-container-tests.md)
-* Later decisions that build on this: [Contract tests share pacts as versioned artifacts through the package repository, without a broker](0037-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker.md), [Recorded responses and fakes live in shared test kits, not in each repo](0039-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md), [Order of preference for where current behaviour is captured](0061-order-of-preference-for-where-current-behaviour-is-captured.md)
+* Later decisions that build on this: [Contract tests share pacts as versioned artifacts through the package repository, without a broker](0037-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker.md), [Recorded responses and fakes live in shared test kits, not in each repo](0039-recorded-responses-and-fakes-live-in-shared-test-kits-not-in-each-repo.md), [Order of preference for where current behaviour is captured](0061-order-of-preference-for-where-current-behaviour-is-captured.md), [An in-process server the test starts is a stand-in, and comes first where developers' machines can't run containers](0067-an-in-process-server-the-test-starts-is-a-stand-in-and-comes-first-where-developers-machines-cannot-run-containers.md)
 * Background: [test-doubles](../docs/REFERENCES.md#test-doubles)
