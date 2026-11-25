@@ -1,6 +1,6 @@
 ---
 name: measure-a-repo
-description: Measure a Gradle repo's tests under the airgap agent, in stages that each gate the next (build; one run with the tests that reach external systems left out; four repeats in varied orders; planted bugs), with the toolkit's measurement init script; record each test's outcome in testing/tests.yaml and the totals in the tests and level sections of testing/assessment.yaml. Use after the safety inventory, or when asked to measure a repo, find its flaky tests, or get its coverage or mutation score.
+description: Measure a Gradle or Maven repo's tests under the airgap agent, in stages that each gate the next (build; one run with the tests that reach external systems left out; four repeats in varied orders; planted bugs), with the toolkit's measurement init script; record each test's outcome in testing/tests.yaml and the totals in the tests and level sections of testing/assessment.yaml. Use after the safety inventory, or when asked to measure a repo, find its flaky tests, or get its coverage or mutation score.
 ---
 
 # Measuring a repo
@@ -26,7 +26,7 @@ your reply: point at its file and line instead
 
 | Check | Otherwise |
 |---|---|
-| It builds with Gradle | Maven or another build tool isn't covered yet: say so and stop |
+| It builds with Gradle | With Maven (a `pom.xml`, no Gradle build file), read [maven.md](maven.md) for the commands and where the reports land, and skip this table's Gradle rows. Another build tool isn't covered yet: say so and stop |
 | Its Gradle is 5.6 or later | Say the measurement script needs Gradle 5.6 or later, and stop |
 | The assessment file has a `safety` section, and each finding with `effect: blocks` has a decided `safety/<id>` decision | Stop; name the findings still blocking |
 | `testing/tests.yaml` has `found_by.draft-the-external-systems-list`, from discovery | Stop: run [draft-the-external-systems-list](../draft-the-external-systems-list/SKILL.md) first, so the tests that reach external systems can be left out |
