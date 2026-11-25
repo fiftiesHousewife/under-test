@@ -85,6 +85,24 @@
         "placeholder": {
           "const": true,
           "description": "The setting's value looks like a placeholder for a person to fill in."
+        },
+        "written_at": {
+          "type": "object",
+          "required": [
+            "file",
+            "line"
+          ],
+          "additionalProperties": false,
+          "description": "external-calls/2, for a literal: where the literal is written, which may be far from the point when a test passes it to a client, so a reader can tell an address written in the main code from one a test gives.",
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "line": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
         }
       }
     }

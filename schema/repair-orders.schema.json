@@ -183,7 +183,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The calls every ordered test's chain to this system goes through, in call order, ending at the connection point: the longest common end of their chains, without any test's own method, worked out from the ordered tests that have a chain (a test with an empty chain is left out of it; the repair skill checks whether the shared stand-in covers that test). One stand-in here would cover every test with a chain; empty when they share only the point itself or nothing, or none has a chain."
+          "description": "The calls every ordered test's chain to this system goes through, in call order, ending at the connection point: the longest common end of their chains, without any step in a test's own class (its test method, set-up or helpers), worked out from the ordered tests that have a chain (a test with an empty chain is left out of it; the repair skill checks whether the shared stand-in covers that test). One stand-in here would cover every test with a chain; empty when they share only the point itself or nothing, or none has a chain."
         },
         "tests": {
           "type": "array",
@@ -359,7 +359,7 @@
             "stand-in-not-chosen",
             "address-in-code"
           ],
-          "description": "Set when repair can't pair the test yet, and recorded by the repair skill as work for the testing plan: stand-in-not-chosen when the order's stand_in.approach is not-chosen; address-in-code when the system's address in the facts has source literal at a file under the main sources. Whether there is no place to inject is the repair skill's judgement, not the sub-command's. When both hold, stand-in-not-chosen."
+          "description": "Set when repair can't pair the test yet, and recorded by the repair skill as work for the testing plan: stand-in-not-chosen when the order's stand_in.approach is not-chosen; address-in-code when the system's address in the facts has source literal and its written_at file is under the main sources (where the literal is written, not where the point is: a host a test passes to a library client is the test's). With no written_at, address-in-code is never set; the repair skill checks. Whether there is no place to inject is the repair skill's judgement, not the sub-command's. When both hold, stand-in-not-chosen."
         }
       }
     }
