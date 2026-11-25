@@ -1,0 +1,4768 @@
+{
+ "classpath_notes": [],
+ "connection_points": [
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "InetAddress.getLocalHost()"
+   },
+   "call": "java.net.InetAddress#getHostName",
+   "file": "./src/main/java/examples/ftp/FTPClientExample.java",
+   "kind": "host-lookup",
+   "line": 126,
+   "method": "examples.ftp.FTPClientExample#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "InetAddress"
+   },
+   "call": "java.net.InetAddress#getLocalHost",
+   "file": "./src/main/java/examples/ftp/FTPClientExample.java",
+   "kind": "host-lookup",
+   "line": 126,
+   "method": "examples.ftp.FTPClientExample#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[base++]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/ftp/FTPClientExample.java",
+   "kind": "socket",
+   "line": 327,
+   "method": "examples.ftp.FTPClientExample#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[base++]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/ftp/FTPClientExample.java",
+   "kind": "socket",
+   "line": 329,
+   "method": "examples.ftp.FTPClientExample#main(String[])"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "reply of _parsePassiveModeReply"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/ftp/ServerToServerFTP.java",
+   "kind": "host-lookup",
+   "line": 176,
+   "method": "examples.ftp.ServerToServerFTP#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/ftp/ServerToServerFTP.java",
+   "kind": "socket",
+   "line": 88,
+   "method": "examples.ftp.ServerToServerFTP#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/ftp/ServerToServerFTP.java",
+   "kind": "socket",
+   "line": 90,
+   "method": "examples.ftp.ServerToServerFTP#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[4]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/ftp/ServerToServerFTP.java",
+   "kind": "socket",
+   "line": 125,
+   "method": "examples.ftp.ServerToServerFTP#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[4]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/ftp/ServerToServerFTP.java",
+   "kind": "socket",
+   "line": 127,
+   "method": "examples.ftp.ServerToServerFTP#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "URI.create(uriString)"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/mail/IMAPUtils.java",
+   "kind": "socket",
+   "line": 85,
+   "method": "examples.mail.IMAPUtils#imapLogin(URI,int,ProtocolCommandListener)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "arg0[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/mail/POP3Mail.java",
+   "kind": "socket",
+   "line": 107,
+   "method": "examples.mail.POP3Mail#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/mail/SMTPMail.java",
+   "kind": "socket",
+   "line": 118,
+   "method": "examples.mail.SMTPMail#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/nntp/ArticleReader.java",
+   "kind": "socket",
+   "line": 48,
+   "method": "examples.nntp.ArticleReader#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/nntp/ExtendedNNTPOps.java",
+   "kind": "socket",
+   "line": 45,
+   "method": "examples.nntp.ExtendedNNTPOps#demo(String,String,String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/nntp/ListNewsgroups.java",
+   "kind": "socket",
+   "line": 48,
+   "method": "examples.nntp.ListNewsgroups#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/nntp/MessageThreading.java",
+   "kind": "socket",
+   "line": 49,
+   "method": "examples.nntp.MessageThreading#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/nntp/PostMessage.java",
+   "kind": "socket",
+   "line": 141,
+   "method": "examples.nntp.PostMessage#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "arg"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/ntp/NTPClient.java",
+   "kind": "host-lookup",
+   "line": 165,
+   "method": "examples.ntp.NTPClient#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "InetAddress.getByName(arg)"
+   },
+   "call": "java.net.InetAddress#getHostName",
+   "file": "./src/main/java/examples/ntp/NTPClient.java",
+   "kind": "host-lookup",
+   "line": 166,
+   "method": "examples.ntp.NTPClient#main(String[])"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "{?}.{?}.{?}.{?}"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/ntp/NTPClient.java",
+   "kind": "host-lookup",
+   "line": 96,
+   "method": "examples.ntp.NTPClient#processResponse(TimeInfo)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "{?}.{?}.{?}.{?}"
+   },
+   "call": "java.net.InetAddress#getHostName",
+   "file": "./src/main/java/examples/ntp/NTPClient.java",
+   "kind": "host-lookup",
+   "line": 97,
+   "method": "examples.ntp.NTPClient#processResponse(TimeInfo)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "response.getDatagramPacket()"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/examples/ntp/SimpleNTPServer.java",
+   "kind": "socket",
+   "line": 195,
+   "method": "examples.ntp.SimpleNTPServer#handlePacket(DatagramPacket,long)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/ntp/TimeClient.java",
+   "kind": "socket",
+   "line": 47,
+   "method": "examples.ntp.TimeClient#timeTCP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[1]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/ntp/TimeClient.java",
+   "kind": "host-lookup",
+   "line": 61,
+   "method": "examples.ntp.TimeClient#timeUDP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/telnet/TelnetClientExample.java",
+   "kind": "socket",
+   "line": 113,
+   "method": "examples.telnet.TelnetClientExample#main(String[])"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "rainmaker.wunderground.com"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/telnet/WeatherTelnet.java",
+   "kind": "socket",
+   "line": 49,
+   "method": "examples.telnet.WeatherTelnet#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/chargen.java",
+   "kind": "socket",
+   "line": 54,
+   "method": "examples.unix.chargen#chargenTCP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[1]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/unix/chargen.java",
+   "kind": "host-lookup",
+   "line": 79,
+   "method": "examples.unix.chargen#chargenUDP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/daytime.java",
+   "kind": "socket",
+   "line": 45,
+   "method": "examples.unix.daytime#daytimeTCP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[1]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/unix/daytime.java",
+   "kind": "host-lookup",
+   "line": 58,
+   "method": "examples.unix.daytime#daytimeUDP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/echo.java",
+   "kind": "socket",
+   "line": 54,
+   "method": "examples.unix.echo#echoTCP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[1]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/unix/echo.java",
+   "kind": "host-lookup",
+   "line": 81,
+   "method": "examples.unix.echo#echoUDP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[arg].substring(index + 1)"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/unix/finger.java",
+   "kind": "host-lookup",
+   "line": 118,
+   "method": "examples.unix.finger#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "null"
+   },
+   "call": "java.net.InetAddress#getHostName",
+   "file": "./src/main/java/examples/unix/finger.java",
+   "kind": "host-lookup",
+   "line": 119,
+   "method": "examples.unix.finger#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "InetAddress"
+   },
+   "call": "java.net.InetAddress#getLocalHost",
+   "file": "./src/main/java/examples/unix/finger.java",
+   "kind": "host-lookup",
+   "line": 69,
+   "method": "examples.unix.finger#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "InetAddress"
+   },
+   "call": "java.net.InetAddress#getLocalHost",
+   "file": "./src/main/java/examples/unix/finger.java",
+   "kind": "host-lookup",
+   "line": 103,
+   "method": "examples.unix.finger#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "null"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/finger.java",
+   "kind": "socket",
+   "line": 79,
+   "method": "examples.unix.finger#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "null"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/finger.java",
+   "kind": "socket",
+   "line": 130,
+   "method": "examples.unix.finger#main(String[])"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/unix/fwhois.java",
+   "kind": "host-lookup",
+   "line": 65,
+   "method": "examples.unix.fwhois#main(String[])"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "call": "java.net.InetAddress#getHostName",
+   "file": "./src/main/java/examples/unix/fwhois.java",
+   "kind": "host-lookup",
+   "line": 66,
+   "method": "examples.unix.fwhois#main(String[])"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/fwhois.java",
+   "kind": "socket",
+   "line": 76,
+   "method": "examples.unix.fwhois#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/rdate.java",
+   "kind": "socket",
+   "line": 46,
+   "method": "examples.unix.rdate#timeTCP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[1]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/examples/unix/rdate.java",
+   "kind": "host-lookup",
+   "line": 58,
+   "method": "examples.unix.rdate#timeUDP(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/rexec.java",
+   "kind": "socket",
+   "line": 64,
+   "method": "examples.unix.rexec#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/rlogin.java",
+   "kind": "socket",
+   "line": 75,
+   "method": "examples.unix.rlogin#main(String[])"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/examples/unix/rshell.java",
+   "kind": "socket",
+   "line": 68,
+   "method": "examples.unix.rshell#main(String[])"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of createServerSocket"
+   },
+   "call": "java.net.ServerSocket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 191,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createServerSocket(int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of createServerSocket"
+   },
+   "call": "java.net.ServerSocket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 208,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createServerSocket(int,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of createServerSocket"
+   },
+   "call": "java.net.ServerSocket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 228,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createServerSocket(int,int,InetAddress)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxy of DefaultSocketFactory"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 79,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket()"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new Socket()"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 81,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxy of DefaultSocketFactory"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 120,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 124,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "java.net.Socket#connect",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 121,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxy of DefaultSocketFactory"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 172,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 177,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "java.net.Socket#connect",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 174,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxy of DefaultSocketFactory"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 99,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of createSocket"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 103,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of createSocket"
+   },
+   "call": "java.net.Socket#connect",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 100,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxy of DefaultSocketFactory"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 146,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of createSocket"
+   },
+   "call": "java.net.Socket#<init>",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 151,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of createSocket"
+   },
+   "call": "java.net.Socket#connect",
+   "file": "./src/main/java/org/apache/commons/net/DefaultSocketFactory.java",
+   "kind": "socket",
+   "line": 148,
+   "method": "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "call": "java.net.Socket#connect",
+   "file": "./src/main/java/org/apache/commons/net/SocketClient.java",
+   "kind": "socket",
+   "line": 243,
+   "method": "org.apache.commons.net.SocketClient#_connect(InetAddress,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "factory of setSocketFactory"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/SocketClient.java",
+   "kind": "socket",
+   "line": 233,
+   "method": "org.apache.commons.net.SocketClient#_connect(InetAddress,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/org/apache/commons/net/SocketClient.java",
+   "kind": "socket",
+   "line": 287,
+   "method": "org.apache.commons.net.SocketClient#connect(InetAddress)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "URI.create(uriString)"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/org/apache/commons/net/SocketClient.java",
+   "kind": "socket",
+   "line": 306,
+   "method": "org.apache.commons.net.SocketClient#connect(String)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "rainmaker.wunderground.com"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/SocketClient.java",
+   "kind": "host-lookup",
+   "line": 202,
+   "method": "org.apache.commons.net.SocketClient#connect(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "hostname of connect"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/SocketClient.java",
+   "kind": "host-lookup",
+   "line": 268,
+   "method": "org.apache.commons.net.SocketClient#connect(String,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "ftp.gnu.org"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/SocketClientFunctionalTest.java",
+   "kind": "socket",
+   "line": 58,
+   "method": "org.apache.commons.net.SocketClientFunctionalTest#testProxySettings()"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "InetAddress"
+   },
+   "call": "java.net.InetAddress#getLocalHost",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "host-lookup",
+   "line": 232,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "socket",
+   "line": 232,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "socket",
+   "line": 192,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(InetAddress,int,InetAddress)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of connect"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "socket",
+   "line": 311,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(InetAddress,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "rainmaker.wunderground.com"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "host-lookup",
+   "line": 256,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(String,int)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "InetAddress"
+   },
+   "call": "java.net.InetAddress#getLocalHost",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "host-lookup",
+   "line": 256,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(String,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "rainmaker.wunderground.com"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "socket",
+   "line": 256,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "hostname of connect"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "host-lookup",
+   "line": 279,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(String,int,InetAddress)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "hostname of connect"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "socket",
+   "line": 279,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(String,int,InetAddress)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "hostname of connect"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/main/java/org/apache/commons/net/bsd/RCommandClient.java",
+   "kind": "socket",
+   "line": 344,
+   "method": "org.apache.commons.net.bsd.RCommandClient#connect(String,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[0]"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/org/apache/commons/net/chargen/CharGenUDPClient.java",
+   "kind": "socket",
+   "line": 96,
+   "method": "org.apache.commons.net.chargen.CharGenUDPClient#send(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[1]"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/org/apache/commons/net/daytime/DaytimeUDPClient.java",
+   "kind": "socket",
+   "line": 67,
+   "method": "org.apache.commons.net.daytime.DaytimeUDPClient#getTime(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[0]"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/org/apache/commons/net/discard/DiscardUDPClient.java",
+   "kind": "socket",
+   "line": 70,
+   "method": "org.apache.commons.net.discard.DiscardUDPClient#send(byte[],int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "reply of _parsePassiveModeReply"
+   },
+   "call": "java.net.Socket#connect",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPClient.java",
+   "kind": "socket",
+   "line": 920,
+   "method": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "_socketFactory_"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPClient.java",
+   "kind": "socket",
+   "line": 901,
+   "method": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "ipAddress of setActiveExternalIPAddress"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPClient.java",
+   "kind": "host-lookup",
+   "line": 1479,
+   "method": "org.apache.commons.net.ftp.FTPClient#setActiveExternalIPAddress(String)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "ipAddress of setPassiveLocalIPAddress"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPClient.java",
+   "kind": "host-lookup",
+   "line": 1491,
+   "method": "org.apache.commons.net.ftp.FTPClient#setPassiveLocalIPAddress(String)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "ipAddress of setReportActiveExternalIPAddress"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPClient.java",
+   "kind": "host-lookup",
+   "line": 1527,
+   "method": "org.apache.commons.net.ftp.FTPClient#setReportActiveExternalIPAddress(String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "_replyLines.get(0)"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPClient.java",
+   "kind": "host-lookup",
+   "line": 3833,
+   "method": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "tgftp.nws.noaa.gov"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientConfigFunctionalTest.java",
+   "kind": "socket",
+   "line": 74,
+   "method": "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#setUp()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "passiveModeServerIP of PassiveNatWorkAroundLocalClient"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "kind": "host-lookup",
+   "line": 140,
+   "method": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxyHost of FTPHTTPClient"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPHTTPClient.java",
+   "kind": "socket",
+   "line": 112,
+   "method": "org.apache.commons.net.ftp.FTPHTTPClient#_openDataConnection_(String,String)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxyHost of FTPHTTPClient"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPHTTPClient.java",
+   "kind": "socket",
+   "line": 132,
+   "method": "org.apache.commons.net.ftp.FTPHTTPClient#connect(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "context of FTPSClient"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPSClient.java",
+   "kind": "socket",
+   "line": 269,
+   "method": "org.apache.commons.net.ftp.FTPSClient#sslNegotiation()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "context of FTPSSocketFactory"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPSSocketFactory.java",
+   "kind": "socket",
+   "line": 45,
+   "method": "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPSSocketFactory.java",
+   "kind": "socket",
+   "line": 55,
+   "method": "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPSSocketFactory.java",
+   "kind": "socket",
+   "line": 66,
+   "method": "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(InetAddress,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPSSocketFactory.java",
+   "kind": "socket",
+   "line": 50,
+   "method": "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "address of createSocket"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/ftp/FTPSSocketFactory.java",
+   "kind": "socket",
+   "line": 61,
+   "method": "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(String,int,InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "settings[HOSTNAME]"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "kind": "socket",
+   "line": 152,
+   "method": "org.apache.commons.net.ftp.ListingFunctionalTest#setUp()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "www.apache.org"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/ftp/TestConnectTimeout.java",
+   "kind": "socket",
+   "line": 39,
+   "method": "org.apache.commons.net.ftp.TestConnectTimeout#testConnectTimeout()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of open"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/ftp/parser/DownloadListings.java",
+   "kind": "socket",
+   "line": 56,
+   "method": "org.apache.commons.net.ftp.parser.DownloadListings#open(String,int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "ctx of IMAPSClient"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/imap/IMAPSClient.java",
+   "kind": "socket",
+   "line": 204,
+   "method": "org.apache.commons.net.imap.IMAPSClient#performSSLNegotiation()"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "message.getDatagramPacket()"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/org/apache/commons/net/ntp/NTPUDPClient.java",
+   "kind": "socket",
+   "line": 90,
+   "method": "org.apache.commons.net.ntp.NTPUDPClient#getTime(InetAddress,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "kind": "host-lookup",
+   "line": 72,
+   "local": "this machine",
+   "method": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "kind": "socket",
+   "line": 72,
+   "local": "this machine",
+   "method": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientTest.java",
+   "kind": "host-lookup",
+   "line": 73,
+   "local": "this machine",
+   "method": "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientTest.java",
+   "kind": "socket",
+   "line": 73,
+   "local": "this machine",
+   "method": "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ConstructorTest.java",
+   "kind": "socket",
+   "line": 99,
+   "local": "this machine",
+   "method": "org.apache.commons.net.pop3.POP3ConstructorTest#testPOP3ClientStateTransition()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "ctx of POP3SClient"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/pop3/POP3SClient.java",
+   "kind": "socket",
+   "line": 213,
+   "method": "org.apache.commons.net.pop3.POP3SClient#performSSLNegotiation()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "factory of setSocketFactory"
+   },
+   "call": "java.net.InetAddress#getHostName",
+   "file": "./src/main/java/org/apache/commons/net/smtp/AuthenticatingSMTPClient.java",
+   "kind": "host-lookup",
+   "line": 161,
+   "method": "org.apache.commons.net.smtp.AuthenticatingSMTPClient#elogin()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "factory of setSocketFactory"
+   },
+   "call": "java.net.InetAddress#getHostName",
+   "file": "./src/main/java/org/apache/commons/net/smtp/SMTPClient.java",
+   "kind": "host-lookup",
+   "line": 221,
+   "method": "org.apache.commons.net.smtp.SMTPClient#login()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "TLS"
+   },
+   "call": "javax.net.SocketFactory#createSocket",
+   "file": "./src/main/java/org/apache/commons/net/smtp/SMTPSClient.java",
+   "kind": "socket",
+   "line": 202,
+   "method": "org.apache.commons.net.smtp.SMTPSClient#performSSLNegotiation()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "rainmaker.wunderground.com"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientFunctionalTest.java",
+   "kind": "socket",
+   "line": 51,
+   "method": "org.apache.commons.net.telnet.TelnetClientFunctionalTest#testFunctionalTest()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "127.0.0.1"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "kind": "socket",
+   "line": 90,
+   "local": "this machine",
+   "method": "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "127.0.0.1"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "kind": "socket",
+   "line": 105,
+   "local": "this machine",
+   "method": "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "127.0.0.1"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "kind": "socket",
+   "line": 110,
+   "local": "this machine",
+   "method": "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "127.0.0.1"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "kind": "socket",
+   "line": 116,
+   "local": "this machine",
+   "method": "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of TelnetTestSimpleServer"
+   },
+   "call": "java.net.ServerSocket#<init>",
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetTestSimpleServer.java",
+   "kind": "socket",
+   "line": 43,
+   "method": "org.apache.commons.net.telnet.TelnetTestSimpleServer#<init>(int)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of receiveFile"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/org/apache/commons/net/tftp/TFTP.java",
+   "kind": "socket",
+   "line": 230,
+   "method": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "packet of send"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/org/apache/commons/net/tftp/TFTP.java",
+   "kind": "socket",
+   "line": 273,
+   "method": "org.apache.commons.net.tftp.TFTP#send(TFTPPacket)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[argc]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/tftp/TFTPClient.java",
+   "kind": "host-lookup",
+   "line": 331,
+   "method": "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "parts[0]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/tftp/TFTPClient.java",
+   "kind": "host-lookup",
+   "line": 292,
+   "method": "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[argc]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/tftp/TFTPClient.java",
+   "kind": "host-lookup",
+   "line": 541,
+   "method": "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String)"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "parts[0]"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/main/java/org/apache/commons/net/tftp/TFTPClient.java",
+   "kind": "host-lookup",
+   "line": 502,
+   "method": "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "java.net.InetAddress#getByName",
+   "file": "./src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java",
+   "kind": "host-lookup",
+   "line": 74,
+   "local": "this machine",
+   "method": "org.apache.commons.net.time.TimeTCPClientTest#testCompareTimes()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java",
+   "kind": "socket",
+   "line": 79,
+   "local": "this machine",
+   "method": "org.apache.commons.net.time.TimeTCPClientTest#testCompareTimes()"
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "localhost"
+   },
+   "call": "org.apache.commons.net.SocketClient#connect",
+   "file": "./src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java",
+   "kind": "socket",
+   "line": 96,
+   "local": "this machine",
+   "method": "org.apache.commons.net.time.TimeTCPClientTest#testCompareTimes()"
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of TimeTestSimpleServer"
+   },
+   "call": "java.net.ServerSocket#<init>",
+   "file": "./src/test/java/org/apache/commons/net/time/TimeTestSimpleServer.java",
+   "kind": "socket",
+   "line": 68,
+   "method": "org.apache.commons.net.time.TimeTestSimpleServer#connect()"
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[1]"
+   },
+   "call": "java.net.DatagramSocket#send",
+   "file": "./src/main/java/org/apache/commons/net/time/TimeUDPClient.java",
+   "kind": "socket",
+   "line": 83,
+   "method": "org.apache.commons.net.time.TimeUDPClient#getTime(InetAddress,int)"
+  }
+ ],
+ "dispatch_points_not_followed": [
+  {
+   "implementations": 5,
+   "method": "org.apache.commons.net.SocketClient#__getReply()"
+  },
+  {
+   "implementations": 11,
+   "method": "org.apache.commons.net.SocketClient#_connectAction_()"
+  },
+  {
+   "implementations": 7,
+   "method": "org.apache.commons.net.SocketClient#_openDataConnection_(FTPCmd,String)"
+  },
+  {
+   "implementations": 9,
+   "method": "org.apache.commons.net.SocketClient#disconnect()"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#getCommandSupport()"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#getInputStream()"
+  },
+  {
+   "implementations": 5,
+   "method": "org.apache.commons.net.SocketClient#getReplyString()"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#getReplyStrings()"
+  },
+  {
+   "implementations": 5,
+   "method": "org.apache.commons.net.SocketClient#logout()"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#noop()"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#retrieveArticle(String,ArticleInfo)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#retrieveArticleBody(String,ArticleInfo)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#retrieveArticleHeader(String,ArticleInfo)"
+  },
+  {
+   "implementations": 5,
+   "method": "org.apache.commons.net.SocketClient#selectArticle(ArticleInfo)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#selectArticle(String,ArticleInfo)"
+  },
+  {
+   "implementations": 12,
+   "method": "org.apache.commons.net.SocketClient#sendCommand(FTPCmd)"
+  },
+  {
+   "implementations": 12,
+   "method": "org.apache.commons.net.SocketClient#sendCommand(FTPCmd,String)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.SocketClient#stat(String)"
+  },
+  {
+   "implementations": 7,
+   "method": "org.apache.commons.net.ftp.Configurable#_openDataConnection_(FTPCmd,String)"
+  },
+  {
+   "implementations": 9,
+   "method": "org.apache.commons.net.ftp.Configurable#getDefaultConfiguration()"
+  },
+  {
+   "implementations": 8,
+   "method": "org.apache.commons.net.ftp.Configurable#parseFTPEntry(String)"
+  },
+  {
+   "implementations": 7,
+   "method": "org.apache.commons.net.ftp.FTP#_openDataConnection_(FTPCmd,String)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+  },
+  {
+   "implementations": 9,
+   "method": "org.apache.commons.net.ftp.FTPFileEntryParser#getDefaultConfiguration()"
+  },
+  {
+   "implementations": 11,
+   "method": "org.apache.commons.net.ftp.FTPFileEntryParser#parseFTPEntry(String)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.ftp.FTPFileEntryParser#preParse(List)"
+  },
+  {
+   "implementations": 9,
+   "method": "org.apache.commons.net.ftp.FTPFileEntryParserImpl#getDefaultConfiguration()"
+  },
+  {
+   "implementations": 11,
+   "method": "org.apache.commons.net.ftp.FTPFileEntryParserImpl#parseFTPEntry(String)"
+  },
+  {
+   "implementations": 8,
+   "method": "org.apache.commons.net.ftp.parser.ConfigurableFTPFileEntryParserImpl#getDefaultConfiguration()"
+  },
+  {
+   "implementations": 8,
+   "method": "org.apache.commons.net.ftp.parser.ConfigurableFTPFileEntryParserImpl#parseFTPEntry(String)"
+  },
+  {
+   "implementations": 9,
+   "method": "org.apache.commons.net.ftp.parser.RegexFTPFileEntryParserImpl#getDefaultConfiguration()"
+  },
+  {
+   "implementations": 9,
+   "method": "org.apache.commons.net.ftp.parser.RegexFTPFileEntryParserImpl#parseFTPEntry(String)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.nntp.NNTP#retrieveArticle(String,ArticleInfo)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.nntp.NNTP#retrieveArticleBody(String,ArticleInfo)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.nntp.NNTP#retrieveArticleHeader(String,ArticleInfo)"
+  },
+  {
+   "implementations": 5,
+   "method": "org.apache.commons.net.nntp.NNTP#selectArticle(ArticleInfo)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.nntp.NNTP#selectArticle(String,ArticleInfo)"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.tftp.TFTPPacket#_newDatagram(DatagramPacket,byte[])"
+  },
+  {
+   "implementations": 4,
+   "method": "org.apache.commons.net.tftp.TFTPPacket#newDatagram()"
+  },
+  {
+   "implementations": 5,
+   "method": "org.apache.commons.net.tftp.TFTPPacket#toString()"
+  }
+ ],
+ "not_resolved": [
+  {
+   "count": 5,
+   "example": "./src/main/java/org/apache/commons/net/imap/IMAPCommand.java:73 Unsolved symbol : We are unable to find the constructor declaration corresponding to this(...",
+   "reason": "UnsolvedSymbolException: Unsolved symbol : We are unable to find the constructor declaration corresponding to this(..."
+  },
+  {
+   "count": 2,
+   "example": "./src/main/java/org/apache/commons/net/telnet/Telnet.java:767 Ambiguous method call: cannot find a most applicable method: ReflectionMethodDeclaration{m...",
+   "reason": "MethodAmbiguityException: Ambiguous method call: cannot find a most applicable method: ReflectionMethodDeclaration{m..."
+  },
+  {
+   "count": 2,
+   "example": "./src/main/java/examples/unix/finger.java:80 Unsolved symbol in Method 'query' with parameterTypes [PrimitiveTypeUsage{name='boolean'}]...",
+   "reason": "UnsolvedSymbolException: Unsolved symbol in an expression"
+  },
+  {
+   "count": 1,
+   "example": "./src/test/java/org/apache/commons/net/io/ToNetASCIIInputStreamTest.java:73 Ambiguous method call: cannot find a most applicable method: JavassistMethodDeclaration{ct...",
+   "reason": "MethodAmbiguityException: Ambiguous method call: cannot find a most applicable method: JavassistMethodDeclaration{ct..."
+  }
+ ],
+ "schema": "external-calls/1",
+ "summary": {
+  "calls_not_resolved": 10,
+  "calls_resolved": 10005,
+  "files": 270,
+  "files_not_parsed": 0,
+  "methods": 2285,
+  "tests": 336,
+  "tests_reaching": 70,
+  "tests_starting_a_framework": 0
+ },
+ "systems": [
+  {
+   "address": {
+    "source": "literal",
+    "value": "TLS"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "TLS",
+   "named_by": "host",
+   "points": [
+    "org.apache.commons.net.smtp.SMTPSClient#performSSLNegotiation()"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[base++]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.ftp.FTPClientExample",
+   "named_by": "class",
+   "points": [
+    "examples.ftp.FTPClientExample#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.ftp.ServerToServerFTP",
+   "named_by": "class",
+   "points": [
+    "examples.ftp.ServerToServerFTP#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "URI.create(uriString)"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.mail.IMAPUtils",
+   "named_by": "class",
+   "points": [
+    "examples.mail.IMAPUtils#imapLogin(URI,int,ProtocolCommandListener)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "arg0[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.mail.POP3Mail",
+   "named_by": "class",
+   "points": [
+    "examples.mail.POP3Mail#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.mail.SMTPMail",
+   "named_by": "class",
+   "points": [
+    "examples.mail.SMTPMail#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.nntp.ArticleReader",
+   "named_by": "class",
+   "points": [
+    "examples.nntp.ArticleReader#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.nntp.ExtendedNNTPOps",
+   "named_by": "class",
+   "points": [
+    "examples.nntp.ExtendedNNTPOps#demo(String,String,String)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.nntp.ListNewsgroups",
+   "named_by": "class",
+   "points": [
+    "examples.nntp.ListNewsgroups#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.nntp.MessageThreading",
+   "named_by": "class",
+   "points": [
+    "examples.nntp.MessageThreading#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.nntp.PostMessage",
+   "named_by": "class",
+   "points": [
+    "examples.nntp.PostMessage#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "response.getDatagramPacket()"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.ntp.SimpleNTPServer",
+   "named_by": "class",
+   "points": [
+    "examples.ntp.SimpleNTPServer#handlePacket(DatagramPacket,long)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.ntp.TimeClient",
+   "named_by": "class",
+   "points": [
+    "examples.ntp.TimeClient#timeTCP(String)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.telnet.TelnetClientExample",
+   "named_by": "class",
+   "points": [
+    "examples.telnet.TelnetClientExample#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.chargen",
+   "named_by": "class",
+   "points": [
+    "examples.unix.chargen#chargenTCP(String)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.daytime",
+   "named_by": "class",
+   "points": [
+    "examples.unix.daytime#daytimeTCP(String)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.echo",
+   "named_by": "class",
+   "points": [
+    "examples.unix.echo#echoTCP(String)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "null"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.finger",
+   "named_by": "class",
+   "points": [
+    "examples.unix.finger#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.rdate",
+   "named_by": "class",
+   "points": [
+    "examples.unix.rdate#timeTCP(String)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.rexec",
+   "named_by": "class",
+   "points": [
+    "examples.unix.rexec#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.rlogin",
+   "named_by": "class",
+   "points": [
+    "examples.unix.rlogin#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "args[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "examples.unix.rshell",
+   "named_by": "class",
+   "points": [
+    "examples.unix.rshell#main(String[])"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "ftp.gnu.org"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "ftp.gnu.org",
+   "named_by": "host",
+   "points": [
+    "org.apache.commons.net.SocketClientFunctionalTest#testProxySettings()"
+   ],
+   "shared_chain": [],
+   "tests": 1
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of createServerSocket"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.DefaultSocketFactory",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.DefaultSocketFactory#createServerSocket(int)",
+    "org.apache.commons.net.DefaultSocketFactory#createServerSocket(int,int)",
+    "org.apache.commons.net.DefaultSocketFactory#createServerSocket(int,int,InetAddress)",
+    "org.apache.commons.net.DefaultSocketFactory#createSocket()",
+    "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int)",
+    "org.apache.commons.net.DefaultSocketFactory#createSocket(InetAddress,int,InetAddress,int)",
+    "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int)",
+    "org.apache.commons.net.DefaultSocketFactory#createSocket(String,int,InetAddress,int)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.chargen.CharGenUDPClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.chargen.CharGenUDPClient#send(InetAddress,int)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[1]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.daytime.DaytimeUDPClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.daytime.DaytimeUDPClient#getTime(InetAddress,int)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[0]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.discard.DiscardUDPClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.discard.DiscardUDPClient#send(byte[],int,InetAddress,int)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "reply of _parsePassiveModeReply"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.ftp.FTPClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+    "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+   ],
+   "tests": 14
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "proxyHost of FTPHTTPClient"
+   },
+   "alternatives": [
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.ftp.FTPHTTPClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.ftp.FTPHTTPClient#_openDataConnection_(String,String)",
+    "org.apache.commons.net.ftp.FTPHTTPClient#connect(String,int)"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.ftp.FTPHTTPClient#connect(String,int)"
+   ],
+   "tests": 27
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "context of FTPSClient"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.ftp.FTPSClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.ftp.FTPSClient#sslNegotiation()"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "context of FTPSSocketFactory"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.ftp.FTPSSocketFactory",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket()",
+    "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(InetAddress,int)",
+    "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(InetAddress,int,InetAddress,int)",
+    "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(String,int)",
+    "org.apache.commons.net.ftp.FTPSSocketFactory#createSocket(String,int,InetAddress,int)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "settings[HOSTNAME]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.ftp.ListingFunctionalTest",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.ftp.ListingFunctionalTest#setUp()"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.ftp.ListingFunctionalTest#setUp()"
+   ],
+   "tests": 14
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of open"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.ftp.parser.DownloadListings",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.ftp.parser.DownloadListings#open(String,int)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "ctx of IMAPSClient"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.imap.IMAPSClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.imap.IMAPSClient#performSSLNegotiation()"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "message.getDatagramPacket()"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.ntp.NTPUDPClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.ntp.NTPUDPClient#getTime(InetAddress,int)"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.ntp.NTPUDPClient#getTime(InetAddress,int)"
+   ],
+   "tests": 1
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "ctx of POP3SClient"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.pop3.POP3SClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.pop3.POP3SClient#performSSLNegotiation()"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of TelnetTestSimpleServer"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer#<init>(int)"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer#<init>(int)"
+   ],
+   "tests": 8
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "host of receiveFile"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.tftp.TFTP",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+    "org.apache.commons.net.tftp.TFTP#send(TFTPPacket)"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+   ],
+   "tests": 9
+  },
+  {
+   "address": {
+    "source": "parameter",
+    "value": "port of TimeTestSimpleServer"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.time.TimeTestSimpleServer",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.time.TimeTestSimpleServer#connect()"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.time.TimeTCPClientTest#openConnections()",
+    "org.apache.commons.net.time.TimeTestSimpleServer#connect()"
+   ],
+   "tests": 1
+  },
+  {
+   "address": {
+    "source": "built-at-run-time",
+    "value": "new byte[1]"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "org.apache.commons.net.time.TimeUDPClient",
+   "named_by": "class",
+   "points": [
+    "org.apache.commons.net.time.TimeUDPClient#getTime(InetAddress,int)"
+   ],
+   "shared_chain": [],
+   "tests": 0
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "rainmaker.wunderground.com"
+   },
+   "alternatives": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "whois.internic.net"
+   ],
+   "kinds": [
+    "socket"
+   ],
+   "name": "rainmaker.wunderground.com",
+   "named_by": "host",
+   "points": [
+    "examples.telnet.WeatherTelnet#main(String[])",
+    "org.apache.commons.net.bsd.RCommandClient#connect(String,int)",
+    "org.apache.commons.net.telnet.TelnetClientFunctionalTest#testFunctionalTest()"
+   ],
+   "shared_chain": [],
+   "tests": 27
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "tgftp.nws.noaa.gov"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "tgftp.nws.noaa.gov",
+   "named_by": "host",
+   "points": [
+    "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#setUp()"
+   ],
+   "shared_chain": [
+    "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#setUp()"
+   ],
+   "tests": 1
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "whois.internic.net"
+   },
+   "alternatives": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "rainmaker.wunderground.com"
+   ],
+   "kinds": [
+    "socket"
+   ],
+   "name": "whois.internic.net",
+   "named_by": "host",
+   "points": [
+    "examples.unix.fwhois#main(String[])",
+    "org.apache.commons.net.SocketClient#_connect(InetAddress,int,InetAddress,int)",
+    "org.apache.commons.net.SocketClient#connect(InetAddress)",
+    "org.apache.commons.net.SocketClient#connect(String)",
+    "org.apache.commons.net.bsd.RCommandClient#connect(InetAddress,int)",
+    "org.apache.commons.net.bsd.RCommandClient#connect(InetAddress,int,InetAddress)",
+    "org.apache.commons.net.bsd.RCommandClient#connect(InetAddress,int,InetAddress,int)",
+    "org.apache.commons.net.bsd.RCommandClient#connect(String,int,InetAddress)",
+    "org.apache.commons.net.bsd.RCommandClient#connect(String,int,InetAddress,int)"
+   ],
+   "shared_chain": [],
+   "tests": 53
+  },
+  {
+   "address": {
+    "source": "literal",
+    "value": "www.apache.org"
+   },
+   "alternatives": [],
+   "kinds": [
+    "socket"
+   ],
+   "name": "www.apache.org",
+   "named_by": "host",
+   "points": [
+    "org.apache.commons.net.ftp.TestConnectTimeout#testConnectTimeout()"
+   ],
+   "shared_chain": [],
+   "tests": 1
+  }
+ ],
+ "tests": [
+  {
+   "file": "./src/test/java/org/apache/commons/net/SocketClientFunctionalTest.java",
+   "line": 53,
+   "reaches": [
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.SocketClientFunctionalTest#testProxySettings()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.SocketClientFunctionalTest#testProxySettings()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.SocketClientFunctionalTest#testProxySettings()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "ftp.gnu.org",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.SocketClientFunctionalTest.testProxySettings"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientConfigFunctionalTest.java",
+   "line": 125,
+   "reaches": [
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#testTimeZoneFunctionality()",
+      "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String)",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#testTimeZoneFunctionality()",
+      "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "rainmaker.wunderground.com",
+    "tgftp.nws.noaa.gov",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.FTPClientConfigFunctionalTest.testTimeZoneFunctionality"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "line": 148,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientTest#testParsePassiveModeReplyForLocalAddressWithNatWorkaround()",
+      "org.apache.commons.net.ftp.FTPClient#_parsePassiveModeReply(String)",
+      "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [],
+   "test": "org.apache.commons.net.ftp.FTPClientTest.testParsePassiveModeReplyForLocalAddressWithNatWorkaround"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "line": 160,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientTest#testParsePassiveModeReplyForLocalAddressWithNatWorkaroundDisabled()",
+      "org.apache.commons.net.ftp.FTPClient#_parsePassiveModeReply(String)",
+      "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [],
+   "test": "org.apache.commons.net.ftp.FTPClientTest.testParsePassiveModeReplyForLocalAddressWithNatWorkaroundDisabled"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "line": 190,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientTest#testParsePassiveModeReplyForLocalAddressWithSimpleNatWorkaroundStrategy()",
+      "org.apache.commons.net.ftp.FTPClient#_parsePassiveModeReply(String)",
+      "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [],
+   "test": "org.apache.commons.net.ftp.FTPClientTest.testParsePassiveModeReplyForLocalAddressWithSimpleNatWorkaroundStrategy"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "line": 176,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientTest#testParsePassiveModeReplyForLocalAddressWithoutNatWorkaroundStrategy()",
+      "org.apache.commons.net.ftp.FTPClient#_parsePassiveModeReply(String)",
+      "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [],
+   "test": "org.apache.commons.net.ftp.FTPClientTest.testParsePassiveModeReplyForLocalAddressWithoutNatWorkaroundStrategy"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "line": 154,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientTest#testParsePassiveModeReplyForNonLocalAddressWithNatWorkaround()",
+      "org.apache.commons.net.ftp.FTPClient#_parsePassiveModeReply(String)",
+      "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [],
+   "test": "org.apache.commons.net.ftp.FTPClientTest.testParsePassiveModeReplyForNonLocalAddressWithNatWorkaround"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "line": 168,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientTest#testParsePassiveModeReplyForNonLocalAddressWithNatWorkaroundDisabled()",
+      "org.apache.commons.net.ftp.FTPClient#_parsePassiveModeReply(String)",
+      "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [],
+   "test": "org.apache.commons.net.ftp.FTPClientTest.testParsePassiveModeReplyForNonLocalAddressWithNatWorkaroundDisabled"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/FTPClientTest.java",
+   "line": 183,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ftp.FTPClientTest#testParsePassiveModeReplyForNonLocalAddressWithoutNatWorkaroundStrategy()",
+      "org.apache.commons.net.ftp.FTPClient#_parsePassiveModeReply(String)",
+      "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClient.NatServerResolverImpl#resolve(String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [],
+   "test": "org.apache.commons.net.ftp.FTPClientTest.testParsePassiveModeReplyForNonLocalAddressWithoutNatWorkaroundStrategy"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 186,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsing()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsing()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testInitiateListParsing"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 200,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPath()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPath()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testInitiateListParsingWithPath"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 213,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPathAndAutodetection()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPathAndAutodetection()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testInitiateListParsingWithPathAndAutodetection"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 225,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPathAndAutodetectionButEmpty()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPathAndAutodetectionButEmpty()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testInitiateListParsingWithPathAndAutodetectionButEmpty"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 236,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPathAndIncorrectParser()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testInitiateListParsingWithPathAndIncorrectParser()",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testInitiateListParsingWithPathAndIncorrectParser"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 248,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFiles()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFiles()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListFiles"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 259,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithAutodection()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithAutodection()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListFilesWithAutodection"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 273,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithIncorrectParser()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithIncorrectParser()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListFilesWithIncorrectParser"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 290,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithPathAndAutodectionButEmpty()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithPathAndAutodectionButEmpty()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListFilesWithPathAndAutodectionButEmpty"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 301,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithPathAndAutodetection()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListFilesWithPathAndAutodetection()",
+      "org.apache.commons.net.ftp.FTPClient#listFiles(String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(String,String)",
+      "org.apache.commons.net.ftp.FTPClient#initiateListParsing(FTPFileEntryParser,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListFilesWithPathAndAutodetection"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 313,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListNames()",
+      "org.apache.commons.net.ftp.FTPClient#listNames()",
+      "org.apache.commons.net.ftp.FTPClient#listNames(String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListNames()",
+      "org.apache.commons.net.ftp.FTPClient#listNames()",
+      "org.apache.commons.net.ftp.FTPClient#listNames(String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListNames"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 330,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListNamesWithPath()",
+      "org.apache.commons.net.ftp.FTPClient#listNames(String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListNamesWithPath()",
+      "org.apache.commons.net.ftp.FTPClient#listNames(String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListNamesWithPath"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 340,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListNamesWithPathButEmpty()",
+      "org.apache.commons.net.ftp.FTPClient#listNames(String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+      "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.ftp.FTPClientTest.PassiveNatWorkAroundLocalClient#getRemoteAddress()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testListNamesWithPathButEmpty()",
+      "org.apache.commons.net.ftp.FTPClient#listNames(String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(FTPCmd,String)",
+      "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.FTPClient#_openDataConnection_(String,String)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPClient",
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testListNamesWithPathButEmpty"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/ListingFunctionalTest.java",
+   "line": 348,
+   "reaches": [
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testPrintWorkingDirectory()",
+      "org.apache.commons.net.ftp.ListingFunctionalTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String)",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "run-time",
+     "chain": [
+      "org.apache.commons.net.ftp.ListingFunctionalTest#testPrintWorkingDirectory()",
+      "org.apache.commons.net.ftp.ListingFunctionalTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.ListingFunctionalTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.ftp.ListingFunctionalTest",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.ftp.ListingFunctionalTest.testPrintWorkingDirectory"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ftp/TestConnectTimeout.java",
+   "line": 32,
+   "reaches": [
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.ftp.TestConnectTimeout#testConnectTimeout()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.ftp.TestConnectTimeout#testConnectTimeout()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ftp.TestConnectTimeout#testConnectTimeout()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "rainmaker.wunderground.com",
+    "whois.internic.net",
+    "www.apache.org"
+   ],
+   "test": "org.apache.commons.net.ftp.TestConnectTimeout.testConnectTimeout"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/ntp/TestNtpClient.java",
+   "line": 75,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.ntp.TestNtpClient#testGetTime()",
+      "org.apache.commons.net.ntp.NTPUDPClient#getTime(InetAddress,int)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.ntp.NTPUDPClient#getTime(InetAddress,int)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ntp.NTPUDPClient"
+   ],
+   "test": "org.apache.commons.net.ntp.TestNtpClient.testGetTime"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 486,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testDelete()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testDelete()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testDelete"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 452,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testDeleteWithReset()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testDeleteWithReset()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testDeleteWithReset"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 203,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessageOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessageOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListMessageOnEmptyMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 157,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessageOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessageOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListMessageOnFullMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 188,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessagesOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessagesOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListMessagesOnEmptyMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 134,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessagesOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListMessagesOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListMessagesOnFullMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 236,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIDOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIDOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListUniqueIDOnFullMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 266,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIDsOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIDsOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListUniqueIDsOnEmptyMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 214,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIDsOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIDsOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListUniqueIDsOnFullMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 281,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIdentifierOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testListUniqueIdentifierOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testListUniqueIdentifierOnEmptyMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 83,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testNoopCommand()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testNoopCommand()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testNoopCommand"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 517,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testResetAndDeleteShouldFails()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testResetAndDeleteShouldFails()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testResetAndDeleteShouldFails"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 336,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testRetrieveMessageOnEmptyMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 292,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testRetrieveMessageOnFullMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 344,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageShouldFails()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageShouldFails()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testRetrieveMessageShouldFails"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 424,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageTopOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageTopOnEmptyMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testRetrieveMessageTopOnEmptyMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 364,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageTopOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageTopOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testRetrieveMessageTopOnFullMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 432,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageTopShouldFails()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveMessageTopShouldFails()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testRetrieveMessageTopShouldFails"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 383,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveOverSizedMessageTopOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testRetrieveOverSizedMessageTopOnFullMailbox()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testRetrieveOverSizedMessageTopOnFullMailbox"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientCommandsTest.java",
+   "line": 100,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testStatus()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#testStatus()",
+      "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientCommandsTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientCommandsTest.testStatus"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientTest.java",
+   "line": 97,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testInvalidLoginWithBadName()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testInvalidLoginWithBadName()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientTest.testInvalidLoginWithBadName"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientTest.java",
+   "line": 106,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testInvalidLoginWithBadPassword()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testInvalidLoginWithBadPassword()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientTest.testInvalidLoginWithBadPassword"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientTest.java",
+   "line": 119,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testLoginFromWrongState()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testLoginFromWrongState()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientTest.testLoginFromWrongState"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientTest.java",
+   "line": 140,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testLogoutFromAllStates()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testLogoutFromAllStates()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientTest.testLogoutFromAllStates"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ClientTest.java",
+   "line": 88,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testValidLoginWithNameAndPassword()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ClientTest#testValidLoginWithNameAndPassword()",
+      "org.apache.commons.net.pop3.POP3ClientTest#connect()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ClientTest#connect()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ClientTest.testValidLoginWithNameAndPassword"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/pop3/POP3ConstructorTest.java",
+   "line": 88,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ConstructorTest#testPOP3ClientStateTransition()",
+      "org.apache.commons.net.SocketClient#connect(String)",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.pop3.POP3ConstructorTest#testPOP3ClientStateTransition()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.pop3.POP3ConstructorTest#testPOP3ClientStateTransition()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.pop3.POP3ConstructorTest.testPOP3ClientStateTransition"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientFunctionalTest.java",
+   "line": 48,
+   "reaches": [
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientFunctionalTest#testFunctionalTest()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "host",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientFunctionalTest#testFunctionalTest()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientFunctionalTest#testFunctionalTest()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientFunctionalTest.testFunctionalTest"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 653,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testAYT()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testAYT()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testAYT"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 578,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testDeleteOptionHandler()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testDeleteOptionHandler()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testDeleteOptionHandler"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 170,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testInitial()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testInitial()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testInitial"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 508,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testNotification()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testNotification()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testNotification"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 252,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testOptionNegotiation()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testOptionNegotiation()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testOptionNegotiation"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 435,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testOptionRenegotiation()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testOptionRenegotiation()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testOptionRenegotiation"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 763,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testSetReaderThread()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testSetReaderThread()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testSetReaderThread"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/telnet/TelnetClientTest.java",
+   "line": 696,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testSpy()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+      "org.apache.commons.net.SocketClient#connect(String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.SocketClient#connect(String,int)",
+     "through_set_up": true
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.telnet.TelnetClientTest#testSpy()",
+      "org.apache.commons.net.telnet.TelnetClientTest#setUp()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.telnet.TelnetClientTest#setUp()",
+     "through_set_up": true
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.ftp.FTPHTTPClient",
+    "org.apache.commons.net.telnet.TelnetTestSimpleServer",
+    "rainmaker.wunderground.com",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.telnet.TelnetClientTest.testSpy"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java",
+   "line": 38,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPServerPathTest#testReadOnly()",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPServerPathTest#testReadOnly()",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPServerPathTest.testReadOnly"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java",
+   "line": 84,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPServerPathTest#testWriteOnly()",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPServerPathTest#testWriteOnly()",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPServerPathTest.testWriteOnly"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java",
+   "line": 132,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPServerPathTest#testWriteOutsideHome()",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPServerPathTest#testWriteOutsideHome()",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPServerPathTest.testWriteOutsideHome"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPTest.java",
+   "line": 114,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testASCIIDownloads()",
+      "org.apache.commons.net.tftp.TFTPTest#testDownload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testASCIIDownloads()",
+      "org.apache.commons.net.tftp.TFTPTest#testDownload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPTest.testASCIIDownloads"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPTest.java",
+   "line": 137,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testASCIIUploads()",
+      "org.apache.commons.net.tftp.TFTPTest#testUpload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testASCIIUploads()",
+      "org.apache.commons.net.tftp.TFTPTest#testUpload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPTest.testASCIIUploads"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPTest.java",
+   "line": 154,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testHugeDownloads()",
+      "org.apache.commons.net.tftp.TFTPTest#testDownload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testHugeDownloads()",
+      "org.apache.commons.net.tftp.TFTPTest#testDownload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPTest.testHugeDownloads"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPTest.java",
+   "line": 146,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testHugeUploads()",
+      "org.apache.commons.net.tftp.TFTPTest#testUpload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testHugeUploads()",
+      "org.apache.commons.net.tftp.TFTPTest#testUpload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPTest.testHugeUploads"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPTest.java",
+   "line": 105,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testTFTPBinaryDownloads()",
+      "org.apache.commons.net.tftp.TFTPTest#testDownload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testTFTPBinaryDownloads()",
+      "org.apache.commons.net.tftp.TFTPTest#testDownload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#receiveFile(String,int,OutputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPTest.testTFTPBinaryDownloads"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/tftp/TFTPTest.java",
+   "line": 128,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testTFTPBinaryUploads()",
+      "org.apache.commons.net.tftp.TFTPTest#testUpload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.tftp.TFTPTest#testTFTPBinaryUploads()",
+      "org.apache.commons.net.tftp.TFTPTest#testUpload(int,File)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,String,int)",
+      "org.apache.commons.net.tftp.TFTPClient#sendFile(String,int,InputStream,InetAddress,int)",
+      "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.tftp.TFTP#bufferedSend(TFTPPacket)",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.tftp.TFTP"
+   ],
+   "test": "org.apache.commons.net.tftp.TFTPTest.testTFTPBinaryUploads"
+  },
+  {
+   "file": "./src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java",
+   "line": 64,
+   "reaches": [
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.time.TimeTCPClientTest#testCompareTimes()"
+     ],
+     "kind": "host-lookup",
+     "point": "org.apache.commons.net.time.TimeTCPClientTest#testCompareTimes()",
+     "through_set_up": false
+    },
+    {
+     "address_for_tests": "local",
+     "chain": [
+      "org.apache.commons.net.time.TimeTCPClientTest#testCompareTimes()"
+     ],
+     "kind": "socket",
+     "point": "org.apache.commons.net.time.TimeTCPClientTest#testCompareTimes()",
+     "through_set_up": false
+    }
+   ],
+   "stand_ins": [],
+   "systems": [
+    "org.apache.commons.net.time.TimeTestSimpleServer",
+    "whois.internic.net"
+   ],
+   "test": "org.apache.commons.net.time.TimeTCPClientTest.testCompareTimes"
+  }
+ ],
+ "tests_starting_a_framework": [],
+ "tool_version": "0.1.0"
+}
