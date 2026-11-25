@@ -110,8 +110,8 @@ steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none
 ## 4. Record each test's connections in testing/tests.yaml
 
 For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, keys in this order (the
-reach is the one whose `point` is among the system's `points`; a name with no such reach gets no entry, and the reply
-lists how many, with one example, as a fault for under-test-external-calls' maintainers):
+reach is the one whose `point` is among the system's `points`, else, for a test reaching two systems of one kind, its
+reach of one of the system's kinds):
 
 * `node`: the system's `unique-id`; `kind`: its kind; `found_by: code-path`;
 * `grade` and `reason`, by the first that holds

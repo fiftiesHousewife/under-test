@@ -1551,7 +1551,7 @@
     "org.jivesoftware.openfire.ldap.LdapManager#getContext(LdapName)",
     "org.jivesoftware.util.JiveInitialLdapContext#<init>(Hashtable,Control[])"
    ],
-   "tests": 55
+   "tests": 9
   },
   {
    "address": {
@@ -1988,8 +1988,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.admin.AuthCheckFilterTest.willNotRedirectARequestFromAnAdminUser"
   },
@@ -2029,8 +2028,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.admin.AuthCheckFilterTest.willRedirectARequestIfTheServletRequestAuthenticatorReturnsAnUnauthorisedUser"
   },
@@ -2070,8 +2068,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.admin.AuthCheckFilterTest.willRedirectARequestIfTheServletRequestAuthenticatorReturnsNoUser"
   },
@@ -2111,8 +2108,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.admin.AuthCheckFilterTest.willRedirectARequestWithABrokenServletRequestAuthenticator"
   },
@@ -2152,8 +2148,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.admin.AuthCheckFilterTest.willRedirectARequestWithoutAServletRequestAuthenticator"
   },
@@ -3154,8 +3149,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.admin.GroupBasedAdminProviderTest.willRetrieveGroupMembers"
   },
@@ -3196,8 +3190,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.admin.GroupBasedAdminProviderTest.willReturnEmptyListIfGroupIsNotFound"
   },
@@ -3607,8 +3600,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.cluster.ClusterMonitorTest.whenAnotherNodeJoinsTheClusterAfterANodeHasLeftTheClusterAMessageWillBeSent"
   },
@@ -3650,8 +3642,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.cluster.ClusterMonitorTest.whenAnotherNodeJoinsTheClusterNothingWillBeSent"
   },
@@ -3693,8 +3684,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.cluster.ClusterMonitorTest.whenAnotherNodeLeavesTheClusterAMessageWillBeSent"
   },
@@ -3733,8 +3723,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.cluster.ClusterMonitorTest.whenThisNodeLeavesTheClusterAMessageWillBeSent"
   },
@@ -4519,8 +4508,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.group.GroupJIDTest.testParseGroupJIDFromString"
   },
@@ -4561,8 +4549,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.group.GroupManagerTest.aForceLookupHitWillIgnoreTheExistingCache"
   },
@@ -4603,8 +4590,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.group.GroupManagerTest.aForceLookupMissWillIgnoreTheExistingCache"
   },
@@ -4645,8 +4631,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.group.GroupManagerTest.willCacheAHitIfNotAlreadyCached"
   },
@@ -4687,8 +4672,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.group.GroupManagerTest.willCacheAMissIfNotAlreadyCached"
   },
@@ -4729,8 +4713,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.group.GroupManagerTest.willUseACacheHit"
   },
@@ -4771,8 +4754,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.group.GroupManagerTest.willUseACacheMiss"
   },
@@ -7379,8 +7361,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.canGetUserByUserNameForExistingUsers"
   },
@@ -7404,8 +7385,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.createExistingUserWillGetError"
   },
@@ -7429,8 +7409,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.createThenDeleteUserAndVerifyDeletionResults"
   },
@@ -7455,8 +7434,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.deleteInvalidUserWillGetError"
   },
@@ -7500,8 +7478,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.getUserNamesWillGetAListOfUserNames"
   },
@@ -7539,8 +7516,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserFalseWillReturnFalseForLocalNonUsers"
   },
@@ -7578,8 +7554,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserFalseWillReturnFalseForRemoteUsers"
   },
@@ -7617,8 +7592,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserFalseWillReturnFalseForUnknownRemoteUsers"
   },
@@ -7656,8 +7630,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserFalseWillReturnTrueForLocalUsers"
   },
@@ -7695,8 +7668,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserTrueWillReturnFalseForATimeout"
   },
@@ -7734,8 +7706,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserTrueWillReturnFalseForLocalNonUsers"
   },
@@ -7773,8 +7744,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserTrueWillReturnFalseForUnknownRemoteUsers"
   },
@@ -7812,8 +7782,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserTrueWillReturnFalseNoAnswer"
   },
@@ -7851,8 +7820,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserTrueWillReturnTrueForLocalUsers"
   },
@@ -7890,8 +7858,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserTrueWillReturnTrueForRemoteUsers"
   },
@@ -7931,8 +7898,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserWillReturnFalseForATimeout"
   },
@@ -7972,8 +7938,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserWillReturnFalseForLocalNonUsers"
   },
@@ -8013,8 +7978,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserWillReturnFalseForUnknownRemoteUsers"
   },
@@ -8054,8 +8018,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserWillReturnFalseNoAnswer"
   },
@@ -8095,8 +8058,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserWillReturnTrueForLocalUsers"
   },
@@ -8136,8 +8098,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.isRegisteredUserWillReturnTrueForRemoteUsers"
   },
@@ -8179,8 +8140,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.openfire.user.UserManagerTest.verifyUserCountIsTwo"
   },
@@ -9348,8 +9308,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.util.ListPagerTest.aDefaultRequestWillHaveAPageSizeOf25"
   },
@@ -9377,8 +9336,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.util.ListPagerTest.anEmptyListWillStartOnPage1Of1"
   },
@@ -9406,8 +9364,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.util.ListPagerTest.theLowerBoundCurrentPageIs1"
   },
@@ -9435,8 +9392,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.util.ListPagerTest.theUpperBoundCurrentPageIsTotalPages"
   },
@@ -9463,8 +9419,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.util.ListPagerTest.willFilterTheList"
   },
@@ -9492,8 +9447,7 @@
    ],
    "stand_ins": [],
    "systems": [
-    "database.defaultProvider.serverURL",
-    "ldap.host"
+    "database.defaultProvider.serverURL"
    ],
    "test": "org.jivesoftware.util.ListPagerTest.willRoundUp"
   },
