@@ -127,8 +127,8 @@ button.quiet { background: transparent; color: var(--accent); }
   var AP_CHOICES = ["Application Owner decides: re-enable, or delete once the approval-test baseline exists",
     "Application Owner decides: make it a real test, or delete once the approval-test baseline exists",
     "fixed in the fix-flaky-tests workstream", "fixed in the strengthen-tests workstream"];
-  var STAND_INS = ["not-chosen", "run-in-container", "recorded-responses", "contract", "fake-behind-an-interface",
-    "shared-test-environment", "accept-risk"];
+  var STAND_INS = ["not-chosen", "run-in-container", "in-process-server", "recorded-responses", "contract",
+    "fake-behind-an-interface", "shared-test-environment", "accept-risk"];
 
   function el(tag, attrs, kids) {
     var e = document.createElement(tag);
@@ -228,11 +228,10 @@ button.quiet { background: transparent; color: var(--accent); }
     : noStandIn.length ? answer("block", "Does it run on its own?", "Not yet: " + noStandIn.length + " external system(s) have no stand-in.")
     : unconfirmed.length ? answer("warn", "Does it run on its own?", "Once the Architecture Owner confirms " + unconfirmed.length + " external system(s).")
     : answer("ok", "Does it run on its own?", "Every external system has a confirmed stand-in.");
-  var trust;
-  if (!T) { trust = answer("", "Can its tests be trusted?", "Not known: the tests haven't been measured."); }
+  var trust, weak = aps.reduce(function (n, f) { return n + (f.tests || 0); }, 0);
+  if (!T) { trust = answer("", "Can its tests be trusted?", "Not known: the tests haven't been measured" + (weak ? "; " + weak + " test(s) found meaningless or unreliable" : "") + "."); }
   else {
     var pb = T.planted_bugs, ratio = pb && pb.planted ? pb.caught / pb.planted : null;
-    var weak = aps.reduce(function (n, f) { return n + (f.tests || 0); }, 0);
     var text = (T.line_coverage != null ? T.line_coverage + "% of lines run in tests" : "Coverage not measured") +
       (pb ? "; they caught " + pb.caught + " of " + pb.planted + " planted bugs" : "") + (weak ? "; " + weak + " test(s) found meaningless or unreliable" : "") + ".";
     trust = answer(ratio == null ? "warn" : ratio < 0.5 ? "block" : ratio < 0.8 ? "warn" : "ok", "Can its tests be trusted?", text);
@@ -257,7 +256,7 @@ button.quiet { background: transparent; color: var(--accent); }
       }))]);
 
   // ---- Running offline: the external systems list
-  section("running", "What it talks to", C ? "From the external systems list, drafted from the code, with the airgap agent's reports" : "",
+  section("running", "What it talks to", C ? "From the external systems list, drafted from the code" + ((C.nodes || []).some(function (n) { return ((n.metadata || {})["under-test"] || {}).reports; }) ? ", with the airgap agent's reports" : "") : "",
     "Each external system needs a stand-in before the tests run offline. The Architecture Owner confirms each one.",
     !rels.length ? [nothing(C ? "No external systems." : "No external systems list yet.")] : [table(["System", "Callers and setting", "Tests", "Stand-in"],
       rels.map(function (x) {
@@ -298,8 +297,8 @@ button.quiet { background: transparent; color: var(--accent); }
         found.map(function (f) { return el("tr", {}, [el("td", {}, [el("div", {text: f.kind === "other" ? f.id.replace(/^other-/, "").replace(/-/g, " ") : f.kind.replace(/-/g, " ")}), el("span", {cls: "muted mono", text: f.id})]),
           el("td", {cls: "num", text: String(f.tests)}), el("td", {cls: "where", text: list(f.examples)}), decisionCell(prefix + f.id, AP_CHOICES, "What happens to " + f.id)]); }))]);
   }
-  testsSection("meaningless", "Meaningless tests", A.meaningless_tests, "meaningless/", "Tests that pass whatever the code does. No existing test is deleted before the approval-test baseline exists.");
-  testsSection("unreliable", "Unreliable tests", A.unreliable_tests, "unreliable/", "Tests that may give a different answer on another run.");
+  testsSection("meaningless", "Meaningless tests", A.meaningless_tests, "meaningless/", "Tests that pass whatever the code does. No existing test is deleted before the approval-test baseline exists. Three examples of each kind; testing/tests.yaml lists every test.");
+  testsSection("unreliable", "Unreliable tests", A.unreliable_tests, "unreliable/", "Tests that may give a different answer on another run. Three examples of each kind; testing/tests.yaml lists every test.");
 
   // ---- Test assets and other sources
   var srcs = (S && S.sources) || [];

@@ -263,5 +263,7 @@ decisions:
 ## 6. Report
 
 Briefly: the total number of tests; how many are meaningless and how many unreliable, each kind's count and examples;
-disabled tests, and tests that never run, need the Application Owner; read coverage and planted-bug results with these
+disabled tests, and tests that never run, need the Application Owner (say how many of those that never run are in
+classes the build excludes on purpose, such as functional tests that need the network: often the tests repair pairs,
+which need a scheduled run rather than deleting); read coverage and planted-bug results with these
 in mind (a test with no real assertion adds coverage but catches nothing); and anything the searches couldn't settle.
