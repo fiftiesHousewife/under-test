@@ -107,6 +107,7 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Repair is directed by a work order per external system that under-test-tools writes](0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Repair pairs each test that reaches an external system, after measurement, changing only test code](0096-repair-pairs-each-test-that-reaches-an-external-system-after-measurement-changing-only-test-code.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [An external system is one on another machine that a test cannot run without](0098-an-external-system-is-one-on-another-machine-that-a-test-cannot-run-without.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Repair converts a JUnit 3 test class to JUnit 4 before pairing it](0102-repair-converts-a-junit-3-test-class-to-junit-4-before-pairing-it.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

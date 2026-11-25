@@ -1938,6 +1938,18 @@ items:
     done_when:
       - "Chosen in discussion by Toolkit maintainers"
     decision_record: "docs/decisions/0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md"
+  - key: "decide-repair-converts-a-junit-3-test-class-to-junit-4-before-pairing-it"
+    status: "done"
+    type: "decision"
+    title: "Repair converts a JUnit 3 test class to JUnit 4 before pairing it"
+    parent: "the-toolkit-supports-every-step-of-a-repos-journey"
+    phase: "pilots"
+    horizon: "now"
+    owner_role: "Technical Architect"
+    done_by: "person"
+    done_when:
+      - "Chosen in discussion by Toolkit maintainers"
+    decision_record: "docs/decisions/0102-repair-converts-a-junit-3-test-class-to-junit-4-before-pairing-it.md"
   - key: "decide-repair-pairs-each-test-that-reaches-an-external-system"
     status: "done"
     type: "decision"
