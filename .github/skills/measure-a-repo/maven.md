@@ -23,6 +23,12 @@ in one folder from the organisation's package repository (or Maven Central); `X`
 own JVM (`forkCount=0`), say so and stop: those need the agent in `JAVA_TOOL_OPTIONS` for Maven itself, which this
 page doesn't cover yet.
 
+**Check that the agent loads,** once, before the stages: run one test graded `reaches` alone
+(`M -B X test -Dtest=<Class>#<method> -DfailIfNoTests=false -Dmaven.test.failure.ignore=true`) and find its call
+refused in `target/airgap/`. A run with no report means no call off the machine only if the agent was there, and a
+run's reports don't show that. With no test graded `reaches`, say the check couldn't be made. If its call isn't
+refused, stop.
+
 **Downloads:** the extension puts the agent only in the JVMs that run the repo's code, not in Maven's own, so Maven
 fetches what it needs as the runs go (some plugins fetch files only when they run, which `dependency:go-offline`
 misses). Only where Maven itself runs with the agent (the `forkCount=0` case above) must it run offline (`-o`), after
@@ -40,7 +46,7 @@ they read Gradle's `build/under-test/runs/<n>/<task>/`.
 | One run | `M -B X org.jacoco:jacoco-maven-plugin:0.8.16:prepare-agent test org.jacoco:jacoco-maven-plugin:0.8.16:report -Djacoco.destFile=$PWD/build/under-test/jacoco.exec -Djacoco.dataFile=$PWD/build/under-test/jacoco.exec -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true`, then `R 1` and copy `target/site/jacoco/jacoco.xml` beside it |
 | Repeats | `M -B X test -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true -Dsurefire.runOrder=random -Dsurefire.runOrder.random.seed=<n>`, then `R <n>`, for n = 2 to 5 |
 | A rerun alone | `M -B X test -Dtest='<Class>#<method>' -Dsurefire.failIfNoSpecifiedTests=false -Dmaven.test.failure.ignore=true`, then `R <test>-<k>` |
-| Planted bugs | `M -B X org.pitest:pitest-maven:1.30.2:mutationCoverage -DtargetClasses='<targets>' -DexcludedTestClasses='<left out classes>' -DoutputFormats=XML -DtimestampedReports=false`; the mutations are in `target/pit-reports/mutations.xml` |
+| Planted bugs | `M -B X org.pitest:pitest-maven:1.30.2:mutationCoverage -DtargetClasses='<targets>' -DexcludedTestClasses='<left out classes>' -DoutputFormats=XML -DtimestampedReports=false -DargLine="-Xbootclasspath/a:<agent jar> -javaagent:<agent jar>=mode=refuse;report=$PWD/build/under-test/planted-bugs/calls.jsonl"`; the mutations are in `target/pit-reports/mutations.xml`. PIT starts its own test JVMs, which the extension doesn't reach, so the agent goes in its `argLine` |
 
 * `-Dmaven.test.failure.ignore=true` keeps a failing test from stopping the build before the coverage report and the
   next runs; the stages read each test's outcome from its report.

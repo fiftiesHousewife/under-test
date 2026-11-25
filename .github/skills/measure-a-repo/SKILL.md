@@ -122,7 +122,8 @@ Write `stage: repeats`, `runs: 5`, `flaky` (flaky and order-dependent tests), `f
   (`.class` files without `$`). Otherwise, or with no `group`, ask which packages hold the key code. `sampled` is
   `true` only when the targets leave some main code out.
 * `<left out>`: each test class with a test that failed in any run (flaky, order-dependent or failing every run), or
-  was left out, fully qualified, sorted, comma-separated; no flag if none. A disabled test doesn't put its class here.
+  was left out, and each test class the build's runner never runs (none of its tests is in run 1's reports: PIT finds
+  tests by itself, so it would run them), fully qualified, sorted, comma-separated; no flag if none. A disabled test doesn't put its class here.
 
 `planted` is every `mutation` in `build/under-test/planted-bugs/mutations.xml`; `caught`, those with status `KILLED`,
 `TIMED_OUT` or `MEMORY_ERROR` (not `RUN_ERROR`). Write `stage: planted-bugs` and `planted_bugs`.
