@@ -34,8 +34,9 @@ fetches what it needs as the runs go (some plugins fetch files only when they ru
 misses). Only where Maven itself runs with the agent (the `forkCount=0` case above) must it run offline (`-o`), after
 a run without the agent has fetched everything.
 
-`R <n>` below means: after the run, copy `target/surefire-reports/` and `target/airgap/` of each module to
-`build/under-test/runs/<n>/<module>/`, so the next run doesn't overwrite them. The stages read their reports there, as
+Before each run, delete each module's `target/surefire-reports/` and `target/airgap/`, so a run's copy holds only its
+own reports. `R <n>` below means: after the run, copy `target/surefire-reports/` and `target/airgap/` of each module to
+`build/under-test/runs/<n>/<module>/` (`build/under-test/runs/<n>/` for a single-module build), so the next run doesn't overwrite them. The stages read their reports there, as
 they read Gradle's `build/under-test/runs/<n>/<task>/`.
 
 ## The stages' commands

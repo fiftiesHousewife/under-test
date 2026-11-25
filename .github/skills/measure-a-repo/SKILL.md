@@ -28,7 +28,7 @@ your reply: point at its file and line instead
 |---|---|
 | It builds with Gradle | With Maven (a `pom.xml`, no Gradle build file), read [maven.md](maven.md) for the commands and where the reports land, and skip this table's Gradle rows. Another build tool isn't covered yet: say so and stop |
 | Its Gradle is 5.6 or later | Say the measurement script needs Gradle 5.6 or later, and stop |
-| The assessment file has a `safety` section, and each finding with `effect: blocks` has a decided `safety/<id>` decision | Stop; name the findings still blocking |
+| The assessment file has a `safety` section, and each finding with `effect: blocks` has a decided `safety/<id>` decision | Stop; name the findings still blocking. (Only the toolkit's own field trial of old public releases runs without one, under the airgap agent refusing every call: [why](../../../docs/decisions/0089-the-field-trials-public-repos-run-their-tests-under-the-airgap-agent-without-a-safety-inventory-first.md)) |
 | `testing/tests.yaml` has `found_by.draft-the-external-systems-list`, from discovery | Stop: run [draft-the-external-systems-list](../draft-the-external-systems-list/SKILL.md) first, so the tests that reach external systems can be left out |
 | Every run uses the airgap agent's `airgap.init.gradle` ([its repo](https://github.com/fiftiesHousewife/under-test-airgap)) | Stop. Only a CI runner with no route out may pass `-Dmeasure.network=blocked-by-runner` instead; **never** pass it anywhere else |
 | It has a Gradle wrapper | Ask which Gradle the team uses, and use that `gradle` for `./gradlew` throughout |
@@ -118,8 +118,9 @@ Write `stage: repeats`, `runs: 5`, `flaky` (flaky and order-dependent tests), `f
 ./gradlew measurePlantedBugs -Dmeasure.targets='<targets>' -Dmeasure.excludedTests='<left out>' I
 ```
 
-* `<targets>`: `<group>.*` for each project's `group`, comma-separated, if the main code has 200 classes or fewer
-  (`.class` files without `$`). Otherwise, or with no `group`, ask which packages hold the key code. `sampled` is
+* `<targets>`: `<package>.*` for each top package of the main code (the shortest packages holding all its classes,
+  such as `org.apache.commons.net` and `examples`), comma-separated, if the main code has 200 classes or fewer
+  (`.class` files without `$`). Otherwise ask which packages hold the key code. `sampled` is
   `true` only when the targets leave some main code out.
 * `<left out>`: each test class with a test that failed in any run (flaky, order-dependent or failing every run), or
   was left out, and each test class the build's runner never runs (none of its tests is in run 1's reports: PIT finds
@@ -135,7 +136,7 @@ pass every run, was left out, or was refused a call; never touch another skill's
 `"path:line"` of its method) for a test that has none. Set `found_by.measure-a-repo` (`version`, `commit`). Keys in
 this order:
 
-* `outcome`: from the table, or `disabled`, or `left-out`;
+* `outcome`: from the table, or `disabled`, or `left-out`, or `never-run` for a test the build's runner never runs;
 * `runs`: each run in order, `P` passed, `F` failed, `S` skipped, `-` not run; `reruns` for a test rerun alone;
 * `left_out_because`: for `left-out`, `"graded reaches <node>"`;
 * `called`: each `target` of its report lines with `outcome: refused`, distinct, sorted;
@@ -193,10 +194,11 @@ level:
   `counter` directly under `report`: covered ÷ (missed + covered) × 100 (0 when missed + covered is 0), summing over
   projects first.
 * `mix`: per cent of `count`, each test in exactly one: `broad` if its fully qualified class or method name contains
-  `e2e`, `acceptance` or `system` in any case; otherwise by task, `test` (`local`) or `integrationTest` (`container`);
+  `e2e`, `acceptance` or `system` in any case; otherwise by task, `test` (`local`) or `integrationTest` (`container`), or on Maven by plugin, Surefire's (`local`)
+  or Failsafe's (`container`);
   a test in any other task is in none, and its task is named in the report.
 * Per cents: round half up to one decimal, dropping `.0` (`64.7`, `100`, `0`).
-* `evidence`: exactly one line, `"Built and ran its tests five times on Gradle <version from ./gradlew --version> and
+* `evidence`: exactly one line, `"Built and ran its tests five times on Gradle <version from ./gradlew --version> (on Maven: Maven <version from mvn -v>) and
   JDK <the JDK's major version: 8, 11, 17>, under the airgap agent"`, with `on a CI runner with no route out` in place of
   `under the airgap agent` there.
 * `reached` ([levels](../../../decision-guides/0012-what-each-test-maturity-level-means.md)): `1` only on a CI runner

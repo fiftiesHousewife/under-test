@@ -186,9 +186,10 @@
                   "flaky",
                   "order-dependent",
                   "disabled",
-                  "left-out"
+                  "left-out",
+                  "never-run"
                 ],
-                "description": "left-out: not run, because it reaches an external system; failed-every-run: failed in its run and in every rerun alone; flaky: passed and failed with nothing changed; order-dependent: failed in some orders and passed in every rerun alone."
+                "description": "left-out: not run, because it reaches an external system; failed-every-run: failed in its run and in every rerun alone; flaky: passed and failed with nothing changed; order-dependent: failed in some orders and passed in every rerun alone. never-run: the build's test runner never runs it (a class its includes or excludes leave out, or a method it doesn't pick up), so no run measured it."
               },
               "runs": {
                 "type": "string",
