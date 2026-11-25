@@ -91,9 +91,9 @@ names.
 
 | Node key | Value |
 |---|---|
-| `unique-id` | `named_by: host`: the host as from-airgap-reports.md step 2 makes it; a setting, variable or JNDI name: `<kind>-<name>`; `class`: `<kind>-via-<the class's simple name>`; lower-cased, every character but `a-z` and `0-9` turned to `-`, runs collapsed, ends trimmed |
+| `unique-id` | `named_by: host`: the host as from-airgap-reports.md step 2 makes it; a setting, variable or JNDI name: `<kind>-<name>`; `class`: `<kind>-via-<the class's simple name, after its enclosing classes' (`HttpConnection.Response`)>`; lower-cased, every character but `a-z` and `0-9` turned to `-`, runs collapsed, ends trimmed |
 | `node-type` | `database` for a database; `ldap` for a directory; `service` for `http`; else `system` |
-| `name` | the host; else `<A database / A directory / An HTTP service / A mail server / A queue / A system>, address from <setting / environment variable / system property / JNDI name> <name>`, or `..., address unknown, opened by <the class's simple name>` |
+| `name` | the host; else `<A database / A directory / An HTTP service / A mail server / A queue / A system>, address from <setting / environment variable / system property / JNDI name> <name>`, or `..., address unknown, opened by <the class's simple name, after its enclosing classes'>` |
 | `description` | `<Thing> opened by <the opening classes' simple names, sorted, joined by ", ">, found in the code by under-test-external-calls.` |
 | `metadata.under-test` | `addresses`: the literal, or a setting's value that isn't a placeholder, as written; else `address-from`: `setting <name>, which has no value in the repo`, `setting <name>, whose value in <file>:<line> is a placeholder`, `environment variable <name>`, `system property <name>`, `JNDI name <name>`, or `built at run time in <value>`; and `opened-by`, the system's `points` |
 
@@ -111,8 +111,9 @@ steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none
 
 For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, keys in this order (the
 reach is the one whose `system` is this name in a facts file labelled `external-calls/2`; in an earlier one, the one
-whose `point` is among the system's `points`, else, for a test reaching two systems of one kind, its reach of one of
-the system's kinds):
+whose `point` is among the system's `points` and whose kind is the system's kind (two reaches at one point, such as
+`http` and `url`, may differ), else, for a test reaching two systems of one kind, its reach of one of the system's
+kinds):
 
 * `node`: the system's `unique-id`; `kind`: its kind; `found_by: code-path`;
 * `grade` and `reason`: in a facts file labelled `external-calls/2`, the reach's own `grade` and `reason`, copied;
@@ -122,7 +123,7 @@ the system's kinds):
   | When | `grade` | `reason` |
   |---|---|---|
   | The reach has `through_mock` | `cannot-reach` | `through-a-mock` |
-  | The test's `stand_ins` has an embedded server for the kind (its simple name holds, ignoring case, `Ldap` for a directory; `GreenMail` or `Mail` for mail; `WireMock` or `MockWebServer` for `http` and `url`; `Postgres`, `MySQL`, `Mongo`, `H2` or `Database` for a database, so `MySQLContainer` counts; `Kafka`, `ActiveMQ`, `Artemis` or `Rabbit` for a queue) | `cannot-reach` | `embedded-server` |
+  | The test's `stand_ins` has an embedded server for the kind (its simple name holds, ignoring case, `Ldap` for a directory; `GreenMail` or `Mail` for mail; `WireMock` or `MockWebServer` for `http` and `url`; `Postgres`, `MySQL`, `Mongo`, `H2` or `Database` for a database, so `MySQLContainer` counts; `Kafka`, `ActiveMQ`, `Artemis` or `Rabbit` for a queue; for `http` and `url`, also a class in `org.eclipse.jetty`, `io.undertow` or `io.netty`, such as Jetty's `Server`) | `cannot-reach` | `embedded-server` |
   | `address_for_tests` is `none` | `cannot-reach` | `no-address-for-tests` |
   | `address_for_tests` is `local` | `cannot-reach` | `local` |
   | `address_for_tests` is `host` | `reaches` | `host` |
@@ -132,13 +133,16 @@ the system's kinds):
 * `via`: the reach's `chain` as `<Class>.<method>` steps (simple class names, no parameters), joined by ` > `.
 
 Then the tests whose own code or the settings they load name a host (spring-boot.md, spring-xml.md, and in test code
-`grep -rnE '(//|:@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>`, leaving out comment
-lines: `:@` is an Oracle JDBC address, so a mail or XMPP address such as `user@host` names no host). A host is never
+`grep -rnE '(//|:@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test source folders>`, not their
+resources, which are data; leave out comments, whole lines or the end of one: `:@` is an Oracle JDBC address, so a mail
+or XMPP address such as `user@host` names no host). A host is never
 `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` or their subdomains, one ending `.example`, `.test`,
 `.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. A host counts only where it is an
 address to connect to (a URL, a JDBC or LDAP address, a host setting), never a name that only looks like one: a URI
 used as an identifier (a form type, a capabilities node), a certificate or directory name (`CN=`, `dc=`), or a `.class`
-literal. Each test gets an entry with
+literal; nor one the test never connects to: a base URI given to a parser, or an expected value (in an
+assertion, a header or an exception message). A host in a field counts for each test that uses the field, `where` at
+the field's line; one entry per test and node, at its first line. Each test gets an entry with
 `found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, `where`, the `path:line` naming it, and
 `kind`: the node's kind when the host already has a node, else from the address's scheme as spring-xml.md says.
 

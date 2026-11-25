@@ -17,7 +17,8 @@ public final class OutputValidator {
             "testing/sources.yaml", "schema/source-list.schema.json",
             "testing/external-systems.calm.json", "schema/external-systems-list.schema.json",
             "testing/external-calls.json", "schema/external-calls.schema.json",
-            "testing/tests.yaml", "schema/tests.schema.json");
+            "testing/tests.yaml", "schema/tests.schema.json",
+            "testing/repair-orders.json", "schema/repair-orders.schema.json");
 
     private final Path toolkit;
     private final SchemaValidator validator = new SchemaValidator();

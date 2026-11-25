@@ -87,9 +87,10 @@
               "may-reach",
               "missed-by-discovery",
               "paired",
-              "no-node"
+              "no-node",
+              "disabled"
             ],
-            "description": "may-reach: its grade is may-reach, so the Architecture Owner confirms the address before repair pairs it; missed-by-discovery: measurement saw it call out (measurement.missed_by_discovery), so it called a system none of its entries names (with no node; a test with other entries graded reaches is also ordered for those), and the airgap agent's reports must be merged into the list first; paired: its repair field's state is paired; no-node: its entry names a node the external systems list doesn't have."
+            "description": "may-reach: its grade is may-reach, so the Architecture Owner confirms the address before repair pairs it; missed-by-discovery: measurement saw it call out (measurement.missed_by_discovery), so it called a system none of its entries names (with no node; a test with other entries graded reaches is also ordered for those), and the airgap agent's reports must be merged into the list first; paired: its repair field's state is paired; no-node: its entry names a node the external systems list doesn't have. disabled: tests.yaml's meaningless list has the test as disabled; it doesn't run, so it isn't paired, and whether to enable or delete it is the testing plan's."
           }
         }
       }
@@ -125,7 +126,7 @@
         "tests"
       ],
       "additionalProperties": false,
-      "description": "One external system, with every test repair must pair for it. A system gets an order when at least one test's external_systems entry for its node is graded reaches and the test's repair field is absent or has state waiting (a waiting test is ordered again, so a resolved wait is picked up). The node is matched to the facts' system whose points meet the node's metadata.under-test.opened-by; failing that, the test's system whose kinds include the entry's kind; failing that, any reach of the entry's kind. A node with no relationship from the application fails the run, naming the node.",
+      "description": "One external system, with every test repair must pair for it. A system gets an order when at least one test's external_systems entry for its node is graded reaches, the test isn't disabled (its meaningless entry has kind disabled), and its repair field is absent or has state waiting (a waiting test is ordered again, so a resolved wait is picked up). The node is matched to the facts' system whose points meet the node's metadata.under-test.opened-by; failing that, the test's system whose kinds include the entry's kind; failing that, any reach of the entry's kind. A node with no relationship from the application fails the run, naming the node. A test whose entries of one kind include a code-path entry and test-code or test-settings entries (the hosts its own code or settings name for that client) is ordered once, under the code-path entry's node, with those hosts in evidence.named_hosts; a node whose only tests are ordered that way gets no order of its own.",
       "properties": {
         "node": {
           "type": "string",
@@ -181,7 +182,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The calls every ordered test's chain to this system goes through, in call order, ending at the connection point: the longest common end of their chains, without any test's own method. One stand-in here would cover every test; empty when they share only the point itself or nothing."
+          "description": "The calls every ordered test's chain to this system goes through, in call order, ending at the connection point: the longest common end of their chains, without any test's own method, worked out from the ordered tests that have a chain (a test with an empty chain is left out of it; the repair skill checks whether the shared stand-in covers that test). One stand-in here would cover every test with a chain; empty when they share only the point itself or nothing, or none has a chain."
         },
         "tests": {
           "type": "array",
@@ -255,11 +256,11 @@
             },
             "method": {
               "type": "string",
-              "description": "The chain's second step: the first method the test (or its set-up) calls on the way to the system, as the facts write it. Absent when where is not-known."
+              "description": "The first step of the chain after the test method whose class isn't the test's class: the first call the test (or its set-up) makes into other code on the way to the system, as the facts write it. A set-up reach's chain goes through the test class's own set-up method first, which is skipped by this rule. Absent when where is not-known, or when every step but the point is in the test's class (then where is test-body and the repair skill reads the test)."
             },
             "client_type": {
               "type": "string",
-              "description": "The class declaring that method: the type whose instance the stand-in replaces. Absent when where is not-known."
+              "description": "The class declaring that method: the type whose instance the stand-in replaces. Absent with method."
             },
             "call_at": {
               "type": "string",
@@ -289,26 +290,7 @@
               "type": "string",
               "description": "For field: the test class's field the client is called on, the reach's client_field (external-calls/2)."
             }
-          },
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "where": {
-                    "not": {
-                      "const": "not-known"
-                    }
-                  }
-                }
-              },
-              "then": {
-                "required": [
-                  "method",
-                  "client_type"
-                ]
-              }
-            }
-          ]
+          }
         },
         "chain": {
           "type": "array",
@@ -361,6 +343,13 @@
             },
             "missed_by_discovery": {
               "type": "boolean"
+            },
+            "named_hosts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "The nodes of the test's test-code and test-settings entries of the order's kind, when the test is ordered under a code-path entry: the servers its own code or settings name, which is what a recorded-responses stand-in records."
             }
           }
         },
