@@ -2571,7 +2571,7 @@ items:
     owner_role: "Toolkit Owner"
     done_by: "person"
     done_when:
-      - "Each repo's build-logic copy and config/quality are gone, and check passes under the plugin, the tighter rules' findings fixed (done in this repo, on 0.1.0; under-test-tools, under-test-external-calls, the airgap agent and the lessons repo still to do)"
+      - "Each repo's build-logic copy and config/quality are gone, and check passes under the plugin, the tighter rules' findings fixed (done in this repo, on 0.1.0, and in under-test-tools, on 0.2.0, which deleted its unused build-logic; under-test-external-calls, the airgap agent and the lessons repo still to do)"
       - "When the plugin is applied, includeBuild(\"build-logic\") goes in the same change, so Gradle can't keep using the local copy of the same plugin id (done in this repo)"
       - "AGENTS.md's code standards in each repo name the plugin and its rules (done in this repo)"
     blocked_by:
@@ -2623,7 +2623,7 @@ items:
       - "decide-discovery-keeps-three-lists-of-tests-apart"
   - key: "release-under-test-external-calls-and-under-test-tools"
     type: "deliverable"
-    title: "Release under-test-external-calls and under-test-tools: tag, sign and publish both jars and their bills of materials, with java-conventions"
+    title: "Release under-test-external-calls and under-test-tools: each a jar beside a version tag, signed and published with its bill of materials, with java-conventions"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
     phase: "pilots"
     horizon: "now"
@@ -2631,7 +2631,7 @@ items:
     done_by: "person"
     done_when:
       - "Once published, draft-the-external-systems-list and find-meaningless-and-unreliable-tests fetch their jars by Maven coordinates through the organisation's package repository when the profile names no path, as measure-a-repo fetches the airgap agent"
-      - "Each repo has a release tag, and its jar, signed, is published to Maven Central with its bill of materials, for organisations to mirror"
+      - "Each repo has a release tag, and its jar, signed, is published to Maven Central beside the tag, with a bill of materials beside the jar, for organisations to mirror (under-test-tools has no publishing set-up any more, so its starts from nothing)"
       - "java-conventions is published the same way, and both repos apply it at a pinned version"
       - "The skills and the discovery check name the released versions"
     notes: "The maintainer's step: it needs the maintainer's signing key and Central Portal token."
@@ -2668,6 +2668,7 @@ items:
     blocked_by:
       - "decide-under-test-external-calls-grades-each-reach"
   - key: "repair-orders-sub-command"
+    status: "done"
     type: "deliverable"
     title: "An under-test-tools sub-command writes repair's work orders, one per external system, to testing/repair-orders.json"
     parent: "the-toolkit-supports-every-step-of-a-repos-journey"
@@ -2679,6 +2680,7 @@ items:
       - "schema/repair-orders.schema.json describes a work order per external system"
       - "An under-test-tools sub-command writes testing/repair-orders.json from testing/tests.yaml and under-test-external-calls' facts"
       - "schema/tests.schema.json gains a repair field"
+    notes: "Done in under-test-tools 7ffb453, with an example repo of known answers; it wrote Commons Net's four work orders for repair's first trial."
     blocked_by:
       - "decide-repair-is-directed-by-a-work-order-per-external-system"
       - "tool-grades-each-reach"

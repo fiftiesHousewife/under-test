@@ -55,7 +55,7 @@ The tools the skills run:
 | Tool | What it does |
 |---|---|
 | [under-test-external-calls](https://github.com/fiftiesHousewife/under-test-external-calls) | Reads a Java module's source and finds where it reaches external systems and which tests can reach them, with the chain of calls; its own repo, one jar
-| [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools) | The mechanical steps of the journey's skills, one sub-command each; its first, `meaningless-and-unreliable`, does find-meaningless-and-unreliable-tests' listing, PMD run, counting and writing. Built, not yet published |
+| [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools) | The mechanical steps of the journey's skills, one sub-command each; `repair-orders` writes repair's work orders to `testing/repair-orders.json`, and `meaningless-and-unreliable` does find-meaningless-and-unreliable-tests' listing, PMD run, counting and writing. Built, not yet published |
 | [The toolkit's PMD rules](tools/meaningless-and-unreliable-tests/rules.pmd.xml) | Find the meaningless and unreliable tests PMD can see: tests that never run, have no real assertion, swallow failures, mock everything, sleep or run in a fixed order
 | [gitleaks](https://github.com/gitleaks/gitleaks), with [the toolkit's rules](tools/safety-inventory/) | Finds secrets and production credentials, over the whole history |
 | [OpenRewrite](https://docs.openrewrite.org/) | Changes Java source by recipes that understand types; repair runs the toolkit's own recipes for its mechanical changes ([why](docs/decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)) |
