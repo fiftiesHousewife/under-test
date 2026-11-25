@@ -110,7 +110,8 @@ steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none
 ## 4. Record each test's connections in testing/tests.yaml
 
 For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, keys in this order (the
-reach is the one whose `point` is among the system's `points`):
+reach is the one whose `point` is among the system's `points`; a name with no such reach gets no entry, and the reply
+lists how many, with one example, as a fault for under-test-external-calls' maintainers):
 
 * `node`: the system's `unique-id`; `kind`: its kind; `found_by: code-path`;
 * `grade` and `reason`, by the first that holds
@@ -129,9 +130,13 @@ reach is the one whose `point` is among the system's `points`):
 * `via`: the reach's `chain` as `<Class>.<method>` steps (simple class names, no parameters), joined by ` > `.
 
 Then the tests whose own code or the settings they load name a host (spring-boot.md, spring-xml.md, and in test code
-`grep -rnE '(//|@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>`). A host is never
+`grep -rnE '(//|:@|=)([A-Za-z0-9.-]+\.[A-Za-z]{2,}|[0-9]{1,3}(\.[0-9]{1,3}){3})' <test folders>`, leaving out comment
+lines: `:@` is an Oracle JDBC address, so a mail or XMPP address such as `user@host` names no host). A host is never
 `localhost`, `127.0.0.1`, `::1`, `example.com`/`.org`/`.net` or their subdomains, one ending `.example`, `.test`,
-`.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. Each test gets an entry with
+`.invalid` or `.localhost`, an XML namespace, a schema location or a DTD address. A host counts only where it is an
+address to connect to (a URL, a JDBC or LDAP address, a host setting), never a name that only looks like one: a URI
+used as an identifier (a form type, a capabilities node), a certificate or directory name (`CN=`, `dc=`), or a `.class`
+literal. Each test gets an entry with
 `found_by: test-code` or `test-settings`, `grade: reaches`, `reason: host`, `where`, the `path:line` naming it, and
 `kind`: the node's kind when the host already has a node, else from the address's scheme as spring-xml.md says.
 
