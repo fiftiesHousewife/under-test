@@ -47,7 +47,9 @@ they read Gradle's `build/under-test/runs/<n>/<task>/`.
 * **Leaving tests out:** `build/under-test/leave-out.surefire` holds one line, `**/<Class with / for .>.java#<method>`,
   for each line of the leave-out file SKILL.md's stages write (empty when it is). An excludes file adds to the pom's own
   `<excludes>`, where `-Dtest` would replace them and run classes the build leaves out on purpose. After each run,
-  check that no left-out test is in its reports; if one is, stop and say so.
+  check that no left-out test is in its reports; if one is, stop and say so. An older Surefire stops with "Method filter
+  prohibited": then write `**/<Class with / for .>.java` lines instead, one per class, and record every other test of
+  those classes as `left-out` too, `left_out_because` `"in a class left out for <test>"`.
 * **The order:** Surefire's `runOrder=random` with a seed (Surefire 3.0.0-M6 or later) orders the test classes, not
   the methods within them. With an older Surefire, or JUnit 4, the order is kept, and `order_seeds` is `[]`, as
   SKILL.md says.
