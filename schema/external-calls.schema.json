@@ -92,13 +92,14 @@
   "properties": {
     "schema": {
       "enum": [
+        "external-calls/2",
         "external-calls/1",
         "connection-paths/1",
         "connection-paths/2",
         "connection-paths/3",
         "connection-paths/4"
       ],
-      "description": "external-calls/1 is connection-paths/4 under the tool's new name, under-test-external-calls; the connection-paths labels are files written before the rename. Version 2 added each point's address and whether it stays local, the systems, and each test's systems; version 3 the tests that start a framework; version 4 (and external-calls/1), for each reach, the first call on a mock and the address as the test's settings give it, and each test's embedded servers. Nothing is ever removed."
+      "description": "external-calls/1 is connection-paths/4 under the tool's new name, under-test-external-calls; the connection-paths labels are files written before the rename. Version 2 added each point's address and whether it stays local, the systems, and each test's systems; version 3 the tests that start a framework; version 4 (and external-calls/1), for each reach, the first call on a mock and the address as the test's settings give it, and each test's embedded servers. Nothing is ever removed. external-calls/2 added, on each reach, the system it reaches (one reach per system per kind, plus one per kind for points in no system), its grade and reason, the host, the first call's file and line, and the test class's field the client is called on; and on each test, the framework it starts, its test framework, and a framework test's settings files and profiles."
     },
     "tool_version": {
       "type": "string"
@@ -309,6 +310,59 @@
                     "run-time"
                   ],
                   "description": "Version 4, always present: the reached point's address as the settings on the test classpath give it (src/test/resources before src/main/resources). none: no file gives the setting a value, or only a placeholder, so the test cannot reach the system; local: it stays on the machine; host: a host can be read; run-time: it comes from a parameter, run-time code, an environment variable, a system property or a JNDI name."
+                },
+                "system": {
+                  "type": "string",
+                  "description": "Version /2: the name of the system in systems this reach is to; absent when the point is in no system (local, host-lookup, process)."
+                },
+                "grade": {
+                  "enum": [
+                    "reaches",
+                    "may-reach",
+                    "cannot-reach"
+                  ],
+                  "description": "Version /2: always present: whether the test can reach the system, by the first rule that holds: through_mock; an embedded server for the kind among the test's stand_ins; address_for_tests none; local; host (reaches); otherwise may-reach (decision 0085)."
+                },
+                "reason": {
+                  "enum": [
+                    "through-a-mock",
+                    "embedded-server",
+                    "no-address-for-tests",
+                    "local",
+                    "host",
+                    "run-time"
+                  ],
+                  "description": "Version /2: always present: the rule that gave the grade, as testing/tests.yaml's reason."
+                },
+                "reason_text": {
+                  "type": "string",
+                  "description": "Version /2: the reason in plain English."
+                },
+                "host": {
+                  "type": "string",
+                  "description": "Version /2: present only when address_for_tests is host and the host is known: the host the test would connect to."
+                },
+                "first_call": {
+                  "type": "object",
+                  "required": [
+                    "file",
+                    "line"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Version /2: where the chain's first call (chain[1]) is made, in the test's body or its set-up.",
+                  "properties": {
+                    "file": {
+                      "type": "string"
+                    },
+                    "line": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                },
+                "client_field": {
+                  "type": "string",
+                  "description": "Version /2: present only when chain[1] is called on a field of the test class: that field's name."
                 }
               }
             }
@@ -326,6 +380,34 @@
               "type": "string"
             },
             "description": "Version 4, always present: the full class names of embedded servers the test class (or a superclass or outer class) starts as a @Rule, @ClassRule or @RegisterExtension field, such as GreenMail, WireMock, MockWebServer, embedded Postgres or EmbeddedKafka: a stand-in already in place."
+          },
+          "starts_framework": {
+            "type": "string",
+            "description": "Version /2: the annotation the test starts a framework with, as in tests_starting_a_framework; absent when it starts none."
+          },
+          "test_framework": {
+            "enum": [
+              "junit3",
+              "junit4",
+              "junit5",
+              "junit6",
+              "testng"
+            ],
+            "description": "Version /2: the test's framework, from its annotations and imports, and for JUnit Jupiter the junit-jupiter-api version on the test classpath (6 or later is junit6); absent when it can't be told."
+          },
+          "settings_files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Version /2: present only with starts_framework: the settings files on the test classpath the framework loads, as paths from the folder the tool ran in."
+          },
+          "profiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Version /2: present only with starts_framework: the profiles the test activates."
           }
         }
       }
@@ -416,5 +498,34 @@
         "type": "string"
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema": {
+            "const": "external-calls/2"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "tests": {
+            "items": {
+              "properties": {
+                "reaches": {
+                  "items": {
+                    "required": [
+                      "grade",
+                      "reason"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

@@ -110,11 +110,13 @@ steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none
 ## 4. Record each test's connections in testing/tests.yaml
 
 For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, keys in this order (the
-reach is the one whose `point` is among the system's `points`, else, for a test reaching two systems of one kind, its
-reach of one of the system's kinds):
+reach is the one whose `system` is this name in a facts file labelled `external-calls/2`; in an earlier one, the one
+whose `point` is among the system's `points`, else, for a test reaching two systems of one kind, its reach of one of
+the system's kinds):
 
 * `node`: the system's `unique-id`; `kind`: its kind; `found_by: code-path`;
-* `grade` and `reason`, by the first that holds
+* `grade` and `reason`: in a facts file labelled `external-calls/2`, the reach's own `grade` and `reason`, copied;
+  in an earlier one, by the first that holds
   ([why](../../../docs/decisions/0085-each-test-is-graded-reaches-may-reach-or-cannot-reach-from-the-address-its-own-settings-give.md)):
 
   | When | `grade` | `reason` |
