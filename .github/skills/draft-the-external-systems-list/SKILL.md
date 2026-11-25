@@ -113,7 +113,9 @@ steps 2 and 4 say; `metadata.under-test.reports` is left out when there are none
 ## 4. Record each test's connections in testing/tests.yaml
 
 For each test in the facts file's `tests`, one `external_systems` entry per name in its `systems`, and no other: a reach
-with no `system`, and a test whose `systems` is empty, get no entry from this step. Keys in this order (the
+with no `system`, and a test whose `systems` is empty, get no entry from this step. A reach with no `system` that is
+graded `reaches` or `may-reach` is a fault in the facts, since its test may reach a system the list doesn't name: list
+each in the reply (step 5), by test and point, for under-test-external-calls' maintainers. Keys in this order (the
 reach is the one whose `system` is this name in a facts file labelled `external-calls/2`; in an earlier one, the one
 whose `point` is among the system's `points` and whose kind is the system's kind (two reaches at one point, such as
 `http` and `url`, may differ), else, for a test reaching two systems of one kind, its reach of one of the system's
@@ -180,6 +182,7 @@ Check the files against their schemas if a validator is at hand. Then tell the p
 3. How much under-test-external-calls resolved, and the dispatch points it didn't follow that a person should look at: the
    three with most implementations.
 4. For the safety inventory: the `process` and `host-lookup` points, by method.
-5. How many tests are graded each way, and each test graded `reaches`, with its system.
+5. How many tests are graded each way, and each test graded `reaches`, with its system. Then any reach graded `reaches` or
+   `may-reach` that has no `system` (step 4): a fault for under-test-external-calls' maintainers.
 6. End with: "Measurement leaves out the tests that reach, and runs the rest once under the airgap agent, which
    confirms or clears each that may reach."
