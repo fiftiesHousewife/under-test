@@ -80,8 +80,9 @@ What the stand-in returns for each test (the server's replies, a fake's data, a 
 write, from what the test asserts; a person reviews it. Mark each class and method you write with a comment,
 `// AI-written by pair-the-tests-that-reach-external-systems (<what it does>)`, not an annotation: add no import the
 repo doesn't already use, since the build's JDK may lack it (`javax.annotation.Generated` is gone from JDK 11 on), and
-write only Java the repo's source level allows. The external half is the test as it was: same client, same
-address, nothing stubbed.
+write only Java the repo's source level allows. Where the test waits on the system (a timeout, a retry), give the stand-in half the
+shortest wait that still checks the same behaviour, since it runs in every build and under planted bugs. The external
+half is the test as it was: same client, same address, same waits, nothing stubbed.
 
 ## 5. Check the pair
 
