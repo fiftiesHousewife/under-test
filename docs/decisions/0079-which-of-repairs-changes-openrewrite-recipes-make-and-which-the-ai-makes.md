@@ -8,6 +8,8 @@ group: Using the toolkit in an organisation
 
 **Decided by:** Toolkit maintainers · **Status:** accepted (chosen in discussion)
 
+> Narrowed by [Until the toolkit's recipes exist, the AI makes repair's mechanical changes, and each repair says which a recipe should make](0103-until-the-toolkits-recipes-exist-the-ai-makes-repairs-mechanical-changes-and-each-repair-says-which-a-recipe-should-make.md).
+
 *This is a decision about the toolkit itself, made by its maintainers.*
 
 ## Context and Problem Statement
@@ -84,5 +86,5 @@ Apache-2.0, depending only on OpenRewrite's Apache-2.0 modules.
 ## More Information
 
 * Builds on: [Every test that reaches an external system becomes a pair: one run injects a stand-in, the other is tagged external](0086-every-test-that-reaches-an-external-system-becomes-a-pair-one-run-injects-a-stand-in-the-other-is-tagged-external.md), [Repairing the existing tests is a step of its own, after measurement, changing only test code](0078-repairing-the-existing-tests-is-a-step-of-its-own-after-measurement-changing-only-test-code.md), [We reuse existing tools before building new ones](0021-we-reuse-existing-tools-before-building-new-ones.md), [A skill's mechanical steps are done by deterministic tools, and the skill keeps only judgement](0075-a-skills-mechanical-steps-are-done-by-deterministic-tools-and-the-skill-keeps-only-judgement.md)
-* Later decisions that build on this: [Repair is directed by a work order per external system that under-test-tools writes](0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md), [Repair pairs each test that reaches an external system, after measurement, changing only test code](0096-repair-pairs-each-test-that-reaches-an-external-system-after-measurement-changing-only-test-code.md), [Repair converts a JUnit 3 test class to JUnit 4 before pairing it](0102-repair-converts-a-junit-3-test-class-to-junit-4-before-pairing-it.md)
+* Later decisions that build on this: [Repair is directed by a work order per external system that under-test-tools writes](0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md), [Repair pairs each test that reaches an external system, after measurement, changing only test code](0096-repair-pairs-each-test-that-reaches-an-external-system-after-measurement-changing-only-test-code.md), [Repair converts a JUnit 3 test class to JUnit 4 before pairing it](0102-repair-converts-a-junit-3-test-class-to-junit-4-before-pairing-it.md), [Until the toolkit's recipes exist, the AI makes repair's mechanical changes, and each repair says which a recipe should make](0103-until-the-toolkits-recipes-exist-the-ai-makes-repairs-mechanical-changes-and-each-repair-says-which-a-recipe-should-make.md)
 * Background: [test-doubles](../REFERENCES.md#test-doubles)
