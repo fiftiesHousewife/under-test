@@ -256,7 +256,7 @@
             },
             "method": {
               "type": "string",
-              "description": "The first step of the chain after the test method whose class isn't the test's class: the first call the test (or its set-up) makes into other code on the way to the system, as the facts write it. A set-up reach's chain goes through the test class's own set-up method first, which is skipped by this rule. Absent when where is not-known, or when every step but the point is in the test's class (then where is test-body and the repair skill reads the test)."
+              "description": "The first step of the chain after the test method whose class isn't the test's class: the first call the test (or its set-up) makes into other code on the way to the system, as the facts write it. A set-up reach's chain goes through the test class's own set-up method first, which is skipped by this rule. The connection point counts as a step, so a test calling the point's method directly gets that method. Absent when where is not-known, or when every step, the point included, is in the test's class (then where is test-body and the repair skill reads the test)."
             },
             "client_type": {
               "type": "string",
