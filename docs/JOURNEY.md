@@ -155,7 +155,7 @@ It also records the mix of test types. Scoring each obstacle to testing, with ev
   `testing/tests.yaml`. Results stay in the assessment file until a central store exists.
 - **Decided in:** [The assessment file: where it lives, who writes which fields, and its schema version](../decision-guides/0023-the-assessment-file-where-it-lives-who-writes-which-fields-and-its-schema-version.md), [Where measured results are stored and how each repo sees its own](../decision-guides/0025-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md), [How flaky tests are found](../decision-guides/0043-how-flaky-tests-are-found.md), [The named list of obstacles to testing and how each is scored](../decision-guides/0029-the-named-list-of-obstacles-to-testing-and-how-each-is-scored.md).
 
-### 3. Repair (planned)
+### 3. Repair
 
 Repair makes the tests that reach external systems safe to run and still worth running, changing only test code
 ([why](decisions/0096-repair-pairs-each-test-that-reaches-an-external-system-after-measurement-changing-only-test-code.md)).
@@ -169,7 +169,12 @@ writes a work order from under-test-external-calls' record: which tests to pair,
 method each test calls, whether it gets there through set-up, and the calls every test reaching the system shares)
 ([why](decisions/0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md)). The
 mechanical changes are made by OpenRewrite recipes, the rest by the AI, and a person reviews each, one external system
-at a time ([why](decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)).
+at a time ([why](decisions/0079-which-of-repairs-changes-openrewrite-recipes-make-and-which-the-ai-makes.md)); until
+the recipes exist the AI makes them too, and lists them for the recipes
+([why](decisions/0103-until-the-toolkits-recipes-exist-the-ai-makes-repairs-mechanical-changes-and-each-repair-says-which-a-recipe-should-make.md)).
+A JUnit 3 class is converted to JUnit 4 first
+([why](decisions/0102-repair-converts-a-junit-3-test-class-to-junit-4-before-pairing-it.md)). The skill is
+[pair-the-tests-that-reach-external-systems](../.github/skills/pair-the-tests-that-reach-external-systems/SKILL.md).
 
 What needs production code changed (a dependency a test can't replace, an address written in the code that a
 stand-in needs in a setting) waits: it is recorded against its test, and the testing plan turns it into work
