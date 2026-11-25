@@ -4,44 +4,92 @@
   "title": "Repair work orders",
   "description": "testing/repair-orders.json: one work order per external system whose tests repair must pair, written by under-test-tools' repair-orders sub-command from testing/external-calls.json, testing/tests.yaml and testing/external-systems.calm.json, and read by the repair skill one order at a time (decisions 0086, 0095 and 0096). The sub-command only joins and copies what those files say; it decides nothing a person or the repair skill decides. Orders are sorted by node, tests within an order by test, and every list is sorted unless its description says otherwise, so the same inputs always give the same file.",
   "type": "object",
-  "required": ["schema", "tool_version", "made_from", "orders", "not_ordered"],
+  "required": [
+    "schema",
+    "tool_version",
+    "made_from",
+    "orders",
+    "not_ordered"
+  ],
   "additionalProperties": false,
   "properties": {
-    "schema": {"const": "repair-orders/1"},
-    "tool_version": {"type": "string", "description": "under-test-tools' version."},
+    "schema": {
+      "const": "repair-orders/1"
+    },
+    "tool_version": {
+      "type": "string",
+      "description": "under-test-tools' version."
+    },
     "made_from": {
       "type": "object",
-      "required": ["external_calls", "tests", "external_systems"],
+      "required": [
+        "external_calls",
+        "tests",
+        "external_systems"
+      ],
       "additionalProperties": false,
       "description": "What the orders were made from, so a stale order can be seen.",
       "properties": {
         "external_calls": {
           "type": "object",
-          "required": ["schema", "tool_version"],
+          "required": [
+            "schema",
+            "tool_version"
+          ],
           "additionalProperties": false,
           "properties": {
-            "schema": {"type": "string", "description": "The facts file's schema label, such as external-calls/1."},
-            "tool_version": {"type": "string", "description": "The facts file's tool_version."}
+            "schema": {
+              "type": "string",
+              "description": "The facts file's schema label, such as external-calls/1."
+            },
+            "tool_version": {
+              "type": "string",
+              "description": "The facts file's tool_version."
+            }
           }
         },
-        "tests": {"$ref": "#/$defs/found-by-stamp", "description": "testing/tests.yaml's found_by.draft-the-external-systems-list."},
-        "external_systems": {"type": "string", "description": "The path of the external systems list read, from the repo root."}
+        "tests": {
+          "$ref": "#/$defs/found-by-stamp",
+          "description": "testing/tests.yaml's found_by.draft-the-external-systems-list."
+        },
+        "external_systems": {
+          "type": "string",
+          "description": "The path of the external systems list read, from the repo root."
+        }
       }
     },
-    "orders": {"type": "array", "items": {"$ref": "#/$defs/order"}},
+    "orders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/order"
+      }
+    },
     "not_ordered": {
       "type": "array",
       "description": "Tests that reach or called an external system but are in no order, each with why, so nothing is dropped silently.",
       "items": {
         "type": "object",
-        "required": ["test", "why"],
+        "required": [
+          "test",
+          "why"
+        ],
         "additionalProperties": false,
         "properties": {
-          "test": {"type": "string"},
-          "node": {"type": "string", "description": "The entry's node, if it has one."},
+          "test": {
+            "type": "string"
+          },
+          "node": {
+            "type": "string",
+            "description": "The entry's node, if it has one."
+          },
           "why": {
-            "enum": ["may-reach", "missed-by-discovery", "paired", "no-node"],
-            "description": "may-reach: its grade is may-reach, so the Architecture Owner confirms the address before repair pairs it; missed-by-discovery: measurement saw it call out (measurement.missed_by_discovery) but no external_systems entry names the system, so the airgap agent's reports must be merged into the list first; paired: its repair field's state is paired; no-node: its entry names a node the external systems list doesn't have."
+            "enum": [
+              "may-reach",
+              "missed-by-discovery",
+              "paired",
+              "no-node"
+            ],
+            "description": "may-reach: its grade is may-reach, so the Architecture Owner confirms the address before repair pairs it; missed-by-discovery: measurement saw it call out (measurement.missed_by_discovery), so it called a system none of its entries names (with no node; a test with other entries graded reaches is also ordered for those), and the airgap agent's reports must be merged into the list first; paired: its repair field's state is paired; no-node: its entry names a node the external systems list doesn't have."
           }
         }
       }
@@ -50,94 +98,274 @@
   "$defs": {
     "found-by-stamp": {
       "type": "object",
-      "required": ["version", "commit"],
+      "required": [
+        "version",
+        "commit"
+      ],
       "additionalProperties": false,
       "properties": {
-        "version": {"type": "string"},
-        "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"}
+        "version": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,40}$"
+        }
       }
     },
     "order": {
       "type": "object",
-      "required": ["node", "kind", "name", "stand_in", "address_from", "shared_chain", "tests"],
+      "required": [
+        "node",
+        "kind",
+        "name",
+        "stand_in",
+        "address_from",
+        "shared_chain",
+        "tests"
+      ],
       "additionalProperties": false,
-      "description": "One external system, with every test repair must pair for it. A system gets an order when at least one test's external_systems entry for its node is graded reaches and the test's repair field is absent or has state waiting (a waiting test is ordered again, so a resolved wait is picked up).",
+      "description": "One external system, with every test repair must pair for it. A system gets an order when at least one test's external_systems entry for its node is graded reaches and the test's repair field is absent or has state waiting (a waiting test is ordered again, so a resolved wait is picked up). The node is matched to the facts' system whose points meet the node's metadata.under-test.opened-by; failing that, the test's system whose kinds include the entry's kind; failing that, any reach of the entry's kind. A node with no relationship from the application fails the run, naming the node.",
       "properties": {
-        "node": {"type": "string", "description": "The system's unique-id in the external systems list."},
-        "kind": {"type": "string", "description": "The node's kind, as the tests' entries give it."},
-        "name": {"type": "string", "description": "The node's name."},
+        "node": {
+          "type": "string",
+          "description": "The system's unique-id in the external systems list."
+        },
+        "kind": {
+          "type": "string",
+          "description": "The kind of the ordered entries for this node: the most common, ties going to the first in sort order."
+        },
+        "name": {
+          "type": "string",
+          "description": "The node's name."
+        },
         "stand_in": {
           "type": "object",
-          "required": ["approach", "state"],
+          "required": [
+            "approach",
+            "state"
+          ],
           "additionalProperties": false,
           "description": "From the relationship to the node: metadata.under-test.stand-in, and the relationship's metadata.under-test.state.",
           "properties": {
-            "approach": {"enum": ["not-chosen", "run-in-container", "recorded-responses", "contract", "fake-behind-an-interface", "shared-test-environment", "accept-risk"]},
-            "kit": {"type": "string", "description": "The shared test kit it comes from, if the list names one."},
-            "state": {"enum": ["proposed", "decided"], "description": "Whether a person has decided the stand-in. Repair may start on a proposed one; its pull request is where a person decides."}
+            "approach": {
+              "enum": [
+                "not-chosen",
+                "run-in-container",
+                "recorded-responses",
+                "contract",
+                "fake-behind-an-interface",
+                "shared-test-environment",
+                "accept-risk"
+              ]
+            },
+            "kit": {
+              "type": "string",
+              "description": "The shared test kit it comes from, if the list names one."
+            },
+            "state": {
+              "enum": [
+                "proposed",
+                "decided"
+              ],
+              "description": "Whether a person has decided the stand-in. Repair may start on a proposed one; its pull request is where a person decides."
+            }
           }
         },
-        "address_from": {"type": "string", "description": "Where the system's address comes from: the node's metadata.under-test.addresses joined by \", \", else its address-from, as written."},
+        "address_from": {
+          "type": "string",
+          "description": "Where the system's address comes from: the node's metadata.under-test.addresses joined by \", \", else its address-from, as written."
+        },
         "shared_chain": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "description": "The calls every ordered test's chain to this system goes through, in call order, ending at the connection point: the longest common end of their chains, without any test's own method. One stand-in here would cover every test; empty when they share only the point itself or nothing."
         },
-        "tests": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/ordered-test"}}
+        "tests": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/ordered-test"
+          }
+        }
       }
     },
     "ordered-test": {
       "type": "object",
-      "required": ["test", "class", "method", "at", "framework", "inject", "chain", "through_mock", "stand_ins", "evidence"],
+      "required": [
+        "test",
+        "class",
+        "method",
+        "at",
+        "framework",
+        "inject",
+        "chain",
+        "through_mock",
+        "stand_ins",
+        "evidence"
+      ],
       "additionalProperties": false,
       "properties": {
-        "test": {"type": "string", "description": "As tests.yaml names it: <fully qualified class>.<method>."},
-        "class": {"type": "string", "description": "The test's fully qualified class."},
-        "method": {"type": "string", "description": "The test method's name."},
-        "at": {"type": "string", "pattern": "^[^:]+:[0-9]+$", "description": "The test method's file and line, from the repo root, as tests.yaml's at."},
+        "test": {
+          "type": "string",
+          "description": "As tests.yaml names it: <fully qualified class>.<method>."
+        },
+        "class": {
+          "type": "string",
+          "description": "The test's fully qualified class."
+        },
+        "method": {
+          "type": "string",
+          "description": "The test method's name."
+        },
+        "at": {
+          "type": "string",
+          "pattern": "^[^:]+:[0-9]+$",
+          "description": "The test method's file and line, from the repo root, as tests.yaml's at."
+        },
         "framework": {
-          "enum": ["junit3", "junit4", "junit5", "junit6", "testng", "unknown"],
+          "enum": [
+            "junit3",
+            "junit4",
+            "junit5",
+            "junit6",
+            "testng",
+            "unknown"
+          ],
           "description": "The test's framework, which decides the pair's shape (a test interface on JUnit 5 or 6, a parameterised class on JUnit 4). unknown until the facts file is external-calls/2, which records it; the repair skill then reads the test's imports."
         },
         "inject": {
           "type": "object",
-          "required": ["where", "method", "client_type"],
+          "required": [
+            "where"
+          ],
           "additionalProperties": false,
-          "description": "Where the stand-in goes, by the first rule that holds: framework-settings when the facts' tests_starting_a_framework names the test; set-up when the reach has through_set_up; else test-body. field (the client is a field of the test class) and the call's file and line need external-calls/2. A shared stand-in is the order's shared_chain, which the repair skill may choose instead.",
+          "description": "Where the stand-in goes, by the first rule that holds: not-known when the chain is empty (the repair skill finds the place by reading the test); framework-settings when the facts' tests_starting_a_framework names the test; set-up when the reach has through_set_up; else test-body. field (the client is a field of the test class) and the call's file and line need external-calls/2. A shared stand-in is the order's shared_chain, which the repair skill may choose instead. The reach used is the one whose point is among the system's points, else the test's reach of one of the system's kinds (a test reaching two systems of one kind has one reach for both).",
           "properties": {
-            "where": {"enum": ["test-body", "set-up", "field", "framework-settings"]},
-            "method": {"type": "string", "description": "The chain's second step: the first method the test (or its set-up) calls on the way to the system, as the facts write it."},
-            "client_type": {"type": "string", "description": "The class declaring that method: the type whose instance the stand-in replaces."},
-            "call_at": {"type": "string", "pattern": "^[^:]+:[0-9]+$", "description": "The file and line where the test calls it. Only from external-calls/2."},
+            "where": {
+              "enum": [
+                "test-body",
+                "set-up",
+                "field",
+                "framework-settings",
+                "not-known"
+              ]
+            },
+            "method": {
+              "type": "string",
+              "description": "The chain's second step: the first method the test (or its set-up) calls on the way to the system, as the facts write it. Absent when where is not-known."
+            },
+            "client_type": {
+              "type": "string",
+              "description": "The class declaring that method: the type whose instance the stand-in replaces. Absent when where is not-known."
+            },
+            "call_at": {
+              "type": "string",
+              "pattern": "^[^:]+:[0-9]+$",
+              "description": "The file and line where the test calls it. Only from external-calls/2."
+            },
             "settings": {
               "type": "object",
               "additionalProperties": false,
-              "description": "For framework-settings: the settings files and profiles the test loads, from tests_starting_a_framework.",
+              "description": "For framework-settings: the settings files and profiles the test loads. Left out until a facts version records them (external-calls/1's tests_starting_a_framework doesn't).",
               "properties": {
-                "files": {"type": "array", "items": {"type": "string"}},
-                "profiles": {"type": "array", "items": {"type": "string"}}
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "profiles": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
               }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "where": {
+                    "not": {
+                      "const": "not-known"
+                    }
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "method",
+                  "client_type"
+                ]
+              }
+            }
+          ]
+        },
+        "chain": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string"
+          },
+          "description": "The reach's chain from the facts, in call order, from the test method to the connection point. Not sorted. Empty when the facts have no reach for the test: an entry graded reaches by test-code, test-settings or airgap-report, where the facts' tests don't name the test."
+        },
+        "through_mock": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "As the facts give it for the reach: false, true, or the first call on a mock where the facts name it. false when the chain is empty."
+        },
+        "stand_ins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The embedded stand-ins the test already uses, from the facts' stand_ins."
+        },
+        "evidence": {
+          "type": "object",
+          "required": [
+            "grade",
+            "reason",
+            "missed_by_discovery"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "grade": {
+              "const": "reaches"
+            },
+            "reason": {
+              "type": "string",
+              "description": "The entry's reason, such as host."
+            },
+            "found_by": {
+              "type": "string",
+              "description": "The entry's found_by: code-path, test-code, test-settings or airgap-report."
+            },
+            "called": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "measurement.called, if measurement ran: what the airgap agent refused for this test."
+            },
+            "missed_by_discovery": {
+              "type": "boolean"
             }
           }
         },
-        "chain": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "The reach's chain from the facts, in call order, from the test method to the connection point. Not sorted."},
-        "through_mock": {"type": ["boolean", "string"], "description": "false, or true when the reach goes through a mock; with external-calls/2, the first call on a mock instead of true."},
-        "stand_ins": {"type": "array", "items": {"type": "string"}, "description": "The embedded stand-ins the test already uses, from the facts' stand_ins."},
-        "evidence": {
-          "type": "object",
-          "required": ["grade", "reason", "missed_by_discovery"],
-          "additionalProperties": false,
-          "properties": {
-            "grade": {"const": "reaches"},
-            "reason": {"type": "string", "description": "The entry's reason, such as host."},
-            "found_by": {"type": "string", "description": "The entry's found_by: code-path, test-code, test-settings or airgap-report."},
-            "called": {"type": "array", "items": {"type": "string"}, "description": "measurement.called, if measurement ran: what the airgap agent refused for this test."},
-            "missed_by_discovery": {"type": "boolean"}
-          }
-        },
         "waits_for": {
-          "enum": ["stand-in-not-chosen", "address-in-code"],
-          "description": "Set when repair can't pair the test yet, and recorded by the repair skill as work for the testing plan: stand-in-not-chosen when the order's stand_in.approach is not-chosen; address-in-code when the system's address in the facts has source literal at a file under the main sources. Whether there is no place to inject is the repair skill's judgement, not the sub-command's."
+          "enum": [
+            "stand-in-not-chosen",
+            "address-in-code"
+          ],
+          "description": "Set when repair can't pair the test yet, and recorded by the repair skill as work for the testing plan: stand-in-not-chosen when the order's stand_in.approach is not-chosen; address-in-code when the system's address in the facts has source literal at a file under the main sources. Whether there is no place to inject is the repair skill's judgement, not the sub-command's. When both hold, stand-in-not-chosen."
         }
       }
     }
