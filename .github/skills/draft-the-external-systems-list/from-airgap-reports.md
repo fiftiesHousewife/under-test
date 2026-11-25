@@ -107,8 +107,8 @@ application's node), `reports` (paths read, sorted), `commit` (what `git rev-par
 ## 5. Record each refused test in testing/tests.yaml
 
 Each line with `outcome: refused` that names a `test` (a line with no `test` (the agent names the test on the JUnit
-Platform and, from airgap 0.4.0, under Surefire's JUnit 4 provider too, but not for a call in `@BeforeClass` or
-`@AfterClass`) gets its test
+Platform and, from airgap 0.4.0, under Surefire's JUnit 4 provider too, except Surefire 2.19.x, which runs no
+listeners; never for a call in `@BeforeClass` or `@AfterClass`) gets its test
 from its `stack`: the first frame in a class from the repo's test sources, as `<class>.<method>`.), to a host other than `localhost`, `127.0.0.1` or `::1`, gives
 that test an `external_systems` entry for the line's node, one per test and node, keys in this order:
 

@@ -66,8 +66,8 @@ The init script stops the run if the file is missing, so a test meant to be left
 Read `build/under-test/runs/1/<task>/*.xml`: a `testcase` with `failure` or `error` failed; with `skipped`, it is
 disabled; else it passed. Read the airgap agent's calls in `build/under-test/runs/1/<task>/calls.jsonl`, one JSON
 object a line, each naming its `test`, `target` and `outcome`; only lines with `outcome: refused` count. A line with no `test` (the agent names the test on the JUnit
-Platform and, from airgap 0.4.0, under Surefire's JUnit 4 provider too, but not for a call in `@BeforeClass` or
-`@AfterClass`) gets its test
+Platform and, from airgap 0.4.0, under Surefire's JUnit 4 provider too, except Surefire 2.19.x, which runs no
+listeners; never for a call in `@BeforeClass` or `@AfterClass`) gets its test
 from its `stack`: the first frame in a class from the repo's test sources, as `<class>.<method>`. The agent
 always allows the machine itself, so each refused call is a call off the machine; a test that needs a service on its
 own machine that isn't running just fails
