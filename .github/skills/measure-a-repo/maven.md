@@ -41,11 +41,13 @@ they read Gradle's `build/under-test/runs/<n>/<task>/`.
 | Stage | Command |
 |---|---|
 | Build | `M -o -B X clean test-compile` |
-| One run | `M -o -B X org.jacoco:jacoco-maven-plugin:0.8.16:prepare-agent test org.jacoco:jacoco-maven-plugin:0.8.16:report -Djacoco.destFile=$PWD/build/under-test/jacoco.exec -Djacoco.dataFile=$PWD/build/under-test/jacoco.exec -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire`, then `R 1` and copy `target/site/jacoco/jacoco.xml` beside it |
-| Repeats | `M -o -B X test -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dsurefire.runOrder=random -Dsurefire.runOrder.random.seed=<n>`, then `R <n>`, for n = 2 to 5 |
-| A rerun alone | `M -o -B X test -Dtest='<Class>#<method>' -Dsurefire.failIfNoSpecifiedTests=false`, then `R <test>-<k>` |
+| One run | `M -o -B X org.jacoco:jacoco-maven-plugin:0.8.16:prepare-agent test org.jacoco:jacoco-maven-plugin:0.8.16:report -Djacoco.destFile=$PWD/build/under-test/jacoco.exec -Djacoco.dataFile=$PWD/build/under-test/jacoco.exec -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true`, then `R 1` and copy `target/site/jacoco/jacoco.xml` beside it |
+| Repeats | `M -o -B X test -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true -Dsurefire.runOrder=random -Dsurefire.runOrder.random.seed=<n>`, then `R <n>`, for n = 2 to 5 |
+| A rerun alone | `M -o -B X test -Dtest='<Class>#<method>' -Dsurefire.failIfNoSpecifiedTests=false -Dmaven.test.failure.ignore=true`, then `R <test>-<k>` |
 | Planted bugs | `M -o -B X org.pitest:pitest-maven:1.30.2:mutationCoverage -DtargetClasses='<targets>' -DexcludedTestClasses='<left out classes>' -DoutputFormats=XML -DtimestampedReports=false`; the mutations are in `target/pit-reports/mutations.xml` |
 
+* `-Dmaven.test.failure.ignore=true` keeps a failing test from stopping the build before the coverage report and the
+  next runs; the stages read each test's outcome from its report.
 * **Leaving tests out:** `build/under-test/leave-out.surefire` holds one line, `**/<Class with / for .>.java#<method>`,
   for each line of the leave-out file SKILL.md's stages write (empty when it is). An excludes file adds to the pom's own
   `<excludes>`, where `-Dtest` would replace them and run classes the build leaves out on purpose. After each run,
