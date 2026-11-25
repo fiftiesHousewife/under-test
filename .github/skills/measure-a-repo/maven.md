@@ -23,14 +23,10 @@ in one folder from the organisation's package repository (or Maven Central); `X`
 own JVM (`forkCount=0`), say so and stop: those need the agent in `JAVA_TOOL_OPTIONS` for Maven itself, which this
 page doesn't cover yet.
 
-**First, without the agent and running nothing,** fetch everything the stages need, so every later run is offline
-(`-o`):
-
-```bash
-M -B dependency:go-offline
-M -B dependency:get -Dartifact=org.jacoco:jacoco-maven-plugin:0.8.16
-M -B dependency:get -Dartifact=org.pitest:pitest-maven:1.30.2
-```
+**Downloads:** the extension puts the agent only in the JVMs that run the repo's code, not in Maven's own, so Maven
+fetches what it needs as the runs go (some plugins fetch files only when they run, which `dependency:go-offline`
+misses). Only where Maven itself runs with the agent (the `forkCount=0` case above) must it run offline (`-o`), after
+a run without the agent has fetched everything.
 
 `R <n>` below means: after the run, copy `target/surefire-reports/` and `target/airgap/` of each module to
 `build/under-test/runs/<n>/<module>/`, so the next run doesn't overwrite them. The stages read their reports there, as
@@ -40,11 +36,11 @@ they read Gradle's `build/under-test/runs/<n>/<task>/`.
 
 | Stage | Command |
 |---|---|
-| Build | `M -o -B X clean test-compile` |
-| One run | `M -o -B X org.jacoco:jacoco-maven-plugin:0.8.16:prepare-agent test org.jacoco:jacoco-maven-plugin:0.8.16:report -Djacoco.destFile=$PWD/build/under-test/jacoco.exec -Djacoco.dataFile=$PWD/build/under-test/jacoco.exec -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true`, then `R 1` and copy `target/site/jacoco/jacoco.xml` beside it |
-| Repeats | `M -o -B X test -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true -Dsurefire.runOrder=random -Dsurefire.runOrder.random.seed=<n>`, then `R <n>`, for n = 2 to 5 |
-| A rerun alone | `M -o -B X test -Dtest='<Class>#<method>' -Dsurefire.failIfNoSpecifiedTests=false -Dmaven.test.failure.ignore=true`, then `R <test>-<k>` |
-| Planted bugs | `M -o -B X org.pitest:pitest-maven:1.30.2:mutationCoverage -DtargetClasses='<targets>' -DexcludedTestClasses='<left out classes>' -DoutputFormats=XML -DtimestampedReports=false`; the mutations are in `target/pit-reports/mutations.xml` |
+| Build | `M -B X clean test-compile` |
+| One run | `M -B X org.jacoco:jacoco-maven-plugin:0.8.16:prepare-agent test org.jacoco:jacoco-maven-plugin:0.8.16:report -Djacoco.destFile=$PWD/build/under-test/jacoco.exec -Djacoco.dataFile=$PWD/build/under-test/jacoco.exec -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true`, then `R 1` and copy `target/site/jacoco/jacoco.xml` beside it |
+| Repeats | `M -B X test -Dsurefire.excludesFile=$PWD/build/under-test/leave-out.surefire -Dmaven.test.failure.ignore=true -Dsurefire.runOrder=random -Dsurefire.runOrder.random.seed=<n>`, then `R <n>`, for n = 2 to 5 |
+| A rerun alone | `M -B X test -Dtest='<Class>#<method>' -Dsurefire.failIfNoSpecifiedTests=false -Dmaven.test.failure.ignore=true`, then `R <test>-<k>` |
+| Planted bugs | `M -B X org.pitest:pitest-maven:1.30.2:mutationCoverage -DtargetClasses='<targets>' -DexcludedTestClasses='<left out classes>' -DoutputFormats=XML -DtimestampedReports=false`; the mutations are in `target/pit-reports/mutations.xml` |
 
 * `-Dmaven.test.failure.ignore=true` keeps a failing test from stopping the build before the coverage report and the
   next runs; the stages read each test's outcome from its report.
