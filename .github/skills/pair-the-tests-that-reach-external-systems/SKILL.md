@@ -20,7 +20,7 @@ It reads what earlier steps wrote and searches nothing again.
 |---|---|
 | `testing/assessment.yaml`'s safety section has no finding with `effect: blocks` whose `safety/<id>` decision isn't `decided` | Stop: run-the-safety-inventory first. Repair runs the repo's tests |
 | `testing/tests.yaml` has measurement results (some test has `measurement`) | Stop: measure-a-repo first, so what repair changes shows when it runs again |
-| `testing/repair-orders.json` exists, matches [its schema](../../../schema/repair-orders.schema.json), and its `made_from` matches the facts file's `schema` and `tool_version` and tests.yaml's `found_by.draft-the-external-systems-list` | Make it again, in the repo root: `java -jar <under-test-tools.jar> repair-orders`, the jar from [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools)' release (until it is published, its build's `build/libs/under-test-tools.jar`). It writes only the orders, and logs `<n> orders holding <n> tests; <n> left out of any order.`; any other exit than 0 prints why: stop and say so ([why](../../../docs/decisions/0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md)) |
+| `testing/repair-orders.json` exists, matches [its schema](../../../schema/repair-orders.schema.json), and its `made_from` matches the facts file's `schema` and `tool_version` and tests.yaml's `found_by.draft-the-external-systems-list` | Make it again, in the repo root: `java -jar <under-test-tools.jar> repair-orders`, the jar from [under-test-tools](https://github.com/fiftiesHousewife/under-test-tools)' release (until it is published, the one its `./gradlew allInOneJar` puts in `build/libs/`). It writes only the orders, and logs `<n> orders holding <n> tests; <n> left out of any order.`; any other exit than 0 prints why: stop and say so ([why](../../../docs/decisions/0095-repair-is-directed-by-a-work-order-per-external-system-that-under-test-tools-writes.md)) |
 | Every run of the repo's tests is under the airgap agent, refusing every call to another machine: `--init-script <airgap.init.gradle>` for Gradle, the agent's Maven core extension for Maven ([its repo](https://github.com/fiftiesHousewife/under-test-airgap)) | Stop |
 
 ## 2. One order at a time
@@ -38,7 +38,9 @@ convert the whole class to JUnit 4 before pairing it, as its own commit
 `@Test`, `@Before` and `@After` for the names and overrides, `org.junit.Assert`, no `extends TestCase`; a `suite()`
 that adds each test once per value becomes `@RunWith(Parameterized.class)` with those values. Run the class's tests
 before and after, under the airgap agent: the same tests must run, and the same ones pass. If they don't, undo the
-commit and record every test of the class as waiting, `waits_for: no-place-to-inject`, saying why in the reply.
+commit and record every test of the class as waiting, `waits_for: no-place-to-inject`, with why in its `note`. Where
+the tests fail under the airgap agent both before and after, this check shows little: also check that the same test
+methods exist, with the same bodies.
 
 ## 4. Make each test class a pair
 
@@ -55,7 +57,7 @@ Keep `<Class>`'s name for the stand-in half, so the build's existing runs and re
 
 | `inject.where` | Put the stand-in |
 |---|---|
-| `field` | In the field `inject.field`: the stand-in half sets it to a client pointed at the stand-in |
+| `field` | On the client in the field `inject.field`: where the client takes its address when it is made, the stand-in half makes it pointed at the stand-in; where it takes its address when it connects (most protocol clients), at `inject.call_at` |
 | `set-up` | In the set-up method on the chain, where it makes the client |
 | `test-body` | At `inject.call_at` (`inject.method` on a `inject.client_type`); with no `call_at`, where the test body makes its first call to `inject.client_type` |
 | `framework-settings` | In the settings the test loads (`inject.settings`): a test-only settings file or profile pointing the framework at the stand-in |
@@ -85,14 +87,19 @@ address, nothing stubbed.
   above all, it fails when the behaviour it checks is broken: change what the stand-in returns, and the test fails.
 * Don't run the external half; it runs on its schedule where the real system's test instance can be reached.
 
-A pair that fails these is undone, and its tests are recorded as waiting, `waits_for: no-place-to-inject`, with why in
-the reply.
+A pair that fails these is undone; a JUnit 3 conversion that passed its own check stays. Its tests are recorded as
+waiting: `waits_for: test-fails-on-its-own` when the stand-in works but the test body fails whatever it returns (it
+would fail against the real system too), else `no-place-to-inject`; with why in each test's `note`.
+
+**The build may leave the stand-in half out.** Where the build's test task excludes the class by name (a Surefire or
+Gradle `exclude` such as `**/*FunctionalTest.java`), the pair is still made, but don't change the build: say so in each
+test's `note`, for the testing plan.
 
 ## 6. Record each test
 
 In `testing/tests.yaml`, set each ordered test's `repair` ([schema](../../../schema/tests.schema.json)): `state: paired`,
-`pair` (`"<Cases interface or parameterised class>, <stand-in class>, <external class>"`) and, once a person opens it,
-`pull_request`; or `state: waiting` with its `waits_for`. Write nothing else in the file. Commit it on the branch.
+`pair` (`"<bodies>; stand-in: <classes>; external: <class or external target>"`), a `note` where step 5 asks for one,
+and, once a person opens it, `pull_request`; or `state: waiting` with its `waits_for` and `note`. Write nothing else in the file. Commit it on the branch.
 
 ## 7. Report
 

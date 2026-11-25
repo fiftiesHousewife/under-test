@@ -234,20 +234,25 @@
               },
               "pair": {
                 "type": "string",
-                "description": "For paired: the classes that make the pair, as \"<test interface or parameterised class>, <stand-in class>, <external class>\"."
+                "description": "For paired: the class that holds the test bodies (a test interface, or the parameterised class on JUnit 4); then the stand-in half's class and any stand-in classes written for it; then the external half's class, or 'external target' for a parameterised class. As \"<bodies>; stand-in: <classes>; external: <class or external target>\"."
               },
               "waits_for": {
                 "enum": [
                   "stand-in-not-chosen",
                   "address-in-code",
                   "no-place-to-inject",
+                  "test-fails-on-its-own",
                   "turned-down"
                 ],
-                "description": "For waiting: why; the testing plan turns it into work."
+                "description": "For waiting: why; the testing plan turns it into work. test-fails-on-its-own: the stand-in works but the test body fails whatever the stand-in does, so it would fail against the real system too."
               },
               "pull_request": {
                 "type": "string",
                 "description": "The pull request that made the change, or that a person turned down."
+              },
+              "note": {
+                "type": "string",
+                "description": "What the testing plan must know about this test's repair: why it waits, in a sentence, or something repair found but may not change, such as a build that leaves the stand-in half out of its normal runs."
               }
             }
           }
