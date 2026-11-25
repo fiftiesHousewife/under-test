@@ -163,7 +163,7 @@ def write_page(items, by_key, path):
         return [b for b in item.get("blocked_by", []) if b in open_keys]
     lines = ["# Backlog", "",
              "Open work for this repository, generated from the issue tracker by "
-             "[tools/backlog-import](../tools/backlog-import/README.md) after each import. Do not edit by hand.", "",
+             "[under-test's backlog importer](https://github.com/fiftiesHousewife/under-test/blob/main/tools/backlog-import/README.md) after each import. Do not edit by hand.", "",
              "Ordered by horizon (now, next, later), then items that are ready before items waiting on others.", ""]
     outcomes = [item for item in items if item["type"] == "outcome" and item["key"] in open_keys]
     for outcome in outcomes:
