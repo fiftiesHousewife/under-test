@@ -10,7 +10,9 @@ It reaches an XML file's beans from a test whose class, or a superclass in the r
 `new ClassPathXmlApplicationContext("…xml")` (or the `FileSystem` or `Generic` variant), and follows each
 `<import resource=...>` to the imported file's beans. A chain through the file has a
 step `org.springframework.context.ApplicationContext#<xml path>()`, the file's path on the classpath (`spring/app.xml`;
-a wildcard location stands for each file it matches). A bean whose class matches a connection rule
+a wildcard location stands for each file it matches). A bean inside a `<beans profile="...">` block has one more
+step after it, `ApplicationContext#<profile dev,qa of <file>>()`: the chain goes through it only for a test whose
+active profiles turn the block on, so no rule here needs to check profiles again. A bean whose class matches a connection rule
 is a point, and the first of its `url`, `jdbcUrl`, `URL`, `serverURL`, `brokerURL`, `providerUrl`, `uri`, `baseUrl`,
 `serviceUrl`, `connectionString`, `host` or `serverName` properties is its address. A `${name}` in it becomes the
 setting `name`, looked up in all the repo's settings files, the test's own first. Take all of that from the facts file.
