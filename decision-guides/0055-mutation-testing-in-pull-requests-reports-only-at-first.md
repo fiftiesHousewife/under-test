@@ -8,6 +8,8 @@ group: Rolling out
 
 **Decided by:** Technical Architect · **Status:** proposed
 
+> Narrowed by [From the first piece of work, no change may lower a repo's measured results](0068-from-the-first-piece-of-work-no-change-may-lower-a-repos-measured-results.md).
+
 *This is a decision guide for adopting organisations. Each organisation accepts, narrows or replaces it in its own organisation repo.*
 
 ## Context and Problem Statement
@@ -33,5 +35,5 @@ Proposed: report only at first; revisit after a quarter.
 ## More Information
 
 * Builds on: [What counts as evidence for each test maturity level](0013-what-counts-as-evidence-for-each-test-maturity-level.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [From the first piece of work, no change may lower a repo's measured results](0068-from-the-first-piece-of-work-no-change-may-lower-a-repos-measured-results.md)
 * Background: [mutation-testing](../docs/REFERENCES.md#mutation-testing)

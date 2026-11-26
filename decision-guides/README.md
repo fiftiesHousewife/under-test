@@ -125,6 +125,7 @@ Decisions about the toolkit itself are in [docs/decisions/](../docs/decisions/RE
 | [How each batch of repos is chosen](0054-how-each-batch-of-repos-is-chosen.md) | proposed | Engagement Lead, with the Programme Sponsor |
 | [Mutation testing in pull requests reports only at first](0055-mutation-testing-in-pull-requests-reports-only-at-first.md) | proposed | Technical Architect |
 | [How often repos are re-scanned and re-measured](0056-how-often-repos-are-re-scanned-and-re-measured.md) | proposed | Engagement Lead |
+| [From the first piece of work, no change may lower a repo's measured results](0068-from-the-first-piece-of-work-no-change-may-lower-a-repos-measured-results.md) | proposed | Technical Architect |
 
 ## Capturing current behaviour
 

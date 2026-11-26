@@ -294,14 +294,16 @@ approval-test baseline exists.
 ### Keep it there
 
 Progress is measured by required tests met (one of the right kind for each external system, and passing tests for
-each requirement), alongside coverage and mutation results. Changed repos are re-scanned nightly, and repos in the
+each requirement), alongside coverage and mutation results. From the first piece of work, no change may lower the
+repo's last measured results: coverage, planted bugs caught, and the counts of flaky and meaningless tests ratchet.
+Changed repos are re-scanned nightly, and repos in the
 current batch re-measured monthly and whenever a workstream finishes. Mutation testing in pull requests only reports
 at first. Once the target level is reached, the repo is handed over.
 
 - **Who:** the measure-a-repo skill, run by a Forward Deployed Engineer; the Engagement Lead reports progress; the
   Application Owner accepts the results.
 - **Leaves in the repo:** an up-to-date assessment file, which holds the repo's results until a central store exists.
-- **Decided in:** [Progress is measured by required tests met, alongside coverage and mutation results](../decision-guides/0014-progress-is-measured-by-required-tests-met-alongside-coverage-and-mutation-results.md), [What counts as evidence for each test maturity level](../decision-guides/0013-what-counts-as-evidence-for-each-test-maturity-level.md), [How often repos are re-scanned and re-measured](../decision-guides/0056-how-often-repos-are-re-scanned-and-re-measured.md), [Mutation testing in pull requests reports only at first](../decision-guides/0055-mutation-testing-in-pull-requests-reports-only-at-first.md).
+- **Decided in:** [Progress is measured by required tests met, alongside coverage and mutation results](../decision-guides/0014-progress-is-measured-by-required-tests-met-alongside-coverage-and-mutation-results.md), [What counts as evidence for each test maturity level](../decision-guides/0013-what-counts-as-evidence-for-each-test-maturity-level.md), [How often repos are re-scanned and re-measured](../decision-guides/0056-how-often-repos-are-re-scanned-and-re-measured.md), [Mutation testing in pull requests reports only at first](../decision-guides/0055-mutation-testing-in-pull-requests-reports-only-at-first.md), [From the first piece of work, no change may lower a repo's measured results](../decision-guides/0068-from-the-first-piece-of-work-no-change-may-lower-a-repos-measured-results.md).
 
 ## At every step
 

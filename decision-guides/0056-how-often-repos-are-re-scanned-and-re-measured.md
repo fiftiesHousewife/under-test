@@ -34,5 +34,5 @@ Proposed: the first option.
 ## More Information
 
 * Builds on: [Where measured results are stored and how each repo sees its own](0025-where-measured-results-are-stored-and-how-each-repo-sees-its-own.md)
-* Later decisions that build on this: none yet
+* Later decisions that build on this: [From the first piece of work, no change may lower a repo's measured results](0068-from-the-first-piece-of-work-no-change-may-lower-a-repos-measured-results.md)
 * Background: none
