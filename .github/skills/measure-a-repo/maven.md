@@ -13,7 +13,8 @@ reach it, give the person each command to run in their own terminal, then read w
 
 **Maven** is the repo's `./mvnw` if it has one, else `mvn`; `M` below. **Surefire** must be 2.19 or later (it leaves
 out tests by `!` patterns from then): `M help:effective-pom | grep -A1 maven-surefire-plugin`. If it is older, say so
-and stop.
+and stop. Surefire before 2.21 can't start on JDK 10 or later (it fails with a `NullPointerException` before any test
+runs): run Maven on a JDK 8 or 9; with neither, say so and stop, since the pom's Surefire can't be changed.
 
 **The airgap agent** comes from its Maven extension, named for each run, never in `.mvn/extensions.xml`. Put the three
 jars, `airgap-maven-extension`, `airgap-agent` and `airgap-junit` (`io.github.fiftieshousewife.airgap`, one version),
