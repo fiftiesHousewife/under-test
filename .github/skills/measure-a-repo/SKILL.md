@@ -69,7 +69,11 @@ object a line, each naming its `test`, `target` and `outcome`; only lines with `
 Platform and, from airgap 0.4.0, under Surefire's JUnit 4 provider too, except Surefire 2.19.x, which runs no
 listeners; never for a call in `@BeforeClass` or `@AfterClass`) gets its test
 from its `stack`: the first frame in a class from the repo's test sources, as `<class>.<method>`. The agent
-always allows the machine itself, so each refused call is a call off the machine; a test that needs a service on its
+always allows the machine itself, so each refused network call (`kind` `host-lookup`, `tcp`, `udp`, `http`, `url`,
+`database`, `mail` or `jndi`) is a call off the machine. A refused `process` or `file-write` line is something else:
+one whose stack is all the test runner's or the JDK's own (Surefire's `PpidChecker` starting `/bin/sh`, a JDK's usage
+tracker writing its file) is no test's, so list it in the report and count it nowhere; one from the repo's code goes
+to the safety inventory, by its stack. a test that needs a service on its
 own machine that isn't running just fails
 ([why](../../../docs/decisions/0090-only-a-system-on-another-machine-reaches-out-and-a-test-needing-a-service-on-its-own-machine-is-found-by-failing.md)).
 This file is run 1's whole report, and the one to hand to
