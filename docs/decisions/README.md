@@ -110,6 +110,8 @@ Numbers follow reading order until a record is accepted; after that a number nev
 | [Repair converts a JUnit 3 test class to JUnit 4 before pairing it](0102-repair-converts-a-junit-3-test-class-to-junit-4-before-pairing-it.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [Until the toolkit's recipes exist, the AI makes repair's mechanical changes, and each repair says which a recipe should make](0103-until-the-toolkits-recipes-exist-the-ai-makes-repairs-mechanical-changes-and-each-repair-says-which-a-recipe-should-make.md) | accepted (chosen in discussion) | Toolkit maintainers |
 | [A Maven repo's tests get the airgap agent from its Maven extension, named on the command line](0104-a-maven-repos-tests-get-the-airgap-agent-from-its-maven-extension-named-on-the-command-line.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [Repair writes a recorded-responses stand-in so the pair works at once, and a person records the real responses](0105-repair-writes-a-recorded-responses-stand-in-so-the-pair-works-at-once-and-a-person-records-the-real-responses.md) | accepted (chosen in discussion) | Toolkit maintainers |
+| [A stand-in for an HTTPS system makes a throwaway certificate in the test, trusted only by that test](0106-a-stand-in-for-an-https-system-makes-a-throwaway-certificate-in-the-test-trusted-only-by-that-test.md) | accepted (chosen in discussion) | Toolkit maintainers |
 
 ## Recording results and owning plans
 

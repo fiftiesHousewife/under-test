@@ -255,6 +255,13 @@
               "note": {
                 "type": "string",
                 "description": "What the testing plan must know about this test's repair: why it waits, in a sentence, or something repair found but may not change, such as a build that leaves the stand-in half out of its normal runs."
+              },
+              "responses": {
+                "enum": [
+                  "written",
+                  "recorded"
+                ],
+                "description": "For a paired test whose stand-in replays responses: written, by repair from what the test asserts, until a person records the real ones from the system's test instance or a public server (decision 0105); recorded once they have."
               }
             }
           }

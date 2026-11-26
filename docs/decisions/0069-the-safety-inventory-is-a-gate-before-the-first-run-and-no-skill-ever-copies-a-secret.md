@@ -45,5 +45,5 @@ into any file it writes or any reply**; where it must point at one, it gives the
 ## More Information
 
 * Builds on: [A repo's code first runs in measurement, which comes before capturing current behaviour and again after it](0058-a-repos-code-first-runs-in-measurement-which-comes-before-capturing-current-behaviour-and-again-after-it.md)
-* Later decisions that build on this: [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md)
+* Later decisions that build on this: [A repo may be built, without running its tests, before the safety gate](0073-a-repo-may-be-built-without-running-its-tests-before-the-safety-gate.md), [A stand-in for an HTTPS system makes a throwaway certificate in the test, trusted only by that test](0106-a-stand-in-for-an-https-system-makes-a-throwaway-certificate-in-the-test-trusted-only-by-that-test.md)
 * Background: none
