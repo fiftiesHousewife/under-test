@@ -18,8 +18,8 @@ What it does, in order:
   1. Creates labels for item type, phase, owner role, who does it, and horizon (if missing).
   2. Creates one issue per item, or updates it if an issue with the same key already exists.
      The key is stored in a hidden comment in the issue body, so re-running never duplicates.
-  3. Closes items marked status: done as completed, and closes, as not planned, any issue whose item is no longer in
-     the file.
+  3. Closes items marked status: done as completed, items marked status: dropped as not planned, and, as not planned,
+     any issue whose item is no longer in the file.
   4. Links each item to its parent as a sub-issue.
   5. Adds "blocked by" links between items.
   6. With --page <path>, writes a readable Markdown page of the open items, ordered and linked to their issues.
@@ -156,7 +156,7 @@ def write_page(items, by_key, path):
     """An ordered, readable table of open items, grouped by outcome, linked to their issues."""
     titles = {item["key"]: item["title"] for item in items}
     open_keys = ({key for key, issue in by_key.items() if issue.get("state") == "open"} if by_key
-                 else {item["key"] for item in items if item.get("status") != "done"})
+                 else {item["key"] for item in items if item.get("status") not in ("done", "dropped")})
     def link(key):
         return f"[{titles[key]}]({by_key[key]['html_url']})" if key in by_key else titles[key]
     def waiting(item):
@@ -176,6 +176,11 @@ def write_page(items, by_key, path):
             number = f"#{by_key[item['key']]['number']}" if item["key"] in by_key else ""
             blockers = ", ".join(link(b) for b in waiting(item)) or "–"
             lines.append(f"| {number} | {link(item['key'])} | {item['type']} | {item['owner_role']} | {item['done_by']} | {blockers} |")
+        lines.append("")
+    dropped = [item for item in items if item.get("status") == "dropped"]
+    if dropped:
+        lines += ["## Dropped", "", "Work decided against, kept in the backlog file as a record.", ""]
+        lines += [f"- {link(item['key'])}" + (f": {item['notes']}" if item.get("notes") else "") for item in dropped]
         lines.append("")
     Path(path).write_text("\n".join(lines), encoding="utf-8")
     print(f"wrote {path}")
@@ -252,6 +257,10 @@ def main():
             print(f"  close as completed #{issue['number']}: {item['title']}")
             by_key[item["key"]], _ = github.request("PATCH", f"issues/{issue['number']}",
                                                     {"state": "closed", "state_reason": "completed"}, writes=True)
+        elif item.get("status") == "dropped" and issue.get("state") == "open":
+            print(f"  close as not planned #{issue['number']}: {item['title']} (dropped)")
+            by_key[item["key"]], _ = github.request("PATCH", f"issues/{issue['number']}",
+                                                    {"state": "closed", "state_reason": "not_planned"}, writes=True)
 
     seed_keys = {item["key"] for item in items}
     for key, issue in by_key.items():

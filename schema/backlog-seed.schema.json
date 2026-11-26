@@ -107,9 +107,10 @@
           "status": {
             "enum": [
               "open",
-              "done"
+              "done",
+              "dropped"
             ],
-            "description": "done: the work is finished; importers close the item as completed. Omitted means open."
+            "description": "done: the work is finished; importers close the item as completed. dropped: the work was decided against, and the item stays in the file as a record; importers close it as not planned and list it under Dropped on the backlog page. Omitted means open."
           }
         }
       }
