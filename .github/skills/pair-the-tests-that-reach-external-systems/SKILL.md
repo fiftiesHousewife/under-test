@@ -67,7 +67,8 @@ Keep `<Class>`'s name for the stand-in half, so the build's existing runs and re
 | `not-known` | Read the test to find where it makes its client. If there is nowhere to give it one without changing production code, record it as waiting, `waits_for: no-place-to-inject` ([why](../../../docs/decisions/0064-what-repair-does-where-a-test-that-reaches-an-external-system-has-no-place-to-inject-a-stand-in.md)) |
 
 Where the order has a `shared_chain`, one stand-in at its first call may serve every test in the order: use it when
-each test reaches that call with a client the test class makes.
+each test reaches that call with a client the test class makes. A stand-in class several orders use (a replay server,
+a certificate maker) is written once and is byte-identical on each order's branch, so the branches merge.
 
 **The stand-in** is the order's `stand_in.approach`, from its `kit` where it names one:
 
@@ -77,7 +78,10 @@ each test reaches that call with a client the test class makes.
 | `run-in-container` | Starts the system in Testcontainers; where developers' machines can't run containers, the class is tagged `container` too |
 | `recorded-responses` | Replays recorded responses for the order's server and each in `evidence.named_hosts`, from files in the test resources, served by a small server in the test's JVM. Repair can't record them, since every call is refused: write each from what the test asserts and what the real system is known to return, say in the file that it was written, and set the test's `repair.responses: written`; a person records the real ones later ([why](../../../docs/decisions/0105-repair-writes-a-recorded-responses-stand-in-so-the-pair-works-at-once-and-a-person-records-the-real-responses.md)) |
 | `fake-behind-an-interface` | Implements the client's interface with a fake in the test sources |
-| An HTTPS system, any approach serving it | Serves HTTPS with a throwaway self-signed certificate for `localhost`, made in the test's JVM from the JDK's `KeyPairGenerator` when the test starts, trusted only through an `SSLContext` given to that test's client; never a committed keystore, never `keytool` (the agent refuses programs a test starts). Where the client can't take an `SSLContext`, serve HTTP and say in the test's `note` that its stand-in half doesn't check TLS ([why](../../../docs/decisions/0106-a-stand-in-for-an-https-system-makes-a-throwaway-certificate-in-the-test-trusted-only-by-that-test.md)) |
+| An HTTPS system, any approach serving it | Serves HTTPS with a throwaway self-signed certificate for `localhost`, made in the test's JVM from the JDK's `KeyPairGenerator` when the test starts, trusted only through an `SSLContext` given to that test's client, a replacement built the way the real client is built
+(the same builder and settings, plus the `SSLContext`); the certificate names `localhost` as its subject alternative
+name, so the stand-in's address is `https://localhost:<port>`. A shared test kit's certificate maker is best: without
+one, a small DER encoder in the test sources does it. Never a committed keystore, never `keytool` (the agent refuses programs a test starts). Where the client can't take an `SSLContext`, serve HTTP and say in the test's `note` that its stand-in half doesn't check TLS ([why](../../../docs/decisions/0106-a-stand-in-for-an-https-system-makes-a-throwaway-certificate-in-the-test-trusted-only-by-that-test.md)) |
 | `contract`, `shared-test-environment`, `accept-risk` | Is the test as it is, pointed at the agreed test system; `accept-risk` needs a person's decision recorded in the list, so record the test as waiting if there is none |
 
 What the stand-in returns for each test (the server's replies, a fake's data, a container's start-up data) is yours to
@@ -92,6 +96,8 @@ half is the test as it was: same client, same address, same waits, nothing stubb
 
 * The stand-in half passes, every test in it, under the airgap agent, and the agent refuses no call for its paired
   tests (run them by method: the class's other tests may still call out).
+* An HTTPS stand-in also fails when its client doesn't trust the certificate: a client with only the JVM's own trust
+  must fail.
 * It passes [the checks an AI-written test must pass](../../../decision-guides/0047-the-checks-an-ai-written-test-must-pass-before-it-is-kept.md);
   above all, it fails when the behaviour it checks is broken: change what the stand-in returns, and the test fails.
 * Don't run the external half; it runs on its schedule where the real system's test instance can be reached.
