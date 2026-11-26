@@ -243,9 +243,10 @@
                   "address-in-code",
                   "no-place-to-inject",
                   "test-fails-on-its-own",
+                  "disabled",
                   "turned-down"
                 ],
-                "description": "For waiting: why; the testing plan turns it into work. test-fails-on-its-own: the stand-in works but the test body fails whatever the stand-in does, so it would fail against the real system too."
+                "description": "For waiting: why; the testing plan turns it into work. test-fails-on-its-own: the stand-in works but the test body fails whatever the stand-in does, so it would fail against the real system too. disabled: the test is disabled in its source, so repair doesn't pair it; whether to enable or delete it is the testing plan's."
               },
               "pull_request": {
                 "type": "string",
