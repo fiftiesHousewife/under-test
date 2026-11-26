@@ -28,7 +28,9 @@ source); and only the Key and Tracker item columns of any existing `testing/TEST
 
 Write nothing, and report only why, if there is no `techniques` section (run the choose-techniques skill first), no
 target level, or a `safety` finding with `effect: blocks` and no `safety/<finding id>` decision with `state: decided`
-(whatever its choice): name each such finding, and say the Security and Platform Owner decides it.
+(whatever its choice): name each such finding, and say the Security and Platform Owner decides it. With no `safety`
+section at all, write the plan, but put "The safety inventory hasn't run: no work that runs the repo's code starts
+until it has." as the plan's first line after its title, so a repo never inventoried can't look like a clean one.
 
 * A `stale` decision counts as absent.
 * A technique is **adopted**, **deferred** or **rejected** when its `techniques/<id>` decision's `choice` is exactly
@@ -51,19 +53,21 @@ that node's `name`, and its `stand-in.approach`, `stand-in.kit`, `state`, `never
 
 | # | From | Made when | Workstream | Slug | Work | Done when |
 |---|---|---|---|---|---|---|
-| 1 | each connection | approach is `run-in-container`, `recorded-responses`, `contract` or `fake-behind-an-interface` | `make-it-run-on-its-own` | `stand-in-<destination node id>` | Give tests a stand-in for <destination name>: <approach, in words>, with <technique name> | Tests that reach <destination name> use the stand-in and pass with outbound calls blocked. |
+| 1 | each connection | approach is `run-in-container`, `in-process-server`, `recorded-responses`, `contract`, `fake-behind-an-interface` or `shared-test-environment` | `make-it-run-on-its-own` | `stand-in-<destination node id>` | Give tests a stand-in for <destination name>: <approach, in words>, with <technique name> | Tests that reach <destination name> use the stand-in and pass with outbound calls blocked. |
 | 2 | each connection | approach is `not-chosen` | `make-it-run-on-its-own` | `choose-stand-in-<destination node id>` | Choose what tests use for <destination name> | The Architecture Owner has decided the stand-in in the external systems list |
-| 3 | each external system: a node named by an `external_systems` entry graded `reaches` in `testing/tests.yaml` | a test with such an entry for it has no `repair` field | `make-it-run-on-its-own` | `pair-<node id>` | Pair the <n> tests that reach <system name> (repair) | Each is a pair, or recorded as waiting |
+| 3 | each external system: a node named by an `external_systems` entry graded `reaches` in `testing/tests.yaml` | a test with such an entry for it has no `repair` field | `make-it-run-on-its-own` | `pair-<node id>` | Pair the <n> test(s) that reach <system name> (repair) | Each is a pair, or recorded as waiting |
 | 4 | `tests.failing` | more than 0 | `make-it-run-on-its-own` | `tests-failing-every-run` | Make the <n> tests that fail in every run pass with outbound calls blocked | No test fails in every run |
-| 5 | `tests.flaky` | more than 0 | `fix-flaky-tests` | `flaky-tests` | Fix the <n> flaky tests, groups that fail together first | Five runs in a row with no flaky test |
+| 5 | `tests.flaky` | more than 0 | `fix-flaky-tests` | `flaky-tests` | Fix the <n> flaky test(s), groups that fail together first | Five runs in a row with no flaky test |
 | 6 | each `unreliable_tests` finding (kind `sleeps` or `order-dependent`) | always | `fix-flaky-tests` | `<finding id>` | Fix the <n> tests that <sleep / depend on the order they run in> | <No test sleeps / Every test passes when run alone> |
 | 7 | each adopted technique | it is no row 1's technique | its `workstream` | `<technique id>` | <technique name> | Gives evidence for level <the lowest of its evidence_for_maturity_levels> |
 | 8 | each `meaningless_tests` finding of kind `disabled` or `never-runs` | always | `strengthen-tests` | `<disabled-tests / never-run-tests>` (with `-<finding id>` added if that kind has more than one finding) | <Re-enable or delete the <n> disabled tests / Make the <n> tests that never run run, or delete them>, as the Application Owner decides, once current behaviour is recorded | <No disabled test / No test that never runs> is left undecided |
 | 9 | each `meaningless_tests` finding of kind `no-real-assertion`, `swallows-failures`, `mocks-everything` or `other` | always | `strengthen-tests` | `<finding id>` | Fix the <n> tests that <have no real assertion / swallow their own failures / mock everything / its id with hyphens as spaces, dropping a leading `other-`> | Each of those tests asserts what the code does, and catches a planted bug |
 
 * `<a / b>` picks by kind, in the order the kinds are listed.
-* **Approach in words:** `run-in-container` "run in a container", `recorded-responses` "recorded responses",
-  `contract` "a contract test", `fake-behind-an-interface` "a fake behind an interface".
+* **Approach in words:** `run-in-container` "run in a container", `in-process-server` "a server the test starts in
+  its own JVM", `recorded-responses` "recorded responses", `contract` "a contract test", `fake-behind-an-interface`
+  "a fake behind an interface", `shared-test-environment` "a shared test environment, for now". An `accept-risk`
+  connection makes no row: a person decided its tests may reach it.
 * **Row 1's technique** is the adopted one whose `test_stand_in_approach` is the connection's approach, the first by
   id if several. With none, write "no technique adopted yet" as its name and make the row anyway.
 * **Row 1 extras:** append to Work ", using the shared test kit <kit>" if the stand-in has a `kit`, then
